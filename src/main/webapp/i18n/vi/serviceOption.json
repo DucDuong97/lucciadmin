@@ -1,0 +1,25 @@
+{
+  "lucciadminApp": {
+    "serviceOption": {
+      "home": {
+        "title": "Service Options",
+        "createLabel": "Thêm mới một Service Option",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Service Option",
+        "notFound": "No Service Options found"
+      },
+      "created": "Một Service Option mới được tạo với định danh {{ param }}",
+      "updated": "Một Service Option cập nhật với định danh {{ param }}",
+      "deleted": "Một Service Option đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Service Option {{ id }}?"
+      },
+      "detail": {
+        "title": "Service Option"
+      },
+      "name": "Name",
+      "benefits": "Benefits",
+      "price": "Price",
+      "service": "Service"
+    }
+  }
+}

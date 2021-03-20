@@ -1,0 +1,23 @@
+{
+  "lucciadminApp": {
+    "singletonContent": {
+      "home": {
+        "title": "Singleton Contents",
+        "createLabel": "Create a new Singleton Content",
+        "createOrEditLabel": "Create or edit a Singleton Content",
+        "notFound": "No Singleton Contents found"
+      },
+      "created": "A new Singleton Content is created with identifier {{ param }}",
+      "updated": "A Singleton Content is updated with identifier {{ param }}",
+      "deleted": "A Singleton Content is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Singleton Content {{ id }}?"
+      },
+      "detail": {
+        "title": "Singleton Content"
+      },
+      "type": "Type",
+      "content": "Content"
+    }
+  }
+}

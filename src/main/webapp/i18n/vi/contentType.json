@@ -1,0 +1,11 @@
+{
+  "lucciadminApp": {
+    "ContentType": {
+      "null": "",
+      "PHONE": "PHONE",
+      "EMAIL": "EMAIL",
+      "ADRESS": "ADRESS",
+      "INTRO": "INTRO"
+    }
+  }
+}

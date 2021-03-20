@@ -1,0 +1,23 @@
+{
+  "lucciadminApp": {
+    "page": {
+      "home": {
+        "title": "Pages",
+        "createLabel": "Thêm mới một Page",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Page",
+        "notFound": "No Pages found"
+      },
+      "created": "Một Page mới được tạo với định danh {{ param }}",
+      "updated": "Một Page cập nhật với định danh {{ param }}",
+      "deleted": "Một Page đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Page {{ id }}?"
+      },
+      "detail": {
+        "title": "Page"
+      },
+      "page": "Page",
+      "description": "Description"
+    }
+  }
+}

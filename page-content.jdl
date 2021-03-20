@@ -1,0 +1,65 @@
+
+entity ServiceOption {
+	name String required unique,
+    benefits String required,
+    price Integer required
+}
+
+entity Policy {
+	name String required unique,
+    content String required
+}
+
+entity CustomerReview {
+	customerName String required,
+    customerTitle String,
+    comment String required,
+}
+
+entity Achievement {
+	name String required unique,
+    number Long required,
+    imgUrl String required
+}
+
+entity ServiceItem {
+	name String required unique,
+    description String,
+    imgUrl String
+}
+
+entity Blog {
+	title String required,
+	publishDate Instant required,
+    titleImgUrl String required,
+    content String required
+}
+
+enum ContentType {
+	PHONE, EMAIL, ADRESS, INTRO
+}
+
+entity SingletonContent {
+	type ContentType required unique,
+    content String
+}
+
+enum SubPage {
+	HOME, INTRO, SERVICE, BLOG, CONTACT
+}
+
+entity Page {
+	page SubPage required unique,
+    description String
+}
+
+relationship OneToMany {
+	ServiceItem{option} to ServiceOption{service}
+}
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+

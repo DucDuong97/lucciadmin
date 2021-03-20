@@ -1,0 +1,24 @@
+{
+  "lucciadminApp": {
+    "customerReview": {
+      "home": {
+        "title": "Customer Reviews",
+        "createLabel": "Create a new Customer Review",
+        "createOrEditLabel": "Create or edit a Customer Review",
+        "notFound": "No Customer Reviews found"
+      },
+      "created": "A new Customer Review is created with identifier {{ param }}",
+      "updated": "A Customer Review is updated with identifier {{ param }}",
+      "deleted": "A Customer Review is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Customer Review {{ id }}?"
+      },
+      "detail": {
+        "title": "Customer Review"
+      },
+      "customerName": "Customer Name",
+      "customerTitle": "Customer Title",
+      "comment": "Comment"
+    }
+  }
+}

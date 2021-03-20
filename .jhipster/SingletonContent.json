@@ -1,0 +1,30 @@
+{
+  "name": "SingletonContent",
+  "fields": [
+    {
+      "fieldName": "type",
+      "fieldType": "ContentType",
+      "fieldValues": "PHONE,EMAIL,ADRESS,INTRO",
+      "fieldValidateRules": [
+        "required",
+        "unique"
+      ]
+    },
+    {
+      "fieldName": "content",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "changelogDate": "20210312182017",
+  "entityTableName": "singleton_content",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

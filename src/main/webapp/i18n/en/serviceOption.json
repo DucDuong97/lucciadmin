@@ -1,0 +1,25 @@
+{
+  "lucciadminApp": {
+    "serviceOption": {
+      "home": {
+        "title": "Service Options",
+        "createLabel": "Create a new Service Option",
+        "createOrEditLabel": "Create or edit a Service Option",
+        "notFound": "No Service Options found"
+      },
+      "created": "A new Service Option is created with identifier {{ param }}",
+      "updated": "A Service Option is updated with identifier {{ param }}",
+      "deleted": "A Service Option is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Service Option {{ id }}?"
+      },
+      "detail": {
+        "title": "Service Option"
+      },
+      "name": "Name",
+      "benefits": "Benefits",
+      "price": "Price",
+      "service": "Service"
+    }
+  }
+}

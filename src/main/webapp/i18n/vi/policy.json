@@ -1,0 +1,23 @@
+{
+  "lucciadminApp": {
+    "policy": {
+      "home": {
+        "title": "Policies",
+        "createLabel": "Thêm mới một Policy",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Policy",
+        "notFound": "No Policies found"
+      },
+      "created": "Một Policy mới được tạo với định danh {{ param }}",
+      "updated": "Một Policy cập nhật với định danh {{ param }}",
+      "deleted": "Một Policy đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Policy {{ id }}?"
+      },
+      "detail": {
+        "title": "Policy"
+      },
+      "name": "Name",
+      "content": "Content"
+    }
+  }
+}

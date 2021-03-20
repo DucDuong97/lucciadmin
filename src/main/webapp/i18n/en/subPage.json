@@ -1,0 +1,12 @@
+{
+  "lucciadminApp": {
+    "SubPage": {
+      "null": "",
+      "HOME": "HOME",
+      "INTRO": "INTRO",
+      "SERVICE": "SERVICE",
+      "BLOG": "BLOG",
+      "CONTACT": "CONTACT"
+    }
+  }
+}
