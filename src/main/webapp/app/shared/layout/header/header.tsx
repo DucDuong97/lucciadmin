@@ -14,6 +14,11 @@ import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
 export interface IHeaderProps {
   isAuthenticated: boolean;
   isAdmin: boolean;
+  // isCustomer: boolean;
+  // isReceptionist: boolean;
+  // isDoctor: boolean;
+  // isNurse: boolean;
+  // isAccounter: boolean;
   ribbonEnv: string;
   isInProduction: boolean;
   isSwaggerEnabled: boolean;
@@ -55,6 +60,15 @@ const Header = (props: IHeaderProps) => {
             <Home />
             {props.isAuthenticated && <EntitiesMenu />}
             {props.isAuthenticated && props.isAdmin && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
+
+            {/*{props.isAuthenticated && props.isCustomer && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
+
+            {/*{props.isAuthenticated && props.isReceptionist && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
+
+            {/*{props.isAuthenticated && props.isDoctor && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
+
+            {/*{props.isAuthenticated && props.isAccounter && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
+
             <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />
             <AccountMenu isAuthenticated={props.isAuthenticated} />
           </Nav>

@@ -53,4 +53,11 @@ public class ServiceOptionServiceImpl implements ServiceOptionService {
         log.debug("Request to delete ServiceOption : {}", id);
         serviceOptionRepository.deleteById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ServiceOption> findByServiceId(Long serviceId) {
+        log.debug("Request to get ServiceOption by Service Id: {}", serviceId);
+        return serviceOptionRepository.findByServiceId(serviceId);
+    }
 }

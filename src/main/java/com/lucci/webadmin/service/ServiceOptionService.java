@@ -40,4 +40,6 @@ public interface ServiceOptionService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<ServiceOption> findByServiceId(Long serviceId);
 }
