@@ -60,6 +60,28 @@ public class CacheConfiguration {
             createCache(cm, com.lucci.webadmin.domain.Blog.class.getName());
             createCache(cm, com.lucci.webadmin.domain.SingletonContent.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Page.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Person.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Patient.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Patient.class.getName() + ".bookings");
+            createCache(cm, com.lucci.webadmin.domain.Patient.class.getName() + ".treatments");
+            createCache(cm, com.lucci.webadmin.domain.Doctor.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Doctor.class.getName() + ".treatments");
+            createCache(cm, com.lucci.webadmin.domain.Nurse.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Nurse.class.getName() + ".treatments");
+            createCache(cm, com.lucci.webadmin.domain.Receptionist.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Receptionist.class.getName() + ".payments");
+            createCache(cm, com.lucci.webadmin.domain.Receptionist.class.getName() + ".getMaterials");
+            createCache(cm, com.lucci.webadmin.domain.Accountant.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Material.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Booking.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Payment.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.MedicalRecord.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Treatment.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Treatment.class.getName() + ".histories");
+            createCache(cm, com.lucci.webadmin.domain.Treatment.class.getName() + ".doctors");
+            createCache(cm, com.lucci.webadmin.domain.Treatment.class.getName() + ".nurses");
+            createCache(cm, com.lucci.webadmin.domain.TreatmentHistory.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.GetMaterial.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

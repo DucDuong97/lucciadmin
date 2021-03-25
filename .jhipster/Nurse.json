@@ -1,0 +1,38 @@
+{
+  "name": "Nurse",
+  "fields": [
+    {
+      "fieldName": "salary",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "person",
+      "otherEntityRelationshipName": "nurse",
+      "relationshipName": "person",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "treatment",
+      "otherEntityRelationshipName": "nurse",
+      "relationshipName": "treatments",
+      "otherEntityField": "id",
+      "ownerSide": false
+    }
+  ],
+  "changelogDate": "20210325060501",
+  "entityTableName": "nurse",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

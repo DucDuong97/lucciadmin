@@ -1,0 +1,16 @@
+{
+  "name": "MedicalRecord",
+  "fields": [],
+  "relationships": [],
+  "changelogDate": "20210325061101",
+  "entityTableName": "medical_record",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

@@ -1,0 +1,24 @@
+{
+  "lucciadminApp": {
+    "material": {
+      "home": {
+        "title": "Materials",
+        "createLabel": "Thêm mới một Material",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Material",
+        "notFound": "No Materials found"
+      },
+      "created": "Một Material mới được tạo với định danh {{ param }}",
+      "updated": "Một Material cập nhật với định danh {{ param }}",
+      "deleted": "Một Material đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Material {{ id }}?"
+      },
+      "detail": {
+        "title": "Material"
+      },
+      "name": "Name",
+      "amount": "Amount",
+      "unit": "Unit"
+    }
+  }
+}

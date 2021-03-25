@@ -1,0 +1,25 @@
+{
+  "lucciadminApp": {
+    "receptionist": {
+      "home": {
+        "title": "Receptionists",
+        "createLabel": "Create a new Receptionist",
+        "createOrEditLabel": "Create or edit a Receptionist",
+        "notFound": "No Receptionists found"
+      },
+      "created": "A new Receptionist is created with identifier {{ param }}",
+      "updated": "A Receptionist is updated with identifier {{ param }}",
+      "deleted": "A Receptionist is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Receptionist {{ id }}?"
+      },
+      "detail": {
+        "title": "Receptionist"
+      },
+      "salary": "Salary",
+      "person": "Person",
+      "payment": "Payment",
+      "getMaterials": "Get Materials"
+    }
+  }
+}

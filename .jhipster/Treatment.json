@@ -1,0 +1,54 @@
+{
+  "name": "Treatment",
+  "fields": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "medicalRecord",
+      "otherEntityRelationshipName": "treatment",
+      "relationshipName": "record",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "treatmentHistory",
+      "otherEntityRelationshipName": "treatment",
+      "relationshipName": "histories"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "doctor",
+      "otherEntityRelationshipName": "treatments",
+      "relationshipName": "doctor",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "nurse",
+      "otherEntityRelationshipName": "treatments",
+      "relationshipName": "nurse",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "patient",
+      "otherEntityRelationshipName": "treatments",
+      "relationshipName": "patient",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210325061201",
+  "entityTableName": "treatment",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

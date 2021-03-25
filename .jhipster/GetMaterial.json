@@ -1,0 +1,40 @@
+{
+  "name": "GetMaterial",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "material",
+      "otherEntityRelationshipName": "getMaterial",
+      "relationshipName": "material",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "receptionist",
+      "otherEntityRelationshipName": "getMaterials",
+      "relationshipName": "receptionist",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210325061401",
+  "entityTableName": "get_material",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

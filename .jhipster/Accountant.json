@@ -1,0 +1,30 @@
+{
+  "name": "Accountant",
+  "fields": [
+    {
+      "fieldName": "salary",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "person",
+      "otherEntityRelationshipName": "accountant",
+      "relationshipName": "person",
+      "otherEntityField": "id",
+      "ownerSide": true
+    }
+  ],
+  "changelogDate": "20210325060701",
+  "entityTableName": "accountant",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

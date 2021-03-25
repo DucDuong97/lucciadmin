@@ -1,0 +1,23 @@
+{
+  "lucciadminApp": {
+    "treatmentHistory": {
+      "home": {
+        "title": "Treatment Histories",
+        "createLabel": "Create a new Treatment History",
+        "createOrEditLabel": "Create or edit a Treatment History",
+        "notFound": "No Treatment Histories found"
+      },
+      "created": "A new Treatment History is created with identifier {{ param }}",
+      "updated": "A Treatment History is updated with identifier {{ param }}",
+      "deleted": "A Treatment History is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Treatment History {{ id }}?"
+      },
+      "detail": {
+        "title": "Treatment History"
+      },
+      "date": "Date",
+      "treatment": "Treatment"
+    }
+  }
+}

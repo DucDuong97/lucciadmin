@@ -1,0 +1,26 @@
+{
+  "lucciadminApp": {
+    "treatment": {
+      "home": {
+        "title": "Treatments",
+        "createLabel": "Thêm mới một Treatment",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Treatment",
+        "notFound": "No Treatments found"
+      },
+      "created": "Một Treatment mới được tạo với định danh {{ param }}",
+      "updated": "Một Treatment cập nhật với định danh {{ param }}",
+      "deleted": "Một Treatment đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Treatment {{ id }}?"
+      },
+      "detail": {
+        "title": "Treatment"
+      },
+      "record": "Record",
+      "histories": "Histories",
+      "doctor": "Doctor",
+      "nurse": "Nurse",
+      "patient": "Patient"
+    }
+  }
+}

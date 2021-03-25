@@ -1,0 +1,49 @@
+{
+  "name": "Payment",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Integer",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "booking",
+      "otherEntityRelationshipName": "payment",
+      "relationshipValidateRules": "required",
+      "relationshipName": "booking",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "receptionist",
+      "otherEntityRelationshipName": "payment",
+      "relationshipValidateRules": "required",
+      "relationshipName": "receptionist",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210325061001",
+  "entityTableName": "payment",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

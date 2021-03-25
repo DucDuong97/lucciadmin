@@ -1,0 +1,32 @@
+{
+  "name": "TreatmentHistory",
+  "fields": [
+    {
+      "fieldName": "date",
+      "fieldType": "Instant",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "treatment",
+      "otherEntityRelationshipName": "histories",
+      "relationshipName": "treatment",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210325061301",
+  "entityTableName": "treatment_history",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}
