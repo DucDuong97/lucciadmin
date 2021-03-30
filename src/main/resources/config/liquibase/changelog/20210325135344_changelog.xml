@@ -1,0 +1,252 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet author="DELL (generated)" id="1616680454738-2">
+        <createTable tableName="accountant">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="accountantPK"/>
+            </column>
+            <column name="salary" type="INTEGER"/>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-3">
+        <createTable tableName="booking">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="bookingPK"/>
+            </column>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="has_purchase" type="BOOLEAN"/>
+            <column name="doctor_id" type="BIGINT"/>
+            <column name="patient_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-4">
+        <createTable tableName="doctor">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="doctorPK"/>
+            </column>
+            <column name="salary" type="INTEGER"/>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-5">
+        <createTable tableName="get_material">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="get_materialPK"/>
+            </column>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="material_id" type="BIGINT"/>
+            <column name="receptionist_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-6">
+        <createTable tableName="material">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="materialPK"/>
+            </column>
+            <column name="amount" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-7">
+        <createTable tableName="medical_record">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="medical_recordPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-8">
+        <createTable tableName="nurse">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="nursePK"/>
+            </column>
+            <column name="salary" type="INTEGER"/>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-9">
+        <createTable tableName="patient">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="patientPK"/>
+            </column>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-10">
+        <createTable tableName="payment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="paymentPK"/>
+            </column>
+            <column name="amount" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="booking_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="receptionist_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-11">
+        <createTable tableName="person">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="personPK"/>
+            </column>
+            <column name="adress" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-12">
+        <createTable tableName="receptionist">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="receptionistPK"/>
+            </column>
+            <column name="salary" type="INTEGER"/>
+            <column name="person_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-13">
+        <createTable tableName="treatment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="treatmentPK"/>
+            </column>
+            <column name="patient_id" type="BIGINT"/>
+            <column name="record_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-14">
+        <createTable tableName="treatment_doctor">
+            <column name="treatment_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="doctor_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-15">
+        <createTable tableName="treatment_history">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="treatment_historyPK"/>
+            </column>
+            <column name="date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="treatment_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-16">
+        <createTable tableName="treatment_nurse">
+            <column name="treatment_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="nurse_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-17">
+        <addUniqueConstraint columnNames="person_id" constraintName="UC_ACCOUNTANTPERSON_ID_COL" tableName="accountant"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-18">
+        <addUniqueConstraint columnNames="doctor_id" constraintName="UC_BOOKINGDOCTOR_ID_COL" tableName="booking"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-19">
+        <addUniqueConstraint columnNames="person_id" constraintName="UC_DOCTORPERSON_ID_COL" tableName="doctor"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-20">
+        <addUniqueConstraint columnNames="material_id" constraintName="UC_GET_MATERIALMATERIAL_ID_COL" tableName="get_material"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-21">
+        <addUniqueConstraint columnNames="person_id" constraintName="UC_NURSEPERSON_ID_COL" tableName="nurse"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-22">
+        <addUniqueConstraint columnNames="person_id" constraintName="UC_PATIENTPERSON_ID_COL" tableName="patient"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-23">
+        <addUniqueConstraint columnNames="person_id" constraintName="UC_RECEPTIONISTPERSON_ID_COL" tableName="receptionist"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-24">
+        <addUniqueConstraint columnNames="record_id" constraintName="UC_TREATMENTRECORD_ID_COL" tableName="treatment"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-25">
+        <addUniqueConstraint columnNames="booking_id" constraintName="UK_ku02qy6369hn9uhy3n7jk9v6e" tableName="payment"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-26">
+        <addForeignKeyConstraint baseColumnNames="patient_id" baseTableName="booking" constraintName="FK1o2fk91av3dkwlxpexo94lcbg" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="patient" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-27">
+        <addForeignKeyConstraint baseColumnNames="doctor_id" baseTableName="treatment_doctor" constraintName="FK44tssdphh0chsb387iid4c81u" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="doctor" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-28">
+        <addForeignKeyConstraint baseColumnNames="treatment_id" baseTableName="treatment_doctor" constraintName="FK46eu41x6uhv41irpk8wwbnuv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="treatment" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-29">
+        <addForeignKeyConstraint baseColumnNames="nurse_id" baseTableName="treatment_nurse" constraintName="FK4k2butmpb7hma0id68slgx8m6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="nurse" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-30">
+        <addForeignKeyConstraint baseColumnNames="doctor_id" baseTableName="booking" constraintName="FK5irh3h3iaq3i2g0vbopequg6o" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="doctor" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-31">
+        <addForeignKeyConstraint baseColumnNames="receptionist_id" baseTableName="get_material" constraintName="FK8n61gccfobu3b8pe7gpmurwkw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="receptionist" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-32">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="accountant" constraintName="FKby7mpxkvybykjd5jte9bphp69" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-33">
+        <addForeignKeyConstraint baseColumnNames="material_id" baseTableName="get_material" constraintName="FKd3gfpi1mk41ql236u4uiubkwc" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="material" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-34">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="patient" constraintName="FKdxxw8hyl1nca8o4x5r5eap9kf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-35">
+        <addForeignKeyConstraint baseColumnNames="record_id" baseTableName="treatment" constraintName="FKj1yo0858uae3ywbpfqj5yk931" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="medical_record" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-36">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="doctor" constraintName="FKjac3wynvf4efdxytrn6p8fkai" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-37">
+        <addForeignKeyConstraint baseColumnNames="patient_id" baseTableName="treatment" constraintName="FKjpqauh9f08891a82no3i8aq7o" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="patient" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-38">
+        <addForeignKeyConstraint baseColumnNames="treatment_id" baseTableName="treatment_nurse" constraintName="FKknqicm85acteifw38n7de2sy3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="treatment" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-39">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="receptionist" constraintName="FKkygdu8uwp80hrevrrdggasmn0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-40">
+        <addForeignKeyConstraint baseColumnNames="treatment_id" baseTableName="treatment_history" constraintName="FKltbd23xx37cjukvl0t815lybi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="treatment" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-41">
+        <addForeignKeyConstraint baseColumnNames="booking_id" baseTableName="payment" constraintName="FKqewrl4xrv9eiad6eab3aoja65" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="booking" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-42">
+        <addForeignKeyConstraint baseColumnNames="receptionist_id" baseTableName="payment" constraintName="FKsnqp4rxxv2jaiyhrrb54q3m5c" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="receptionist" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-43">
+        <addForeignKeyConstraint baseColumnNames="person_id" baseTableName="nurse" constraintName="FKtr7vecm7lgy0f9vcgiameo8ar" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="person" validate="true"/>
+    </changeSet>
+    <changeSet author="DELL (generated)" id="1616680454738-1">
+        <alterSequence sequenceName="sequence_generator"/>
+    </changeSet>
+</databaseChangeLog>
