@@ -2,20 +2,21 @@ import './header.scss';
 
 import React, { useState } from 'react';
 import { Translate, Storage } from 'react-jhipster';
-import { Navbar, Nav, NavbarToggler, NavbarBrand, Collapse } from 'reactstrap';
+import { Navbar, Nav, NavItem, NavLink, NavbarToggler, NavbarBrand, Collapse } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { NavLink as Link } from 'react-router-dom';
+import {NavLink as Link} from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
 import { Home, Brand } from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
+import MenuItem from "app/shared/layout/menus/menu-item";
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
   isAdmin: boolean;
   // isCustomer: boolean;
-  // isReceptionist: boolean;
+  isReceptionist: boolean;
   // isDoctor: boolean;
   // isNurse: boolean;
   // isAccounter: boolean;
@@ -57,7 +58,15 @@ const Header = (props: IHeaderProps) => {
         <Brand />
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
-            <Home />
+            {/*<Home />*/}
+            {props.isAuthenticated && props.isReceptionist &&
+            <NavItem to="/material">
+              <NavLink tag={Link} to="/material" className="d-flex align-items-center">
+                <span>
+                  <Translate contentKey="global.menu.entities.material" />
+                </span>
+              </NavLink>
+            </NavItem>}
             {props.isAuthenticated && <EntitiesMenu />}
             {props.isAuthenticated && props.isAdmin && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
 

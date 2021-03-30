@@ -18,6 +18,7 @@ describe('Header', () => {
   const devProps = {
     isAuthenticated: true,
     isAdmin: true,
+    isReceptionist: false,
     currentLocale: 'en',
     onLocaleChange: localeSpy,
     ribbonEnv: 'dev',
