@@ -33,3 +33,33 @@ export const Home = props => (
     </NavLink>
   </NavItem>
 );
+
+export const Customer = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/patient" className="d-flex align-items-center">
+      <span>
+        <Translate contentKey="global.menu.entities.patient" />
+      </span>
+    </NavLink>
+  </NavItem>
+);
+
+export const Booking = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/booking" className="d-flex align-items-center">
+      <span>
+        <Translate contentKey="global.menu.entities.booking" />
+      </span>
+    </NavLink>
+  </NavItem>
+);
+
+export const Payment = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/payment" className="d-flex align-items-center">
+      <span>
+        <Translate contentKey="global.menu.entities.payment" />
+      </span>
+    </NavLink>
+  </NavItem>
+);

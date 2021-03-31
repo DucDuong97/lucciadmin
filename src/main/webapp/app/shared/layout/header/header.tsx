@@ -8,18 +8,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {NavLink as Link} from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
-import { Home, Brand } from './header-components';
+import {Home, Brand, Customer, Payment, Booking} from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
 import MenuItem from "app/shared/layout/menus/menu-item";
+import {WebContentMenu} from "app/shared/layout/menus/web-content";
+import {MaterialMenu} from "app/shared/layout/menus/material";
 
 export interface IHeaderProps {
   isAuthenticated: boolean;
   isAdmin: boolean;
   // isCustomer: boolean;
   isReceptionist: boolean;
-  // isDoctor: boolean;
-  // isNurse: boolean;
-  // isAccounter: boolean;
+  isDoctor: boolean;
+  isNurse: boolean;
+  // isAccountant: boolean;
   ribbonEnv: string;
   isInProduction: boolean;
   isSwaggerEnabled: boolean;
@@ -58,15 +60,20 @@ const Header = (props: IHeaderProps) => {
         <Brand />
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
-            {/*<Home />*/}
-            {props.isAuthenticated && props.isReceptionist &&
-            <NavItem to="/material">
-              <NavLink tag={Link} to="/material" className="d-flex align-items-center">
-                <span>
-                  <Translate contentKey="global.menu.entities.material" />
-                </span>
-              </NavLink>
-            </NavItem>}
+            <Home />
+            {props.isAuthenticated && (props.isAdmin
+            || props.isDoctor || props.isNurse || props.isReceptionist)
+            && <Customer />}
+            {props.isAuthenticated && (props.isAdmin
+            || props.isDoctor || props.isReceptionist)
+            && <Booking />}
+            {props.isAuthenticated && (props.isAdmin
+            || props.isReceptionist)
+            && <Payment />}
+            {props.isAuthenticated && props.isAdmin && <WebContentMenu />}
+            {props.isAuthenticated && (props.isAdmin
+            || props.isReceptionist)
+            && <MaterialMenu />}
             {props.isAuthenticated && <EntitiesMenu />}
             {props.isAuthenticated && props.isAdmin && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
 
@@ -76,7 +83,7 @@ const Header = (props: IHeaderProps) => {
 
             {/*{props.isAuthenticated && props.isDoctor && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
 
-            {/*{props.isAuthenticated && props.isAccounter && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
+            {/*{props.isAuthenticated && props.isAccountant && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
 
             <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />
             <AccountMenu isAuthenticated={props.isAuthenticated} />

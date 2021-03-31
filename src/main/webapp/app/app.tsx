@@ -39,6 +39,8 @@ export const App = (props: IAppProps) => {
             isAuthenticated={props.isAuthenticated}
             isAdmin={props.isAdmin}
             isReceptionist={props.isReceptionist}
+            isDoctor={props.isDoctor}
+            isNurse={props.isNurse}
             currentLocale={props.currentLocale}
             onLocaleChange={props.setLocale}
             ribbonEnv={props.ribbonEnv}
@@ -64,6 +66,8 @@ const mapStateToProps = ({ authentication, applicationProfile, locale }: IRootSt
   isAuthenticated: authentication.isAuthenticated,
   isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
   isReceptionist: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.RECEPTIONIST]),
+  isDoctor: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.DOCTOR]),
+  isNurse: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.NURSE]),
   ribbonEnv: applicationProfile.ribbonEnv,
   isInProduction: applicationProfile.inProduction,
   isSwaggerEnabled: applicationProfile.isSwaggerEnabled,

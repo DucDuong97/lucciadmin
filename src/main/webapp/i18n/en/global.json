@@ -7,6 +7,21 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "person": "Person",
+        "patient": "Customer",
+        "doctor": "Doctor",
+        "nurse": "Nurse",
+        "receptionist": "Receptionist",
+        "accountant": "Accountant",
+        "booking": "Booking",
+        "payment": "Payment",
+        "medicalRecord": "Medical Record",
+        "treatment": "Treatment",
+        "treatmentHistory": "Treatment History",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+      },
+      "web-content": {
+        "main": "Web Content",
         "serviceOption": "Service Option",
         "policy": "Policy",
         "customerReview": "Customer Review",
@@ -14,21 +29,12 @@
         "serviceItem": "Service Item",
         "blog": "Blog",
         "singletonContent": "Singleton Content",
-        "page": "Page",
-        "person": "Person",
-        "patient": "Patient",
-        "doctor": "Doctor",
-        "nurse": "Nurse",
-        "receptionist": "Receptionist",
-        "accountant": "Accountant",
+        "page": "Page"
+      },
+      "material-menu": {
+        "main": "Material",
         "material": "Material",
-        "booking": "Booking",
-        "payment": "Payment",
-        "medicalRecord": "Medical Record",
-        "treatment": "Treatment",
-        "treatmentHistory": "Treatment History",
-        "getMaterial": "Get Material",
-        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+        "getMaterial": "Get Material"
       },
       "account": {
         "main": "Account",
