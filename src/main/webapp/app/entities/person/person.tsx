@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction } from 'react-jhipster';
+import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -45,6 +45,12 @@ export const Person = (props: IPersonProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.person.adress">Adress</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.person.birth">Birth</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.person.gender">Gender</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -59,6 +65,10 @@ export const Person = (props: IPersonProps) => {
                   <td>{person.name}</td>
                   <td>{person.phone}</td>
                   <td>{person.adress}</td>
+                  <td>{person.birth ? <TextFormat type="date" value={person.birth} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>
+                    <Translate contentKey={`lucciadminApp.Gender.${person.gender}`} />
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${person.id}`} color="info" size="sm">

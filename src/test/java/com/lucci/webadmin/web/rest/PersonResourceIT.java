@@ -15,6 +15,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,6 +24,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.lucci.webadmin.domain.enumeration.Gender;
 /**
  * Integration tests for the {@link PersonResource} REST controller.
  */
@@ -38,6 +41,12 @@ public class PersonResourceIT {
 
     private static final String DEFAULT_ADRESS = "AAAAAAAAAA";
     private static final String UPDATED_ADRESS = "BBBBBBBBBB";
+
+    private static final Instant DEFAULT_BIRTH = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_BIRTH = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+
+    private static final Gender DEFAULT_GENDER = Gender.MALE;
+    private static final Gender UPDATED_GENDER = Gender.FEMALE;
 
     @Autowired
     private PersonRepository personRepository;
@@ -63,7 +72,9 @@ public class PersonResourceIT {
         Person person = new Person()
             .name(DEFAULT_NAME)
             .phone(DEFAULT_PHONE)
-            .adress(DEFAULT_ADRESS);
+            .adress(DEFAULT_ADRESS)
+            .birth(DEFAULT_BIRTH)
+            .gender(DEFAULT_GENDER);
         return person;
     }
     /**
@@ -76,7 +87,9 @@ public class PersonResourceIT {
         Person person = new Person()
             .name(UPDATED_NAME)
             .phone(UPDATED_PHONE)
-            .adress(UPDATED_ADRESS);
+            .adress(UPDATED_ADRESS)
+            .birth(UPDATED_BIRTH)
+            .gender(UPDATED_GENDER);
         return person;
     }
 
@@ -102,6 +115,8 @@ public class PersonResourceIT {
         assertThat(testPerson.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testPerson.getPhone()).isEqualTo(DEFAULT_PHONE);
         assertThat(testPerson.getAdress()).isEqualTo(DEFAULT_ADRESS);
+        assertThat(testPerson.getBirth()).isEqualTo(DEFAULT_BIRTH);
+        assertThat(testPerson.getGender()).isEqualTo(DEFAULT_GENDER);
     }
 
     @Test
@@ -164,6 +179,44 @@ public class PersonResourceIT {
 
     @Test
     @Transactional
+    public void checkBirthIsRequired() throws Exception {
+        int databaseSizeBeforeTest = personRepository.findAll().size();
+        // set the field null
+        person.setBirth(null);
+
+        // Create the Person, which fails.
+
+
+        restPersonMockMvc.perform(post("/api/people")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(person)))
+            .andExpect(status().isBadRequest());
+
+        List<Person> personList = personRepository.findAll();
+        assertThat(personList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkGenderIsRequired() throws Exception {
+        int databaseSizeBeforeTest = personRepository.findAll().size();
+        // set the field null
+        person.setGender(null);
+
+        // Create the Person, which fails.
+
+
+        restPersonMockMvc.perform(post("/api/people")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(person)))
+            .andExpect(status().isBadRequest());
+
+        List<Person> personList = personRepository.findAll();
+        assertThat(personList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPeople() throws Exception {
         // Initialize the database
         personRepository.saveAndFlush(person);
@@ -175,7 +228,9 @@ public class PersonResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(person.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
-            .andExpect(jsonPath("$.[*].adress").value(hasItem(DEFAULT_ADRESS)));
+            .andExpect(jsonPath("$.[*].adress").value(hasItem(DEFAULT_ADRESS)))
+            .andExpect(jsonPath("$.[*].birth").value(hasItem(DEFAULT_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
     }
     
     @Test
@@ -191,7 +246,9 @@ public class PersonResourceIT {
             .andExpect(jsonPath("$.id").value(person.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
-            .andExpect(jsonPath("$.adress").value(DEFAULT_ADRESS));
+            .andExpect(jsonPath("$.adress").value(DEFAULT_ADRESS))
+            .andExpect(jsonPath("$.birth").value(DEFAULT_BIRTH.toString()))
+            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()));
     }
     @Test
     @Transactional
@@ -216,7 +273,9 @@ public class PersonResourceIT {
         updatedPerson
             .name(UPDATED_NAME)
             .phone(UPDATED_PHONE)
-            .adress(UPDATED_ADRESS);
+            .adress(UPDATED_ADRESS)
+            .birth(UPDATED_BIRTH)
+            .gender(UPDATED_GENDER);
 
         restPersonMockMvc.perform(put("/api/people")
             .contentType(MediaType.APPLICATION_JSON)
@@ -230,6 +289,8 @@ public class PersonResourceIT {
         assertThat(testPerson.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testPerson.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testPerson.getAdress()).isEqualTo(UPDATED_ADRESS);
+        assertThat(testPerson.getBirth()).isEqualTo(UPDATED_BIRTH);
+        assertThat(testPerson.getGender()).isEqualTo(UPDATED_GENDER);
     }
 
     @Test

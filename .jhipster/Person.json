@@ -22,6 +22,21 @@
     {
       "fieldName": "adress",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "birth",
+      "fieldType": "Instant",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValues": "MALE,FEMALE,AMBIGIOUS",
+      "fieldValidateRules": [
+        "required"
+      ]
     }
   ],
   "relationships": [

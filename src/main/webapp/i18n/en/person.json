@@ -19,6 +19,8 @@
       "name": "Name",
       "phone": "Phone",
       "adress": "Adress",
+      "birth": "Birth",
+      "gender": "Gender",
       "doctor": "Doctor",
       "nurse": "Nurse",
       "patient": "Patient",

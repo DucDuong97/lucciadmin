@@ -59,6 +59,8 @@ export const PersonUpdate = (props: IPersonUpdateProps) => {
   }, [props.updateSuccess]);
 
   const saveEntity = (event, errors, values) => {
+    values.birth = convertDateTimeToServer(values.birth);
+
     if (errors.length === 0) {
       const entity = {
         ...personEntity,
@@ -129,6 +131,38 @@ export const PersonUpdate = (props: IPersonUpdateProps) => {
                   <Translate contentKey="lucciadminApp.person.adress">Adress</Translate>
                 </Label>
                 <AvField id="person-adress" type="text" name="adress" />
+              </AvGroup>
+              <AvGroup>
+                <Label id="birthLabel" for="person-birth">
+                  <Translate contentKey="lucciadminApp.person.birth">Birth</Translate>
+                </Label>
+                <AvInput
+                  id="person-birth"
+                  type="datetime-local"
+                  className="form-control"
+                  name="birth"
+                  placeholder={'YYYY-MM-DD HH:mm'}
+                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.personEntity.birth)}
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="genderLabel" for="person-gender">
+                  <Translate contentKey="lucciadminApp.person.gender">Gender</Translate>
+                </Label>
+                <AvInput
+                  id="person-gender"
+                  type="select"
+                  className="form-control"
+                  name="gender"
+                  value={(!isNew && personEntity.gender) || 'MALE'}
+                >
+                  <option value="MALE">{translate('lucciadminApp.Gender.MALE')}</option>
+                  <option value="FEMALE">{translate('lucciadminApp.Gender.FEMALE')}</option>
+                  <option value="AMBIGIOUS">{translate('lucciadminApp.Gender.AMBIGIOUS')}</option>
+                </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/person" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

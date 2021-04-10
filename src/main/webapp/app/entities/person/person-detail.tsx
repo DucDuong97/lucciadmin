@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -43,6 +43,18 @@ export const PersonDetail = (props: IPersonDetailProps) => {
             </span>
           </dt>
           <dd>{personEntity.adress}</dd>
+          <dt>
+            <span id="birth">
+              <Translate contentKey="lucciadminApp.person.birth">Birth</Translate>
+            </span>
+          </dt>
+          <dd>{personEntity.birth ? <TextFormat value={personEntity.birth} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dt>
+            <span id="gender">
+              <Translate contentKey="lucciadminApp.person.gender">Gender</Translate>
+            </span>
+          </dt>
+          <dd>{personEntity.gender}</dd>
         </dl>
         <Button tag={Link} to="/person" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

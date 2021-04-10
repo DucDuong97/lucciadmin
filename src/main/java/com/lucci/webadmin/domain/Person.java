@@ -1,6 +1,8 @@
 package com.lucci.webadmin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.lucci.webadmin.utils.NoUTCInstant;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,6 +10,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.Instant;
+
+import com.lucci.webadmin.domain.enumeration.Gender;
 
 /**
  * A Person.
@@ -36,6 +41,16 @@ public class Person implements Serializable {
 
     @Column(name = "adress")
     private String adress;
+
+    @NotNull
+    @JsonDeserialize(converter = NoUTCInstant.class)
+    @Column(name = "birth", nullable = false)
+    private Instant birth;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false)
+    private Gender gender;
 
     @OneToOne(mappedBy = "person")
     @JsonIgnore
@@ -103,6 +118,32 @@ public class Person implements Serializable {
 
     public void setAdress(String adress) {
         this.adress = adress;
+    }
+
+    public Instant getBirth() {
+        return birth;
+    }
+
+    public Person birth(Instant birth) {
+        this.birth = birth;
+        return this;
+    }
+
+    public void setBirth(Instant birth) {
+        this.birth = birth;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public Person gender(Gender gender) {
+        this.gender = gender;
+        return this;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public Doctor getDoctor() {
@@ -195,6 +236,8 @@ public class Person implements Serializable {
             ", name='" + getName() + "'" +
             ", phone='" + getPhone() + "'" +
             ", adress='" + getAdress() + "'" +
+            ", birth='" + getBirth() + "'" +
+            ", gender='" + getGender() + "'" +
             "}";
     }
 }
