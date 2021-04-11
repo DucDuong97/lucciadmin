@@ -44,14 +44,9 @@ export const PatientUpdate = (props: IPatientUpdateProps) => {
 
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const id = values.id;
-      delete values.id;
       const entity = {
         ...patientEntity,
-        person: {
-          ...patientEntity.person,
-          ...values
-        },
+        ...values
       };
 
       if (isNew) {
