@@ -2,23 +2,23 @@
   "lucciadminApp": {
     "patient": {
       "home": {
-        "title": "Patients",
-        "createLabel": "Thêm mới một Patient",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Patient",
-        "notFound": "No Patients found"
+        "title": "Khách Hàng",
+        "createLabel": "Thêm mới một Khách Hàng",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Khách Hàng",
+        "notFound": "Không có Khách Hàng nào"
       },
-      "created": "Một Patient mới được tạo với định danh {{ param }}",
-      "updated": "Một Patient cập nhật với định danh {{ param }}",
-      "deleted": "Một Patient đã xóa với định danh {{ param }}",
+      "created": "Một Khách Hàng mới được tạo với định danh {{ param }}",
+      "updated": "Một Khách Hàng cập nhật với định danh {{ param }}",
+      "deleted": "Một Khách Hàng đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Patient {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Khách Hàng {{ id }}?"
       },
       "detail": {
-        "title": "Patient"
+        "title": "Khách Hàng"
       },
-      "person": "Person",
-      "bookings": "Bookings",
-      "treatments": "Treatments"
+      "person": "T.tin Cá nhân",
+      "bookings": "Lịch hẹn",
+      "treatments": "Bệnh án"
     }
   }
 }

@@ -16,19 +16,19 @@ export const EntitiesMenu = props => (
     <MenuItem icon="asterisk" to="/patient">
       <Translate contentKey="global.menu.entities.patient" />
     </MenuItem>
-    {/*<MenuItem icon="asterisk" to="/treatment">*/}
-    {/*  <Translate contentKey="global.menu.entities.treatment" />*/}
-    {/*</MenuItem>*/}
-    {/*<MenuItem icon="asterisk" to="/medical-record">*/}
-    {/*  <Translate contentKey="global.menu.entities.medicalRecord" />*/}
-    {/*</MenuItem>*/}
-    {/*<MenuItem icon="asterisk" to="/treatment-history">*/}
-    {/*  <Translate contentKey="global.menu.entities.treatmentHistory" />*/}
-    {/*</MenuItem>*/}
+    <MenuItem icon="asterisk" to="/treatment">
+      <Translate contentKey="global.menu.entities.treatment" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/medical-record">
+      <Translate contentKey="global.menu.entities.medicalRecord" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/treatment-history">
+      <Translate contentKey="global.menu.entities.treatmentHistory" />
+    </MenuItem>
 
-    {/*<MenuItem icon="asterisk" to="/person">*/}
-    {/*  <Translate contentKey="global.menu.entities.person" />*/}
-    {/*</MenuItem>*/}
+    <MenuItem icon="asterisk" to="/person">
+      <Translate contentKey="global.menu.entities.person" />
+    </MenuItem>
     {/*<MenuItem icon="asterisk" to="/doctor">*/}
     {/*  <Translate contentKey="global.menu.entities.doctor" />*/}
     {/*</MenuItem>*/}

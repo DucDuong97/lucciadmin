@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
@@ -10,6 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 import { IPerson } from 'app/shared/model/person.model';
 import { getEntities as getPeople } from 'app/entities/person/person.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './patient.reducer';
+import { getEntity as personGetEntity, updateEntity as personUpdateEntity,
+  createEntity as personCreateEntity, reset  as personReset} from '../person/person.reducer';
 import { IPatient } from 'app/shared/model/patient.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
@@ -17,10 +19,9 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IPatientUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const PatientUpdate = (props: IPatientUpdateProps) => {
-  const [personId, setPersonId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { patientEntity, people, loading, updating } = props;
+  const { patientEntity, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/patient');
@@ -33,7 +34,6 @@ export const PatientUpdate = (props: IPatientUpdateProps) => {
       props.getEntity(props.match.params.id);
     }
 
-    props.getPeople();
   }, []);
 
   useEffect(() => {
@@ -44,9 +44,14 @@ export const PatientUpdate = (props: IPatientUpdateProps) => {
 
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
+      const id = values.id;
+      delete values.id;
       const entity = {
         ...patientEntity,
-        ...values,
+        person: {
+          ...patientEntity.person,
+          ...values
+        },
       };
 
       if (isNew) {
@@ -81,18 +86,69 @@ export const PatientUpdate = (props: IPatientUpdateProps) => {
                 </AvGroup>
               ) : null}
               <AvGroup>
-                <Label for="patient-person">
-                  <Translate contentKey="lucciadminApp.patient.person">Person</Translate>
+                <Label id="nameLabel" for="person-name">
+                  <Translate contentKey="lucciadminApp.person.name">Name</Translate>
                 </Label>
-                <AvInput id="patient-person" type="select" className="form-control" name="person.id">
-                  <option value="" key="0" />
-                  {people
-                    ? people.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
+                <AvField
+                  id="person-name"
+                  type="text"
+                  name="person.name"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    maxLength: { value: 60, errorMessage: translate('entity.validation.maxlength', { max: 60 }) },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="phoneLabel" for="person-phone">
+                  <Translate contentKey="lucciadminApp.person.phone">Phone</Translate>
+                </Label>
+                <AvField
+                  id="person-phone"
+                  type="text"
+                  name="person.phone"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                    maxLength: { value: 20, errorMessage: translate('entity.validation.maxlength', { max: 20 }) },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="adressLabel" for="person-adress">
+                  <Translate contentKey="lucciadminApp.person.adress">Adress</Translate>
+                </Label>
+                <AvField id="person-adress" type="text" name="person.adress" />
+              </AvGroup>
+              <AvGroup>
+                <Label id="birthLabel" for="person-birth">
+                  <Translate contentKey="lucciadminApp.person.birth">Birth</Translate>
+                </Label>
+                <AvInput
+                  id="person-birth"
+                  type="datetime-local"
+                  className="form-control"
+                  name="person.birth"
+                  placeholder={'YYYY-MM-DD HH:mm'}
+                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(patientEntity.person.birth)}
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="genderLabel" for="person-gender">
+                  <Translate contentKey="lucciadminApp.person.gender">Gender</Translate>
+                </Label>
+                <AvInput
+                  id="person-gender"
+                  type="select"
+                  className="form-control"
+                  name="person.gender"
+                  value={(!isNew && patientEntity.person.gender) || 'MALE'}
+                >
+                  <option value="MALE">{translate('lucciadminApp.Gender.MALE')}</option>
+                  <option value="FEMALE">{translate('lucciadminApp.Gender.FEMALE')}</option>
+                  <option value="AMBIGIOUS">{translate('lucciadminApp.Gender.AMBIGIOUS')}</option>
                 </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/patient" replace color="info">
@@ -117,7 +173,7 @@ export const PatientUpdate = (props: IPatientUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  people: storeState.person.entities,
+  // people: storeState.person.entities,
   patientEntity: storeState.patient.entity,
   loading: storeState.patient.loading,
   updating: storeState.patient.updating,
@@ -125,7 +181,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getPeople,
   getEntity,
   updateEntity,
   createEntity,

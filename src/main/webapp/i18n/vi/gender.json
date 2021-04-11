@@ -1,0 +1,10 @@
+{
+  "lucciadminApp": {
+    "Gender": {
+      "null": "",
+      "MALE": "Nam",
+      "FEMALE": "Nữ",
+      "AMBIGIOUS": "Không xác định"
+    }
+  }
+}

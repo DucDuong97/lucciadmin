@@ -2,19 +2,19 @@
   "lucciadminApp": {
     "patient": {
       "home": {
-        "title": "Patients",
-        "createLabel": "Create a new Patient",
-        "createOrEditLabel": "Create or edit a Patient",
-        "notFound": "No Patients found"
+        "title": "Customers",
+        "createLabel": "Create a new Customer",
+        "createOrEditLabel": "Create or edit a Customer",
+        "notFound": "No Customers found"
       },
-      "created": "A new Patient is created with identifier {{ param }}",
-      "updated": "A Patient is updated with identifier {{ param }}",
-      "deleted": "A Patient is deleted with identifier {{ param }}",
+      "created": "A new Customer is created with identifier {{ param }}",
+      "updated": "A Customer is updated with identifier {{ param }}",
+      "deleted": "A Customer is deleted with identifier {{ param }}",
       "delete": {
-        "question": "Are you sure you want to delete Patient {{ id }}?"
+        "question": "Are you sure you want to delete Customer {{ id }}?"
       },
       "detail": {
-        "title": "Patient"
+        "title": "Customer"
       },
       "person": "Person",
       "bookings": "Bookings",

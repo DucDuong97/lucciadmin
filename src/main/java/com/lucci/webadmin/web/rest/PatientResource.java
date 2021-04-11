@@ -2,6 +2,7 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.Patient;
 import com.lucci.webadmin.service.PatientService;
+import com.lucci.webadmin.service.PersonService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -32,12 +33,14 @@ public class PatientResource {
     private String applicationName;
 
     private final PatientService patientService;
+    private final PersonService personService;
 
-    public PatientResource(PatientService patientService) {
-        this.patientService = patientService;
-    }
+  public PatientResource(PatientService patientService, PersonService personService) {
+    this.patientService = patientService;
+    this.personService = personService;
+  }
 
-    /**
+  /**
      * {@code POST  /patients} : Create a new patient.
      *
      * @param patient the patient to create.
@@ -50,6 +53,10 @@ public class PatientResource {
         if (patient.getId() != null) {
             throw new BadRequestAlertException("A new patient cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        if (patient.getPerson().getId() != null) {
+          throw new BadRequestAlertException("A new patient cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        personService.save(patient.getPerson());
         Patient result = patientService.save(patient);
         return ResponseEntity.created(new URI("/api/patients/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

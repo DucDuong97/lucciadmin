@@ -39,6 +39,12 @@ export const Patient = (props: IPatientProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.patient.person">Person</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.patient.bookings">Bookings</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.patient.treatments">Treatments</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -50,7 +56,30 @@ export const Patient = (props: IPatientProps) => {
                       {patient.id}
                     </Button>
                   </td>
-                  <td>{patient.person ? <Link to={`person/${patient.person.id}`}>{patient.person.id}</Link> : ''}</td>
+                  <td>{patient.person ? <Link to={`person/${patient.person.id}`}>{patient.person.name} - {patient.person.phone}</Link> : ''}</td>
+
+                  <td className="text-left">
+                    <div className="btn-group flex-btn-group-container">
+                      <Button tag={Link} to={`/booking?patient_id=${patient.id}`} color="info" size="sm">
+                        <FontAwesomeIcon icon="eye" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.view">Option List</Translate>
+                        </span>
+                      </Button>
+                    </div>
+                  </td>
+
+                  <td className="text-left">
+                    <div className="btn-group flex-btn-group-container">
+                      <Button tag={Link} to={`/booking?patient_id=${patient.id}`} color="info" size="sm">
+                        <FontAwesomeIcon icon="eye" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.view">Option List</Translate>
+                        </span>
+                      </Button>
+                    </div>
+                  </td>
+
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${patient.id}`} color="info" size="sm">
