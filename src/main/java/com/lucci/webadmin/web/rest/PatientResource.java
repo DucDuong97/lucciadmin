@@ -1,6 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.domain.Booking;
 import com.lucci.webadmin.domain.Patient;
+import com.lucci.webadmin.service.BookingService;
 import com.lucci.webadmin.service.PatientService;
 import com.lucci.webadmin.service.PersonService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
@@ -34,10 +36,12 @@ public class PatientResource {
 
     private final PatientService patientService;
     private final PersonService personService;
+    private final BookingService bookingService;
 
-  public PatientResource(PatientService patientService, PersonService personService) {
+  public PatientResource(PatientService patientService, PersonService personService, BookingService bookingService) {
     this.patientService = patientService;
     this.personService = personService;
+    this.bookingService = bookingService;
   }
 
   /**
@@ -106,6 +110,11 @@ public class PatientResource {
         log.debug("REST request to get Patient : {}", id);
         Optional<Patient> patient = patientService.findOne(id);
         return ResponseUtil.wrapOrNotFound(patient);
+    }
+
+    @GetMapping("/patients/{id}/bookings")
+    public List<Booking> getBookingByPatientId(@PathVariable Long id) {
+        return bookingService.findByPatientId(id);
     }
 
     /**

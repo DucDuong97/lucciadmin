@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction } from 'react-jhipster';
+import {ICrudGetAction, ICrudGetAllAction, ICrudPutAction, ICrudDeleteAction, ICrudSearchAction} from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
@@ -102,6 +102,11 @@ const apiUrl = 'api/bookings';
 export const getEntities: ICrudGetAllAction<IBooking> = (page, size, sort) => ({
   type: ACTION_TYPES.FETCH_BOOKING_LIST,
   payload: axios.get<IBooking>(`${apiUrl}?cacheBuster=${new Date().getTime()}`),
+});
+
+export const getEntitiesByPatientId: ICrudSearchAction<IBooking> = (search, page, size, sort) => ({
+  type: ACTION_TYPES.FETCH_BOOKING_LIST,
+  payload: axios.get<IBooking>(`api/patients/${search}/bookings?cacheBuster=${new Date().getTime()}`),
 });
 
 export const getEntity: ICrudGetAction<IBooking> = id => {

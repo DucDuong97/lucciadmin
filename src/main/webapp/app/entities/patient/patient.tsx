@@ -60,7 +60,7 @@ export const Patient = (props: IPatientProps) => {
 
                   <td className="text-left">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/booking?patient_id=${patient.id}`} color="info" size="sm">
+                      <Button tag={Link} to={`${match.url}/${patient.id}/booking`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">Option List</Translate>
@@ -71,7 +71,7 @@ export const Patient = (props: IPatientProps) => {
 
                   <td className="text-left">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/booking?patient_id=${patient.id}`} color="info" size="sm">
+                      <Button tag={Link} to={`/treatment?patient_id=${patient.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">Option List</Translate>

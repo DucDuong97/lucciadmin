@@ -53,4 +53,9 @@ public class BookingServiceImpl implements BookingService {
         log.debug("Request to delete Booking : {}", id);
         bookingRepository.deleteById(id);
     }
+
+  @Override
+  public List<Booking> findByPatientId(Long patientId) {
+    return bookingRepository.findByPatientId(patientId);
+  }
 }

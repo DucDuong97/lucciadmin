@@ -40,4 +40,6 @@ public interface BookingService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+  List<Booking> findByPatientId(Long patientId);
 }

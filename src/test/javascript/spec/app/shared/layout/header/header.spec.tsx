@@ -19,6 +19,8 @@ describe('Header', () => {
     isAuthenticated: true,
     isAdmin: true,
     isReceptionist: false,
+    isDoctor: false,
+    isNurse: false,
     currentLocale: 'en',
     onLocaleChange: localeSpy,
     ribbonEnv: 'dev',
