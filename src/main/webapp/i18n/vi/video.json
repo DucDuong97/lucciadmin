@@ -1,0 +1,23 @@
+{
+  "lucciadminApp": {
+    "video": {
+      "home": {
+        "title": "Videos",
+        "createLabel": "Thêm mới một Video",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Video",
+        "notFound": "No Videos found"
+      },
+      "created": "Một Video mới được tạo với định danh {{ param }}",
+      "updated": "Một Video cập nhật với định danh {{ param }}",
+      "deleted": "Một Video đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Video {{ id }}?"
+      },
+      "detail": {
+        "title": "Video"
+      },
+      "url": "Url",
+      "serviceItem": "Service Item"
+    }
+  }
+}

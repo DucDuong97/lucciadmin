@@ -1,0 +1,23 @@
+{
+  "lucciadminApp": {
+    "imgUrl": {
+      "home": {
+        "title": "Img Urls",
+        "createLabel": "Create a new Img Url",
+        "createOrEditLabel": "Create or edit a Img Url",
+        "notFound": "No Img Urls found"
+      },
+      "created": "A new Img Url is created with identifier {{ param }}",
+      "updated": "A Img Url is updated with identifier {{ param }}",
+      "deleted": "A Img Url is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Img Url {{ id }}?"
+      },
+      "detail": {
+        "title": "Img Url"
+      },
+      "imgUrl": "Img Url",
+      "serviceItem": "Service Item"
+    }
+  }
+}

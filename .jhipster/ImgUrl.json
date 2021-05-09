@@ -1,0 +1,33 @@
+{
+  "name": "ImgUrl",
+  "fields": [
+    {
+      "fieldName": "imgUrl",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "unique"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "serviceItem",
+      "otherEntityRelationshipName": "customerImgUrls",
+      "relationshipName": "serviceItem",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210508061849",
+  "entityTableName": "img_url",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

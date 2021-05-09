@@ -1,0 +1,23 @@
+{
+  "lucciadminApp": {
+    "imgUrl": {
+      "home": {
+        "title": "Img Urls",
+        "createLabel": "Thêm mới một Img Url",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Img Url",
+        "notFound": "No Img Urls found"
+      },
+      "created": "Một Img Url mới được tạo với định danh {{ param }}",
+      "updated": "Một Img Url cập nhật với định danh {{ param }}",
+      "deleted": "Một Img Url đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Img Url {{ id }}?"
+      },
+      "detail": {
+        "title": "Img Url"
+      },
+      "imgUrl": "Img Url",
+      "serviceItem": "Service Item"
+    }
+  }
+}

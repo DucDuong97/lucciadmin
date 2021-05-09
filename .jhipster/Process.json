@@ -1,0 +1,36 @@
+{
+  "name": "Process",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "order",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "serviceItem",
+      "otherEntityRelationshipName": "processes",
+      "relationshipName": "process",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210508061649",
+  "entityTableName": "process",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

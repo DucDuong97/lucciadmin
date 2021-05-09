@@ -1,0 +1,33 @@
+{
+  "name": "Video",
+  "fields": [
+    {
+      "fieldName": "url",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required",
+        "unique"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "serviceItem",
+      "otherEntityRelationshipName": "relatedVideos",
+      "relationshipName": "serviceItem",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210508061749",
+  "entityTableName": "video",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}
