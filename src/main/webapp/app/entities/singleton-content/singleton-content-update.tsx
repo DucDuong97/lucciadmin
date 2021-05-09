@@ -88,7 +88,7 @@ export const SingletonContentUpdate = (props: ISingletonContentUpdateProps) => {
                 >
                   <option value="PHONE">{translate('lucciadminApp.ContentType.PHONE')}</option>
                   <option value="EMAIL">{translate('lucciadminApp.ContentType.EMAIL')}</option>
-                  <option value="ADRESS">{translate('lucciadminApp.ContentType.ADRESS')}</option>
+                  <option value="ADDRESS">{translate('lucciadminApp.ContentType.ADDRESS')}</option>
                   <option value="INTRO">{translate('lucciadminApp.ContentType.INTRO')}</option>
                 </AvInput>
               </AvGroup>

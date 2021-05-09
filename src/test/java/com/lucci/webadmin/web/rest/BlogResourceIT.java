@@ -38,9 +38,6 @@ public class BlogResourceIT {
     private static final Instant DEFAULT_PUBLISH_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_PUBLISH_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final String DEFAULT_TITLE_IMG_URL = "AAAAAAAAAA";
-    private static final String UPDATED_TITLE_IMG_URL = "BBBBBBBBBB";
-
     private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
     private static final String UPDATED_CONTENT = "BBBBBBBBBB";
 
@@ -68,7 +65,6 @@ public class BlogResourceIT {
         Blog blog = new Blog()
             .title(DEFAULT_TITLE)
             .publishDate(DEFAULT_PUBLISH_DATE)
-            .titleImgUrl(DEFAULT_TITLE_IMG_URL)
             .content(DEFAULT_CONTENT);
         return blog;
     }
@@ -82,7 +78,6 @@ public class BlogResourceIT {
         Blog blog = new Blog()
             .title(UPDATED_TITLE)
             .publishDate(UPDATED_PUBLISH_DATE)
-            .titleImgUrl(UPDATED_TITLE_IMG_URL)
             .content(UPDATED_CONTENT);
         return blog;
     }
@@ -108,7 +103,6 @@ public class BlogResourceIT {
         Blog testBlog = blogList.get(blogList.size() - 1);
         assertThat(testBlog.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testBlog.getPublishDate()).isEqualTo(DEFAULT_PUBLISH_DATE);
-        assertThat(testBlog.getTitleImgUrl()).isEqualTo(DEFAULT_TITLE_IMG_URL);
         assertThat(testBlog.getContent()).isEqualTo(DEFAULT_CONTENT);
     }
 
@@ -172,25 +166,6 @@ public class BlogResourceIT {
 
     @Test
     @Transactional
-    public void checkTitleImgUrlIsRequired() throws Exception {
-        int databaseSizeBeforeTest = blogRepository.findAll().size();
-        // set the field null
-        blog.setTitleImgUrl(null);
-
-        // Create the Blog, which fails.
-
-
-        restBlogMockMvc.perform(post("/api/blogs")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(blog)))
-            .andExpect(status().isBadRequest());
-
-        List<Blog> blogList = blogRepository.findAll();
-        assertThat(blogList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void checkContentIsRequired() throws Exception {
         int databaseSizeBeforeTest = blogRepository.findAll().size();
         // set the field null
@@ -221,7 +196,6 @@ public class BlogResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(blog.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].publishDate").value(hasItem(DEFAULT_PUBLISH_DATE.toString())))
-            .andExpect(jsonPath("$.[*].titleImgUrl").value(hasItem(DEFAULT_TITLE_IMG_URL)))
             .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)));
     }
     
@@ -238,7 +212,6 @@ public class BlogResourceIT {
             .andExpect(jsonPath("$.id").value(blog.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.publishDate").value(DEFAULT_PUBLISH_DATE.toString()))
-            .andExpect(jsonPath("$.titleImgUrl").value(DEFAULT_TITLE_IMG_URL))
             .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT));
     }
     @Test
@@ -264,7 +237,6 @@ public class BlogResourceIT {
         updatedBlog
             .title(UPDATED_TITLE)
             .publishDate(UPDATED_PUBLISH_DATE)
-            .titleImgUrl(UPDATED_TITLE_IMG_URL)
             .content(UPDATED_CONTENT);
 
         restBlogMockMvc.perform(put("/api/blogs")
@@ -278,7 +250,6 @@ public class BlogResourceIT {
         Blog testBlog = blogList.get(blogList.size() - 1);
         assertThat(testBlog.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testBlog.getPublishDate()).isEqualTo(UPDATED_PUBLISH_DATE);
-        assertThat(testBlog.getTitleImgUrl()).isEqualTo(UPDATED_TITLE_IMG_URL);
         assertThat(testBlog.getContent()).isEqualTo(UPDATED_CONTENT);
     }
 

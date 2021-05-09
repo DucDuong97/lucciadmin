@@ -63,7 +63,7 @@ export const ServiceOption = (props: IServiceOptionProps) => {
                   <td>{serviceOption.benefits}</td>
                   <td>{serviceOption.price}</td>
                   <td>
-                    {serviceOption.service ? <Link to={`service-item/${serviceOption.service.name}`}>{serviceOption.service.name}</Link> : ''}
+                    {serviceOption.service ? <Link to={`service-item/${serviceOption.service.id}`}>{serviceOption.service.id}</Link> : ''}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

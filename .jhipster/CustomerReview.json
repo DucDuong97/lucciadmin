@@ -9,7 +9,7 @@
       ]
     },
     {
-      "fieldName": "customerTitle",
+      "fieldName": "customerAddress",
       "fieldType": "String"
     },
     {
@@ -20,7 +20,16 @@
       ]
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "imgUrl",
+      "otherEntityRelationshipName": "customerReview",
+      "relationshipName": "customerImgUrl",
+      "otherEntityField": "id",
+      "ownerSide": true
+    }
+  ],
   "changelogDate": "20210312181617",
   "entityTableName": "customer_review",
   "dto": "no",

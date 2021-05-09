@@ -25,7 +25,6 @@ public class ServiceOption implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 30)
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
@@ -37,7 +36,6 @@ public class ServiceOption implements Serializable {
     @Column(name = "price", nullable = false)
     private Integer price;
 
-    @NotNull
     @ManyToOne
     @JsonIgnoreProperties(value = "options", allowSetters = true)
     private ServiceItem service;

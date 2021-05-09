@@ -96,6 +96,18 @@ import treatmentHistory, {
 import getMaterial, {
   GetMaterialState
 } from 'app/entities/get-material/get-material.reducer';
+// prettier-ignore
+import process, {
+  ProcessState
+} from 'app/entities/process/process.reducer';
+// prettier-ignore
+import video, {
+  VideoState
+} from 'app/entities/video/video.reducer';
+// prettier-ignore
+import imgUrl, {
+  ImgUrlState
+} from 'app/entities/img-url/img-url.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -130,6 +142,9 @@ export interface IRootState {
   readonly treatment: TreatmentState;
   readonly treatmentHistory: TreatmentHistoryState;
   readonly getMaterial: GetMaterialState;
+  readonly process: ProcessState;
+  readonly video: VideoState;
+  readonly imgUrl: ImgUrlState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -166,6 +181,9 @@ const rootReducer = combineReducers<IRootState>({
   treatment,
   treatmentHistory,
   getMaterial,
+  process,
+  video,
+  imgUrl,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });

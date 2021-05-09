@@ -58,7 +58,7 @@ export const Achievement = (props: IAchievementProps) => {
                   </td>
                   <td>{achievement.name}</td>
                   <td>{achievement.number}</td>
-                  <td>{achievement.imgUrl}</td>
+                  <td>{achievement.imgUrl ? <Link to={`img-url/${achievement.imgUrl.id}`}>{achievement.imgUrl.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${achievement.id}`} color="info" size="sm">

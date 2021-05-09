@@ -34,9 +34,6 @@ export const ServiceItem = (props: IServiceItemProps) => {
             <thead>
               <tr>
                 <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
                   <Translate contentKey="lucciadminApp.serviceItem.name">Name</Translate>
                 </th>
                 <th>
@@ -45,35 +42,15 @@ export const ServiceItem = (props: IServiceItemProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.serviceItem.imgUrl">Img Url</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="lucciadminApp.serviceItem.imgUrl">Options</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
             <tbody>
               {serviceItemList.map((serviceItem, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${serviceItem.id}`} color="link" size="sm">
-                      {serviceItem.id}
-                    </Button>
-                  </td>
                   <td>{serviceItem.name}</td>
                   <td>{serviceItem.description}</td>
-                  <td>{serviceItem.imgUrl}</td>
-
-                  {/*reference buttons*/}
-                  <td className="text-right">
-                    <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`/service-option?service_id=${serviceItem.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">Option List</Translate>
-                        </span>
-                      </Button>
-                    </div>
-                  </td>
+                  <td>{serviceItem.imgUrl === null ? '' : serviceItem.imgUrl.imgUrl}</td>
 
                   {/*item buttons*/}
                   <td className="text-right">

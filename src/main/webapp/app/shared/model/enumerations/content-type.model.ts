@@ -3,7 +3,7 @@ export const enum ContentType {
 
   EMAIL = 'EMAIL',
 
-  ADRESS = 'ADRESS',
+  ADDRESS = 'ADDRESS',
 
   INTRO = 'INTRO',
 }

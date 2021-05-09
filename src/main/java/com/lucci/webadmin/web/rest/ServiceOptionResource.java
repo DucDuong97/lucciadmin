@@ -102,12 +102,6 @@ public class ServiceOptionResource {
         return ResponseUtil.wrapOrNotFound(serviceOption);
     }
 
-    @RequestMapping(value = "service_id", method = RequestMethod.GET)
-    public List<ServiceOption> getByServiceId(@RequestParam Long serviceId) {
-//        log.debug("REST request to get ServiceOption : {}", serviceId);
-        return serviceOptionService.findByServiceId(serviceId);
-    }
-
     /**
      * {@code DELETE  /service-options/:id} : delete the "id" serviceOption.
      *

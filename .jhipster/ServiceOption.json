@@ -28,7 +28,7 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "serviceItem",
-      "otherEntityRelationshipName": "option",
+      "otherEntityRelationshipName": "options",
       "relationshipName": "service",
       "otherEntityField": "id"
     }

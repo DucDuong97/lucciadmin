@@ -40,10 +40,13 @@ export const CustomerReview = (props: ICustomerReviewProps) => {
                   <Translate contentKey="lucciadminApp.customerReview.customerName">Customer Name</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="lucciadminApp.customerReview.customerTitle">Customer Title</Translate>
+                  <Translate contentKey="lucciadminApp.customerReview.customerAddress">Customer Address</Translate>
                 </th>
                 <th>
                   <Translate contentKey="lucciadminApp.customerReview.comment">Comment</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.customerReview.customerImgUrl">Customer Img Url</Translate>
                 </th>
                 <th />
               </tr>
@@ -57,8 +60,15 @@ export const CustomerReview = (props: ICustomerReviewProps) => {
                     </Button>
                   </td>
                   <td>{customerReview.customerName}</td>
-                  <td>{customerReview.customerTitle}</td>
+                  <td>{customerReview.customerAddress}</td>
                   <td>{customerReview.comment}</td>
+                  <td>
+                    {customerReview.customerImgUrl ? (
+                      <Link to={`img-url/${customerReview.customerImgUrl.id}`}>{customerReview.customerImgUrl.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${customerReview.id}`} color="info" size="sm">

@@ -38,17 +38,19 @@ export const BlogDetail = (props: IBlogDetailProps) => {
           </dt>
           <dd>{blogEntity.publishDate ? <TextFormat value={blogEntity.publishDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
           <dt>
-            <span id="titleImgUrl">
-              <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
-            </span>
-          </dt>
-          <dd>{blogEntity.titleImgUrl}</dd>
-          <dt>
             <span id="content">
               <Translate contentKey="lucciadminApp.blog.content">Content</Translate>
             </span>
           </dt>
           <dd>{blogEntity.content}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
+          </dt>
+          <dd>{blogEntity.titleImgUrl ? blogEntity.titleImgUrl.id : ''}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.blog.relatedBlog">Related Blog</Translate>
+          </dt>
+          <dd>{blogEntity.relatedBlog ? blogEntity.relatedBlog.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/blog" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

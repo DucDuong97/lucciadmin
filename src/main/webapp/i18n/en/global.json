@@ -18,6 +18,9 @@
         "medicalRecord": "Medical Record",
         "treatment": "Treatment",
         "treatmentHistory": "Treatment History",
+        "process": "Process",
+        "video": "Video",
+        "imgUrl": "Img Url",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {

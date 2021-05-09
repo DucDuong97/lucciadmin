@@ -24,7 +24,6 @@ public class Achievement implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 30)
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
@@ -32,10 +31,9 @@ public class Achievement implements Serializable {
     @Column(name = "number", nullable = false)
     private Long number;
 
-    @NotNull
-    @Pattern(regexp = "^/images/[a-zA-Z0-9_\\-]*\\.[a-zA-Z]*$")
-    @Column(name = "img_url", nullable = false)
-    private String imgUrl;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ImgUrl imgUrl;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -72,16 +70,16 @@ public class Achievement implements Serializable {
         this.number = number;
     }
 
-    public String getImgUrl() {
+    public ImgUrl getImgUrl() {
         return imgUrl;
     }
 
-    public Achievement imgUrl(String imgUrl) {
+    public Achievement imgUrl(ImgUrl imgUrl) {
         this.imgUrl = imgUrl;
         return this;
     }
 
-    public void setImgUrl(String imgUrl) {
+    public void setImgUrl(ImgUrl imgUrl) {
         this.imgUrl = imgUrl;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -109,7 +107,6 @@ public class Achievement implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", number=" + getNumber() +
-            ", imgUrl='" + getImgUrl() + "'" +
             "}";
     }
 }

@@ -82,6 +82,13 @@ public class CacheConfiguration {
             createCache(cm, com.lucci.webadmin.domain.Treatment.class.getName() + ".nurses");
             createCache(cm, com.lucci.webadmin.domain.TreatmentHistory.class.getName());
             createCache(cm, com.lucci.webadmin.domain.GetMaterial.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".processes");
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".blogs");
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".relatedVideos");
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".customerImgUrls");
+            createCache(cm, com.lucci.webadmin.domain.Process.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.Video.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.ImgUrl.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

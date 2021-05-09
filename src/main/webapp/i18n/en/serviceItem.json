@@ -19,7 +19,11 @@
       "name": "Name",
       "description": "Description",
       "imgUrl": "Img Url",
-      "option": "Option"
+      "options": "Options",
+      "processes": "Processes",
+      "blogs": "Blogs",
+      "relatedVideos": "Related Videos",
+      "customerImgUrls": "Customer Img Urls"
     }
   }
 }

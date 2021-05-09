@@ -26,23 +26,35 @@ public class ServiceItem implements Serializable {
     private Long id;
 
     @NotNull
-    @NotBlank
-    @Size(max = 30)
-    @Pattern(regexp = "^[A-Za-z]*$")
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @Column(name = "description")
     private String description;
 
-    @Pattern(regexp = "^/images/[a-zA-Z0-9_\\-]*\\.[a-zA-Z]*$")
-    @Column(name = "img_url")
-    private String imgUrl;
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ImgUrl imgUrl;
 
-    @Size(max = 3)
     @OneToMany(mappedBy = "service")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<ServiceOption> options = new HashSet<>();
+
+    @OneToMany(mappedBy = "process")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Process> processes = new HashSet<>();
+
+    @OneToMany(mappedBy = "relatedBlog")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Blog> blogs = new HashSet<>();
+
+    @OneToMany(mappedBy = "serviceItem")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Video> relatedVideos = new HashSet<>();
+
+    @OneToMany(mappedBy = "serviceItem")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<ImgUrl> customerImgUrls = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -79,16 +91,16 @@ public class ServiceItem implements Serializable {
         this.description = description;
     }
 
-    public String getImgUrl() {
+    public ImgUrl getImgUrl() {
         return imgUrl;
     }
 
-    public ServiceItem imgUrl(String imgUrl) {
+    public ServiceItem imgUrl(ImgUrl imgUrl) {
         this.imgUrl = imgUrl;
         return this;
     }
 
-    public void setImgUrl(String imgUrl) {
+    public void setImgUrl(ImgUrl imgUrl) {
         this.imgUrl = imgUrl;
     }
 
@@ -101,13 +113,13 @@ public class ServiceItem implements Serializable {
         return this;
     }
 
-    public ServiceItem addOption(ServiceOption serviceOption) {
+    public ServiceItem addOptions(ServiceOption serviceOption) {
         this.options.add(serviceOption);
         serviceOption.setService(this);
         return this;
     }
 
-    public ServiceItem removeOption(ServiceOption serviceOption) {
+    public ServiceItem removeOptions(ServiceOption serviceOption) {
         this.options.remove(serviceOption);
         serviceOption.setService(null);
         return this;
@@ -115,6 +127,106 @@ public class ServiceItem implements Serializable {
 
     public void setOptions(Set<ServiceOption> serviceOptions) {
         this.options = serviceOptions;
+    }
+
+    public Set<Process> getProcesses() {
+        return processes;
+    }
+
+    public ServiceItem processes(Set<Process> processes) {
+        this.processes = processes;
+        return this;
+    }
+
+    public ServiceItem addProcesses(Process process) {
+        this.processes.add(process);
+        process.setProcess(this);
+        return this;
+    }
+
+    public ServiceItem removeProcesses(Process process) {
+        this.processes.remove(process);
+        process.setProcess(null);
+        return this;
+    }
+
+    public void setProcesses(Set<Process> processes) {
+        this.processes = processes;
+    }
+
+    public Set<Blog> getBlogs() {
+        return blogs;
+    }
+
+    public ServiceItem blogs(Set<Blog> blogs) {
+        this.blogs = blogs;
+        return this;
+    }
+
+    public ServiceItem addBlogs(Blog blog) {
+        this.blogs.add(blog);
+        blog.setRelatedBlog(this);
+        return this;
+    }
+
+    public ServiceItem removeBlogs(Blog blog) {
+        this.blogs.remove(blog);
+        blog.setRelatedBlog(null);
+        return this;
+    }
+
+    public void setBlogs(Set<Blog> blogs) {
+        this.blogs = blogs;
+    }
+
+    public Set<Video> getRelatedVideos() {
+        return relatedVideos;
+    }
+
+    public ServiceItem relatedVideos(Set<Video> videos) {
+        this.relatedVideos = videos;
+        return this;
+    }
+
+    public ServiceItem addRelatedVideos(Video video) {
+        this.relatedVideos.add(video);
+        video.setServiceItem(this);
+        return this;
+    }
+
+    public ServiceItem removeRelatedVideos(Video video) {
+        this.relatedVideos.remove(video);
+        video.setServiceItem(null);
+        return this;
+    }
+
+    public void setRelatedVideos(Set<Video> videos) {
+        this.relatedVideos = videos;
+    }
+
+    public Set<ImgUrl> getCustomerImgUrls() {
+        return customerImgUrls;
+    }
+
+    public ServiceItem customerImgUrls(Set<ImgUrl> imgUrls) {
+        this.customerImgUrls = imgUrls;
+        return this;
+    }
+
+    public ServiceItem addCustomerImgUrls(ImgUrl imgUrl) {
+        this.customerImgUrls.add(imgUrl);
+        imgUrl.setServiceItem(this);
+        return this;
+    }
+
+    public ServiceItem removeCustomerImgUrls(ImgUrl imgUrl) {
+        this.customerImgUrls.remove(imgUrl);
+        imgUrl.setServiceItem(null);
+        return this;
+    }
+
+    public void setCustomerImgUrls(Set<ImgUrl> imgUrls) {
+        this.customerImgUrls = imgUrls;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -141,7 +253,6 @@ public class ServiceItem implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
-            ", imgUrl='" + getImgUrl() + "'" +
             "}";
     }
 }

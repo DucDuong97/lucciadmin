@@ -24,17 +24,19 @@ public class CustomerReview implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 30)
     @Column(name = "customer_name", nullable = false)
     private String customerName;
 
-    @Size(max = 30)
-    @Column(name = "customer_title")
-    private String customerTitle;
+    @Column(name = "customer_address")
+    private String customerAddress;
 
     @NotNull
     @Column(name = "comment", nullable = false)
     private String comment;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ImgUrl customerImgUrl;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -58,17 +60,17 @@ public class CustomerReview implements Serializable {
         this.customerName = customerName;
     }
 
-    public String getCustomerTitle() {
-        return customerTitle;
+    public String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public CustomerReview customerTitle(String customerTitle) {
-        this.customerTitle = customerTitle;
+    public CustomerReview customerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
         return this;
     }
 
-    public void setCustomerTitle(String customerTitle) {
-        this.customerTitle = customerTitle;
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
     }
 
     public String getComment() {
@@ -82,6 +84,19 @@ public class CustomerReview implements Serializable {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public ImgUrl getCustomerImgUrl() {
+        return customerImgUrl;
+    }
+
+    public CustomerReview customerImgUrl(ImgUrl imgUrl) {
+        this.customerImgUrl = imgUrl;
+        return this;
+    }
+
+    public void setCustomerImgUrl(ImgUrl imgUrl) {
+        this.customerImgUrl = imgUrl;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -107,7 +122,7 @@ public class CustomerReview implements Serializable {
         return "CustomerReview{" +
             "id=" + getId() +
             ", customerName='" + getCustomerName() + "'" +
-            ", customerTitle='" + getCustomerTitle() + "'" +
+            ", customerAddress='" + getCustomerAddress() + "'" +
             ", comment='" + getComment() + "'" +
             "}";
     }

@@ -36,9 +36,6 @@ public class ServiceItemResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_IMG_URL = "AAAAAAAAAA";
-    private static final String UPDATED_IMG_URL = "BBBBBBBBBB";
-
     @Autowired
     private ServiceItemRepository serviceItemRepository;
 
@@ -62,8 +59,7 @@ public class ServiceItemResourceIT {
     public static ServiceItem createEntity(EntityManager em) {
         ServiceItem serviceItem = new ServiceItem()
             .name(DEFAULT_NAME)
-            .description(DEFAULT_DESCRIPTION)
-            .imgUrl(DEFAULT_IMG_URL);
+            .description(DEFAULT_DESCRIPTION);
         return serviceItem;
     }
     /**
@@ -75,8 +71,7 @@ public class ServiceItemResourceIT {
     public static ServiceItem createUpdatedEntity(EntityManager em) {
         ServiceItem serviceItem = new ServiceItem()
             .name(UPDATED_NAME)
-            .description(UPDATED_DESCRIPTION)
-            .imgUrl(UPDATED_IMG_URL);
+            .description(UPDATED_DESCRIPTION);
         return serviceItem;
     }
 
@@ -101,7 +96,6 @@ public class ServiceItemResourceIT {
         ServiceItem testServiceItem = serviceItemList.get(serviceItemList.size() - 1);
         assertThat(testServiceItem.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testServiceItem.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
-        assertThat(testServiceItem.getImgUrl()).isEqualTo(DEFAULT_IMG_URL);
     }
 
     @Test
@@ -155,8 +149,7 @@ public class ServiceItemResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(serviceItem.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].imgUrl").value(hasItem(DEFAULT_IMG_URL)));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
     
     @Test
@@ -171,8 +164,7 @@ public class ServiceItemResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(serviceItem.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.imgUrl").value(DEFAULT_IMG_URL));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
     @Test
     @Transactional
@@ -196,8 +188,7 @@ public class ServiceItemResourceIT {
         em.detach(updatedServiceItem);
         updatedServiceItem
             .name(UPDATED_NAME)
-            .description(UPDATED_DESCRIPTION)
-            .imgUrl(UPDATED_IMG_URL);
+            .description(UPDATED_DESCRIPTION);
 
         restServiceItemMockMvc.perform(put("/api/service-items")
             .contentType(MediaType.APPLICATION_JSON)
@@ -210,7 +201,6 @@ public class ServiceItemResourceIT {
         ServiceItem testServiceItem = serviceItemList.get(serviceItemList.size() - 1);
         assertThat(testServiceItem.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testServiceItem.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
-        assertThat(testServiceItem.getImgUrl()).isEqualTo(UPDATED_IMG_URL);
     }
 
     @Test

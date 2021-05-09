@@ -17,8 +17,9 @@
         "title": "Customer Review"
       },
       "customerName": "Customer Name",
-      "customerTitle": "Customer Title",
-      "comment": "Comment"
+      "customerAddress": "Customer Address",
+      "comment": "Comment",
+      "customerImgUrl": "Customer Img Url"
     }
   }
 }

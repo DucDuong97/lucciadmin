@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,7 +26,6 @@ public class Blog implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 100)
     @Column(name = "title", nullable = false)
     private String title;
 
@@ -34,13 +34,16 @@ public class Blog implements Serializable {
     private Instant publishDate;
 
     @NotNull
-    @Pattern(regexp = "^/images/[a-zA-Z0-9_\\-]*\\.[a-zA-Z]*$")
-    @Column(name = "title_img_url", nullable = false)
-    private String titleImgUrl;
-
-    @NotNull
     @Column(name = "content", nullable = false)
     private String content;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ImgUrl titleImgUrl;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "blogs", allowSetters = true)
+    private ServiceItem relatedBlog;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -77,19 +80,6 @@ public class Blog implements Serializable {
         this.publishDate = publishDate;
     }
 
-    public String getTitleImgUrl() {
-        return titleImgUrl;
-    }
-
-    public Blog titleImgUrl(String titleImgUrl) {
-        this.titleImgUrl = titleImgUrl;
-        return this;
-    }
-
-    public void setTitleImgUrl(String titleImgUrl) {
-        this.titleImgUrl = titleImgUrl;
-    }
-
     public String getContent() {
         return content;
     }
@@ -101,6 +91,32 @@ public class Blog implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public ImgUrl getTitleImgUrl() {
+        return titleImgUrl;
+    }
+
+    public Blog titleImgUrl(ImgUrl imgUrl) {
+        this.titleImgUrl = imgUrl;
+        return this;
+    }
+
+    public void setTitleImgUrl(ImgUrl imgUrl) {
+        this.titleImgUrl = imgUrl;
+    }
+
+    public ServiceItem getRelatedBlog() {
+        return relatedBlog;
+    }
+
+    public Blog relatedBlog(ServiceItem serviceItem) {
+        this.relatedBlog = serviceItem;
+        return this;
+    }
+
+    public void setRelatedBlog(ServiceItem serviceItem) {
+        this.relatedBlog = serviceItem;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -127,7 +143,6 @@ public class Blog implements Serializable {
             "id=" + getId() +
             ", title='" + getTitle() + "'" +
             ", publishDate='" + getPublishDate() + "'" +
-            ", titleImgUrl='" + getTitleImgUrl() + "'" +
             ", content='" + getContent() + "'" +
             "}";
     }

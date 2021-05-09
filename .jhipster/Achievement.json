@@ -15,16 +15,18 @@
       "fieldValidateRules": [
         "required"
       ]
-    },
-    {
-      "fieldName": "imgUrl",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required"
-      ]
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "imgUrl",
+      "otherEntityRelationshipName": "achievement",
+      "relationshipName": "imgUrl",
+      "otherEntityField": "id",
+      "ownerSide": true
+    }
+  ],
   "changelogDate": "20210312181717",
   "entityTableName": "achievement",
   "dto": "no",

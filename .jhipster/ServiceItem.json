@@ -12,18 +12,46 @@
     {
       "fieldName": "description",
       "fieldType": "String"
-    },
-    {
-      "fieldName": "imgUrl",
-      "fieldType": "String"
     }
   ],
   "relationships": [
     {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "imgUrl",
+      "otherEntityRelationshipName": "serviceItem",
+      "relationshipName": "imgUrl",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
       "relationshipType": "one-to-many",
       "otherEntityName": "serviceOption",
       "otherEntityRelationshipName": "service",
-      "relationshipName": "option"
+      "relationshipName": "options"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "process",
+      "otherEntityRelationshipName": "process",
+      "relationshipName": "processes"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "blog",
+      "otherEntityRelationshipName": "relatedBlog",
+      "relationshipName": "blogs"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "video",
+      "otherEntityRelationshipName": "serviceItem",
+      "relationshipName": "relatedVideos"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "imgUrl",
+      "otherEntityRelationshipName": "serviceItem",
+      "relationshipName": "customerImgUrls"
     }
   ],
   "changelogDate": "20210312181817",

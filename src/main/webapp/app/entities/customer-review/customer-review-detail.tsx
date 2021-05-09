@@ -32,17 +32,21 @@ export const CustomerReviewDetail = (props: ICustomerReviewDetailProps) => {
           </dt>
           <dd>{customerReviewEntity.customerName}</dd>
           <dt>
-            <span id="customerTitle">
-              <Translate contentKey="lucciadminApp.customerReview.customerTitle">Customer Title</Translate>
+            <span id="customerAddress">
+              <Translate contentKey="lucciadminApp.customerReview.customerAddress">Customer Address</Translate>
             </span>
           </dt>
-          <dd>{customerReviewEntity.customerTitle}</dd>
+          <dd>{customerReviewEntity.customerAddress}</dd>
           <dt>
             <span id="comment">
               <Translate contentKey="lucciadminApp.customerReview.comment">Comment</Translate>
             </span>
           </dt>
           <dd>{customerReviewEntity.comment}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.customerReview.customerImgUrl">Customer Img Url</Translate>
+          </dt>
+          <dd>{customerReviewEntity.customerImgUrl ? customerReviewEntity.customerImgUrl.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/customer-review" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

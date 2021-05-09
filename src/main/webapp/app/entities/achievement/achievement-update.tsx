@@ -7,6 +7,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IImgUrl } from 'app/shared/model/img-url.model';
+import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './achievement.reducer';
 import { IAchievement } from 'app/shared/model/achievement.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -15,9 +17,10 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IAchievementUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const AchievementUpdate = (props: IAchievementUpdateProps) => {
+  const [imgUrlId, setImgUrlId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { achievementEntity, loading, updating } = props;
+  const { achievementEntity, imgUrls, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/achievement');
@@ -29,6 +32,8 @@ export const AchievementUpdate = (props: IAchievementUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
+
+    props.getImgUrls();
   }, []);
 
   useEffect(() => {
@@ -104,17 +109,19 @@ export const AchievementUpdate = (props: IAchievementUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="imgUrlLabel" for="achievement-imgUrl">
+                <Label for="achievement-imgUrl">
                   <Translate contentKey="lucciadminApp.achievement.imgUrl">Img Url</Translate>
                 </Label>
-                <AvField
-                  id="achievement-imgUrl"
-                  type="text"
-                  name="imgUrl"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
+                <AvInput id="achievement-imgUrl" type="select" className="form-control" name="imgUrl.id">
+                  <option value="" key="0" />
+                  {imgUrls
+                    ? imgUrls.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/achievement" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -138,6 +145,7 @@ export const AchievementUpdate = (props: IAchievementUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  imgUrls: storeState.imgUrl.entities,
   achievementEntity: storeState.achievement.entity,
   loading: storeState.achievement.loading,
   updating: storeState.achievement.updating,
@@ -145,6 +153,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getImgUrls,
   getEntity,
   updateEntity,
   createEntity,

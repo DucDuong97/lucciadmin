@@ -33,8 +33,8 @@ public class CustomerReviewResourceIT {
     private static final String DEFAULT_CUSTOMER_NAME = "AAAAAAAAAA";
     private static final String UPDATED_CUSTOMER_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CUSTOMER_TITLE = "AAAAAAAAAA";
-    private static final String UPDATED_CUSTOMER_TITLE = "BBBBBBBBBB";
+    private static final String DEFAULT_CUSTOMER_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_CUSTOMER_ADDRESS = "BBBBBBBBBB";
 
     private static final String DEFAULT_COMMENT = "AAAAAAAAAA";
     private static final String UPDATED_COMMENT = "BBBBBBBBBB";
@@ -62,7 +62,7 @@ public class CustomerReviewResourceIT {
     public static CustomerReview createEntity(EntityManager em) {
         CustomerReview customerReview = new CustomerReview()
             .customerName(DEFAULT_CUSTOMER_NAME)
-            .customerTitle(DEFAULT_CUSTOMER_TITLE)
+            .customerAddress(DEFAULT_CUSTOMER_ADDRESS)
             .comment(DEFAULT_COMMENT);
         return customerReview;
     }
@@ -75,7 +75,7 @@ public class CustomerReviewResourceIT {
     public static CustomerReview createUpdatedEntity(EntityManager em) {
         CustomerReview customerReview = new CustomerReview()
             .customerName(UPDATED_CUSTOMER_NAME)
-            .customerTitle(UPDATED_CUSTOMER_TITLE)
+            .customerAddress(UPDATED_CUSTOMER_ADDRESS)
             .comment(UPDATED_COMMENT);
         return customerReview;
     }
@@ -100,7 +100,7 @@ public class CustomerReviewResourceIT {
         assertThat(customerReviewList).hasSize(databaseSizeBeforeCreate + 1);
         CustomerReview testCustomerReview = customerReviewList.get(customerReviewList.size() - 1);
         assertThat(testCustomerReview.getCustomerName()).isEqualTo(DEFAULT_CUSTOMER_NAME);
-        assertThat(testCustomerReview.getCustomerTitle()).isEqualTo(DEFAULT_CUSTOMER_TITLE);
+        assertThat(testCustomerReview.getCustomerAddress()).isEqualTo(DEFAULT_CUSTOMER_ADDRESS);
         assertThat(testCustomerReview.getComment()).isEqualTo(DEFAULT_COMMENT);
     }
 
@@ -174,7 +174,7 @@ public class CustomerReviewResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(customerReview.getId().intValue())))
             .andExpect(jsonPath("$.[*].customerName").value(hasItem(DEFAULT_CUSTOMER_NAME)))
-            .andExpect(jsonPath("$.[*].customerTitle").value(hasItem(DEFAULT_CUSTOMER_TITLE)))
+            .andExpect(jsonPath("$.[*].customerAddress").value(hasItem(DEFAULT_CUSTOMER_ADDRESS)))
             .andExpect(jsonPath("$.[*].comment").value(hasItem(DEFAULT_COMMENT)));
     }
     
@@ -190,7 +190,7 @@ public class CustomerReviewResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(customerReview.getId().intValue()))
             .andExpect(jsonPath("$.customerName").value(DEFAULT_CUSTOMER_NAME))
-            .andExpect(jsonPath("$.customerTitle").value(DEFAULT_CUSTOMER_TITLE))
+            .andExpect(jsonPath("$.customerAddress").value(DEFAULT_CUSTOMER_ADDRESS))
             .andExpect(jsonPath("$.comment").value(DEFAULT_COMMENT));
     }
     @Test
@@ -215,7 +215,7 @@ public class CustomerReviewResourceIT {
         em.detach(updatedCustomerReview);
         updatedCustomerReview
             .customerName(UPDATED_CUSTOMER_NAME)
-            .customerTitle(UPDATED_CUSTOMER_TITLE)
+            .customerAddress(UPDATED_CUSTOMER_ADDRESS)
             .comment(UPDATED_COMMENT);
 
         restCustomerReviewMockMvc.perform(put("/api/customer-reviews")
@@ -228,7 +228,7 @@ public class CustomerReviewResourceIT {
         assertThat(customerReviewList).hasSize(databaseSizeBeforeUpdate);
         CustomerReview testCustomerReview = customerReviewList.get(customerReviewList.size() - 1);
         assertThat(testCustomerReview.getCustomerName()).isEqualTo(UPDATED_CUSTOMER_NAME);
-        assertThat(testCustomerReview.getCustomerTitle()).isEqualTo(UPDATED_CUSTOMER_TITLE);
+        assertThat(testCustomerReview.getCustomerAddress()).isEqualTo(UPDATED_CUSTOMER_ADDRESS);
         assertThat(testCustomerReview.getComment()).isEqualTo(UPDATED_COMMENT);
     }
 

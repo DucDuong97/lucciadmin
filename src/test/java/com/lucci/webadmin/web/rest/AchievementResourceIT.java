@@ -36,9 +36,6 @@ public class AchievementResourceIT {
     private static final Long DEFAULT_NUMBER = 1L;
     private static final Long UPDATED_NUMBER = 2L;
 
-    private static final String DEFAULT_IMG_URL = "AAAAAAAAAA";
-    private static final String UPDATED_IMG_URL = "BBBBBBBBBB";
-
     @Autowired
     private AchievementRepository achievementRepository;
 
@@ -62,8 +59,7 @@ public class AchievementResourceIT {
     public static Achievement createEntity(EntityManager em) {
         Achievement achievement = new Achievement()
             .name(DEFAULT_NAME)
-            .number(DEFAULT_NUMBER)
-            .imgUrl(DEFAULT_IMG_URL);
+            .number(DEFAULT_NUMBER);
         return achievement;
     }
     /**
@@ -75,8 +71,7 @@ public class AchievementResourceIT {
     public static Achievement createUpdatedEntity(EntityManager em) {
         Achievement achievement = new Achievement()
             .name(UPDATED_NAME)
-            .number(UPDATED_NUMBER)
-            .imgUrl(UPDATED_IMG_URL);
+            .number(UPDATED_NUMBER);
         return achievement;
     }
 
@@ -101,7 +96,6 @@ public class AchievementResourceIT {
         Achievement testAchievement = achievementList.get(achievementList.size() - 1);
         assertThat(testAchievement.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testAchievement.getNumber()).isEqualTo(DEFAULT_NUMBER);
-        assertThat(testAchievement.getImgUrl()).isEqualTo(DEFAULT_IMG_URL);
     }
 
     @Test
@@ -164,25 +158,6 @@ public class AchievementResourceIT {
 
     @Test
     @Transactional
-    public void checkImgUrlIsRequired() throws Exception {
-        int databaseSizeBeforeTest = achievementRepository.findAll().size();
-        // set the field null
-        achievement.setImgUrl(null);
-
-        // Create the Achievement, which fails.
-
-
-        restAchievementMockMvc.perform(post("/api/achievements")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(achievement)))
-            .andExpect(status().isBadRequest());
-
-        List<Achievement> achievementList = achievementRepository.findAll();
-        assertThat(achievementList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllAchievements() throws Exception {
         // Initialize the database
         achievementRepository.saveAndFlush(achievement);
@@ -193,8 +168,7 @@ public class AchievementResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(achievement.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.intValue())))
-            .andExpect(jsonPath("$.[*].imgUrl").value(hasItem(DEFAULT_IMG_URL)));
+            .andExpect(jsonPath("$.[*].number").value(hasItem(DEFAULT_NUMBER.intValue())));
     }
     
     @Test
@@ -209,8 +183,7 @@ public class AchievementResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(achievement.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER.intValue()))
-            .andExpect(jsonPath("$.imgUrl").value(DEFAULT_IMG_URL));
+            .andExpect(jsonPath("$.number").value(DEFAULT_NUMBER.intValue()));
     }
     @Test
     @Transactional
@@ -234,8 +207,7 @@ public class AchievementResourceIT {
         em.detach(updatedAchievement);
         updatedAchievement
             .name(UPDATED_NAME)
-            .number(UPDATED_NUMBER)
-            .imgUrl(UPDATED_IMG_URL);
+            .number(UPDATED_NUMBER);
 
         restAchievementMockMvc.perform(put("/api/achievements")
             .contentType(MediaType.APPLICATION_JSON)
@@ -248,7 +220,6 @@ public class AchievementResourceIT {
         Achievement testAchievement = achievementList.get(achievementList.size() - 1);
         assertThat(testAchievement.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testAchievement.getNumber()).isEqualTo(UPDATED_NUMBER);
-        assertThat(testAchievement.getImgUrl()).isEqualTo(UPDATED_IMG_URL);
     }
 
     @Test

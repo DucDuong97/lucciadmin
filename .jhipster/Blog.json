@@ -16,13 +16,6 @@
       ]
     },
     {
-      "fieldName": "titleImgUrl",
-      "fieldType": "String",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
       "fieldName": "content",
       "fieldType": "String",
       "fieldValidateRules": [
@@ -30,7 +23,23 @@
       ]
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "imgUrl",
+      "otherEntityRelationshipName": "blog",
+      "relationshipName": "titleImgUrl",
+      "otherEntityField": "id",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "serviceItem",
+      "otherEntityRelationshipName": "blogs",
+      "relationshipName": "relatedBlog",
+      "otherEntityField": "id"
+    }
+  ],
   "changelogDate": "20210312181917",
   "entityTableName": "blog",
   "dto": "no",

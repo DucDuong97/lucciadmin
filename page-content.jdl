@@ -1,10 +1,4 @@
 
-entity ServiceOption {
-	name String required unique,
-    benefits String required,
-    price Integer required
-}
-
 entity Policy {
 	name String required unique,
     content String required
@@ -12,49 +6,66 @@ entity Policy {
 
 entity CustomerReview {
 	customerName String required,
-    customerTitle String,
+	customerAddress String,
     comment String required,
 }
 
 entity Achievement {
 	name String required unique,
     number Long required,
-    imgUrl String required
 }
 
 entity ServiceItem {
 	name String required unique,
     description String,
-    imgUrl String
+}
+relationship OneToMany {
+	ServiceItem{options} to ServiceOption{service},
+	ServiceItem{processes} to Process{process},
+	ServiceItem{blogs} to Blog{relatedBlog},
+	ServiceItem{relatedVideos} to Video,
+    ServiceItem{customerImgUrls} to ImgUrl,
+}
+entity ServiceOption {
+ 	name String required unique,
+     benefits String required,
+     price Integer required
+ }
+entity Process {
+    name String required,
+    order Long,
+}
+
+entity Video {
+    url String required unique,
+}
+
+entity ImgUrl {
+    imgUrl String required unique,
+}
+relationship OneToOne {
+    Achievement{imgUrl} to ImgUrl,
+    ServiceItem{imgUrl} to ImgUrl,
+    CustomerReview{customerImgUrl} to ImgUrl,
+    Blog{titleImgUrl} to ImgUrl,
 }
 
 entity Blog {
 	title String required,
 	publishDate Instant required,
-    titleImgUrl String required,
     content String required
-}
-
-enum ContentType {
-	PHONE, EMAIL, ADRESS, INTRO
 }
 
 entity SingletonContent {
 	type ContentType required unique,
     content String
 }
+enum ContentType {
+	PHONE, EMAIL, ADDRESS, INTRO
+}
 
 enum SubPage {
 	HOME, INTRO, SERVICE, BLOG, CONTACT
-}
-
-entity Page {
-	page SubPage required unique,
-    description String
-}
-
-relationship OneToMany {
-	ServiceItem{option} to ServiceOption{service}
 }
 
 // Use Data Transfer Objects (DTO)

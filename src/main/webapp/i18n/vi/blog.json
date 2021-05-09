@@ -18,8 +18,9 @@
       },
       "title": "Title",
       "publishDate": "Publish Date",
+      "content": "Content",
       "titleImgUrl": "Title Img Url",
-      "content": "Content"
+      "relatedBlog": "Related Blog"
     }
   }
 }

@@ -7,6 +7,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IImgUrl } from 'app/shared/model/img-url.model';
+import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './service-item.reducer';
 import { IServiceItem } from 'app/shared/model/service-item.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -15,12 +17,14 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IServiceItemUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
+  const [imgUrlId, setImgUrlId] = useState('0');
+  const [customerImgUrlsId, setCustomerImgUrlsId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { serviceItemEntity, loading, updating } = props;
+  const { serviceItemEntity, imgUrls, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/service-item');
+    props.history.goBack();
   };
 
   useEffect(() => {
@@ -29,6 +33,8 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
+
+    props.getImgUrls();
   }, []);
 
   useEffect(() => {
@@ -95,10 +101,25 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                 <AvField id="service-item-description" type="text" name="description" />
               </AvGroup>
               <AvGroup>
-                <Label id="imgUrlLabel" for="service-item-imgUrl">
+                <Label for="service-item-imgUrl">
                   <Translate contentKey="lucciadminApp.serviceItem.imgUrl">Img Url</Translate>
                 </Label>
-                <AvField id="service-item-imgUrl" type="text" name="imgUrl" />
+                <AvInput id="service-item-imgUrl" type="select" className="form-control" name="imgUrl.id">
+                  <option value="" key="0" />
+                  {imgUrls
+                    ? imgUrls.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.imgUrl}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <Button tag={Link} to={`/img-url/new`} color="primary" size="sm">
+                  <FontAwesomeIcon icon="plus" />{' '}
+                  <span className="d-none d-md-inline">
+                    Add Image URL
+                  </span>
+                </Button>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/service-item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -122,6 +143,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  imgUrls: storeState.imgUrl.entities,
   serviceItemEntity: storeState.serviceItem.entity,
   loading: storeState.serviceItem.loading,
   updating: storeState.serviceItem.updating,
@@ -129,6 +151,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getImgUrls,
   getEntity,
   updateEntity,
   createEntity,

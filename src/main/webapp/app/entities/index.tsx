@@ -25,6 +25,9 @@ import MedicalRecord from './medical-record';
 import Treatment from './treatment';
 import TreatmentHistory from './treatment-history';
 import GetMaterial from './get-material';
+import Process from './process';
+import Video from './video';
+import ImgUrl from './img-url';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -52,6 +55,9 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}treatment`} component={Treatment} />
       <ErrorBoundaryRoute path={`${match.url}treatment-history`} component={TreatmentHistory} />
       <ErrorBoundaryRoute path={`${match.url}get-material`} component={GetMaterial} />
+      <ErrorBoundaryRoute path={`${match.url}process`} component={Process} />
+      <ErrorBoundaryRoute path={`${match.url}video`} component={Video} />
+      <ErrorBoundaryRoute path={`${match.url}img-url`} component={ImgUrl} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

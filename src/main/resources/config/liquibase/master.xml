@@ -35,6 +35,9 @@
     <include file="config/liquibase/changelog/20210325061201_added_entity_Treatment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210325061301_added_entity_TreatmentHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210325061401_added_entity_GetMaterial.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061649_added_entity_Process.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061749_added_entity_Video.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061849_added_entity_ImgUrl.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210312181417_added_entity_constraints_ServiceOption.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210325060301_added_entity_constraints_Patient.xml" relativeToChangelogFile="false"/>
@@ -48,6 +51,13 @@
     <include file="config/liquibase/changelog/20210325061301_added_entity_constraints_TreatmentHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210325061401_added_entity_constraints_GetMaterial.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210325135344_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210312181617_added_entity_constraints_CustomerReview.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210312181717_added_entity_constraints_Achievement.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210312181817_added_entity_constraints_ServiceItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061649_added_entity_constraints_Process.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061749_added_entity_constraints_Video.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061849_added_entity_constraints_ImgUrl.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210312181917_added_entity_constraints_Blog.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

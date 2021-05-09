@@ -7,6 +7,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IImgUrl } from 'app/shared/model/img-url.model';
+import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './customer-review.reducer';
 import { ICustomerReview } from 'app/shared/model/customer-review.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -15,9 +17,10 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface ICustomerReviewUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
+  const [customerImgUrlId, setCustomerImgUrlId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { customerReviewEntity, loading, updating } = props;
+  const { customerReviewEntity, imgUrls, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/customer-review');
@@ -29,6 +32,8 @@ export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
+
+    props.getImgUrls();
   }, []);
 
   useEffect(() => {
@@ -89,10 +94,10 @@ export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="customerTitleLabel" for="customer-review-customerTitle">
-                  <Translate contentKey="lucciadminApp.customerReview.customerTitle">Customer Title</Translate>
+                <Label id="customerAddressLabel" for="customer-review-customerAddress">
+                  <Translate contentKey="lucciadminApp.customerReview.customerAddress">Customer Address</Translate>
                 </Label>
-                <AvField id="customer-review-customerTitle" type="text" name="customerTitle" />
+                <AvField id="customer-review-customerAddress" type="text" name="customerAddress" />
               </AvGroup>
               <AvGroup>
                 <Label id="commentLabel" for="customer-review-comment">
@@ -106,6 +111,21 @@ export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
+              </AvGroup>
+              <AvGroup>
+                <Label for="customer-review-customerImgUrl">
+                  <Translate contentKey="lucciadminApp.customerReview.customerImgUrl">Customer Img Url</Translate>
+                </Label>
+                <AvInput id="customer-review-customerImgUrl" type="select" className="form-control" name="customerImgUrl.id">
+                  <option value="" key="0" />
+                  {imgUrls
+                    ? imgUrls.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/customer-review" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -129,6 +149,7 @@ export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  imgUrls: storeState.imgUrl.entities,
   customerReviewEntity: storeState.customerReview.entity,
   loading: storeState.customerReview.loading,
   updating: storeState.customerReview.updating,
@@ -136,6 +157,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getImgUrls,
   getEntity,
   updateEntity,
   createEntity,

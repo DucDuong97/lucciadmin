@@ -7,6 +7,10 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IImgUrl } from 'app/shared/model/img-url.model';
+import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
+import { IServiceItem } from 'app/shared/model/service-item.model';
+import { getEntities as getServiceItems } from 'app/entities/service-item/service-item.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './blog.reducer';
 import { IBlog } from 'app/shared/model/blog.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -15,9 +19,11 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IBlogUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const BlogUpdate = (props: IBlogUpdateProps) => {
+  const [titleImgUrlId, setTitleImgUrlId] = useState('0');
+  const [relatedBlogId, setRelatedBlogId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { blogEntity, loading, updating } = props;
+  const { blogEntity, imgUrls, serviceItems, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/blog');
@@ -29,6 +35,9 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
+
+    props.getImgUrls();
+    props.getServiceItems();
   }, []);
 
   useEffect(() => {
@@ -107,19 +116,6 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="titleImgUrlLabel" for="blog-titleImgUrl">
-                  <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
-                </Label>
-                <AvField
-                  id="blog-titleImgUrl"
-                  type="text"
-                  name="titleImgUrl"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
-              </AvGroup>
-              <AvGroup>
                 <Label id="contentLabel" for="blog-content">
                   <Translate contentKey="lucciadminApp.blog.content">Content</Translate>
                 </Label>
@@ -131,6 +127,36 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
+              </AvGroup>
+              <AvGroup>
+                <Label for="blog-titleImgUrl">
+                  <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
+                </Label>
+                <AvInput id="blog-titleImgUrl" type="select" className="form-control" name="titleImgUrl.id">
+                  <option value="" key="0" />
+                  {imgUrls
+                    ? imgUrls.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="blog-relatedBlog">
+                  <Translate contentKey="lucciadminApp.blog.relatedBlog">Related Blog</Translate>
+                </Label>
+                <AvInput id="blog-relatedBlog" type="select" className="form-control" name="relatedBlog.id">
+                  <option value="" key="0" />
+                  {serviceItems
+                    ? serviceItems.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/blog" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -154,6 +180,8 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  imgUrls: storeState.imgUrl.entities,
+  serviceItems: storeState.serviceItem.entities,
   blogEntity: storeState.blog.entity,
   loading: storeState.blog.loading,
   updating: storeState.blog.updating,
@@ -161,6 +189,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getImgUrls,
+  getServiceItems,
   getEntity,
   updateEntity,
   createEntity,
