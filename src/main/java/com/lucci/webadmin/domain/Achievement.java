@@ -32,7 +32,6 @@ public class Achievement implements Serializable {
     private Long number;
 
     @OneToOne
-    @JoinColumn(unique = true)
     private ImgUrl imgUrl;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

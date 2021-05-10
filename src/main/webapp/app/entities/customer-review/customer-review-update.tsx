@@ -120,12 +120,18 @@ export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
                   <option value="" key="0" />
                   {imgUrls
                     ? imgUrls.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.imgUrl}
+                      </option>
+                    ))
                     : null}
                 </AvInput>
+                <Button tag={Link} to={`/img-url/new`} color="primary" size="sm">
+                  <FontAwesomeIcon icon="plus" />{' '}
+                  <span className="d-none d-md-inline">
+                    Add Image URL
+                  </span>
+                </Button>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/customer-review" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

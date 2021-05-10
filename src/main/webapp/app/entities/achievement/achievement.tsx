@@ -34,9 +34,6 @@ export const Achievement = (props: IAchievementProps) => {
             <thead>
               <tr>
                 <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
                   <Translate contentKey="lucciadminApp.achievement.name">Name</Translate>
                 </th>
                 <th>
@@ -51,14 +48,9 @@ export const Achievement = (props: IAchievementProps) => {
             <tbody>
               {achievementList.map((achievement, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${achievement.id}`} color="link" size="sm">
-                      {achievement.id}
-                    </Button>
-                  </td>
                   <td>{achievement.name}</td>
                   <td>{achievement.number}</td>
-                  <td>{achievement.imgUrl ? <Link to={`img-url/${achievement.imgUrl.id}`}>{achievement.imgUrl.id}</Link> : ''}</td>
+                  <td>{achievement.imgUrl ? achievement.imgUrl.imgUrl : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${achievement.id}`} color="info" size="sm">

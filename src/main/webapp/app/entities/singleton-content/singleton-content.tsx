@@ -34,9 +34,6 @@ export const SingletonContent = (props: ISingletonContentProps) => {
             <thead>
               <tr>
                 <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
                   <Translate contentKey="lucciadminApp.singletonContent.type">Type</Translate>
                 </th>
                 <th>
@@ -48,11 +45,6 @@ export const SingletonContent = (props: ISingletonContentProps) => {
             <tbody>
               {singletonContentList.map((singletonContent, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${singletonContent.id}`} color="link" size="sm">
-                      {singletonContent.id}
-                    </Button>
-                  </td>
                   <td>
                     <Translate contentKey={`lucciadminApp.ContentType.${singletonContent.type}`} />
                   </td>
