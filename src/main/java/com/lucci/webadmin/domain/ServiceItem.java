@@ -1,7 +1,10 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -34,6 +37,7 @@ public class ServiceItem implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     private ImgUrl imgUrl;
 
     @OneToMany(mappedBy = "service")
@@ -52,7 +56,8 @@ public class ServiceItem implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Video> relatedVideos = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem")
+    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<ImgUrl> customerImgUrls = new HashSet<>();
 

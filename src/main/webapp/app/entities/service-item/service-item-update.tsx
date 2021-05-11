@@ -45,9 +45,14 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
 
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
+      const customerImgs = [];
+      values.customerImgUrls.forEach(value => {
+        customerImgs.push({id: value});
+      });
       const entity = {
         ...serviceItemEntity,
         ...values,
+        customerImgUrls: customerImgs
       };
 
       if (isNew) {
@@ -120,6 +125,23 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                     Add Image URL
                   </span>
                 </Button>
+              </AvGroup>
+              {/*multiple selection of customerImgs*/}
+              <AvGroup>
+                <Label for="customerImgUrls">
+                  <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Image URLS</Translate>
+                </Label>
+                <AvInput type="select" className="form-control"
+                         name="customerImgUrls" value={serviceItemEntity.customerImgUrls ? serviceItemEntity.customerImgUrls.map(img => img.id) : []}
+                         multiple>
+                  {imgUrls
+                    ? imgUrls.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.imgUrl}
+                      </option>
+                    ))
+                    : null}
+                </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/service-item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
