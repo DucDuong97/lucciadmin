@@ -21,6 +21,10 @@
       "fieldValidateRules": [
         "required"
       ]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
     }
   ],
   "relationships": [
@@ -35,8 +39,8 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "serviceItem",
-      "otherEntityRelationshipName": "blogs",
-      "relationshipName": "relatedBlog",
+      "otherEntityRelationshipName": "relatedBlogs",
+      "relationshipName": "serviceItem",
       "otherEntityField": "id"
     }
   ],

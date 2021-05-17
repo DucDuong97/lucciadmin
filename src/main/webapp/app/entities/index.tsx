@@ -28,6 +28,9 @@ import GetMaterial from './get-material';
 import Process from './process';
 import Video from './video';
 import ImgUrl from './img-url';
+import PricingCard from './pricing-card';
+import PricingContent from './pricing-content';
+import Branch from './branch';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -58,6 +61,9 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}process`} component={Process} />
       <ErrorBoundaryRoute path={`${match.url}video`} component={Video} />
       <ErrorBoundaryRoute path={`${match.url}img-url`} component={ImgUrl} />
+      <ErrorBoundaryRoute path={`${match.url}pricing-card`} component={PricingCard} />
+      <ErrorBoundaryRoute path={`${match.url}pricing-content`} component={PricingContent} />
+      <ErrorBoundaryRoute path={`${match.url}branch`} component={Branch} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

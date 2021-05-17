@@ -43,7 +43,7 @@ export const Process = (props: IProcessProps) => {
                   <Translate contentKey="lucciadminApp.process.order">Order</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="lucciadminApp.process.process">Process</Translate>
+                  <Translate contentKey="lucciadminApp.process.serviceItem">Service Item</Translate>
                 </th>
                 <th />
               </tr>
@@ -58,7 +58,7 @@ export const Process = (props: IProcessProps) => {
                   </td>
                   <td>{process.name}</td>
                   <td>{process.order}</td>
-                  <td>{process.process ? <Link to={`service-item/${process.process.id}`}>{process.process.id}</Link> : ''}</td>
+                  <td>{process.serviceItem ? <Link to={`service-item/${process.serviceItem.id}`}>{process.serviceItem.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${process.id}`} color="info" size="sm">

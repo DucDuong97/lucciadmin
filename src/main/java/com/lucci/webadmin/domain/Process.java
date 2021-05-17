@@ -33,7 +33,7 @@ public class Process implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "processes", allowSetters = true)
-    private ServiceItem process;
+    private ServiceItem serviceItem;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -70,17 +70,17 @@ public class Process implements Serializable {
         this.order = order;
     }
 
-    public ServiceItem getProcess() {
-        return process;
+    public ServiceItem getServiceItem() {
+        return serviceItem;
     }
 
-    public Process process(ServiceItem serviceItem) {
-        this.process = serviceItem;
+    public Process serviceItem(ServiceItem serviceItem) {
+        this.serviceItem = serviceItem;
         return this;
     }
 
-    public void setProcess(ServiceItem serviceItem) {
-        this.process = serviceItem;
+    public void setServiceItem(ServiceItem serviceItem) {
+        this.serviceItem = serviceItem;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

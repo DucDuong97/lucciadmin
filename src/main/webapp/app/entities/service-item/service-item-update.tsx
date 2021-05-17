@@ -24,7 +24,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
   const { serviceItemEntity, imgUrls, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.goBack();
+    props.history.push('/service-item');
   };
 
   useEffect(() => {
@@ -45,14 +45,9 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
 
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
-      const customerImgs = [];
-      values.customerImgUrls.forEach(value => {
-        customerImgs.push({id: value});
-      });
       const entity = {
         ...serviceItemEntity,
         ...values,
-        customerImgUrls: customerImgs
       };
 
       if (isNew) {
@@ -114,32 +109,9 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   {imgUrls
                     ? imgUrls.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.imgUrl}
+                          {otherEntity.id}
                         </option>
                       ))
-                    : null}
-                </AvInput>
-                <Button tag={Link} to={`/img-url/new`} color="primary" size="sm">
-                  <FontAwesomeIcon icon="plus" />{' '}
-                  <span className="d-none d-md-inline">
-                    Add Image URL
-                  </span>
-                </Button>
-              </AvGroup>
-              {/*multiple selection of customerImgs*/}
-              <AvGroup>
-                <Label for="customerImgUrls">
-                  <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Image URLS</Translate>
-                </Label>
-                <AvInput type="select" className="form-control"
-                         name="customerImgUrls" value={serviceItemEntity.customerImgUrls ? serviceItemEntity.customerImgUrls.map(img => img.id) : []}
-                         multiple>
-                  {imgUrls
-                    ? imgUrls.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.imgUrl}
-                      </option>
-                    ))
                     : null}
                 </AvInput>
               </AvGroup>

@@ -14,9 +14,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="img_url"/>
 
-        <addForeignKeyConstraint baseColumnNames="related_blog_id"
+        <addForeignKeyConstraint baseColumnNames="service_item_id"
                                  baseTableName="blog"
-                                 constraintName="fk_blog_related_blog_id"
+                                 constraintName="fk_blog_service_item_id"
                                  referencedColumnNames="id"
                                  referencedTableName="service_item"/>
 

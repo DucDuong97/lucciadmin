@@ -32,14 +32,14 @@
     {
       "relationshipType": "one-to-many",
       "otherEntityName": "process",
-      "otherEntityRelationshipName": "process",
+      "otherEntityRelationshipName": "serviceItem",
       "relationshipName": "processes"
     },
     {
       "relationshipType": "one-to-many",
       "otherEntityName": "blog",
-      "otherEntityRelationshipName": "relatedBlog",
-      "relationshipName": "blogs"
+      "otherEntityRelationshipName": "serviceItem",
+      "relationshipName": "relatedBlogs"
     },
     {
       "relationshipType": "one-to-many",
@@ -52,6 +52,12 @@
       "otherEntityName": "imgUrl",
       "otherEntityRelationshipName": "serviceItem",
       "relationshipName": "customerImgUrls"
+    },
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "pricingCard",
+      "otherEntityRelationshipName": "serviceItem",
+      "relationshipName": "pricingCards"
     }
   ],
   "changelogDate": "20210312181817",

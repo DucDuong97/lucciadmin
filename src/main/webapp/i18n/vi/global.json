@@ -21,6 +21,9 @@
         "process": "Process",
         "video": "Video",
         "imgUrl": "Img Url",
+        "pricingCard": "Pricing Card",
+        "pricingContent": "Pricing Content",
+        "branch": "Branch",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {

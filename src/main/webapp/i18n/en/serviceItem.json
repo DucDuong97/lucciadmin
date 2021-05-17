@@ -21,9 +21,10 @@
       "imgUrl": "Img Url",
       "options": "Options",
       "processes": "Processes",
-      "blogs": "Blogs",
+      "relatedBlogs": "Related Blogs",
       "relatedVideos": "Related Videos",
-      "customerImgUrls": "Customer Img Urls"
+      "customerImgUrls": "Customer Img Urls",
+      "pricingCards": "Pricing Cards"
     }
   }
 }

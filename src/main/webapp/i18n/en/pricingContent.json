@@ -1,0 +1,24 @@
+{
+  "lucciadminApp": {
+    "pricingContent": {
+      "home": {
+        "title": "Pricing Contents",
+        "createLabel": "Create a new Pricing Content",
+        "createOrEditLabel": "Create or edit a Pricing Content",
+        "notFound": "No Pricing Contents found"
+      },
+      "created": "A new Pricing Content is created with identifier {{ param }}",
+      "updated": "A Pricing Content is updated with identifier {{ param }}",
+      "deleted": "A Pricing Content is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pricing Content {{ id }}?"
+      },
+      "detail": {
+        "title": "Pricing Content"
+      },
+      "content": "Content",
+      "pro": "Pro",
+      "pricingCard": "Pricing Card"
+    }
+  }
+}

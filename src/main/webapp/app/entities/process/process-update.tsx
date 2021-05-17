@@ -17,7 +17,7 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IProcessUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ProcessUpdate = (props: IProcessUpdateProps) => {
-  const [processId, setProcessId] = useState('0');
+  const [serviceItemId, setServiceItemId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { processEntity, serviceItems, loading, updating } = props;
@@ -100,10 +100,10 @@ export const ProcessUpdate = (props: IProcessUpdateProps) => {
                 <AvField id="process-order" type="string" className="form-control" name="order" />
               </AvGroup>
               <AvGroup>
-                <Label for="process-process">
-                  <Translate contentKey="lucciadminApp.process.process">Process</Translate>
+                <Label for="process-serviceItem">
+                  <Translate contentKey="lucciadminApp.process.serviceItem">Service Item</Translate>
                 </Label>
-                <AvInput id="process-process" type="select" className="form-control" name="process.id">
+                <AvInput id="process-serviceItem" type="select" className="form-control" name="serviceItem.id">
                   <option value="" key="0" />
                   {serviceItems
                     ? serviceItems.map(otherEntity => (

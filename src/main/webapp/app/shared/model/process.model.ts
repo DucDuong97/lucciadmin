@@ -4,7 +4,7 @@ export interface IProcess {
   id?: number;
   name?: string;
   order?: number;
-  process?: IServiceItem;
+  serviceItem?: IServiceItem;
 }
 
 export const defaultValue: Readonly<IProcess> = {};

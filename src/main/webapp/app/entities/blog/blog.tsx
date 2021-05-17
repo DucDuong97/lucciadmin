@@ -46,10 +46,13 @@ export const Blog = (props: IBlogProps) => {
                   <Translate contentKey="lucciadminApp.blog.content">Content</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="lucciadminApp.blog.description">Description</Translate>
+                </th>
+                <th>
                   <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="lucciadminApp.blog.relatedBlog">Related Blog</Translate>
+                  <Translate contentKey="lucciadminApp.blog.serviceItem">Service Item</Translate>
                 </th>
                 <th />
               </tr>
@@ -65,8 +68,9 @@ export const Blog = (props: IBlogProps) => {
                   <td>{blog.title}</td>
                   <td>{blog.publishDate ? <TextFormat type="date" value={blog.publishDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{blog.content}</td>
+                  <td>{blog.description}</td>
                   <td>{blog.titleImgUrl ? <Link to={`img-url/${blog.titleImgUrl.id}`}>{blog.titleImgUrl.id}</Link> : ''}</td>
-                  <td>{blog.relatedBlog ? <Link to={`service-item/${blog.relatedBlog.id}`}>{blog.relatedBlog.id}</Link> : ''}</td>
+                  <td>{blog.serviceItem ? <Link to={`service-item/${blog.serviceItem.id}`}>{blog.serviceItem.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${blog.id}`} color="info" size="sm">

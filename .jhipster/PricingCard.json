@@ -1,0 +1,45 @@
+{
+  "name": "PricingCard",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "Integer",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "pricingContent",
+      "otherEntityRelationshipName": "pricingCard",
+      "relationshipName": "contents"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "serviceItem",
+      "otherEntityRelationshipName": "pricingCards",
+      "relationshipName": "serviceItem",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210516213054",
+  "entityTableName": "pricing_card",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

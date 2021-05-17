@@ -1,7 +1,6 @@
 package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.ServiceItem;
-import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.service.ServiceItemService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
@@ -16,11 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * REST controller for managing {@link com.lucci.webadmin.domain.ServiceItem}.
@@ -37,11 +33,9 @@ public class ServiceItemResource {
     private String applicationName;
 
     private final ServiceItemService serviceItemService;
-    private final ImgUrlService imgUrlService;
 
-    public ServiceItemResource(ServiceItemService serviceItemService, ImgUrlService imgUrlService) {
+    public ServiceItemResource(ServiceItemService serviceItemService) {
         this.serviceItemService = serviceItemService;
-        this.imgUrlService = imgUrlService;
     }
 
     /**
@@ -77,15 +71,6 @@ public class ServiceItemResource {
         log.debug("REST request to update ServiceItem : {}", serviceItem);
         if (serviceItem.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (serviceItem.getCustomerImgUrls() != null) {
-            serviceItem.getCustomerImgUrls().forEach(img ->
-                imgUrlService.findOne(img.getId())
-                .ifPresent(imgUrl -> {
-                    img.setImgUrl(imgUrl.getImgUrl());
-                    img.setServiceItem(serviceItem);
-                })
-            );
         }
         ServiceItem result = serviceItemService.save(serviceItem);
         return ResponseEntity.ok()

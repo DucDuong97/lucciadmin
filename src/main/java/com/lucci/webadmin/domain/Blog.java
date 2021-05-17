@@ -37,13 +37,16 @@ public class Blog implements Serializable {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToOne
     @JoinColumn(unique = true)
     private ImgUrl titleImgUrl;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "blogs", allowSetters = true)
-    private ServiceItem relatedBlog;
+    @JsonIgnoreProperties(value = "relatedBlogs", allowSetters = true)
+    private ServiceItem serviceItem;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -93,6 +96,19 @@ public class Blog implements Serializable {
         this.content = content;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public Blog description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public ImgUrl getTitleImgUrl() {
         return titleImgUrl;
     }
@@ -106,17 +122,17 @@ public class Blog implements Serializable {
         this.titleImgUrl = imgUrl;
     }
 
-    public ServiceItem getRelatedBlog() {
-        return relatedBlog;
+    public ServiceItem getServiceItem() {
+        return serviceItem;
     }
 
-    public Blog relatedBlog(ServiceItem serviceItem) {
-        this.relatedBlog = serviceItem;
+    public Blog serviceItem(ServiceItem serviceItem) {
+        this.serviceItem = serviceItem;
         return this;
     }
 
-    public void setRelatedBlog(ServiceItem serviceItem) {
-        this.relatedBlog = serviceItem;
+    public void setServiceItem(ServiceItem serviceItem) {
+        this.serviceItem = serviceItem;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -144,6 +160,7 @@ public class Blog implements Serializable {
             ", title='" + getTitle() + "'" +
             ", publishDate='" + getPublishDate() + "'" +
             ", content='" + getContent() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

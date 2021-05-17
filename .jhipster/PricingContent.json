@@ -1,0 +1,39 @@
+{
+  "name": "PricingContent",
+  "fields": [
+    {
+      "fieldName": "content",
+      "fieldType": "String",
+      "fieldValidateRules": [
+        "required"
+      ]
+    },
+    {
+      "fieldName": "pro",
+      "fieldType": "Boolean",
+      "fieldValidateRules": [
+        "required"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "pricingCard",
+      "otherEntityRelationshipName": "contents",
+      "relationshipName": "pricingCard",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210516213154",
+  "entityTableName": "pricing_content",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

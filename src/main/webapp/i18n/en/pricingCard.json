@@ -1,0 +1,25 @@
+{
+  "lucciadminApp": {
+    "pricingCard": {
+      "home": {
+        "title": "Pricing Cards",
+        "createLabel": "Create a new Pricing Card",
+        "createOrEditLabel": "Create or edit a Pricing Card",
+        "notFound": "No Pricing Cards found"
+      },
+      "created": "A new Pricing Card is created with identifier {{ param }}",
+      "updated": "A Pricing Card is updated with identifier {{ param }}",
+      "deleted": "A Pricing Card is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Pricing Card {{ id }}?"
+      },
+      "detail": {
+        "title": "Pricing Card"
+      },
+      "name": "Name",
+      "price": "Price",
+      "contents": "Contents",
+      "serviceItem": "Service Item"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "lucciadminApp": {
+    "pricingCard": {
+      "home": {
+        "title": "Pricing Cards",
+        "createLabel": "Thêm mới một Pricing Card",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Pricing Card",
+        "notFound": "No Pricing Cards found"
+      },
+      "created": "Một Pricing Card mới được tạo với định danh {{ param }}",
+      "updated": "Một Pricing Card cập nhật với định danh {{ param }}",
+      "deleted": "Một Pricing Card đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Pricing Card {{ id }}?"
+      },
+      "detail": {
+        "title": "Pricing Card"
+      },
+      "name": "Name",
+      "price": "Price",
+      "contents": "Contents",
+      "serviceItem": "Service Item"
+    }
+  }
+}

@@ -18,7 +18,7 @@
       },
       "name": "Name",
       "order": "Order",
-      "process": "Process"
+      "serviceItem": "Service Item"
     }
   }
 }

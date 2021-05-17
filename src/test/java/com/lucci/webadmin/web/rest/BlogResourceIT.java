@@ -41,6 +41,9 @@ public class BlogResourceIT {
     private static final String DEFAULT_CONTENT = "AAAAAAAAAA";
     private static final String UPDATED_CONTENT = "BBBBBBBBBB";
 
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
     @Autowired
     private BlogRepository blogRepository;
 
@@ -65,7 +68,8 @@ public class BlogResourceIT {
         Blog blog = new Blog()
             .title(DEFAULT_TITLE)
             .publishDate(DEFAULT_PUBLISH_DATE)
-            .content(DEFAULT_CONTENT);
+            .content(DEFAULT_CONTENT)
+            .description(DEFAULT_DESCRIPTION);
         return blog;
     }
     /**
@@ -78,7 +82,8 @@ public class BlogResourceIT {
         Blog blog = new Blog()
             .title(UPDATED_TITLE)
             .publishDate(UPDATED_PUBLISH_DATE)
-            .content(UPDATED_CONTENT);
+            .content(UPDATED_CONTENT)
+            .description(UPDATED_DESCRIPTION);
         return blog;
     }
 
@@ -104,6 +109,7 @@ public class BlogResourceIT {
         assertThat(testBlog.getTitle()).isEqualTo(DEFAULT_TITLE);
         assertThat(testBlog.getPublishDate()).isEqualTo(DEFAULT_PUBLISH_DATE);
         assertThat(testBlog.getContent()).isEqualTo(DEFAULT_CONTENT);
+        assertThat(testBlog.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
     }
 
     @Test
@@ -196,7 +202,8 @@ public class BlogResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(blog.getId().intValue())))
             .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
             .andExpect(jsonPath("$.[*].publishDate").value(hasItem(DEFAULT_PUBLISH_DATE.toString())))
-            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)));
+            .andExpect(jsonPath("$.[*].content").value(hasItem(DEFAULT_CONTENT)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
     
     @Test
@@ -212,7 +219,8 @@ public class BlogResourceIT {
             .andExpect(jsonPath("$.id").value(blog.getId().intValue()))
             .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
             .andExpect(jsonPath("$.publishDate").value(DEFAULT_PUBLISH_DATE.toString()))
-            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT));
+            .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION));
     }
     @Test
     @Transactional
@@ -237,7 +245,8 @@ public class BlogResourceIT {
         updatedBlog
             .title(UPDATED_TITLE)
             .publishDate(UPDATED_PUBLISH_DATE)
-            .content(UPDATED_CONTENT);
+            .content(UPDATED_CONTENT)
+            .description(UPDATED_DESCRIPTION);
 
         restBlogMockMvc.perform(put("/api/blogs")
             .contentType(MediaType.APPLICATION_JSON)
@@ -251,6 +260,7 @@ public class BlogResourceIT {
         assertThat(testBlog.getTitle()).isEqualTo(UPDATED_TITLE);
         assertThat(testBlog.getPublishDate()).isEqualTo(UPDATED_PUBLISH_DATE);
         assertThat(testBlog.getContent()).isEqualTo(UPDATED_CONTENT);
+        assertThat(testBlog.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
     }
 
     @Test

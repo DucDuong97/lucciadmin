@@ -20,7 +20,7 @@ export interface IBlogUpdateProps extends StateProps, DispatchProps, RouteCompon
 
 export const BlogUpdate = (props: IBlogUpdateProps) => {
   const [titleImgUrlId, setTitleImgUrlId] = useState('0');
-  const [relatedBlogId, setRelatedBlogId] = useState('0');
+  const [serviceItemId, setServiceItemId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { blogEntity, imgUrls, serviceItems, loading, updating } = props;
@@ -129,6 +129,12 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
+                <Label id="descriptionLabel" for="blog-description">
+                  <Translate contentKey="lucciadminApp.blog.description">Description</Translate>
+                </Label>
+                <AvField id="blog-description" type="text" name="description" />
+              </AvGroup>
+              <AvGroup>
                 <Label for="blog-titleImgUrl">
                   <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
                 </Label>
@@ -144,10 +150,10 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                 </AvInput>
               </AvGroup>
               <AvGroup>
-                <Label for="blog-relatedBlog">
-                  <Translate contentKey="lucciadminApp.blog.relatedBlog">Related Blog</Translate>
+                <Label for="blog-serviceItem">
+                  <Translate contentKey="lucciadminApp.blog.serviceItem">Service Item</Translate>
                 </Label>
-                <AvInput id="blog-relatedBlog" type="select" className="form-control" name="relatedBlog.id">
+                <AvInput id="blog-serviceItem" type="select" className="form-control" name="serviceItem.id">
                   <option value="" key="0" />
                   {serviceItems
                     ? serviceItems.map(otherEntity => (

@@ -19,8 +19,9 @@
       "title": "Title",
       "publishDate": "Publish Date",
       "content": "Content",
+      "description": "Description",
       "titleImgUrl": "Title Img Url",
-      "relatedBlog": "Related Blog"
+      "serviceItem": "Service Item"
     }
   }
 }

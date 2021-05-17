@@ -1,10 +1,7 @@
 package com.lucci.webadmin.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -37,29 +34,31 @@ public class ServiceItem implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     private ImgUrl imgUrl;
 
     @OneToMany(mappedBy = "service")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<ServiceOption> options = new HashSet<>();
 
-    @OneToMany(mappedBy = "process")
+    @OneToMany(mappedBy = "serviceItem")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Process> processes = new HashSet<>();
 
-    @OneToMany(mappedBy = "relatedBlog")
+    @OneToMany(mappedBy = "serviceItem")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Blog> blogs = new HashSet<>();
+    private Set<Blog> relatedBlogs = new HashSet<>();
 
     @OneToMany(mappedBy = "serviceItem")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Video> relatedVideos = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
+    @OneToMany(mappedBy = "serviceItem")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<ImgUrl> customerImgUrls = new HashSet<>();
+
+    @OneToMany(mappedBy = "serviceItem")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<PricingCard> pricingCards = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -145,13 +144,13 @@ public class ServiceItem implements Serializable {
 
     public ServiceItem addProcesses(Process process) {
         this.processes.add(process);
-        process.setProcess(this);
+        process.setServiceItem(this);
         return this;
     }
 
     public ServiceItem removeProcesses(Process process) {
         this.processes.remove(process);
-        process.setProcess(null);
+        process.setServiceItem(null);
         return this;
     }
 
@@ -159,29 +158,29 @@ public class ServiceItem implements Serializable {
         this.processes = processes;
     }
 
-    public Set<Blog> getBlogs() {
-        return blogs;
+    public Set<Blog> getRelatedBlogs() {
+        return relatedBlogs;
     }
 
-    public ServiceItem blogs(Set<Blog> blogs) {
-        this.blogs = blogs;
+    public ServiceItem relatedBlogs(Set<Blog> blogs) {
+        this.relatedBlogs = blogs;
         return this;
     }
 
-    public ServiceItem addBlogs(Blog blog) {
-        this.blogs.add(blog);
-        blog.setRelatedBlog(this);
+    public ServiceItem addRelatedBlogs(Blog blog) {
+        this.relatedBlogs.add(blog);
+        blog.setServiceItem(this);
         return this;
     }
 
-    public ServiceItem removeBlogs(Blog blog) {
-        this.blogs.remove(blog);
-        blog.setRelatedBlog(null);
+    public ServiceItem removeRelatedBlogs(Blog blog) {
+        this.relatedBlogs.remove(blog);
+        blog.setServiceItem(null);
         return this;
     }
 
-    public void setBlogs(Set<Blog> blogs) {
-        this.blogs = blogs;
+    public void setRelatedBlogs(Set<Blog> blogs) {
+        this.relatedBlogs = blogs;
     }
 
     public Set<Video> getRelatedVideos() {
@@ -232,6 +231,31 @@ public class ServiceItem implements Serializable {
 
     public void setCustomerImgUrls(Set<ImgUrl> imgUrls) {
         this.customerImgUrls = imgUrls;
+    }
+
+    public Set<PricingCard> getPricingCards() {
+        return pricingCards;
+    }
+
+    public ServiceItem pricingCards(Set<PricingCard> pricingCards) {
+        this.pricingCards = pricingCards;
+        return this;
+    }
+
+    public ServiceItem addPricingCards(PricingCard pricingCard) {
+        this.pricingCards.add(pricingCard);
+        pricingCard.setServiceItem(this);
+        return this;
+    }
+
+    public ServiceItem removePricingCards(PricingCard pricingCard) {
+        this.pricingCards.remove(pricingCard);
+        pricingCard.setServiceItem(null);
+        return this;
+    }
+
+    public void setPricingCards(Set<PricingCard> pricingCards) {
+        this.pricingCards = pricingCards;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

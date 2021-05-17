@@ -7,8 +7,9 @@ export interface IBlog {
   title?: string;
   publishDate?: string;
   content?: string;
+  description?: string;
   titleImgUrl?: IImgUrl;
-  relatedBlog?: IServiceItem;
+  serviceItem?: IServiceItem;
 }
 
 export const defaultValue: Readonly<IBlog> = {};

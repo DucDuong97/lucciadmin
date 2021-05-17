@@ -44,13 +44,19 @@ export const BlogDetail = (props: IBlogDetailProps) => {
           </dt>
           <dd>{blogEntity.content}</dd>
           <dt>
+            <span id="description">
+              <Translate contentKey="lucciadminApp.blog.description">Description</Translate>
+            </span>
+          </dt>
+          <dd>{blogEntity.description}</dd>
+          <dt>
             <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
           </dt>
           <dd>{blogEntity.titleImgUrl ? blogEntity.titleImgUrl.id : ''}</dd>
           <dt>
-            <Translate contentKey="lucciadminApp.blog.relatedBlog">Related Blog</Translate>
+            <Translate contentKey="lucciadminApp.blog.serviceItem">Service Item</Translate>
           </dt>
-          <dd>{blogEntity.relatedBlog ? blogEntity.relatedBlog.id : ''}</dd>
+          <dd>{blogEntity.serviceItem ? blogEntity.serviceItem.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/blog" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -21,19 +21,31 @@ entity ServiceItem {
 }
 relationship OneToMany {
 	ServiceItem{options} to ServiceOption{service},
-	ServiceItem{processes} to Process{process},
-	ServiceItem{blogs} to Blog{relatedBlog},
+	ServiceItem{processes} to Process,
+	ServiceItem{relatedBlogs} to Blog,
 	ServiceItem{relatedVideos} to Video,
     ServiceItem{customerImgUrls} to ImgUrl,
+    ServiceItem{pricingCards} to PricingCard,
 }
 entity ServiceOption {
  	name String required unique,
-     benefits String required,
-     price Integer required
- }
+ 	benefits String required,
+    price Integer required
+}
 entity Process {
     name String required,
     order Long,
+}
+entity PricingCard {
+    name String required,
+    price Integer required,
+}
+relationship OneToMany {
+ 	PricingCard{contents} to PricingContent{pricingCard}
+ }
+entity PricingContent {
+    content String required,
+    pro Boolean required
 }
 
 entity Video {
@@ -53,7 +65,14 @@ relationship OneToOne {
 entity Blog {
 	title String required,
 	publishDate Instant required,
+    content String required,
+    description String,
     content String required
+}
+
+entity Branch {
+    adress String required,
+    city String required,
 }
 
 entity SingletonContent {
