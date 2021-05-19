@@ -69,8 +69,8 @@ export const Blog = (props: IBlogProps) => {
                   <td>{blog.publishDate ? <TextFormat type="date" value={blog.publishDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{blog.content}</td>
                   <td>{blog.description}</td>
-                  <td>{blog.titleImgUrl ? <Link to={`img-url/${blog.titleImgUrl.id}`}>{blog.titleImgUrl.id}</Link> : ''}</td>
-                  <td>{blog.serviceItem ? <Link to={`service-item/${blog.serviceItem.id}`}>{blog.serviceItem.id}</Link> : ''}</td>
+                  <td>{blog.titleImgUrl ? <Link to={`img-url/${blog.titleImgUrl.id}`}>{blog.titleImgUrl.imgUrl}</Link> : ''}</td>
+                  <td>{blog.serviceItem ? <Link to={`service-item/${blog.serviceItem.id}`}>{blog.serviceItem.name}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${blog.id}`} color="info" size="sm">

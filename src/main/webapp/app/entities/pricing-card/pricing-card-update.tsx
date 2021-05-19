@@ -20,7 +20,7 @@ export const PricingCardUpdate = (props: IPricingCardUpdateProps) => {
   const [serviceItemId, setServiceItemId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { pricingCardEntity, serviceItems, loading, updating } = props;
+  const { pricingCardEntity, pricingContents, serviceItems, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/pricing-card');
@@ -117,7 +117,7 @@ export const PricingCardUpdate = (props: IPricingCardUpdateProps) => {
                   {serviceItems
                     ? serviceItems.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}
@@ -147,6 +147,7 @@ export const PricingCardUpdate = (props: IPricingCardUpdateProps) => {
 const mapStateToProps = (storeState: IRootState) => ({
   serviceItems: storeState.serviceItem.entities,
   pricingCardEntity: storeState.pricingCard.entity,
+  pricingContents: storeState.pricingCard.entity.contents,
   loading: storeState.pricingCard.loading,
   updating: storeState.pricingCard.updating,
   updateSuccess: storeState.pricingCard.updateSuccess,

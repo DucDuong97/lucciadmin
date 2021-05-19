@@ -34,7 +34,7 @@ public class PricingCard implements Serializable {
     @Column(name = "price", nullable = false)
     private Integer price;
 
-    @OneToMany(mappedBy = "pricingCard")
+    @OneToMany(mappedBy = "pricingCard", fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<PricingContent> contents = new HashSet<>();
 

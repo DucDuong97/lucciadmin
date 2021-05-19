@@ -52,11 +52,11 @@ export const BlogDetail = (props: IBlogDetailProps) => {
           <dt>
             <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
           </dt>
-          <dd>{blogEntity.titleImgUrl ? blogEntity.titleImgUrl.id : ''}</dd>
+          <dd>{blogEntity.titleImgUrl ? blogEntity.titleImgUrl.imgUrl : ''}</dd>
           <dt>
             <Translate contentKey="lucciadminApp.blog.serviceItem">Service Item</Translate>
           </dt>
-          <dd>{blogEntity.serviceItem ? blogEntity.serviceItem.id : ''}</dd>
+          <dd>{blogEntity.serviceItem ? blogEntity.serviceItem.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/blog" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

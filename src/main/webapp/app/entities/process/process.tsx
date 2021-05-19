@@ -58,7 +58,7 @@ export const Process = (props: IProcessProps) => {
                   </td>
                   <td>{process.name}</td>
                   <td>{process.order}</td>
-                  <td>{process.serviceItem ? <Link to={`service-item/${process.serviceItem.id}`}>{process.serviceItem.id}</Link> : ''}</td>
+                  <td>{process.serviceItem ? <Link to={`service-item/${process.serviceItem.id}`}>{process.serviceItem.name}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${process.id}`} color="info" size="sm">

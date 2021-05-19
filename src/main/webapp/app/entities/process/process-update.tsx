@@ -108,7 +108,7 @@ export const ProcessUpdate = (props: IProcessUpdateProps) => {
                   {serviceItems
                     ? serviceItems.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}

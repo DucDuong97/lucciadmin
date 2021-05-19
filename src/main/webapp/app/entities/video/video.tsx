@@ -54,7 +54,7 @@ export const Video = (props: IVideoProps) => {
                     </Button>
                   </td>
                   <td>{video.url}</td>
-                  <td>{video.serviceItem ? <Link to={`service-item/${video.serviceItem.id}`}>{video.serviceItem.id}</Link> : ''}</td>
+                  <td>{video.serviceItem ? <Link to={`service-item/${video.serviceItem.id}`}>{video.serviceItem.name}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${video.id}`} color="info" size="sm">

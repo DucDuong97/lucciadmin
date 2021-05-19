@@ -7,24 +7,19 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IImgUrl } from 'app/shared/model/img-url.model';
 import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
+import { getEntities as getVideos } from 'app/entities/video/video.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './service-item.reducer';
-import { IServiceItem } from 'app/shared/model/service-item.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IServiceItemUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
-  const [imgUrlId, setImgUrlId] = useState('0');
-  const [customerImgUrlsId, setCustomerImgUrlsId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { serviceItemEntity, imgUrls, loading, updating } = props;
+  const { serviceItemEntity, imgUrls, videos, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/service-item');
+    props.history.goBack();
   };
 
   useEffect(() => {
@@ -33,8 +28,8 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
-
     props.getImgUrls();
+    props.getVideos();
   }, []);
 
   useEffect(() => {
@@ -48,6 +43,8 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
       const entity = {
         ...serviceItemEntity,
         ...values,
+        customerImgUrls: values.customerImgUrls.map(value => ({id: value})),
+        relatedVideos:   values.relatedVideos.map(value => ({id: value}))
       };
 
       if (isNew) {
@@ -81,6 +78,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   <AvInput id="service-item-id" type="text" className="form-control" name="id" required readOnly />
                 </AvGroup>
               ) : null}
+
               <AvGroup>
                 <Label id="nameLabel" for="service-item-name">
                   <Translate contentKey="lucciadminApp.serviceItem.name">Name</Translate>
@@ -94,12 +92,14 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   }}
                 />
               </AvGroup>
+
               <AvGroup>
                 <Label id="descriptionLabel" for="service-item-description">
                   <Translate contentKey="lucciadminApp.serviceItem.description">Description</Translate>
                 </Label>
                 <AvField id="service-item-description" type="text" name="description" />
               </AvGroup>
+
               <AvGroup>
                 <Label for="service-item-imgUrl">
                   <Translate contentKey="lucciadminApp.serviceItem.imgUrl">Img Url</Translate>
@@ -109,12 +109,54 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   {imgUrls
                     ? imgUrls.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.imgUrl}
                         </option>
                       ))
                     : null}
                 </AvInput>
+                <Button tag={Link} to={`/img-url/new`} color="primary" size="sm">
+                  <FontAwesomeIcon icon="plus" />{' '}
+                  <span className="d-none d-md-inline">
+                    Add Image URL
+                  </span>
+                </Button>
               </AvGroup>
+
+              <AvGroup>
+                <Label for="customerImgUrls">
+                  <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Image URLS</Translate>
+                </Label>
+                <AvInput type="select" className="form-control"
+                         name="customerImgUrls" value={serviceItemEntity.customerImgUrls ? serviceItemEntity.customerImgUrls.map(img => img.id) : []}
+                         multiple>
+                  {imgUrls
+                    ? imgUrls.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.imgUrl}
+                      </option>
+                    ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+
+              <AvGroup>
+                <Label for="relatedVideos">
+                  <Translate contentKey="lucciadminApp.serviceItem.relatedVideos">Realated Videos</Translate>
+                </Label>
+                <AvInput type="select" className="form-control"
+                         name="relatedVideos" value={serviceItemEntity.relatedVideos ? serviceItemEntity.relatedVideos.map(video => video.id) : []}
+                         multiple>
+                  {videos
+                    ? videos.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.url}
+                      </option>
+                    ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+
+
               <Button tag={Link} id="cancel-save" to="/service-item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -138,6 +180,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   imgUrls: storeState.imgUrl.entities,
+  videos: storeState.video.entities,
   serviceItemEntity: storeState.serviceItem.entity,
   loading: storeState.serviceItem.loading,
   updating: storeState.serviceItem.updating,
@@ -146,6 +189,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getImgUrls,
+  getVideos,
   getEntity,
   updateEntity,
   createEntity,

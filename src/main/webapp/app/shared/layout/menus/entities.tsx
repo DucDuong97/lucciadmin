@@ -29,6 +29,12 @@ export const EntitiesMenu = props => (
     <MenuItem icon="asterisk" to="/person">
       <Translate contentKey="global.menu.entities.person" />
     </MenuItem>
+    <MenuItem icon="asterisk" to="/booking">
+      <Translate contentKey="global.menu.entities.booking" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/payment">
+      <Translate contentKey="global.menu.entities.payment" />
+    </MenuItem>
     {/*<MenuItem icon="asterisk" to="/doctor">*/}
     {/*  <Translate contentKey="global.menu.entities.doctor" />*/}
     {/*</MenuItem>*/}
@@ -42,30 +48,6 @@ export const EntitiesMenu = props => (
     {/*  <Translate contentKey="global.menu.entities.accountant" />*/}
     {/*</MenuItem>*/}
 
-    <MenuItem icon="asterisk" to="/booking">
-      <Translate contentKey="global.menu.entities.booking" />
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/payment">
-      <Translate contentKey="global.menu.entities.payment" />
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/service-item">
-      <Translate contentKey="global.menu.entities.serviceItem" />
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/process">
-      <Translate contentKey="global.menu.entities.process" />
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/pricing-card">
-      <Translate contentKey="global.menu.entities.pricingCard" />
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/pricing-content">
-      <Translate contentKey="global.menu.entities.pricingContent" />
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/blog">
-      <Translate contentKey="global.menu.entities.blog" />
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/branch">
-      <Translate contentKey="global.menu.entities.branch" />
-    </MenuItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
   </NavDropdown>
 );

@@ -13,20 +13,20 @@ export const WebContentMenu = props => (
     id="entity-menu"
     style={{ maxHeight: '80vh', overflow: 'auto' }}
   >
-    {/*<MenuItem icon="asterisk" to="/service-option">*/}
-    {/*  <Translate contentKey="global.menu.web-content.serviceOption" />*/}
-    {/*</MenuItem>*/}
-    {/*<MenuItem icon="asterisk" to="/policy">*/}
-    {/*  <Translate contentKey="global.menu.web-content.policy" />*/}
-    {/*</MenuItem>*/}
-    {/*<MenuItem icon="asterisk" to="/img-url">*/}
-    {/*  <Translate contentKey="global.menu.entities.imgUrl" />*/}
-    {/*</MenuItem>*/}
-    {/*<MenuItem icon="asterisk" to="/process">*/}
-    {/*  <Translate contentKey="global.menu.entities.process" />*/}
-    {/*</MenuItem>*/}
     <MenuItem icon="asterisk" to="/service-item">
       <Translate contentKey="global.menu.web-content.serviceItem" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/pricing-card">
+      <Translate contentKey="global.menu.entities.pricingCard" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/pricing-content">
+      <Translate contentKey="global.menu.entities.pricingContent" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/process">
+      <Translate contentKey="global.menu.entities.process" />
+    </MenuItem>
+    <MenuItem icon="asterisk" to="/video">
+      <Translate contentKey="global.menu.entities.video" />
     </MenuItem>
     <MenuItem icon="asterisk" to="/achievement">
       <Translate contentKey="global.menu.web-content.achievement" />
@@ -40,9 +40,15 @@ export const WebContentMenu = props => (
     <MenuItem icon="asterisk" to="/singleton-content">
       <Translate contentKey="global.menu.web-content.singletonContent" />
     </MenuItem>
-    <MenuItem icon="asterisk" to="/video">
-      <Translate contentKey="global.menu.entities.video" />
+    <MenuItem icon="asterisk" to="/policy">
+      <Translate contentKey="global.menu.web-content.policy" />
     </MenuItem>
+    <MenuItem icon="asterisk" to="/branch">
+      <Translate contentKey="global.menu.entities.branch" />
+    </MenuItem>
+    {/*<MenuItem icon="asterisk" to="/img-url">*/}
+    {/*  <Translate contentKey="global.menu.entities.imgUrl" />*/}
+    {/*</MenuItem>*/}
     {/* jhipster-needle-add-entity-to-menu - JHipster will add web-content to the menu here */}
   </NavDropdown>
 );

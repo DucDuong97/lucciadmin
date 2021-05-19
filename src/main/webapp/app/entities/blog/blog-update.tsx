@@ -121,7 +121,8 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                 </Label>
                 <AvField
                   id="blog-content"
-                  type="text"
+                  type="textarea"
+                  rows="10"
                   name="content"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
@@ -143,7 +144,7 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                   {imgUrls
                     ? imgUrls.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.imgUrl}
                         </option>
                       ))
                     : null}
@@ -158,7 +159,7 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                   {serviceItems
                     ? serviceItems.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}

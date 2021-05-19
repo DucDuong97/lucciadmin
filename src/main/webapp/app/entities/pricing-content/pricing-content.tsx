@@ -9,6 +9,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './pricing-content.reducer';
 import { IPricingContent } from 'app/shared/model/pricing-content.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {faCheck, faTimes} from "@fortawesome/free-solid-svg-icons";
 
 export interface IPricingContentProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -57,10 +58,10 @@ export const PricingContent = (props: IPricingContentProps) => {
                     </Button>
                   </td>
                   <td>{pricingContent.content}</td>
-                  <td>{pricingContent.pro ? 'true' : 'false'}</td>
+                  <td><FontAwesomeIcon icon={pricingContent.pro ? faCheck : faTimes} /></td>
                   <td>
                     {pricingContent.pricingCard ? (
-                      <Link to={`pricing-card/${pricingContent.pricingCard.id}`}>{pricingContent.pricingCard.id}</Link>
+                      <Link to={`pricing-card/${pricingContent.pricingCard.id}`}>{pricingContent.pricingCard.name}</Link>
                     ) : (
                       ''
                     )}

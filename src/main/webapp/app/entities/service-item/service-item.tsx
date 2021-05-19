@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './service-item.reducer';
-import { IServiceItem } from 'app/shared/model/service-item.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
 export interface IServiceItemProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -34,9 +32,6 @@ export const ServiceItem = (props: IServiceItemProps) => {
             <thead>
               <tr>
                 <th>
-                  <Translate contentKey="global.field.id">ID</Translate>
-                </th>
-                <th>
                   <Translate contentKey="lucciadminApp.serviceItem.name">Name</Translate>
                 </th>
                 <th>
@@ -51,14 +46,11 @@ export const ServiceItem = (props: IServiceItemProps) => {
             <tbody>
               {serviceItemList.map((serviceItem, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${serviceItem.id}`} color="link" size="sm">
-                      {serviceItem.id}
-                    </Button>
-                  </td>
                   <td>{serviceItem.name}</td>
                   <td>{serviceItem.description}</td>
-                  <td>{serviceItem.imgUrl ? <Link to={`img-url/${serviceItem.imgUrl.id}`}>{serviceItem.imgUrl.id}</Link> : ''}</td>
+                  <td>{serviceItem.imgUrl ? serviceItem.imgUrl.imgUrl : ''}</td>
+
+                  {/*item buttons*/}
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${serviceItem.id}`} color="info" size="sm">

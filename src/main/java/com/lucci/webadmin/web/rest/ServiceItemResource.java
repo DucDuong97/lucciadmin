@@ -1,7 +1,9 @@
 package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.ServiceItem;
+import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.service.ServiceItemService;
+import com.lucci.webadmin.service.VideoService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -33,9 +35,13 @@ public class ServiceItemResource {
     private String applicationName;
 
     private final ServiceItemService serviceItemService;
+    private final ImgUrlService imgUrlService;
+    private final VideoService videoService;
 
-    public ServiceItemResource(ServiceItemService serviceItemService) {
+    public ServiceItemResource(ServiceItemService serviceItemService, ImgUrlService imgUrlService, VideoService videoService) {
         this.serviceItemService = serviceItemService;
+        this.imgUrlService = imgUrlService;
+        this.videoService = videoService;
     }
 
     /**
@@ -71,6 +77,24 @@ public class ServiceItemResource {
         log.debug("REST request to update ServiceItem : {}", serviceItem);
         if (serviceItem.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (serviceItem.getCustomerImgUrls() != null) {
+            serviceItem.getCustomerImgUrls().forEach(img ->
+                imgUrlService.findOne(img.getId())
+                .ifPresent(imgUrl -> {
+                    img.setImgUrl(imgUrl.getImgUrl());
+                    img.setServiceItem(serviceItem);
+                })
+            );
+        }
+        if (serviceItem.getRelatedVideos() != null) {
+            serviceItem.getRelatedVideos().forEach(vid ->
+                videoService.findOne(vid.getId())
+                    .ifPresent(imgUrl -> {
+                        vid.setUrl(imgUrl.getUrl());
+                        vid.setServiceItem(serviceItem);
+                    })
+            );
         }
         ServiceItem result = serviceItemService.save(serviceItem);
         return ResponseEntity.ok()

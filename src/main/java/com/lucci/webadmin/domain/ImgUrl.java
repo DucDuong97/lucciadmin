@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "img_url")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
 public class ImgUrl implements Serializable {
 
     private static final long serialVersionUID = 1L;

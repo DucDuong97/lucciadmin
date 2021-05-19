@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -34,29 +35,35 @@ public class ServiceItem implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     private ImgUrl imgUrl;
 
     @OneToMany(mappedBy = "service")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<ServiceOption> options = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem")
+    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Process> processes = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem")
+    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Blog> relatedBlogs = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem")
+    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Video> relatedVideos = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem")
+    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<ImgUrl> customerImgUrls = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem")
+    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<PricingCard> pricingCards = new HashSet<>();
 

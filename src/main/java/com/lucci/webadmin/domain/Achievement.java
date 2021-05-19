@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -32,6 +33,7 @@ public class Achievement implements Serializable {
     private Long number;
 
     @OneToOne
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     private ImgUrl imgUrl;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -108,7 +108,7 @@ export const PricingContentUpdate = (props: IPricingContentUpdateProps) => {
                   {pricingCards
                     ? pricingCards.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}

@@ -94,7 +94,8 @@ export const PolicyUpdate = (props: IPolicyUpdateProps) => {
                 </Label>
                 <AvField
                   id="policy-content"
-                  type="text"
+                  type="textarea"
+                  rows="10"
                   name="content"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },

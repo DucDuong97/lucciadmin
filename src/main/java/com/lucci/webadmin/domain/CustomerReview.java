@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -36,6 +37,7 @@ public class CustomerReview implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
+    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     private ImgUrl customerImgUrl;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
