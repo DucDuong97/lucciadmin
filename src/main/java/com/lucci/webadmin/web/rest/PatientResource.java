@@ -57,10 +57,12 @@ public class PatientResource {
         if (patient.getId() != null) {
             throw new BadRequestAlertException("A new patient cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (patient.getPerson().getId() != null) {
-          throw new BadRequestAlertException("A new patient cannot already have an ID", ENTITY_NAME, "idexists");
+        if (patient.getPerson() != null) {
+            if (patient.getPerson().getId() != null) {
+                throw new BadRequestAlertException("A new patient cannot already have an ID", ENTITY_NAME, "idexists");
+            }
+            personService.save(patient.getPerson());
         }
-        personService.save(patient.getPerson());
         Patient result = patientService.save(patient);
         return ResponseEntity.created(new URI("/api/patients/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
