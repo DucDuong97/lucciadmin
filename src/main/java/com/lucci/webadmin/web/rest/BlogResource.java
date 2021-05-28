@@ -83,6 +83,7 @@ public class BlogResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of blogs in body.
      */
+    @CrossOrigin
     @GetMapping("/blogs")
     public List<Blog> getAllBlogs() {
         log.debug("REST request to get all Blogs");
@@ -95,6 +96,7 @@ public class BlogResource {
      * @param id the id of the blog to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the blog, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/blogs/{id}")
     public ResponseEntity<Blog> getBlog(@PathVariable Long id) {
         log.debug("REST request to get Blog : {}", id);

@@ -83,6 +83,7 @@ public class SingletonContentResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of singletonContents in body.
      */
+    @CrossOrigin
     @GetMapping("/singleton-contents")
     public List<SingletonContent> getAllSingletonContents() {
         log.debug("REST request to get all SingletonContents");
@@ -95,6 +96,7 @@ public class SingletonContentResource {
      * @param id the id of the singletonContent to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the singletonContent, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/singleton-contents/{id}")
     public ResponseEntity<SingletonContent> getSingletonContent(@PathVariable Long id) {
         log.debug("REST request to get SingletonContent : {}", id);

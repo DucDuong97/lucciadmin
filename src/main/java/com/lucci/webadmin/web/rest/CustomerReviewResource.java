@@ -83,6 +83,7 @@ public class CustomerReviewResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of customerReviews in body.
      */
+    @CrossOrigin
     @GetMapping("/customer-reviews")
     public List<CustomerReview> getAllCustomerReviews() {
         log.debug("REST request to get all CustomerReviews");
@@ -95,6 +96,7 @@ public class CustomerReviewResource {
      * @param id the id of the customerReview to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerReview, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/customer-reviews/{id}")
     public ResponseEntity<CustomerReview> getCustomerReview(@PathVariable Long id) {
         log.debug("REST request to get CustomerReview : {}", id);

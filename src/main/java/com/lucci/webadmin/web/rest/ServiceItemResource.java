@@ -107,6 +107,7 @@ public class ServiceItemResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of serviceItems in body.
      */
+    @CrossOrigin
     @GetMapping("/service-items")
     public List<ServiceItem> getAllServiceItems() {
         log.debug("REST request to get all ServiceItems");
@@ -119,6 +120,7 @@ public class ServiceItemResource {
      * @param id the id of the serviceItem to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the serviceItem, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/service-items/{id}")
     public ResponseEntity<ServiceItem> getServiceItem(@PathVariable Long id) {
         log.debug("REST request to get ServiceItem : {}", id);

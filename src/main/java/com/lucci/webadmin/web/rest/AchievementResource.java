@@ -83,6 +83,7 @@ public class AchievementResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of achievements in body.
      */
+    @CrossOrigin
     @GetMapping("/achievements")
     public List<Achievement> getAllAchievements() {
         log.debug("REST request to get all Achievements");
@@ -95,6 +96,7 @@ public class AchievementResource {
      * @param id the id of the achievement to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the achievement, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/achievements/{id}")
     public ResponseEntity<Achievement> getAchievement(@PathVariable Long id) {
         log.debug("REST request to get Achievement : {}", id);

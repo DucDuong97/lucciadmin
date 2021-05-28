@@ -83,6 +83,7 @@ public class ImgUrlResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of imgUrls in body.
      */
+    @CrossOrigin
     @GetMapping("/img-urls")
     public List<ImgUrl> getAllImgUrls() {
         log.debug("REST request to get all ImgUrls");
@@ -95,6 +96,7 @@ public class ImgUrlResource {
      * @param id the id of the imgUrl to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the imgUrl, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/img-urls/{id}")
     public ResponseEntity<ImgUrl> getImgUrl(@PathVariable Long id) {
         log.debug("REST request to get ImgUrl : {}", id);

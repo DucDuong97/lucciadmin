@@ -83,6 +83,7 @@ public class BranchResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of branches in body.
      */
+    @CrossOrigin
     @GetMapping("/branches")
     public List<Branch> getAllBranches() {
         log.debug("REST request to get all Branches");
@@ -95,6 +96,7 @@ public class BranchResource {
      * @param id the id of the branch to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the branch, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/branches/{id}")
     public ResponseEntity<Branch> getBranch(@PathVariable Long id) {
         log.debug("REST request to get Branch : {}", id);

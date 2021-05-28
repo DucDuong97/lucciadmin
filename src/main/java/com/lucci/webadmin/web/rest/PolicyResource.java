@@ -83,6 +83,7 @@ public class PolicyResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of policies in body.
      */
+    @CrossOrigin
     @GetMapping("/policies")
     public List<Policy> getAllPolicies() {
         log.debug("REST request to get all Policies");
@@ -95,6 +96,7 @@ public class PolicyResource {
      * @param id the id of the policy to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the policy, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/policies/{id}")
     public ResponseEntity<Policy> getPolicy(@PathVariable Long id) {
         log.debug("REST request to get Policy : {}", id);

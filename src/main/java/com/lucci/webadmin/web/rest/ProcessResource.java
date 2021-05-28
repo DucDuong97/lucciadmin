@@ -83,6 +83,7 @@ public class ProcessResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of processes in body.
      */
+    @CrossOrigin
     @GetMapping("/processes")
     public List<Process> getAllProcesses() {
         log.debug("REST request to get all Processes");
@@ -95,6 +96,7 @@ public class ProcessResource {
      * @param id the id of the process to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the process, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/processes/{id}")
     public ResponseEntity<Process> getProcess(@PathVariable Long id) {
         log.debug("REST request to get Process : {}", id);

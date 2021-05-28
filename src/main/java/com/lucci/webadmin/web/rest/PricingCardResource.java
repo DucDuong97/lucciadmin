@@ -83,6 +83,7 @@ public class PricingCardResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of pricingCards in body.
      */
+    @CrossOrigin
     @GetMapping("/pricing-cards")
     public List<PricingCard> getAllPricingCards() {
         log.debug("REST request to get all PricingCards");
@@ -95,6 +96,7 @@ public class PricingCardResource {
      * @param id the id of the pricingCard to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pricingCard, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/pricing-cards/{id}")
     public ResponseEntity<PricingCard> getPricingCard(@PathVariable Long id) {
         log.debug("REST request to get PricingCard : {}", id);

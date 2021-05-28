@@ -83,6 +83,7 @@ public class ServiceOptionResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of serviceOptions in body.
      */
+    @CrossOrigin
     @GetMapping("/service-options")
     public List<ServiceOption> getAllServiceOptions() {
         log.debug("REST request to get all ServiceOptions");
@@ -95,6 +96,7 @@ public class ServiceOptionResource {
      * @param id the id of the serviceOption to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the serviceOption, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/service-options/{id}")
     public ResponseEntity<ServiceOption> getServiceOption(@PathVariable Long id) {
         log.debug("REST request to get ServiceOption : {}", id);
