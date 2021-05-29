@@ -9,14 +9,18 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistra
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-@Profile({JHipsterConstants.SPRING_PROFILE_PRODUCTION})
 public class StaticResourcesWebConfiguration implements WebMvcConfigurer {
 
-    protected static final String[] RESOURCE_LOCATIONS = new String[]{"classpath:/static/app/", "classpath:/static/content/", "classpath:/static/i18n/"};
-    protected static final String[] RESOURCE_PATHS = new String[]{"/app/*", "/content/*", "/i18n/*"};
+    private static final String IMAGE_DIR_NAME = "images";
+    private static final String IMAGE_DIR_ABS_PATH = "file:/"+ Paths.get(IMAGE_DIR_NAME).toFile().getAbsolutePath() + "/";
+    protected static final String[] RESOURCE_LOCATIONS = new String[]{
+        "classpath:/static/app/", "classpath:/static/content/", "classpath:/static/i18n/", IMAGE_DIR_ABS_PATH};
+    protected static final String[] RESOURCE_PATHS = new String[]{
+        "/app/*", "/content/*", "/i18n/*", "/" + IMAGE_DIR_NAME + "/**"};
 
     private final JHipsterProperties jhipsterProperties;
 

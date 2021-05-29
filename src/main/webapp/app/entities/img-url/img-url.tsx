@@ -39,6 +39,9 @@ export const ImgUrl = (props: IImgUrlProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.imgUrl.imgUrl">Img Url</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.imgUrl.imgUrl">Img Url</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -51,6 +54,7 @@ export const ImgUrl = (props: IImgUrlProps) => {
                     </Button>
                   </td>
                   <td>{imgUrl.imgUrl}</td>
+                  <img src={`${imgUrl.imgUrl}`} alt="hello world"/>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${imgUrl.id}`} color="info" size="sm">

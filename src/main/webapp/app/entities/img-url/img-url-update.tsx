@@ -131,5 +131,4 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
-// @ts-ignore
 export default connect(mapStateToProps, mapDispatchToProps)(ImgUrlUpdate);
