@@ -9,29 +9,25 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IServiceItem } from 'app/shared/model/service-item.model';
 import { getEntities as getServiceItems } from 'app/entities/service-item/service-item.reducer';
-import { getEntity, updateEntity, createEntity, reset } from './img-url.reducer';
+import {getEntity, updateEntity, createEntity, reset, uploadImage} from './img-url.reducer';
 import { IImgUrl } from 'app/shared/model/img-url.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import {toast} from "react-toastify";
+import axios from "axios";
 
 export interface IImgUrlUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
-  const [serviceItemId, setServiceItemId] = useState('0');
-  const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { imgUrlEntity, serviceItems, loading, updating } = props;
+  const { loading, updating } = props;
 
   const handleClose = () => {
     props.history.goBack();
   };
 
   useEffect(() => {
-    if (isNew) {
-      props.reset();
-    } else {
-      props.getEntity(props.match.params.id);
-    }
+    props.reset();
 
     props.getServiceItems();
   }, []);
@@ -42,19 +38,32 @@ export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
     }
   }, [props.updateSuccess]);
 
-  const saveEntity = (event, errors, values) => {
-    if (errors.length === 0) {
-      const entity = {
-        ...imgUrlEntity,
-        ...values,
-      };
+  const [selectedFile, setSelectedFile] = useState<File>();
+  const [isFilePicked, setIsFilePicked] = useState(false);
 
-      if (isNew) {
-        props.createEntity(entity);
-      } else {
-        props.updateEntity(entity);
-      }
+  const changeHandler = (event) => {
+    const imgType = event.target.files[0].type.split('/')[0];
+    if (imgType !== 'image') {
+      setIsFilePicked(false);
+      toast.error("Wrong file format");
+      return;
     }
+    setSelectedFile(event.target.files[0]);
+    setIsFilePicked(true);
+  };
+  const saveEntity = (event, errors, values) => {
+    if (!isFilePicked) {
+      toast.error("Please choose an image");
+      return;
+    }
+    props.uploadImage(selectedFile);
+    // const formData = new FormData();
+    // formData.append('image', selectedFile);
+    // axios.post('api/img-urls/upload', formData, {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data'
+    //   }
+    // });
   };
 
   return (
@@ -71,28 +80,16 @@ export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
           {loading ? (
             <p>Loading...</p>
           ) : (
-            <AvForm model={isNew ? {} : imgUrlEntity} onSubmit={saveEntity}>
-              {!isNew ? (
-                <AvGroup>
-                  <Label for="img-url-id">
-                    <Translate contentKey="global.field.id">ID</Translate>
-                  </Label>
-                  <AvInput id="img-url-id" type="text" className="form-control" name="id" required readOnly />
-                </AvGroup>
-              ) : null}
-              <AvGroup>
-                <Label id="imgUrlLabel" for="img-url-imgUrl">
-                  <Translate contentKey="lucciadminApp.imgUrl.imgUrl">Img Url</Translate>
-                </Label>
-                <AvField
-                  id="img-url-imgUrl"
-                  type="text"
-                  name="imgUrl"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
-              </AvGroup>
+            <AvForm onSubmit={saveEntity}>
+              <input type="file" name="file" onChange={changeHandler} />
+              {isFilePicked ? (
+                <div>
+                  <p>Filename: {selectedFile.name}</p>
+                  <p>Size in bytes: {selectedFile.size}</p>
+                </div>
+              ) : (
+                <p>Select a file to show details</p>
+              )}
               <Button tag={Link} id="cancel-save" to="/img-url" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -101,7 +98,7 @@ export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
                 </span>
               </Button>
               &nbsp;
-              <Button color="primary" id="save-entity" type="submit" disabled={updating}>
+              <Button color="primary" id="save-entity" type="submit" disabled={updating || !isFilePicked}>
                 <FontAwesomeIcon icon="save" />
                 &nbsp;
                 <Translate contentKey="entity.action.save">Save</Translate>
@@ -126,6 +123,7 @@ const mapDispatchToProps = {
   getServiceItems,
   getEntity,
   updateEntity,
+  uploadImage,
   createEntity,
   reset,
 };
@@ -133,4 +131,5 @@ const mapDispatchToProps = {
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;
 
+// @ts-ignore
 export default connect(mapStateToProps, mapDispatchToProps)(ImgUrlUpdate);

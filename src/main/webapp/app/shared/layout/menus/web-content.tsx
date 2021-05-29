@@ -46,9 +46,9 @@ export const WebContentMenu = props => (
     <MenuItem icon="asterisk" to="/branch">
       <Translate contentKey="global.menu.entities.branch" />
     </MenuItem>
-    {/*<MenuItem icon="asterisk" to="/img-url">*/}
-    {/*  <Translate contentKey="global.menu.entities.imgUrl" />*/}
-    {/*</MenuItem>*/}
+    <MenuItem icon="asterisk" to="/img-url">
+      <Translate contentKey="global.menu.entities.imgUrl" />
+    </MenuItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add web-content to the menu here */}
   </NavDropdown>
 );

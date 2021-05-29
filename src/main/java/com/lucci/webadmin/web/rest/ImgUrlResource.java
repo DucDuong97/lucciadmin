@@ -4,18 +4,23 @@ import com.lucci.webadmin.domain.ImgUrl;
 import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
+import com.lucci.webadmin.web.rest.utils.FileUploadUtil;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -56,6 +61,17 @@ public class ImgUrlResource {
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
+    @PostMapping("/img-urls/upload")
+    public ResponseEntity<ImgUrl> uploadImage(@RequestParam("image") MultipartFile multipartFile) throws IOException, URISyntaxException {
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+        String uploadDir = "images/";
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        ImgUrl newImg = new ImgUrl();
+        newImg.setImgUrl(uploadDir + fileName);
+        return createImgUrl(newImg);
+    }
+
 
     /**
      * {@code PUT  /img-urls} : Updates an existing imgUrl.
