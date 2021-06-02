@@ -43,9 +43,6 @@ export const Blog = (props: IBlogProps) => {
                   <Translate contentKey="lucciadminApp.blog.publishDate">Publish Date</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="lucciadminApp.blog.content">Content</Translate>
-                </th>
-                <th>
                   <Translate contentKey="lucciadminApp.blog.description">Description</Translate>
                 </th>
                 <th>
@@ -67,7 +64,6 @@ export const Blog = (props: IBlogProps) => {
                   </td>
                   <td>{blog.title}</td>
                   <td>{blog.publishDate ? <TextFormat type="date" value={blog.publishDate} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{blog.content}</td>
                   <td>{blog.description}</td>
                   <td>{blog.titleImgUrl ? <Link to={`img-url/${blog.titleImgUrl.id}`}>{blog.titleImgUrl.imgUrl}</Link> : ''}</td>
                   <td>{blog.serviceItem ? <Link to={`service-item/${blog.serviceItem.id}`}>{blog.serviceItem.name}</Link> : ''}</td>
