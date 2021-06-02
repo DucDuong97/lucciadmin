@@ -121,9 +121,9 @@ export const createEntity: ICrudPutAction<IImgUrl> = entity => async dispatch =>
   return result;
 };
 
-export const uploadImage = (imageFile: File | Blob) => async dispatch => {
+export const uploadImage: ICrudPutAction<IImgUrl> = entity => async dispatch => {
   const formData = new FormData();
-  formData.append('image', imageFile);
+  formData.append('image', entity.imageFile);
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_IMGURL,
     payload:

@@ -54,7 +54,7 @@ export const ImgUrl = (props: IImgUrlProps) => {
                     </Button>
                   </td>
                   <td>{imgUrl.imgUrl}</td>
-                  <img src={`http://localhost:8080/${imgUrl.imgUrl}`} style={{maxWidth: 200, margin:20}} alt="hello world"/>
+                  <img src={`${imgUrl.imgUrl}`} style={{maxWidth: 200, margin:20}} alt="hello world"/>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${imgUrl.id}`} color="info" size="sm">

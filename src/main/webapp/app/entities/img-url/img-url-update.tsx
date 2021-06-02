@@ -14,7 +14,6 @@ import { IImgUrl } from 'app/shared/model/img-url.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
 import {toast} from "react-toastify";
-import axios from "axios";
 
 export interface IImgUrlUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -56,7 +55,7 @@ export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
       toast.error("Please choose an image");
       return;
     }
-    props.uploadImage(selectedFile);
+    props.uploadImage({imageFile: selectedFile});
     // const formData = new FormData();
     // formData.append('image', selectedFile);
     // axios.post('api/img-urls/upload', formData, {

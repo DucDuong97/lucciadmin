@@ -4,6 +4,7 @@ export interface IImgUrl {
   id?: number;
   imgUrl?: string;
   serviceItem?: IServiceItem;
+  imageFile?: File | Blob;
 }
 
 export const defaultValue: Readonly<IImgUrl> = {};
