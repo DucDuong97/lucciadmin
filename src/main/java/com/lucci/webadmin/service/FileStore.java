@@ -2,7 +2,10 @@ package com.lucci.webadmin.service;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -11,6 +14,8 @@ import java.util.Optional;
 
 @Service
 public class FileStore {
+
+    private final Logger log = LoggerFactory.getLogger(FileStore.class);
     private final AmazonS3 amazonS3;
 
     public FileStore(AmazonS3 amazonS3) {
@@ -32,6 +37,12 @@ public class FileStore {
         } catch (AmazonServiceException e) {
             throw new IllegalStateException("Failed to upload the file", e);
         }
+    }
+
+    public void delete(String bucketName, String fileName) {
+        log.debug("Request to delete file: {}/{} on S3",bucketName, fileName);
+        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucketName, fileName);
+        amazonS3.deleteObject(deleteObjectRequest);
     }
 
 //    public byte[] download(String path, String key) {

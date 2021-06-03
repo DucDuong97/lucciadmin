@@ -89,6 +89,15 @@ public class ImgUrlServiceImpl implements ImgUrlService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete ImgUrl : {}", id);
+        Optional<ImgUrl> imgUrlOpt = findOne(id);
+        if (!imgUrlOpt.isPresent()) {
+            return;
+        }
+        String[] split = imgUrlOpt.get().getImgUrl().split("/", 2);
+        if (split.length < 2 || !split[0].equals(BucketName.IMAGE.getBucketName())) {
+            throw new IllegalStateException("image url has incorrect format");
+        }
+        fileStore.delete(split[0], split[1]);
         imgUrlRepository.deleteById(id);
     }
 }
