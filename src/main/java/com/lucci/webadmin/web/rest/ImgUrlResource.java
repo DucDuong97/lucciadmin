@@ -63,13 +63,11 @@ public class ImgUrlResource {
     }
 
     @PostMapping("/img-urls/upload")
-    public ResponseEntity<ImgUrl> uploadImage(@RequestParam("image") MultipartFile multipartFile) throws IOException, URISyntaxException {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-        String uploadDir = "images/";
-        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-        ImgUrl newImg = new ImgUrl();
-        newImg.setImgUrl(uploadDir + fileName);
-        return createImgUrl(newImg);
+    public ResponseEntity<ImgUrl> uploadImage(@RequestParam("image") MultipartFile multipartFile) throws URISyntaxException {
+        ImgUrl result = imgUrlService.upload(multipartFile);
+        return ResponseEntity.created(new URI("/api/img-urls/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+            .body(result);
     }
 
 

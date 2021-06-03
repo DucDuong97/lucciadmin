@@ -1,6 +1,7 @@
 package com.lucci.webadmin.service;
 
 import com.lucci.webadmin.domain.ImgUrl;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,8 @@ public interface ImgUrlService {
      * @return the persisted entity.
      */
     ImgUrl save(ImgUrl imgUrl);
+
+    ImgUrl upload(MultipartFile file);
 
     /**
      * Get all the imgUrls.
