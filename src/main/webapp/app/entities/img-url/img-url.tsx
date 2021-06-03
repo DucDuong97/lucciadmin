@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './img-url.reducer';
 import { IImgUrl } from 'app/shared/model/img-url.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, IMAGE_FILE_SYSTEM_URL} from 'app/config/constants';
 
 export interface IImgUrlProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -54,7 +54,7 @@ export const ImgUrl = (props: IImgUrlProps) => {
                     </Button>
                   </td>
                   <td>{imgUrl.imgUrl}</td>
-                  <img src={`${imgUrl.imgUrl}`} style={{maxWidth: 200, margin:20}} alt="hello world"/>
+                  <img src={`${IMAGE_FILE_SYSTEM_URL+imgUrl.imgUrl}`} style={{maxWidth: 200, margin:20}} alt="hello world"/>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${imgUrl.id}`} color="info" size="sm">
