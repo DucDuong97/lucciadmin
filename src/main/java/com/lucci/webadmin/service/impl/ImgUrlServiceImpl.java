@@ -59,7 +59,8 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         //Save Image in S3 and then save ImgUrl in the database
-        String path = String.format("%s/%s", BucketName.IMAGE.getBucketName(), "images");
+        String folderName = "images";
+        String path = String.format("%s/%s", BucketName.IMAGE.getBucketName(), folderName);
         String fileName = String.format("%s", file.getOriginalFilename());
         try {
             fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
@@ -67,7 +68,7 @@ public class ImgUrlServiceImpl implements ImgUrlService {
             throw new IllegalStateException("Failed to upload file", e);
         }
         ImgUrl newImg = new ImgUrl();
-        newImg.setImgUrl(String.format("%s/%s", path, fileName));
+        newImg.setImgUrl(String.format("%s/%s", folderName, fileName));
         return this.save(newImg);
     }
 
@@ -91,13 +92,10 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         log.debug("Request to delete ImgUrl : {}", id);
         Optional<ImgUrl> imgUrlOpt = findOne(id);
         if (!imgUrlOpt.isPresent()) {
+            log.debug("ImgUrl {} does not exist", id);
             return;
         }
-        String[] split = imgUrlOpt.get().getImgUrl().split("/", 2);
-        if (split.length < 2 || !split[0].equals(BucketName.IMAGE.getBucketName())) {
-            throw new IllegalStateException("image url has incorrect format");
-        }
-        fileStore.delete(split[0], split[1]);
+        fileStore.delete(BucketName.IMAGE.getBucketName(), imgUrlOpt.get().getImgUrl());
         imgUrlRepository.deleteById(id);
     }
 }
