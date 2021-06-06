@@ -39,9 +39,6 @@ export const Policy = (props: IPolicyProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.policy.name">Name</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="lucciadminApp.policy.content">Content</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -54,7 +51,6 @@ export const Policy = (props: IPolicyProps) => {
                     </Button>
                   </td>
                   <td>{policy.name}</td>
-                  <td>{policy.content}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${policy.id}`} color="info" size="sm">

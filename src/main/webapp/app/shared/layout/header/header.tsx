@@ -21,6 +21,7 @@ export interface IHeaderProps {
   isReceptionist: boolean;
   isDoctor: boolean;
   isNurse: boolean;
+  isMarketing: boolean;
   // isAccountant: boolean;
   ribbonEnv: string;
   isInProduction: boolean;
@@ -70,20 +71,15 @@ const Header = (props: IHeaderProps) => {
             {props.isAuthenticated && (props.isAdmin
             || props.isReceptionist)
             && <Payment />}
-            {props.isAuthenticated && props.isAdmin && <WebContentMenu />}
+            {props.isAuthenticated && (props.isAdmin
+            || props.isMarketing)
+            && <WebContentMenu />}
             {props.isAuthenticated && (props.isAdmin
             || props.isReceptionist)
             && <MaterialMenu />}
-            {props.isAuthenticated && <EntitiesMenu />}
-            {props.isAuthenticated && props.isAdmin && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
-
-            {/*{props.isAuthenticated && props.isCustomer && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
-
-            {/*{props.isAuthenticated && props.isReceptionist && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
-
-            {/*{props.isAuthenticated && props.isDoctor && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
-
-            {/*{props.isAuthenticated && props.isAccountant && <AdminMenu showSwagger={props.isSwaggerEnabled} />}*/}
+            {props.isAuthenticated && props.isAdmin
+            && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
+            {/*{props.isAuthenticated && <EntitiesMenu />}*/}
 
             <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />
             <AccountMenu isAuthenticated={props.isAuthenticated} />
