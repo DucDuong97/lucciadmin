@@ -10,6 +10,7 @@ export interface IServiceItem {
   name?: string;
   description?: string;
   imgUrl?: IImgUrl;
+  file?: File;
   options?: IServiceOption[];
   processes?: IProcess[];
   relatedBlogs?: IBlog[];

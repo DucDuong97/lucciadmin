@@ -13,6 +13,7 @@ export const ACTION_TYPES = {
   UPDATE_SERVICEITEM: 'serviceItem/UPDATE_SERVICEITEM',
   DELETE_SERVICEITEM: 'serviceItem/DELETE_SERVICEITEM',
   RESET: 'serviceItem/RESET',
+  CREATE_IMGURL: 'imgUrl/CREATE_IMGURL'
 };
 
 const initialState = {
@@ -113,6 +114,16 @@ export const getEntity: ICrudGetAction<IServiceItem> = id => {
 };
 
 export const createEntity: ICrudPutAction<IServiceItem> = entity => async dispatch => {
+  if (entity.file != null) {
+    const formData = new FormData();
+    formData.append('image', entity.file);
+    const result = await axios.post('api/img-urls/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    entity.imgUrl = result.data;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_SERVICEITEM,
     payload: axios.post(apiUrl, cleanEntity(entity)),

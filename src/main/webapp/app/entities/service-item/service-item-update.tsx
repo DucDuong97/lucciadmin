@@ -7,9 +7,11 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
+import {getEntities as getImgUrls, uploadImage} from 'app/entities/img-url/img-url.reducer';
 import { getEntities as getVideos } from 'app/entities/video/video.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './service-item.reducer';
+import {IMAGE_FILE_SYSTEM_URL} from "app/config/constants";
+import {toast} from "react-toastify";
 
 export interface IServiceItemUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -38,11 +40,22 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
     }
   }, [props.updateSuccess]);
 
+  const [file, setFile] = useState<File>();
+  const changeHandler = (event) => {
+    const imgType = event.target.files[0].type.split('/')[0];
+    if (imgType !== 'image') {
+      toast.error("Wrong file format");
+      return;
+    }
+    setFile(event.target.files[0]);
+  };
+
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const entity = {
         ...serviceItemEntity,
         ...values,
+        file,
         customerImgUrls: values.customerImgUrls.map(value => ({id: value})),
         relatedVideos:   values.relatedVideos.map(value => ({id: value}))
       };
@@ -99,29 +112,20 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                 </Label>
                 <AvField id="service-item-description" type="text" name="description" />
               </AvGroup>
-
+              {/* -------------------------------------------------------------------------------------------------------*/}
               <AvGroup>
                 <Label for="service-item-imgUrl">
                   <Translate contentKey="lucciadminApp.serviceItem.imgUrl">Img Url</Translate>
                 </Label>
-                <AvInput id="service-item-imgUrl" type="select" className="form-control" name="imgUrl.id">
-                  <option value="" key="0" />
-                  {imgUrls
-                    ? imgUrls.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.imgUrl}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-                <Button tag={Link} to={`/img-url/new`} color="primary" size="sm">
-                  <FontAwesomeIcon icon="plus" />{' '}
-                  <span className="d-none d-md-inline">
-                    Add Image URL
-                  </span>
-                </Button>
+                <div className="form-group">
+                  <input type="file" name="file" onChange={changeHandler}/>
+                  {file && <p>Size in bytes: {file.size}</p>}
+                  {serviceItemEntity.imgUrl &&
+                  <img src={`${IMAGE_FILE_SYSTEM_URL+serviceItemEntity.imgUrl.imgUrl}`}
+                       style={{maxWidth: 200, margin:20}} alt="hello world"/>}
+                </div>
               </AvGroup>
-
+              {/* -------------------------------------------------------------------------------------------------------*/}
               <AvGroup>
                 <Label for="customerImgUrls">
                   <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Image URLS</Translate>
@@ -138,7 +142,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
-
+              {/* -------------------------------------------------------------------------------------------------------*/}
               <AvGroup>
                 <Label for="relatedVideos">
                   <Translate contentKey="lucciadminApp.serviceItem.relatedVideos">Realated Videos</Translate>
