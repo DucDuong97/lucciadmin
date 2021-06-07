@@ -40,6 +40,12 @@ public class PricingCardServiceImpl implements PricingCardService {
         return pricingCardRepository.findAll();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<PricingCard> findAllByServiceId(Long id) {
+        log.debug("Request to get all PricingCards by Service ID: {}", id);
+        return pricingCardRepository.findAllByServiceId(id);
+    }
 
     @Override
     @Transactional(readOnly = true)

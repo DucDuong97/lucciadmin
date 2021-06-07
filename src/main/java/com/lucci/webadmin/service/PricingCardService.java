@@ -25,6 +25,7 @@ public interface PricingCardService {
      */
     List<PricingCard> findAll();
 
+    List<PricingCard> findAllByServiceId(Long id);
 
     /**
      * Get the "id" pricingCard.

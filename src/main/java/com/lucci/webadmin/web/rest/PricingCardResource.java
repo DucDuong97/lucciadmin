@@ -90,6 +90,13 @@ public class PricingCardResource {
         return pricingCardService.findAll();
     }
 
+    @CrossOrigin
+    @GetMapping("/pricing-cards/service/{id}")
+    public List<PricingCard> getAllPricingCardsByServiceId(@PathVariable Long id) {
+        log.debug("REST request to get all PricingCards by Service Id: {}", id);
+        return pricingCardService.findAllByServiceId(id);
+    }
+
     /**
      * {@code GET  /pricing-cards/:id} : get the "id" pricingCard.
      *
