@@ -25,6 +25,7 @@ public interface BlogService {
      */
     List<Blog> findAll();
 
+    List<Blog> findAllByServiceId(Long id);
 
     /**
      * Get the "id" blog.

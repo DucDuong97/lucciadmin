@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,12 @@ public class BlogServiceImpl implements BlogService {
     public List<Blog> findAll() {
         log.debug("Request to get all Blogs");
         return blogRepository.findAll();
+    }
+
+    @Override
+    public List<Blog> findAllByServiceId(Long id) {
+        log.debug("Request to get all Blogs by service: {}", id);
+        return id == null ? Collections.emptyList() : blogRepository.findAllByServiceId(id);
     }
 
 

@@ -90,6 +90,13 @@ public class BlogResource {
         return blogService.findAll();
     }
 
+    @CrossOrigin
+    @GetMapping("/blogs/service/{id}")
+    public List<Blog> getAllBlogsByServiceId(@PathVariable Long id) {
+        log.debug("REST request to get all Blogs by Service: {}", id);
+        return blogService.findAllByServiceId(id);
+    }
+
     /**
      * {@code GET  /blogs/:id} : get the "id" blog.
      *

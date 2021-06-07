@@ -90,6 +90,13 @@ public class ProcessResource {
         return processService.findAll();
     }
 
+    @CrossOrigin
+    @GetMapping("/processes/service/{id}")
+    public List<Process> getAllProcessesByServiceId(@PathVariable Long id) {
+        log.debug("REST request to get all Processes by Service Id: {}", id);
+        return processService.findAllByServiceId(id);
+    }
+
     /**
      * {@code GET  /processes/:id} : get the "id" process.
      *

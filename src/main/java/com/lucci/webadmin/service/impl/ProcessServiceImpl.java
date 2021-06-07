@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,12 @@ public class ProcessServiceImpl implements ProcessService {
     public List<Process> findAll() {
         log.debug("Request to get all Processes");
         return processRepository.findAll();
+    }
+
+    @Override
+    public List<Process> findAllByServiceId(Long id) {
+        log.debug("Request to get all Processes by service id: {}", id);
+        return id == null ? Collections.emptyList() : processRepository.findAllByServiceId(id);
     }
 
 

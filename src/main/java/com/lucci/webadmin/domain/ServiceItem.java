@@ -47,12 +47,12 @@ public class ServiceItem implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Process> processes = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "serviceItem", fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Blog> relatedBlogs = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "serviceItem", fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Video> relatedVideos = new HashSet<>();

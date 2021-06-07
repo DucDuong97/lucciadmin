@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface BlogRepository extends JpaRepository<Blog, Long> {
+public interface BlogRepository extends JpaRepository<Blog, Long>, CustomBlogRepository {
 }

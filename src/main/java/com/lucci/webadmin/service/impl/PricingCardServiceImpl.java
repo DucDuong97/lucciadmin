@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class PricingCardServiceImpl implements PricingCardService {
     @Transactional(readOnly = true)
     public List<PricingCard> findAllByServiceId(Long id) {
         log.debug("Request to get all PricingCards by Service ID: {}", id);
-        return pricingCardRepository.findAllByServiceId(id);
+        return id == null ? Collections.emptyList() : pricingCardRepository.findAllByServiceId(id);
     }
 
     @Override
