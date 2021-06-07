@@ -1,5 +1,6 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.domain.ImgUrl;
 import com.lucci.webadmin.domain.ServiceItem;
 import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.service.ServiceItemService;
@@ -13,12 +14,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * REST controller for managing {@link com.lucci.webadmin.domain.ServiceItem}.
@@ -78,6 +81,14 @@ public class ServiceItemResource {
         if (serviceItem.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        Optional<ServiceItem> serviceItemOpt = serviceItemService.findOne(serviceItem.getId());
+        if (!serviceItemOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
+        serviceItemOpt.get().getCustomerImgUrls().forEach(imgUrl -> {
+            imgUrl.setServiceItem(null);
+            imgUrlService.save(imgUrl);
+        });
         if (serviceItem.getCustomerImgUrls() != null) {
             serviceItem.getCustomerImgUrls().forEach(img ->
                 imgUrlService.findOne(img.getId())
@@ -97,6 +108,11 @@ public class ServiceItemResource {
             );
         }
         ServiceItem result = serviceItemService.save(serviceItem);
+        ImgUrl oldImgUrl = serviceItemOpt.get().getImgUrl();
+        if (!serviceItem.getImgUrl().equals(oldImgUrl)) {
+            oldImgUrl.setServiceItem(null);
+            imgUrlService.delete(oldImgUrl.getId());
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, serviceItem.getId().toString()))
             .body(result);
@@ -137,7 +153,13 @@ public class ServiceItemResource {
     @DeleteMapping("/service-items/{id}")
     public ResponseEntity<Void> deleteServiceItem(@PathVariable Long id) {
         log.debug("REST request to delete ServiceItem : {}", id);
+        Optional<ServiceItem> serviceItemOpt = serviceItemService.findOne(id);
+        if (!serviceItemOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
+        ImgUrl imgUrl = serviceItemOpt.get().getImgUrl();
         serviceItemService.delete(id);
+        imgUrlService.delete(imgUrl.getId());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

@@ -113,16 +113,19 @@ export const getEntity: ICrudGetAction<IServiceItem> = id => {
   };
 };
 
+const uploadImage = async file => {
+  const formData = new FormData();
+  formData.append('image', file);
+  return await axios.post('api/img-urls/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+};
+
 export const createEntity: ICrudPutAction<IServiceItem> = entity => async dispatch => {
   if (entity.file != null) {
-    const formData = new FormData();
-    formData.append('image', entity.file);
-    const result = await axios.post('api/img-urls/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-    entity.imgUrl = result.data;
+    entity.imgUrl = (await uploadImage(entity.file)).data;
   }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_SERVICEITEM,
@@ -133,6 +136,9 @@ export const createEntity: ICrudPutAction<IServiceItem> = entity => async dispat
 };
 
 export const updateEntity: ICrudPutAction<IServiceItem> = entity => async dispatch => {
+  if (entity.file != null) {
+    entity.imgUrl = (await uploadImage(entity.file)).data;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_SERVICEITEM,
     payload: axios.put(apiUrl, cleanEntity(entity)),
