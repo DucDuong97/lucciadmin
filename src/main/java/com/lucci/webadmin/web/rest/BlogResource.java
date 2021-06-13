@@ -1,7 +1,10 @@
 package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.Blog;
+import com.lucci.webadmin.domain.ImgUrl;
+import com.lucci.webadmin.domain.ServiceItem;
 import com.lucci.webadmin.service.BlogService;
+import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -33,9 +36,11 @@ public class BlogResource {
     private String applicationName;
 
     private final BlogService blogService;
+    private final ImgUrlService imgUrlService;
 
-    public BlogResource(BlogService blogService) {
+    public BlogResource(BlogService blogService, ImgUrlService imgUrlService) {
         this.blogService = blogService;
+        this.imgUrlService = imgUrlService;
     }
 
     /**
@@ -72,7 +77,16 @@ public class BlogResource {
         if (blog.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        Optional<Blog> blogOpt = blogService.findOne(blog.getId());
+        if (!blogOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
         Blog result = blogService.save(blog);
+        ImgUrl oldImgUrl = blogOpt.get().getTitleImgUrl();
+        if (!blog.getTitleImgUrl().equals(oldImgUrl)) {
+            oldImgUrl.setServiceItem(null);
+            imgUrlService.delete(oldImgUrl.getId());
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, blog.getId().toString()))
             .body(result);
@@ -120,7 +134,13 @@ public class BlogResource {
     @DeleteMapping("/blogs/{id}")
     public ResponseEntity<Void> deleteBlog(@PathVariable Long id) {
         log.debug("REST request to delete Blog : {}", id);
+        Optional<Blog> blogOpt = blogService.findOne(id);
+        if (!blogOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
+        ImgUrl imgUrl = blogOpt.get().getTitleImgUrl();
         blogService.delete(id);
+        imgUrlService.delete(imgUrl.getId());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

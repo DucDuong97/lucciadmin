@@ -7,6 +7,7 @@ export interface IBlog {
   title?: string;
   publishDate?: string;
   content?: string;
+  file?: File;
   description?: string;
   titleImgUrl?: IImgUrl;
   serviceItem?: IServiceItem;

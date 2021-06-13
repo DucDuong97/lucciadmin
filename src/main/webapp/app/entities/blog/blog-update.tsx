@@ -15,6 +15,8 @@ import { getEntity, updateEntity, createEntity, reset } from './blog.reducer';
 import { IBlog } from 'app/shared/model/blog.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { toast } from 'react-toastify';
+import { IMAGE_FILE_SYSTEM_URL } from 'app/config/constants';
 
 export interface IBlogUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -46,6 +48,16 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
     }
   }, [props.updateSuccess]);
 
+  const [file, setFile] = useState<File>();
+  const changeHandler = (event) => {
+    const imgType = event.target.files[0].type.split('/')[0];
+    if (imgType !== 'image') {
+      toast.error("Wrong file format");
+      return;
+    }
+    setFile(event.target.files[0]);
+  };
+
   const saveEntity = (event, errors, values) => {
     values.publishDate = convertDateTimeToServer(values.publishDate);
 
@@ -53,6 +65,7 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
       const entity = {
         ...blogEntity,
         ...values,
+        file,
       };
 
       if (isNew) {
@@ -139,16 +152,13 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                 <Label for="blog-titleImgUrl">
                   <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
                 </Label>
-                <AvInput id="blog-titleImgUrl" type="select" className="form-control" name="titleImgUrl.id">
-                  <option value="" key="0" />
-                  {imgUrls
-                    ? imgUrls.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.imgUrl}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
+                <div className="form-group">
+                  <input type="file" name="file" onChange={changeHandler}/>
+                  {file && <p>Size in bytes: {file.size}</p>}
+                  {blogEntity.titleImgUrl &&
+                  <img src={`${IMAGE_FILE_SYSTEM_URL+blogEntity.titleImgUrl.imgUrl}`}
+                       style={{maxWidth: 200, margin:20}} alt="hello world"/>}
+                </div>
               </AvGroup>
               <AvGroup>
                 <Label for="blog-serviceItem">

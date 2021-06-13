@@ -7,7 +7,7 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import {getEntities as getImgUrls, uploadImage} from 'app/entities/img-url/img-url.reducer';
+import {getEntities as getImgUrls} from 'app/entities/img-url/img-url.reducer';
 import { getEntities as getVideos } from 'app/entities/video/video.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './service-item.reducer';
 import {IMAGE_FILE_SYSTEM_URL} from "app/config/constants";

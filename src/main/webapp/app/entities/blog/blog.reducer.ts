@@ -113,6 +113,16 @@ export const getEntity: ICrudGetAction<IBlog> = id => {
 };
 
 export const createEntity: ICrudPutAction<IBlog> = entity => async dispatch => {
+  if (entity.file != null) {
+    const formData = new FormData();
+    formData.append('image', entity.file);
+    const result = await axios.post('api/img-urls/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    entity.titleImgUrl = result.data;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_BLOG,
     payload: axios.post(apiUrl, cleanEntity(entity)),
@@ -122,6 +132,16 @@ export const createEntity: ICrudPutAction<IBlog> = entity => async dispatch => {
 };
 
 export const updateEntity: ICrudPutAction<IBlog> = entity => async dispatch => {
+  if (entity.file != null) {
+    const formData = new FormData();
+    formData.append('image', entity.file);
+    const result = await axios.post('api/img-urls/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    entity.titleImgUrl = result.data;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_BLOG,
     payload: axios.put(apiUrl, cleanEntity(entity)),
