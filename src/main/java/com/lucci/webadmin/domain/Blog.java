@@ -16,6 +16,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "blog")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
 public class Blog implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +46,6 @@ public class Blog implements Serializable {
     private ImgUrl titleImgUrl;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "relatedBlogs", allowSetters = true)
     private ServiceItem serviceItem;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

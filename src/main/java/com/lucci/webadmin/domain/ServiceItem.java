@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -40,32 +41,33 @@ public class ServiceItem implements Serializable {
 
     @OneToMany(mappedBy = "service")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnore
     private Set<ServiceOption> options = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
+    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnore
     private Set<Process> processes = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
+    @OneToMany(mappedBy = "serviceItem")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnore
     private Set<Blog> relatedBlogs = new HashSet<>();
+
+    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnore
+    private Set<PricingCard> pricingCards = new HashSet<>();
 
     @OneToMany(mappedBy = "serviceItem", fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Video> relatedVideos = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "serviceItem", fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<ImgUrl> customerImgUrls = new HashSet<>();
-
-    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<PricingCard> pricingCards = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {

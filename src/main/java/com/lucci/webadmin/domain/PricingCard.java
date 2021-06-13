@@ -17,6 +17,7 @@ import java.util.Set;
 @Entity
 @Table(name = "pricing_card")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
 public class PricingCard implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -34,12 +35,11 @@ public class PricingCard implements Serializable {
     @Column(name = "price", nullable = false)
     private Integer price;
 
-    @OneToMany(mappedBy = "pricingCard", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pricingCard", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<PricingContent> contents = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "pricingCards", allowSetters = true)
     private ServiceItem serviceItem;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

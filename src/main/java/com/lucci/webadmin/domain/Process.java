@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "process")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
 public class Process implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,7 +33,6 @@ public class Process implements Serializable {
     private Long order;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "processes", allowSetters = true)
     private ServiceItem serviceItem;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
