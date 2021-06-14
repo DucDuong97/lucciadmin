@@ -1,6 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.config.BucketName;
 import com.lucci.webadmin.domain.SingletonContent;
+import com.lucci.webadmin.service.FileStore;
 import com.lucci.webadmin.service.SingletonContentService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
@@ -33,9 +35,11 @@ public class SingletonContentResource {
     private String applicationName;
 
     private final SingletonContentService singletonContentService;
+    private final FileStore fileStore;
 
-    public SingletonContentResource(SingletonContentService singletonContentService) {
+    public SingletonContentResource(SingletonContentService singletonContentService, FileStore fileStore) {
         this.singletonContentService = singletonContentService;
+        this.fileStore = fileStore;
     }
 
     /**
@@ -72,7 +76,19 @@ public class SingletonContentResource {
         if (singletonContent.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        Optional<SingletonContent> scOpt = singletonContentService.findOne(singletonContent.getId());
+        if (!scOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
         SingletonContent result = singletonContentService.save(singletonContent);
+        SingletonContent oldSC = scOpt.get();
+        String oldImgUrl = oldSC.getContent();
+        if (oldSC.getType().name().startsWith("IMG") && !singletonContent.getType().name().startsWith("IMG")) {
+            fileStore.delete(BucketName.IMAGE.getBucketName(), oldImgUrl);
+        }
+        if (!singletonContent.getContent().equals(oldImgUrl)) {
+            fileStore.delete(BucketName.IMAGE.getBucketName(), oldImgUrl);
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, singletonContent.getId().toString()))
             .body(result);
@@ -113,7 +129,12 @@ public class SingletonContentResource {
     @DeleteMapping("/singleton-contents/{id}")
     public ResponseEntity<Void> deleteSingletonContent(@PathVariable Long id) {
         log.debug("REST request to delete SingletonContent : {}", id);
+        Optional<SingletonContent> scOpt = singletonContentService.findOne(id);
+        if (!scOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
         singletonContentService.delete(id);
+        fileStore.delete(BucketName.IMAGE.getBucketName(), scOpt.get().getContent());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

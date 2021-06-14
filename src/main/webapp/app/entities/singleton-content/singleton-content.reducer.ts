@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { ISingletonContent, defaultValue } from 'app/shared/model/singleton-content.model';
+import { upload } from 'app/entities/img-url/img-url.reducer';
 
 export const ACTION_TYPES = {
   FETCH_SINGLETONCONTENT_LIST: 'singletonContent/FETCH_SINGLETONCONTENT_LIST',
@@ -113,6 +114,9 @@ export const getEntity: ICrudGetAction<ISingletonContent> = id => {
 };
 
 export const createEntity: ICrudPutAction<ISingletonContent> = entity => async dispatch => {
+  if (entity.file != null) {
+    entity.content = (await upload(entity.file)).data.imgUrl;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_SINGLETONCONTENT,
     payload: axios.post(apiUrl, cleanEntity(entity)),
@@ -122,6 +126,9 @@ export const createEntity: ICrudPutAction<ISingletonContent> = entity => async d
 };
 
 export const updateEntity: ICrudPutAction<ISingletonContent> = entity => async dispatch => {
+  if (entity.file != null) {
+    entity.content = (await upload(entity.file)).data.imgUrl;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_SINGLETONCONTENT,
     payload: axios.put(apiUrl, cleanEntity(entity)),

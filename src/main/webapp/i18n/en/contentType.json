@@ -2,10 +2,14 @@
   "lucciadminApp": {
     "ContentType": {
       "null": "",
-      "PHONE": "PHONE",
+      "PHONE": "",
       "EMAIL": "EMAIL",
       "ADDRESS": "ADDRESS",
-      "INTRO": "INTRO"
+      "INTRO": "INTRO",
+      "IMG_HOME_BANNER": "Banner chính",
+      "IMG_CONTACT_BANNER": "Banner form liên hệ",
+      "IMG_ACHIEVEMENT_BANNER": "Banner section Thành tựu",
+      "IMG_LOGO": "Logo"
     }
   }
 }

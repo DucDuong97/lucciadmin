@@ -11,6 +11,8 @@ import { getEntity, updateEntity, createEntity, reset } from './singleton-conten
 import { ISingletonContent } from 'app/shared/model/singleton-content.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import {IMAGE_FILE_SYSTEM_URL} from "app/config/constants";
+import { toast } from 'react-toastify';
 
 export interface ISingletonContentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -23,11 +25,14 @@ export const SingletonContentUpdate = (props: ISingletonContentUpdateProps) => {
     props.history.push('/singleton-content');
   };
 
+  const [type, setType] = useState('PHONE');
+
   useEffect(() => {
     if (isNew) {
       props.reset();
     } else {
       props.getEntity(props.match.params.id);
+      setType(singletonContentEntity.type);
     }
   }, []);
 
@@ -37,11 +42,23 @@ export const SingletonContentUpdate = (props: ISingletonContentUpdateProps) => {
     }
   }, [props.updateSuccess]);
 
+  const [file, setFile] = useState<File>();
+
+  const changeHandler = (event) => {
+    const imgType = event.target.files[0].type.split('/')[0];
+    if (imgType !== 'image') {
+      toast.error("Wrong file format");
+      return;
+    }
+    setFile(event.target.files[0]);
+  };
+
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const entity = {
         ...singletonContentEntity,
         ...values,
+        file
       };
 
       if (isNew) {
@@ -84,19 +101,36 @@ export const SingletonContentUpdate = (props: ISingletonContentUpdateProps) => {
                   type="select"
                   className="form-control"
                   name="type"
+                  onChange={event => setType(event.target.value)}
                   value={(!isNew && singletonContentEntity.type) || 'PHONE'}
                 >
                   <option value="PHONE">{translate('lucciadminApp.ContentType.PHONE')}</option>
                   <option value="EMAIL">{translate('lucciadminApp.ContentType.EMAIL')}</option>
                   <option value="ADDRESS">{translate('lucciadminApp.ContentType.ADDRESS')}</option>
                   <option value="INTRO">{translate('lucciadminApp.ContentType.INTRO')}</option>
+                  <option value="IMG_HOME_BANNER">{translate('lucciadminApp.ContentType.IMG_HOME_BANNER')}</option>
+                  <option value="IMG_CONTACT_BANNER">{translate('lucciadminApp.ContentType.IMG_CONTACT_BANNER')}</option>
+                  <option value="IMG_ACHIEVEMENT_BANNER">{translate('lucciadminApp.ContentType.IMG_ACHIEVEMENT_BANNER')}</option>
+                  <option value="IMG_LOGO">{translate('lucciadminApp.ContentType.IMG_LOGO')}</option>
                 </AvInput>
               </AvGroup>
               <AvGroup>
                 <Label id="contentLabel" for="singleton-content-content">
                   <Translate contentKey="lucciadminApp.singletonContent.content">Content</Translate>
                 </Label>
-                <AvField id="singleton-content-content" type="text" name="content" />
+                {
+                  (type ? type.startsWith('IMG') : false)
+                    ?
+                  <div className="form-group">
+                    <input type="file" name="file" onChange={changeHandler}/>
+                    {file && <p>Size in bytes: {file.size}</p>}
+                    {singletonContentEntity.content &&
+                    <img src={`${IMAGE_FILE_SYSTEM_URL+singletonContentEntity.content}`}
+                         style={{maxWidth: 200, margin:20}} alt="hello world"/>}
+                  </div>
+                    :
+                  <AvField id="singleton-content-content" type="text" name="content" />
+                }
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/singleton-content" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
