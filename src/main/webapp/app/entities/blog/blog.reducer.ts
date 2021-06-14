@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IBlog, defaultValue } from 'app/shared/model/blog.model';
+import {upload} from "app/entities/img-url/img-url.reducer";
 
 export const ACTION_TYPES = {
   FETCH_BLOG_LIST: 'blog/FETCH_BLOG_LIST',
@@ -114,14 +115,7 @@ export const getEntity: ICrudGetAction<IBlog> = id => {
 
 export const createEntity: ICrudPutAction<IBlog> = entity => async dispatch => {
   if (entity.file != null) {
-    const formData = new FormData();
-    formData.append('image', entity.file);
-    const result = await axios.post('api/img-urls/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    entity.titleImgUrl = result.data;
+    entity.titleImgUrl = (await upload(entity.file)).data;
   }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_BLOG,
@@ -133,14 +127,7 @@ export const createEntity: ICrudPutAction<IBlog> = entity => async dispatch => {
 
 export const updateEntity: ICrudPutAction<IBlog> = entity => async dispatch => {
   if (entity.file != null) {
-    const formData = new FormData();
-    formData.append('image', entity.file);
-    const result = await axios.post('api/img-urls/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    entity.titleImgUrl = result.data;
+    entity.titleImgUrl = (await upload(entity.file)).data;
   }
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_BLOG,

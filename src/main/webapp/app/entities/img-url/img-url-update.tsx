@@ -56,13 +56,6 @@ export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
       return;
     }
     props.uploadImage({imageFile: selectedFile});
-    // const formData = new FormData();
-    // formData.append('image', selectedFile);
-    // axios.post('api/img-urls/upload', formData, {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data'
-    //   }
-    // });
   };
 
   return (

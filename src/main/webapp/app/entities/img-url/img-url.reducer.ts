@@ -121,17 +121,20 @@ export const createEntity: ICrudPutAction<IImgUrl> = entity => async dispatch =>
   return result;
 };
 
-export const uploadImage: ICrudPutAction<IImgUrl> = entity => async dispatch => {
+export const upload = async file => {
   const formData = new FormData();
-  formData.append('image', entity.imageFile);
+  formData.append('image', file);
+  return axios.post(`${apiUrl}/upload`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+};
+
+export const uploadImage: ICrudPutAction<IImgUrl> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_IMGURL,
-    payload:
-      axios.post('api/img-urls/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }),
+    payload: upload(entity.imageFile),
   });
   dispatch(getEntities());
   return result;
