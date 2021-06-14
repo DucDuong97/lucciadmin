@@ -2,7 +2,7 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.config.BucketName;
 import com.lucci.webadmin.domain.SingletonContent;
-import com.lucci.webadmin.service.FileStore;
+import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.service.SingletonContentService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
@@ -35,11 +35,11 @@ public class SingletonContentResource {
     private String applicationName;
 
     private final SingletonContentService singletonContentService;
-    private final FileStore fileStore;
+    private final ImgUrlService imgUrlService;
 
-    public SingletonContentResource(SingletonContentService singletonContentService, FileStore fileStore) {
+    public SingletonContentResource(SingletonContentService singletonContentService, ImgUrlService imgUrlService) {
         this.singletonContentService = singletonContentService;
-        this.fileStore = fileStore;
+        this.imgUrlService = imgUrlService;
     }
 
     /**
@@ -84,10 +84,10 @@ public class SingletonContentResource {
         SingletonContent oldSC = scOpt.get();
         String oldImgUrl = oldSC.getContent();
         if (oldSC.getType().name().startsWith("IMG") && !singletonContent.getType().name().startsWith("IMG")) {
-            fileStore.delete(BucketName.IMAGE.getBucketName(), oldImgUrl);
+            imgUrlService.findByURL(oldImgUrl).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
         }
         if (!singletonContent.getContent().equals(oldImgUrl)) {
-            fileStore.delete(BucketName.IMAGE.getBucketName(), oldImgUrl);
+            imgUrlService.findByURL(oldImgUrl).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
         }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, singletonContent.getId().toString()))
@@ -134,7 +134,7 @@ public class SingletonContentResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
         }
         singletonContentService.delete(id);
-        fileStore.delete(BucketName.IMAGE.getBucketName(), scOpt.get().getContent());
+        imgUrlService.findByURL(scOpt.get().getContent()).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

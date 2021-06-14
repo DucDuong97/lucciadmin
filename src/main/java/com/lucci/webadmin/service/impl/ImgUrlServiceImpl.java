@@ -88,6 +88,12 @@ public class ImgUrlServiceImpl implements ImgUrlService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Optional<ImgUrl> findByURL(String url) {
+        return imgUrlRepository.findByURL(url);
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete ImgUrl : {}", id);
         Optional<ImgUrl> imgUrlOpt = findOne(id);

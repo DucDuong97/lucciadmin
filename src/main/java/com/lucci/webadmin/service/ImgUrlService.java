@@ -37,6 +37,8 @@ public interface ImgUrlService {
      */
     Optional<ImgUrl> findOne(Long id);
 
+    Optional<ImgUrl> findByURL(String url);
+
     /**
      * Delete the "id" imgUrl.
      *
