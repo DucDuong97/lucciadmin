@@ -2,29 +2,29 @@
   "lucciadminApp": {
     "serviceItem": {
       "home": {
-        "title": "Service Items",
-        "createLabel": "Thêm mới một Service Item",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Service Item",
+        "title": "Dịch vụ",
+        "createLabel": "Thêm mới một Dịch vụ",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Dịch vụ",
         "notFound": "No Service Items found"
       },
-      "created": "Một Service Item mới được tạo với định danh {{ param }}",
-      "updated": "Một Service Item cập nhật với định danh {{ param }}",
-      "deleted": "Một Service Item đã xóa với định danh {{ param }}",
+      "created": "Một Dịch vụ mới được tạo với định danh {{ param }}",
+      "updated": "Một Dịch vụ cập nhật với định danh {{ param }}",
+      "deleted": "Một Dịch vụ đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Service Item {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Dịch vụ {{ id }}?"
       },
       "detail": {
-        "title": "Service Item"
+        "title": "Dịch vụ"
       },
-      "name": "Name",
-      "description": "Description",
-      "imgUrl": "Img Url",
+      "name": "Tên dịch vụ",
+      "description": "Mô tả",
+      "imgUrl": "Url Icon Dịch vụ",
       "options": "Options",
-      "processes": "Processes",
-      "relatedBlogs": "Related Blogs",
-      "relatedVideos": "Related Videos",
-      "customerImgUrls": "Customer Img Urls",
-      "pricingCards": "Pricing Cards"
+      "processes": "Quy trình",
+      "relatedBlogs": "Blogs liên quan",
+      "relatedVideos": "Videos liên quan",
+      "customerImgUrls": "Khách hàng dùng d.vụ",
+      "pricingCards": "Các gói dịch vụ"
     }
   }
 }

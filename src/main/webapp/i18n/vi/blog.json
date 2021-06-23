@@ -16,12 +16,12 @@
       "detail": {
         "title": "Blog"
       },
-      "title": "Title",
-      "publishDate": "Publish Date",
-      "content": "Content",
-      "description": "Description",
-      "titleImgUrl": "Title Img Url",
-      "serviceItem": "Service Item"
+      "title": "Tiêu đề",
+      "publishDate": "Ngày đăng tải",
+      "content": "Nội dung",
+      "description": "Mô tả",
+      "titleImgUrl": "Url Hình ảnh tiêu đề",
+      "serviceItem": "Dịch vụ tương ứng"
     }
   }
 }

@@ -2,23 +2,23 @@
   "lucciadminApp": {
     "achievement": {
       "home": {
-        "title": "Achievements",
-        "createLabel": "Thêm mới một Achievement",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Achievement",
+        "title": "Thành tựu",
+        "createLabel": "Thêm mới một Thành tựu",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Thành tựu",
         "notFound": "No Achievements found"
       },
-      "created": "Một Achievement mới được tạo với định danh {{ param }}",
-      "updated": "Một Achievement cập nhật với định danh {{ param }}",
-      "deleted": "Một Achievement đã xóa với định danh {{ param }}",
+      "created": "Một Thành tựu mới được tạo với định danh {{ param }}",
+      "updated": "Một Thành tựu cập nhật với định danh {{ param }}",
+      "deleted": "Một Thành tựu đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Achievement {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Thành tựu {{ id }}?"
       },
       "detail": {
-        "title": "Achievement"
+        "title": "Thành tựu"
       },
-      "name": "Name",
-      "number": "Number",
-      "imgUrl": "Img Url"
+      "name": "Tên",
+      "number": "Số lượng",
+      "imgUrl": "Url Hình ảnh"
     }
   }
 }

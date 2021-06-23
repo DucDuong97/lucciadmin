@@ -2,23 +2,23 @@
   "lucciadminApp": {
     "process": {
       "home": {
-        "title": "Processes",
-        "createLabel": "Thêm mới một Process",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Process",
+        "title": "Quy trình",
+        "createLabel": "Thêm mới một Quy trình",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Quy trình",
         "notFound": "No Processes found"
       },
-      "created": "Một Process mới được tạo với định danh {{ param }}",
-      "updated": "Một Process cập nhật với định danh {{ param }}",
-      "deleted": "Một Process đã xóa với định danh {{ param }}",
+      "created": "Một Quy trình mới được tạo với định danh {{ param }}",
+      "updated": "Một Quy trình cập nhật với định danh {{ param }}",
+      "deleted": "Một Quy trình đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Process {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Quy trình {{ id }}?"
       },
       "detail": {
-        "title": "Process"
+        "title": "Quy trình"
       },
-      "name": "Name",
-      "order": "Order",
-      "serviceItem": "Service Item"
+      "name": "Tên bước",
+      "order": "Bước thứ",
+      "serviceItem": "Dịch vụ tương ứng"
     }
   }
 }

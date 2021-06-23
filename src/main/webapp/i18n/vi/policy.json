@@ -2,22 +2,22 @@
   "lucciadminApp": {
     "policy": {
       "home": {
-        "title": "Policies",
-        "createLabel": "Thêm mới một Policy",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Policy",
+        "title": "Chính sách",
+        "createLabel": "Thêm mới một Chính sách",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Chính sách",
         "notFound": "No Policies found"
       },
-      "created": "Một Policy mới được tạo với định danh {{ param }}",
-      "updated": "Một Policy cập nhật với định danh {{ param }}",
-      "deleted": "Một Policy đã xóa với định danh {{ param }}",
+      "created": "Một Chính sách mới được tạo với định danh {{ param }}",
+      "updated": "Một Chính sách cập nhật với định danh {{ param }}",
+      "deleted": "Một Chính sách đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Policy {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Chính sách {{ id }}?"
       },
       "detail": {
-        "title": "Policy"
+        "title": "Chính sách"
       },
-      "name": "Name",
-      "content": "Content"
+      "name": "Tên chính sách",
+      "content": "Nội dung"
     }
   }
 }
