@@ -1,6 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.domain.PricingCard;
 import com.lucci.webadmin.domain.PricingContent;
+import com.lucci.webadmin.service.PricingCardService;
 import com.lucci.webadmin.service.PricingContentService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
@@ -33,9 +35,11 @@ public class PricingContentResource {
     private String applicationName;
 
     private final PricingContentService pricingContentService;
+    private final PricingCardService pricingCardService;
 
-    public PricingContentResource(PricingContentService pricingContentService) {
+    public PricingContentResource(PricingContentService pricingContentService, PricingCardService pricingCardService) {
         this.pricingContentService = pricingContentService;
+        this.pricingCardService = pricingCardService;
     }
 
     /**
@@ -52,6 +56,15 @@ public class PricingContentResource {
             throw new BadRequestAlertException("A new pricingContent cannot already have an ID", ENTITY_NAME, "idexists");
         }
         PricingContent result = pricingContentService.save(pricingContent);
+
+        if (pricingContent.getPricingCard() != null) {
+            Optional<PricingCard> pricingCardOpt = pricingCardService.findOne(pricingContent.getPricingCard().getId());
+            pricingCardOpt.ifPresent(pricingCard -> {
+                    pricingCard.getContents().add(pricingContent);
+                    pricingCardService.save(pricingCard);
+                }
+            );
+        }
         return ResponseEntity.created(new URI("/api/pricing-contents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -73,6 +86,14 @@ public class PricingContentResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         PricingContent result = pricingContentService.save(pricingContent);
+        if (pricingContent.getPricingCard() != null) {
+            Optional<PricingCard> pricingCardOpt = pricingCardService.findOne(pricingContent.getPricingCard().getId());
+            pricingCardOpt.ifPresent(pricingCard -> {
+                    pricingCard.getContents().add(pricingContent);
+                    pricingCardService.save(pricingCard);
+                }
+            );
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, pricingContent.getId().toString()))
             .body(result);
