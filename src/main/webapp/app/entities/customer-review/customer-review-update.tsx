@@ -13,6 +13,8 @@ import { getEntity, updateEntity, createEntity, reset } from './customer-review.
 import { ICustomerReview } from 'app/shared/model/customer-review.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { toast } from 'react-toastify';
+import { IMAGE_FILE_SYSTEM_URL } from 'app/config/constants';
 
 export interface ICustomerReviewUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -42,11 +44,22 @@ export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
     }
   }, [props.updateSuccess]);
 
+  const [file, setFile] = useState<File>();
+  const changeHandler = (event) => {
+    const imgType = event.target.files[0].type.split('/')[0];
+    if (imgType !== 'image') {
+      toast.error("Wrong file format");
+      return;
+    }
+    setFile(event.target.files[0]);
+  };
+
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const entity = {
         ...customerReviewEntity,
         ...values,
+        file,
       };
 
       if (isNew) {
@@ -116,22 +129,13 @@ export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
                 <Label for="customer-review-customerImgUrl">
                   <Translate contentKey="lucciadminApp.customerReview.customerImgUrl">Customer Img Url</Translate>
                 </Label>
-                <AvInput id="customer-review-customerImgUrl" type="select" className="form-control" name="customerImgUrl.id">
-                  <option value="" key="0" />
-                  {imgUrls
-                    ? imgUrls.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.imgUrl}
-                      </option>
-                    ))
-                    : null}
-                </AvInput>
-                <Button tag={Link} to={`/img-url/new`} color="primary" size="sm">
-                  <FontAwesomeIcon icon="plus" />{' '}
-                  <span className="d-none d-md-inline">
-                    Add Image URL
-                  </span>
-                </Button>
+                <div className="form-group">
+                  <input type="file" name="file" onChange={changeHandler}/>
+                  {file && <p>Size in bytes: {file.size}</p>}
+                  {customerReviewEntity.customerImgUrl &&
+                  <img src={`${IMAGE_FILE_SYSTEM_URL+customerReviewEntity.customerImgUrl.imgUrl}`}
+                       style={{maxWidth: 200, margin:20}} alt="hello world"/>}
+                </div>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/customer-review" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

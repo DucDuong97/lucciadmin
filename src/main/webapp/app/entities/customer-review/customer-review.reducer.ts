@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { ICustomerReview, defaultValue } from 'app/shared/model/customer-review.model';
+import { upload } from 'app/entities/img-url/img-url.reducer';
 
 export const ACTION_TYPES = {
   FETCH_CUSTOMERREVIEW_LIST: 'customerReview/FETCH_CUSTOMERREVIEW_LIST',
@@ -113,6 +114,9 @@ export const getEntity: ICrudGetAction<ICustomerReview> = id => {
 };
 
 export const createEntity: ICrudPutAction<ICustomerReview> = entity => async dispatch => {
+  if (entity.file != null) {
+    entity.customerImgUrl = (await upload(entity.file)).data;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_CUSTOMERREVIEW,
     payload: axios.post(apiUrl, cleanEntity(entity)),
@@ -122,6 +126,9 @@ export const createEntity: ICrudPutAction<ICustomerReview> = entity => async dis
 };
 
 export const updateEntity: ICrudPutAction<ICustomerReview> = entity => async dispatch => {
+  if (entity.file != null) {
+    entity.customerImgUrl = (await upload(entity.file)).data;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_CUSTOMERREVIEW,
     payload: axios.put(apiUrl, cleanEntity(entity)),

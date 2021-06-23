@@ -6,6 +6,7 @@ export interface ICustomerReview {
   customerAddress?: string;
   comment?: string;
   customerImgUrl?: IImgUrl;
+  file?: File;
 }
 
 export const defaultValue: Readonly<ICustomerReview> = {};

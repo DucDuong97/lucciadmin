@@ -1,7 +1,10 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.domain.Blog;
 import com.lucci.webadmin.domain.CustomerReview;
+import com.lucci.webadmin.domain.ImgUrl;
 import com.lucci.webadmin.service.CustomerReviewService;
+import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -33,9 +36,11 @@ public class CustomerReviewResource {
     private String applicationName;
 
     private final CustomerReviewService customerReviewService;
+    private final ImgUrlService imgUrlService;
 
-    public CustomerReviewResource(CustomerReviewService customerReviewService) {
+    public CustomerReviewResource(CustomerReviewService customerReviewService, ImgUrlService imgUrlService) {
         this.customerReviewService = customerReviewService;
+        this.imgUrlService = imgUrlService;
     }
 
     /**
@@ -73,6 +78,15 @@ public class CustomerReviewResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         CustomerReview result = customerReviewService.save(customerReview);
+        Optional<CustomerReview> crOpt = customerReviewService.findOne(customerReview.getId());
+        if (!crOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
+        ImgUrl oldImgUrl = crOpt.get().getCustomerImgUrl();
+        if (!customerReview.getCustomerImgUrl().equals(oldImgUrl)) {
+            oldImgUrl.setServiceItem(null);
+            imgUrlService.delete(oldImgUrl.getId());
+        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, customerReview.getId().toString()))
             .body(result);
@@ -114,6 +128,12 @@ public class CustomerReviewResource {
     public ResponseEntity<Void> deleteCustomerReview(@PathVariable Long id) {
         log.debug("REST request to delete CustomerReview : {}", id);
         customerReviewService.delete(id);
+        Optional<CustomerReview> crOpt = customerReviewService.findOne(id);
+        if (!crOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
+        ImgUrl imgUrl = crOpt.get().getCustomerImgUrl();
+        imgUrlService.delete(imgUrl.getId());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }
