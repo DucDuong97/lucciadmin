@@ -83,7 +83,7 @@ public class BlogResource {
         }
         Blog result = blogService.save(blog);
         ImgUrl oldImgUrl = blogOpt.get().getTitleImgUrl();
-        if (!blog.getTitleImgUrl().equals(oldImgUrl)) {
+        if (oldImgUrl != null && !oldImgUrl.equals(blog.getTitleImgUrl())) {
             oldImgUrl.setServiceItem(null);
             imgUrlService.delete(oldImgUrl.getId());
         }
@@ -138,9 +138,11 @@ public class BlogResource {
         if (!blogOpt.isPresent()) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
         }
-        ImgUrl imgUrl = blogOpt.get().getTitleImgUrl();
         blogService.delete(id);
-        imgUrlService.delete(imgUrl.getId());
+        ImgUrl imgUrl = blogOpt.get().getTitleImgUrl();
+        if (imgUrl != null) {
+            imgUrlService.delete(imgUrl.getId());
+        }
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

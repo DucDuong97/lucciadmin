@@ -109,7 +109,7 @@ public class ServiceItemResource {
         }
         ServiceItem result = serviceItemService.save(serviceItem);
         ImgUrl oldImgUrl = serviceItemOpt.get().getImgUrl();
-        if (!serviceItem.getImgUrl().equals(oldImgUrl)) {
+        if (oldImgUrl != null && !oldImgUrl.equals(serviceItem.getImgUrl())) {
             oldImgUrl.setServiceItem(null);
             imgUrlService.delete(oldImgUrl.getId());
         }
@@ -157,9 +157,11 @@ public class ServiceItemResource {
         if (!serviceItemOpt.isPresent()) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
         }
-        ImgUrl imgUrl = serviceItemOpt.get().getImgUrl();
         serviceItemService.delete(id);
-        imgUrlService.delete(imgUrl.getId());
+        ImgUrl imgUrl = serviceItemOpt.get().getImgUrl();
+        if (imgUrl != null) {
+            imgUrlService.delete(imgUrl.getId());
+        }
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }
