@@ -85,13 +85,10 @@ public class ServiceItemResource {
         if (!serviceItemOpt.isPresent()) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
         }
-//        serviceItemOpt.get().getCustomerImgUrls().forEach(imgUrlService::save);
         if (serviceItem.getCustomerImgUrls() != null) {
             serviceItem.getCustomerImgUrls().forEach(img ->
                 imgUrlService.findOne(img.getId())
-                .ifPresent(imgUrl -> {
-                    img.setImgUrl(imgUrl.getImgUrl());
-                })
+                .ifPresent(imgUrl -> img.setImgUrl(imgUrl.getImgUrl()))
             );
         }
         if (serviceItem.getRelatedVideos() != null) {

@@ -48,10 +48,10 @@
       "relationshipName": "relatedVideos"
     },
     {
-      "relationshipType": "one-to-many",
+      "relationshipType": "many-to-many",
       "otherEntityName": "imgUrl",
-      "otherEntityRelationshipName": "serviceItem",
-      "relationshipName": "customerImgUrls"
+      "relationshipName": "customerImgUrls",
+      "ownerSide": true
     },
     {
       "relationshipType": "one-to-many",

@@ -64,10 +64,11 @@ public class ServiceItem implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Video> relatedVideos = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name="service_customer_img")
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JoinTable(name = "service_item_customer_img_urls",
+               joinColumns = @JoinColumn(name = "service_item_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "customer_img_urls_id", referencedColumnName = "id"))
     private Set<ImgUrl> customerImgUrls = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

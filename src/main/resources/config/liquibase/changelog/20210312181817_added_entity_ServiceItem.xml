@@ -30,6 +30,17 @@
 
     <changeSet id="20210312181817-1-relations" author="jhipster">
 
+        <createTable tableName="service_item_customer_img_urls">
+            <column name="customer_img_urls_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="service_item_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="service_item_id, customer_img_urls_id" tableName="service_item_customer_img_urls"/>
+        
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 

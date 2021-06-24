@@ -6,6 +6,8 @@ import com.lucci.webadmin.repository.ServiceItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,15 +39,19 @@ public class ServiceItemServiceImpl implements ServiceItemService {
     @Transactional(readOnly = true)
     public List<ServiceItem> findAll() {
         log.debug("Request to get all ServiceItems");
-        return serviceItemRepository.findAll();
+        return serviceItemRepository.findAllWithEagerRelationships();
     }
 
+
+    public Page<ServiceItem> findAllWithEagerRelationships(Pageable pageable) {
+        return serviceItemRepository.findAllWithEagerRelationships(pageable);
+    }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<ServiceItem> findOne(Long id) {
         log.debug("Request to get ServiceItem : {}", id);
-        return serviceItemRepository.findById(id);
+        return serviceItemRepository.findOneWithEagerRelationships(id);
     }
 
     @Override
