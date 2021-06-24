@@ -77,14 +77,13 @@ public class CustomerReviewResource {
         if (customerReview.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        CustomerReview result = customerReviewService.save(customerReview);
         Optional<CustomerReview> crOpt = customerReviewService.findOne(customerReview.getId());
         if (!crOpt.isPresent()) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
         }
+        CustomerReview result = customerReviewService.save(customerReview);
         ImgUrl oldImgUrl = crOpt.get().getCustomerImgUrl();
-        if (!customerReview.getCustomerImgUrl().equals(oldImgUrl)) {
-            oldImgUrl.setServiceItem(null);
+        if (oldImgUrl != null && !customerReview.getCustomerImgUrl().equals(oldImgUrl)) {
             imgUrlService.delete(oldImgUrl.getId());
         }
         return ResponseEntity.ok()
@@ -127,13 +126,15 @@ public class CustomerReviewResource {
     @DeleteMapping("/customer-reviews/{id}")
     public ResponseEntity<Void> deleteCustomerReview(@PathVariable Long id) {
         log.debug("REST request to delete CustomerReview : {}", id);
-        customerReviewService.delete(id);
         Optional<CustomerReview> crOpt = customerReviewService.findOne(id);
         if (!crOpt.isPresent()) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
         }
+        customerReviewService.delete(id);
         ImgUrl imgUrl = crOpt.get().getCustomerImgUrl();
-        imgUrlService.delete(imgUrl.getId());
+        if (imgUrl != null) {
+            imgUrlService.delete(imgUrl.getId());
+        }
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

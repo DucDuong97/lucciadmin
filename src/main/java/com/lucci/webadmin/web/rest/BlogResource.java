@@ -84,7 +84,6 @@ public class BlogResource {
         Blog result = blogService.save(blog);
         ImgUrl oldImgUrl = blogOpt.get().getTitleImgUrl();
         if (oldImgUrl != null && !oldImgUrl.equals(blog.getTitleImgUrl())) {
-            oldImgUrl.setServiceItem(null);
             imgUrlService.delete(oldImgUrl.getId());
         }
         return ResponseEntity.ok()

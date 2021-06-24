@@ -16,7 +16,9 @@ export default class MenuItem extends React.Component<IMenuItem> {
 
     return (
       <DropdownItem tag={Link} to={to} id={id}>
-        <FontAwesomeIcon icon={icon} fixedWidth /> {children}
+        {icon &&
+        <FontAwesomeIcon icon={icon} fixedWidth />}
+        {children}
       </DropdownItem>
     );
   }

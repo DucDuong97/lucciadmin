@@ -13,7 +13,7 @@ export const WebContentMenu = props => (
     id="entity-menu"
     style={{ maxHeight: '80vh', overflow: 'auto' }}
   >
-    <MenuItem icon="asterisk" to="/service-item">
+    <MenuItem icon={null} to="/service-item">
       <Translate contentKey="global.menu.web-content.serviceItem" />
     </MenuItem>
     <MenuItem icon="asterisk" to="/pricing-card">
@@ -28,25 +28,25 @@ export const WebContentMenu = props => (
     <MenuItem icon="asterisk" to="/video">
       <Translate contentKey="global.menu.entities.video" />
     </MenuItem>
-    <MenuItem icon="asterisk" to="/achievement">
-      <Translate contentKey="global.menu.web-content.achievement" />
-    </MenuItem>
-    <MenuItem icon="asterisk" to="/customer-review">
-      <Translate contentKey="global.menu.web-content.customerReview" />
-    </MenuItem>
     <MenuItem icon="asterisk" to="/blog">
       <Translate contentKey="global.menu.web-content.blog" />
     </MenuItem>
-    <MenuItem icon="asterisk" to="/singleton-content">
+    <MenuItem icon={null} to="/achievement">
+      <Translate contentKey="global.menu.web-content.achievement" />
+    </MenuItem>
+    <MenuItem icon={null} to="/customer-review">
+      <Translate contentKey="global.menu.web-content.customerReview" />
+    </MenuItem>
+    <MenuItem icon={null} to="/singleton-content">
       <Translate contentKey="global.menu.web-content.singletonContent" />
     </MenuItem>
-    <MenuItem icon="asterisk" to="/policy">
+    <MenuItem icon={null} to="/policy">
       <Translate contentKey="global.menu.web-content.policy" />
     </MenuItem>
-    <MenuItem icon="asterisk" to="/branch">
+    <MenuItem icon={null} to="/branch">
       <Translate contentKey="global.menu.entities.branch" />
     </MenuItem>
-    <MenuItem icon="asterisk" to="/img-url">
+    <MenuItem icon={null} to="/img-url">
       <Translate contentKey="global.menu.entities.imgUrl" />
     </MenuItem>
     {/* jhipster-needle-add-entity-to-menu - JHipster will add web-content to the menu here */}

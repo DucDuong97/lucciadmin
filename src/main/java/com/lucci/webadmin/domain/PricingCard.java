@@ -17,7 +17,6 @@ import java.util.Set;
 @Entity
 @Table(name = "pricing_card")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
 public class PricingCard implements Serializable {
 
     private static final long serialVersionUID = 1L;

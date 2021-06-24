@@ -64,7 +64,8 @@ public class ServiceItem implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Video> relatedVideos = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem", fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name="service_customer_img")
     @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<ImgUrl> customerImgUrls = new HashSet<>();
@@ -228,13 +229,11 @@ public class ServiceItem implements Serializable {
 
     public ServiceItem addCustomerImgUrls(ImgUrl imgUrl) {
         this.customerImgUrls.add(imgUrl);
-        imgUrl.setServiceItem(this);
         return this;
     }
 
     public ServiceItem removeCustomerImgUrls(ImgUrl imgUrl) {
         this.customerImgUrls.remove(imgUrl);
-        imgUrl.setServiceItem(null);
         return this;
     }
 

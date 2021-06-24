@@ -85,16 +85,12 @@ public class ServiceItemResource {
         if (!serviceItemOpt.isPresent()) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
         }
-        serviceItemOpt.get().getCustomerImgUrls().forEach(imgUrl -> {
-            imgUrl.setServiceItem(null);
-            imgUrlService.save(imgUrl);
-        });
+//        serviceItemOpt.get().getCustomerImgUrls().forEach(imgUrlService::save);
         if (serviceItem.getCustomerImgUrls() != null) {
             serviceItem.getCustomerImgUrls().forEach(img ->
                 imgUrlService.findOne(img.getId())
                 .ifPresent(imgUrl -> {
                     img.setImgUrl(imgUrl.getImgUrl());
-                    img.setServiceItem(serviceItem);
                 })
             );
         }
@@ -110,7 +106,6 @@ public class ServiceItemResource {
         ServiceItem result = serviceItemService.save(serviceItem);
         ImgUrl oldImgUrl = serviceItemOpt.get().getImgUrl();
         if (oldImgUrl != null && !oldImgUrl.equals(serviceItem.getImgUrl())) {
-            oldImgUrl.setServiceItem(null);
             imgUrlService.delete(oldImgUrl.getId());
         }
         return ResponseEntity.ok()

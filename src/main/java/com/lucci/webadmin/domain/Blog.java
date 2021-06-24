@@ -16,7 +16,6 @@ import java.time.Instant;
 @Entity
 @Table(name = "blog")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
 public class Blog implements Serializable {
 
     private static final long serialVersionUID = 1L;
