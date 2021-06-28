@@ -1,0 +1,14 @@
+entity Payment {
+	date Instant required,
+	amount Integer required
+}
+
+/*
+relationship OneToOne {
+    Payment{receptionist} to Employee,
+    Payment{item required} to Treatment,
+}
+*/
+
+// Set service options to all except few
+service all with serviceImpl
