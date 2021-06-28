@@ -52,6 +52,35 @@ import customer, {
 import employee, {
   EmployeeState
 } from 'app/entities/employee/employee.reducer';
+// prettier-ignore
+import booking, {
+  BookingState
+} from 'app/entities/booking/booking.reducer';
+import process, { ProcessState } from 'app/entities/process/process.reducer';
+// prettier-ignore
+import video, {
+  VideoState
+} from 'app/entities/video/video.reducer';
+// prettier-ignore
+import imgUrl, {
+  ImgUrlState
+} from 'app/entities/img-url/img-url.reducer';
+// prettier-ignore
+import pricingCard, {
+  PricingCardState
+} from 'app/entities/pricing-card/pricing-card.reducer';
+// prettier-ignore
+import pricingContent, {
+  PricingContentState
+} from 'app/entities/pricing-content/pricing-content.reducer';
+// prettier-ignore
+import branch, {
+  BranchState
+} from 'app/entities/branch/branch.reducer';
+// prettier-ignore
+import payment, {
+  PaymentState
+} from 'app/entities/payment/payment.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -75,6 +104,14 @@ export interface IRootState {
   readonly page: PageState;
   readonly customer: CustomerState;
   readonly employee: EmployeeState;
+  readonly booking: BookingState;
+  readonly process: ProcessState;
+  readonly video: VideoState;
+  readonly imgUrl: ImgUrlState;
+  readonly pricingCard: PricingCardState;
+  readonly pricingContent: PricingContentState;
+  readonly branch: BranchState;
+  readonly payment: PaymentState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -100,6 +137,14 @@ const rootReducer = combineReducers<IRootState>({
   page,
   customer,
   employee,
+  booking,
+  process,
+  video,
+  imgUrl,
+  pricingCard,
+  pricingContent,
+  branch,
+  payment,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });

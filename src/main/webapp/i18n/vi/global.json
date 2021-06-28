@@ -23,6 +23,8 @@
         "page": "Page",
         "customer": "Khách hàng",
         "employee": "Nhân viên",
+        "booking": "Booking",
+        "payment": "Payment",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {

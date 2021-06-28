@@ -38,7 +38,7 @@ export const Customer = props => (
   <NavItem>
     <NavLink tag={Link} to="/patient" className="d-flex align-items-center">
       <span>
-        <Translate contentKey="global.menu.entities.patient" />
+        <Translate contentKey="global.menu.entities.customer" />
       </span>
     </NavLink>
   </NavItem>
