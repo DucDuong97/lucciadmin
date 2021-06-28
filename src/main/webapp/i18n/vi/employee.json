@@ -1,0 +1,28 @@
+{
+  "lucciadminApp": {
+    "employee": {
+      "home": {
+        "title": "Nhân viên",
+        "createLabel": "Thêm mới một Nhân viên",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Nhân viên",
+        "notFound": "No Employees found"
+      },
+      "created": "Một Nhân viên mới được tạo với định danh {{ param }}",
+      "updated": "Một Nhân viên cập nhật với định danh {{ param }}",
+      "deleted": "Một Nhân viên đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Nhân viên {{ id }}?"
+      },
+      "detail": {
+        "title": "Nhân viên"
+      },
+      "name": "Tên",
+      "phone": "SĐT",
+      "address": "Địa chỉ",
+      "birth": "Ngày sinh",
+      "gender": "Giới tính",
+      "role": "Vai trò",
+      "salary": "Lương"
+    }
+  }
+}

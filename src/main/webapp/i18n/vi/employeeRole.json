@@ -1,0 +1,12 @@
+{
+  "lucciadminApp": {
+    "EmployeeRole": {
+      "null": "",
+      "DOCTOR": "Bác sỹ",
+      "NURSE": "Y tá",
+      "MARKETING": "Marketer",
+      "RECEPTIONIST": "Lễ tân",
+      "ADMIN": "Admin"
+    }
+  }
+}

@@ -3,5 +3,5 @@ export const enum Gender {
 
   FEMALE = 'FEMALE',
 
-  AMBIGIOUS = 'AMBIGIOUS',
+  AMBIGUOUS = 'AMBIGUOUS',
 }

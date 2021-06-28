@@ -11,13 +11,6 @@
     }
   ],
   "relationships": [
-    {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "serviceItem",
-      "otherEntityRelationshipName": "customerImgUrls",
-      "relationshipName": "serviceItem",
-      "otherEntityField": "id"
-    }
   ],
   "changelogDate": "20210508061849",
   "entityTableName": "img_url",

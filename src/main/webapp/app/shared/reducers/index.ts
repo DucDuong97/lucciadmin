@@ -44,6 +44,14 @@ import singletonContent, {
 import page, {
   PageState
 } from 'app/entities/page/page.reducer';
+// prettier-ignore
+import customer, {
+  CustomerState
+} from 'app/entities/customer/customer.reducer';
+// prettier-ignore
+import employee, {
+  EmployeeState
+} from 'app/entities/employee/employee.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -65,6 +73,8 @@ export interface IRootState {
   readonly blog: BlogState;
   readonly singletonContent: SingletonContentState;
   readonly page: PageState;
+  readonly customer: CustomerState;
+  readonly employee: EmployeeState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -88,6 +98,8 @@ const rootReducer = combineReducers<IRootState>({
   blog,
   singletonContent,
   page,
+  customer,
+  employee,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });

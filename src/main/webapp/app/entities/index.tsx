@@ -12,6 +12,8 @@ import ServiceItem from './service-item';
 import Blog from './blog';
 import SingletonContent from './singleton-content';
 import Page from './page';
+import Customer from './customer';
+import Employee from './employee';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -26,6 +28,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}blog`} component={Blog} />
       <ErrorBoundaryRoute path={`${match.url}singleton-content`} component={SingletonContent} />
       <ErrorBoundaryRoute path={`${match.url}page`} component={Page} />
+      <ErrorBoundaryRoute path={`${match.url}customer`} component={Customer} />
+      <ErrorBoundaryRoute path={`${match.url}employee`} component={Employee} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

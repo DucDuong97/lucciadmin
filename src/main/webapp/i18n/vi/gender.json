@@ -4,7 +4,7 @@
       "null": "",
       "MALE": "Nam",
       "FEMALE": "Nữ",
-      "AMBIGIOUS": "Không xác định"
+      "AMBIGUOUS": "Không xác định"
     }
   }
 }

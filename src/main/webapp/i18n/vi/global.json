@@ -21,6 +21,8 @@
         "blog": "Blog",
         "singletonContent": "Thông tin đơn lẻ",
         "page": "Page",
+        "customer": "Khách hàng",
+        "employee": "Nhân viên",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {

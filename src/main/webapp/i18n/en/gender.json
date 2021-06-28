@@ -2,9 +2,9 @@
   "lucciadminApp": {
     "Gender": {
       "null": "",
-      "MALE": "Male",
-      "FEMALE": "Female",
-      "AMBIGIOUS": "Ambigious"
+      "MALE": "MALE",
+      "FEMALE": "FEMALE",
+      "AMBIGUOUS": "AMBIGUOUS"
     }
   }
 }
