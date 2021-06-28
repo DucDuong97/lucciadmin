@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
@@ -20,7 +20,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
   const { bookingEntity, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/booking');
+    props.history.push('/booking' + props.location.search);
   };
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
   }, [props.updateSuccess]);
 
   const saveEntity = (event, errors, values) => {
-    values.date = convertDateTimeToServer(values.date);
+    values.time = convertDateTimeToServer(values.time);
 
     if (errors.length === 0) {
       const entity = {
@@ -81,23 +81,44 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 <Label id="dateLabel" for="booking-date">
                   <Translate contentKey="lucciadminApp.booking.date">Date</Translate>
                 </Label>
-                <AvInput
+                <AvField
                   id="booking-date"
-                  type="datetime-local"
+                  type="date"
                   className="form-control"
                   name="date"
-                  placeholder={'YYYY-MM-DD HH:mm'}
-                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.bookingEntity.date)}
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
               </AvGroup>
-              <AvGroup check>
-                <Label id="hasPurchaseLabel">
-                  <AvInput id="booking-hasPurchase" type="checkbox" className="form-check-input" name="hasPurchase" />
-                  <Translate contentKey="lucciadminApp.booking.hasPurchase">Has Purchase</Translate>
+              <AvGroup>
+                <Label id="timeLabel" for="booking-time">
+                  <Translate contentKey="lucciadminApp.booking.time">Time</Translate>
                 </Label>
+                <AvInput
+                  id="booking-time"
+                  type="datetime-local"
+                  className="form-control"
+                  name="time"
+                  placeholder={'YYYY-MM-DD HH:mm'}
+                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.bookingEntity.time)}
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
+              </AvGroup>
+              <AvGroup>
+                <Label id="branchLabel" for="booking-branch">
+                  <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
+                </Label>
+                <AvField
+                  id="booking-branch"
+                  type="text"
+                  name="branch"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/booking" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

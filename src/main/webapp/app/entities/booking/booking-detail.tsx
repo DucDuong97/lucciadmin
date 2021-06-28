@@ -30,13 +30,19 @@ export const BookingDetail = (props: IBookingDetailProps) => {
               <Translate contentKey="lucciadminApp.booking.date">Date</Translate>
             </span>
           </dt>
-          <dd>{bookingEntity.date ? <TextFormat value={bookingEntity.date} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>{bookingEntity.date ? <TextFormat value={bookingEntity.date} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
           <dt>
-            <span id="hasPurchase">
-              <Translate contentKey="lucciadminApp.booking.hasPurchase">Has Purchase</Translate>
+            <span id="time">
+              <Translate contentKey="lucciadminApp.booking.time">Time</Translate>
             </span>
           </dt>
-          <dd>{bookingEntity.hasPurchase ? 'true' : 'false'}</dd>
+          <dd>{bookingEntity.time ? <TextFormat value={bookingEntity.time} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dt>
+            <span id="branch">
+              <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
+            </span>
+          </dt>
+          <dd>{bookingEntity.branch}</dd>
         </dl>
         <Button tag={Link} to="/booking" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

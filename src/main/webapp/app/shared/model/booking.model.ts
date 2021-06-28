@@ -3,9 +3,8 @@ import { Moment } from 'moment';
 export interface IBooking {
   id?: number;
   date?: string;
-  hasPurchase?: boolean;
+  time?: string;
+  branch?: string;
 }
 
-export const defaultValue: Readonly<IBooking> = {
-  hasPurchase: false,
-};
+export const defaultValue: Readonly<IBooking> = {};

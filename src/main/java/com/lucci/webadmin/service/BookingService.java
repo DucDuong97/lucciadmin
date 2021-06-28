@@ -1,29 +1,32 @@
 package com.lucci.webadmin.service;
 
-import com.lucci.webadmin.domain.Booking;
+import com.lucci.webadmin.service.dto.BookingDTO;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.Optional;
 
 /**
- * Service Interface for managing {@link Booking}.
+ * Service Interface for managing {@link com.lucci.webadmin.domain.Booking}.
  */
 public interface BookingService {
 
     /**
      * Save a booking.
      *
-     * @param booking the entity to save.
+     * @param bookingDTO the entity to save.
      * @return the persisted entity.
      */
-    Booking save(Booking booking);
+    BookingDTO save(BookingDTO bookingDTO);
 
     /**
      * Get all the bookings.
      *
+     * @param pageable the pagination information.
      * @return the list of entities.
      */
-    List<Booking> findAll();
+    Page<BookingDTO> findAll(Pageable pageable);
 
 
     /**
@@ -32,7 +35,7 @@ public interface BookingService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<Booking> findOne(Long id);
+    Optional<BookingDTO> findOne(Long id);
 
     /**
      * Delete the "id" booking.

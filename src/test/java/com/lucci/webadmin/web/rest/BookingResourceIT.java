@@ -4,6 +4,8 @@ import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Booking;
 import com.lucci.webadmin.repository.BookingRepository;
 import com.lucci.webadmin.service.BookingService;
+import com.lucci.webadmin.service.dto.BookingDTO;
+import com.lucci.webadmin.service.mapper.BookingMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,10 +17,14 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 
+import static com.lucci.webadmin.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -32,14 +38,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser
 public class BookingResourceIT {
 
-    private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Boolean DEFAULT_HAS_PURCHASE = false;
-    private static final Boolean UPDATED_HAS_PURCHASE = true;
+    private static final ZonedDateTime DEFAULT_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+
+    private static final String DEFAULT_BRANCH = "AAAAAAAAAA";
+    private static final String UPDATED_BRANCH = "BBBBBBBBBB";
 
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private BookingMapper bookingMapper;
 
     @Autowired
     private BookingService bookingService;
@@ -61,7 +73,8 @@ public class BookingResourceIT {
     public static Booking createEntity(EntityManager em) {
         Booking booking = new Booking()
             .date(DEFAULT_DATE)
-            .hasPurchase(DEFAULT_HAS_PURCHASE);
+            .time(DEFAULT_TIME)
+            .branch(DEFAULT_BRANCH);
         return booking;
     }
     /**
@@ -73,7 +86,8 @@ public class BookingResourceIT {
     public static Booking createUpdatedEntity(EntityManager em) {
         Booking booking = new Booking()
             .date(UPDATED_DATE)
-            .hasPurchase(UPDATED_HAS_PURCHASE);
+            .time(UPDATED_TIME)
+            .branch(UPDATED_BRANCH);
         return booking;
     }
 
@@ -87,9 +101,10 @@ public class BookingResourceIT {
     public void createBooking() throws Exception {
         int databaseSizeBeforeCreate = bookingRepository.findAll().size();
         // Create the Booking
+        BookingDTO bookingDTO = bookingMapper.toDto(booking);
         restBookingMockMvc.perform(post("/api/bookings")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(booking)))
+            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Booking in the database
@@ -97,7 +112,8 @@ public class BookingResourceIT {
         assertThat(bookingList).hasSize(databaseSizeBeforeCreate + 1);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
         assertThat(testBooking.getDate()).isEqualTo(DEFAULT_DATE);
-        assertThat(testBooking.isHasPurchase()).isEqualTo(DEFAULT_HAS_PURCHASE);
+        assertThat(testBooking.getTime()).isEqualTo(DEFAULT_TIME);
+        assertThat(testBooking.getBranch()).isEqualTo(DEFAULT_BRANCH);
     }
 
     @Test
@@ -107,11 +123,12 @@ public class BookingResourceIT {
 
         // Create the Booking with an existing ID
         booking.setId(1L);
+        BookingDTO bookingDTO = bookingMapper.toDto(booking);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restBookingMockMvc.perform(post("/api/bookings")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(booking)))
+            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Booking in the database
@@ -128,11 +145,52 @@ public class BookingResourceIT {
         booking.setDate(null);
 
         // Create the Booking, which fails.
+        BookingDTO bookingDTO = bookingMapper.toDto(booking);
 
 
         restBookingMockMvc.perform(post("/api/bookings")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(booking)))
+            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Booking> bookingList = bookingRepository.findAll();
+        assertThat(bookingList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = bookingRepository.findAll().size();
+        // set the field null
+        booking.setTime(null);
+
+        // Create the Booking, which fails.
+        BookingDTO bookingDTO = bookingMapper.toDto(booking);
+
+
+        restBookingMockMvc.perform(post("/api/bookings")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Booking> bookingList = bookingRepository.findAll();
+        assertThat(bookingList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkBranchIsRequired() throws Exception {
+        int databaseSizeBeforeTest = bookingRepository.findAll().size();
+        // set the field null
+        booking.setBranch(null);
+
+        // Create the Booking, which fails.
+        BookingDTO bookingDTO = bookingMapper.toDto(booking);
+
+
+        restBookingMockMvc.perform(post("/api/bookings")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
             .andExpect(status().isBadRequest());
 
         List<Booking> bookingList = bookingRepository.findAll();
@@ -151,7 +209,8 @@ public class BookingResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(booking.getId().intValue())))
             .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].hasPurchase").value(hasItem(DEFAULT_HAS_PURCHASE.booleanValue())));
+            .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))))
+            .andExpect(jsonPath("$.[*].branch").value(hasItem(DEFAULT_BRANCH)));
     }
     
     @Test
@@ -166,7 +225,8 @@ public class BookingResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(booking.getId().intValue()))
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.hasPurchase").value(DEFAULT_HAS_PURCHASE.booleanValue()));
+            .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)))
+            .andExpect(jsonPath("$.branch").value(DEFAULT_BRANCH));
     }
     @Test
     @Transactional
@@ -180,7 +240,7 @@ public class BookingResourceIT {
     @Transactional
     public void updateBooking() throws Exception {
         // Initialize the database
-        bookingService.save(booking);
+        bookingRepository.saveAndFlush(booking);
 
         int databaseSizeBeforeUpdate = bookingRepository.findAll().size();
 
@@ -190,11 +250,13 @@ public class BookingResourceIT {
         em.detach(updatedBooking);
         updatedBooking
             .date(UPDATED_DATE)
-            .hasPurchase(UPDATED_HAS_PURCHASE);
+            .time(UPDATED_TIME)
+            .branch(UPDATED_BRANCH);
+        BookingDTO bookingDTO = bookingMapper.toDto(updatedBooking);
 
         restBookingMockMvc.perform(put("/api/bookings")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedBooking)))
+            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
             .andExpect(status().isOk());
 
         // Validate the Booking in the database
@@ -202,7 +264,8 @@ public class BookingResourceIT {
         assertThat(bookingList).hasSize(databaseSizeBeforeUpdate);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
         assertThat(testBooking.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testBooking.isHasPurchase()).isEqualTo(UPDATED_HAS_PURCHASE);
+        assertThat(testBooking.getTime()).isEqualTo(UPDATED_TIME);
+        assertThat(testBooking.getBranch()).isEqualTo(UPDATED_BRANCH);
     }
 
     @Test
@@ -210,10 +273,13 @@ public class BookingResourceIT {
     public void updateNonExistingBooking() throws Exception {
         int databaseSizeBeforeUpdate = bookingRepository.findAll().size();
 
+        // Create the Booking
+        BookingDTO bookingDTO = bookingMapper.toDto(booking);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBookingMockMvc.perform(put("/api/bookings")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(booking)))
+            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Booking in the database
@@ -225,7 +291,7 @@ public class BookingResourceIT {
     @Transactional
     public void deleteBooking() throws Exception {
         // Initialize the database
-        bookingService.save(booking);
+        bookingRepository.saveAndFlush(booking);
 
         int databaseSizeBeforeDelete = bookingRepository.findAll().size();
 

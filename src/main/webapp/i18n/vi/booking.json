@@ -2,22 +2,23 @@
   "lucciadminApp": {
     "booking": {
       "home": {
-        "title": "Bookings",
-        "createLabel": "Thêm mới một Booking",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Booking",
+        "title": "Lịch hẹn",
+        "createLabel": "Thêm mới một Lịch hẹn",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Lịch hẹn",
         "notFound": "No Bookings found"
       },
-      "created": "Một Booking mới được tạo với định danh {{ param }}",
-      "updated": "Một Booking cập nhật với định danh {{ param }}",
-      "deleted": "Một Booking đã xóa với định danh {{ param }}",
+      "created": "Một Lịch hẹn mới được tạo với định danh {{ param }}",
+      "updated": "Một Lịch hẹn cập nhật với định danh {{ param }}",
+      "deleted": "Một Lịch hẹn đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Booking {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Lịch hẹn {{ id }}?"
       },
       "detail": {
-        "title": "Booking"
+        "title": "Lịch hẹn"
       },
-      "date": "Date",
-      "hasPurchase": "Has Purchase"
+      "date": "Ngày",
+      "time": "Giờ",
+      "branch": "Cơ sở"
     }
   }
 }

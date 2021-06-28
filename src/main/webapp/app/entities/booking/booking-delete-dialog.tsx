@@ -17,7 +17,7 @@ export const BookingDeleteDialog = (props: IBookingDeleteDialogProps) => {
   }, []);
 
   const handleClose = () => {
-    props.history.push('/booking');
+    props.history.push('/booking' + props.location.search);
   };
 
   useEffect(() => {

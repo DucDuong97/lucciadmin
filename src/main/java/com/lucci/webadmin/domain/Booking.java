@@ -7,7 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 /**
  * A Booking.
@@ -26,10 +27,15 @@ public class Booking implements Serializable {
 
     @NotNull
     @Column(name = "date", nullable = false)
-    private Instant date;
+    private LocalDate date;
 
-    @Column(name = "has_purchase")
-    private Boolean hasPurchase;
+    @NotNull
+    @Column(name = "time", nullable = false)
+    private ZonedDateTime time;
+
+    @NotNull
+    @Column(name = "branch", nullable = false)
+    private String branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -40,30 +46,43 @@ public class Booking implements Serializable {
         this.id = id;
     }
 
-    public Instant getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public Booking date(Instant date) {
+    public Booking date(LocalDate date) {
         this.date = date;
         return this;
     }
 
-    public void setDate(Instant date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Boolean isHasPurchase() {
-        return hasPurchase;
+    public ZonedDateTime getTime() {
+        return time;
     }
 
-    public Booking hasPurchase(Boolean hasPurchase) {
-        this.hasPurchase = hasPurchase;
+    public Booking time(ZonedDateTime time) {
+        this.time = time;
         return this;
     }
 
-    public void setHasPurchase(Boolean hasPurchase) {
-        this.hasPurchase = hasPurchase;
+    public void setTime(ZonedDateTime time) {
+        this.time = time;
+    }
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public Booking branch(String branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -89,7 +108,8 @@ public class Booking implements Serializable {
         return "Booking{" +
             "id=" + getId() +
             ", date='" + getDate() + "'" +
-            ", hasPurchase='" + isHasPurchase() + "'" +
+            ", time='" + getTime() + "'" +
+            ", branch='" + getBranch() + "'" +
             "}";
     }
 }

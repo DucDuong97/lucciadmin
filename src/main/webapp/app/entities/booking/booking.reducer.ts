@@ -21,6 +21,7 @@ const initialState = {
   entities: [] as ReadonlyArray<IBooking>,
   entity: defaultValue,
   updating: false,
+  totalItems: 0,
   updateSuccess: false,
 };
 
@@ -64,6 +65,7 @@ export default (state: BookingState = initialState, action): BookingState => {
         ...state,
         loading: false,
         entities: action.payload.data,
+        totalItems: parseInt(action.payload.headers['x-total-count'], 10),
       };
     case SUCCESS(ACTION_TYPES.FETCH_BOOKING):
       return {
@@ -99,10 +101,13 @@ const apiUrl = 'api/bookings';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<IBooking> = (page, size, sort) => ({
-  type: ACTION_TYPES.FETCH_BOOKING_LIST,
-  payload: axios.get<IBooking>(`${apiUrl}?cacheBuster=${new Date().getTime()}`),
-});
+export const getEntities: ICrudGetAllAction<IBooking> = (page, size, sort) => {
+  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+  return {
+    type: ACTION_TYPES.FETCH_BOOKING_LIST,
+    payload: axios.get<IBooking>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`),
+  };
+};
 
 export const getEntity: ICrudGetAction<IBooking> = id => {
   const requestUrl = `${apiUrl}/${id}`;

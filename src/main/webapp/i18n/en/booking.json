@@ -17,7 +17,8 @@
         "title": "Booking"
       },
       "date": "Date",
-      "hasPurchase": "Has Purchase"
+      "time": "Time",
+      "branch": "Branch"
     }
   }
 }

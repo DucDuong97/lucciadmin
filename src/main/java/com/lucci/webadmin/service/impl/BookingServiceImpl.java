@@ -3,13 +3,16 @@ package com.lucci.webadmin.service.impl;
 import com.lucci.webadmin.service.BookingService;
 import com.lucci.webadmin.domain.Booking;
 import com.lucci.webadmin.repository.BookingRepository;
+import com.lucci.webadmin.service.dto.BookingDTO;
+import com.lucci.webadmin.service.mapper.BookingMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,29 +26,36 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
 
-    public BookingServiceImpl(BookingRepository bookingRepository) {
+    private final BookingMapper bookingMapper;
+
+    public BookingServiceImpl(BookingRepository bookingRepository, BookingMapper bookingMapper) {
         this.bookingRepository = bookingRepository;
+        this.bookingMapper = bookingMapper;
     }
 
     @Override
-    public Booking save(Booking booking) {
-        log.debug("Request to save Booking : {}", booking);
-        return bookingRepository.save(booking);
+    public BookingDTO save(BookingDTO bookingDTO) {
+        log.debug("Request to save Booking : {}", bookingDTO);
+        Booking booking = bookingMapper.toEntity(bookingDTO);
+        booking = bookingRepository.save(booking);
+        return bookingMapper.toDto(booking);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Booking> findAll() {
+    public Page<BookingDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Bookings");
-        return bookingRepository.findAll();
+        return bookingRepository.findAll(pageable)
+            .map(bookingMapper::toDto);
     }
 
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Booking> findOne(Long id) {
+    public Optional<BookingDTO> findOne(Long id) {
         log.debug("Request to get Booking : {}", id);
-        return bookingRepository.findById(id);
+        return bookingRepository.findById(id)
+            .map(bookingMapper::toDto);
     }
 
     @Override
