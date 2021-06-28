@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { locales, languages } from 'app/config/translation';
 import { getUser, getRoles, updateUser, createUser, reset } from './user-management.reducer';
+import { getEntities as getEmployees } from '../../../entities/employee/employee.reducer'
 import { IRootState } from 'app/shared/reducers';
 
 export interface IUserManagementUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ login: string }> {}
@@ -22,6 +23,7 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
       props.getUser(props.match.params.login);
     }
     props.getRoles();
+    props.getEmployees();
     return () => {
       props.reset();
     };
@@ -41,7 +43,7 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
   };
 
   const isInvalid = false;
-  const { user, loading, updating, roles } = props;
+  const { user, loading, updating, roles, employees } = props;
 
   return (
     <div>
@@ -186,6 +188,19 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
                   ))}
                 </AvInput>
               </AvGroup>
+              <AvGroup>
+                <Label for="relatedEmployeeId">
+                  <Translate contentKey="userManagement.relatedEmployee">Related Employee</Translate>
+                </Label>
+                <AvInput type="select" className="form-control" name="relatedEmployeeId" value={user.relatedEmployeeId}>
+                  <option value={null}>Select an Item</option>
+                  {employees.map(employee => (
+                    <option value={employee.id} key={employee.id}>
+                      {`${employee.id} - ${employee.name}`}
+                    </option>
+                  ))}
+                </AvInput>
+              </AvGroup>
               <Button tag={Link} to="/admin/user-management" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -210,11 +225,12 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
 const mapStateToProps = (storeState: IRootState) => ({
   user: storeState.userManagement.user,
   roles: storeState.userManagement.authorities,
+  employees: storeState.employee.entities,
   loading: storeState.userManagement.loading,
   updating: storeState.userManagement.updating,
 });
 
-const mapDispatchToProps = { getUser, getRoles, updateUser, createUser, reset };
+const mapDispatchToProps = { getUser, getRoles, getEmployees, updateUser, createUser, reset };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

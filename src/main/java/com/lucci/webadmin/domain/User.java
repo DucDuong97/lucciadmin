@@ -4,11 +4,12 @@ import com.lucci.webadmin.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -94,6 +95,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
+    @JsonIgnore
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    private Employee relatedEmployee;
 
     public Long getId() {
         return id;
@@ -198,6 +203,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public Employee getRelatedEmployee() {
+        return relatedEmployee;
+    }
+
+    public void setRelatedEmployee(Employee relatedEmployee) {
+        this.relatedEmployee = relatedEmployee;
     }
 
     @Override

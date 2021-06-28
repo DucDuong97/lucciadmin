@@ -50,6 +50,8 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private Long relatedEmployeeId;
+
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -70,6 +72,9 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+        if (user.getRelatedEmployee() != null) {
+            this.relatedEmployeeId = user.getRelatedEmployee().getId();
+        }
     }
 
     public Long getId() {
@@ -176,6 +181,14 @@ public class UserDTO {
         this.authorities = authorities;
     }
 
+    public Long getRelatedEmployeeId() {
+        return relatedEmployeeId;
+    }
+
+    public void setRelatedEmployeeId(Long relatedEmployeeId) {
+        this.relatedEmployeeId = relatedEmployeeId;
+    }
+
     // prettier-ignore
     @Override
     public String toString() {
@@ -191,6 +204,7 @@ public class UserDTO {
             ", createdDate=" + createdDate +
             ", lastModifiedBy='" + lastModifiedBy + '\'' +
             ", lastModifiedDate=" + lastModifiedDate +
+            ", relatedEmployee=" + relatedEmployeeId +
             ", authorities=" + authorities +
             "}";
     }

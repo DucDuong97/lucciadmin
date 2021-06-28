@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Set;
 
 import com.lucci.webadmin.domain.enumeration.Gender;
 
@@ -57,6 +59,15 @@ public class Employee implements Serializable {
 
     @Column(name = "salary")
     private Integer salary;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "relatedEmployee", cascade = CascadeType.PERSIST)
+    private Set<User> users;
+
+    @PreRemove
+    private void preRemove() {
+        users.forEach(user -> user.setRelatedEmployee(null));
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {

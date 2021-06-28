@@ -36,9 +36,19 @@ export const Home = props => (
 
 export const Customer = props => (
   <NavItem>
-    <NavLink tag={Link} to="/patient" className="d-flex align-items-center">
+    <NavLink tag={Link} to="/customer" className="d-flex align-items-center">
       <span>
         <Translate contentKey="global.menu.entities.customer" />
+      </span>
+    </NavLink>
+  </NavItem>
+);
+
+export const Employee = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/employee" className="d-flex align-items-center">
+      <span>
+        <Translate contentKey="global.menu.entities.employee" />
       </span>
     </NavLink>
   </NavItem>

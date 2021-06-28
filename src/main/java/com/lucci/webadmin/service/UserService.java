@@ -2,8 +2,10 @@ package com.lucci.webadmin.service;
 
 import com.lucci.webadmin.config.Constants;
 import com.lucci.webadmin.domain.Authority;
+import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.domain.User;
 import com.lucci.webadmin.repository.AuthorityRepository;
+import com.lucci.webadmin.repository.EmployeeRepository;
 import com.lucci.webadmin.repository.UserRepository;
 import com.lucci.webadmin.security.AuthoritiesConstants;
 import com.lucci.webadmin.security.SecurityUtils;
@@ -41,12 +43,15 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
+    private final EmployeeRepository employeeRepository;
+
     private final CacheManager cacheManager;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository, EmployeeRepository employeeRepository, CacheManager cacheManager) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
+        this.employeeRepository = employeeRepository;
         this.cacheManager = cacheManager;
     }
 
@@ -162,6 +167,10 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
+        if (userDTO.getRelatedEmployeeId() != null) {
+            employeeRepository.findById(userDTO.getRelatedEmployeeId())
+                .ifPresent(user::setRelatedEmployee);
+        }
         userRepository.save(user);
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
@@ -197,6 +206,10 @@ public class UserService {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .forEach(managedAuthorities::add);
+                if (userDTO.getRelatedEmployeeId() != null) {
+                    employeeRepository.findById(userDTO.getRelatedEmployeeId())
+                        .ifPresent(user::setRelatedEmployee);
+                }
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
                 return user;
