@@ -55,7 +55,7 @@
   "changelogDate": "20210628105133",
   "entityTableName": "employee",
   "dto": "no",
-  "pagination": "no",
+  "pagination": "pagination",
   "service": "no",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,

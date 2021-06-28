@@ -20,7 +20,7 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
   const { employeeEntity, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/employee');
+    props.history.push('/employee' + props.location.search);
   };
 
   useEffect(() => {

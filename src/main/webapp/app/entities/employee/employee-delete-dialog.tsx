@@ -17,7 +17,7 @@ export const EmployeeDeleteDialog = (props: IEmployeeDeleteDialogProps) => {
   }, []);
 
   const handleClose = () => {
-    props.history.push('/employee');
+    props.history.push('/employee' + props.location.search);
   };
 
   useEffect(() => {

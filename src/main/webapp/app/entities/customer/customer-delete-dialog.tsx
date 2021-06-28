@@ -17,7 +17,7 @@ export const CustomerDeleteDialog = (props: ICustomerDeleteDialogProps) => {
   }, []);
 
   const handleClose = () => {
-    props.history.push('/customer');
+    props.history.push('/customer' + props.location.search);
   };
 
   useEffect(() => {

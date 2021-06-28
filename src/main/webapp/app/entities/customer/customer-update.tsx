@@ -20,7 +20,7 @@ export const CustomerUpdate = (props: ICustomerUpdateProps) => {
   const { customerEntity, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/customer');
+    props.history.push('/customer' + props.location.search);
   };
 
   useEffect(() => {
