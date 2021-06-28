@@ -12,25 +12,6 @@ import ServiceItem from './service-item';
 import Blog from './blog';
 import SingletonContent from './singleton-content';
 import Page from './page';
-import Person from './person';
-import Patient from './patient';
-import Doctor from './doctor';
-import Nurse from './nurse';
-import Receptionist from './receptionist';
-import Accountant from './accountant';
-import Material from './material';
-import Booking from './booking';
-import Payment from './payment';
-import MedicalRecord from './medical-record';
-import Treatment from './treatment';
-import TreatmentHistory from './treatment-history';
-import GetMaterial from './get-material';
-import Process from './process';
-import Video from './video';
-import ImgUrl from './img-url';
-import PricingCard from './pricing-card';
-import PricingContent from './pricing-content';
-import Branch from './branch';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -45,25 +26,6 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}blog`} component={Blog} />
       <ErrorBoundaryRoute path={`${match.url}singleton-content`} component={SingletonContent} />
       <ErrorBoundaryRoute path={`${match.url}page`} component={Page} />
-      <ErrorBoundaryRoute path={`${match.url}person`} component={Person} />
-      <ErrorBoundaryRoute path={`${match.url}patient`} component={Patient} />
-      <ErrorBoundaryRoute path={`${match.url}doctor`} component={Doctor} />
-      <ErrorBoundaryRoute path={`${match.url}nurse`} component={Nurse} />
-      <ErrorBoundaryRoute path={`${match.url}receptionist`} component={Receptionist} />
-      <ErrorBoundaryRoute path={`${match.url}accountant`} component={Accountant} />
-      <ErrorBoundaryRoute path={`${match.url}material`} component={Material} />
-      <ErrorBoundaryRoute path={`${match.url}booking`} component={Booking} />
-      <ErrorBoundaryRoute path={`${match.url}payment`} component={Payment} />
-      <ErrorBoundaryRoute path={`${match.url}medical-record`} component={MedicalRecord} />
-      <ErrorBoundaryRoute path={`${match.url}treatment`} component={Treatment} />
-      <ErrorBoundaryRoute path={`${match.url}treatment-history`} component={TreatmentHistory} />
-      <ErrorBoundaryRoute path={`${match.url}get-material`} component={GetMaterial} />
-      <ErrorBoundaryRoute path={`${match.url}process`} component={Process} />
-      <ErrorBoundaryRoute path={`${match.url}video`} component={Video} />
-      <ErrorBoundaryRoute path={`${match.url}img-url`} component={ImgUrl} />
-      <ErrorBoundaryRoute path={`${match.url}pricing-card`} component={PricingCard} />
-      <ErrorBoundaryRoute path={`${match.url}pricing-content`} component={PricingContent} />
-      <ErrorBoundaryRoute path={`${match.url}branch`} component={Branch} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

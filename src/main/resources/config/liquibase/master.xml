@@ -22,47 +22,8 @@
     <include file="config/liquibase/changelog/20210312181917_added_entity_Blog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312182017_added_entity_SingletonContent.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312182117_added_entity_Page.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060201_added_entity_Person.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060301_added_entity_Patient.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060401_added_entity_Doctor.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060501_added_entity_Nurse.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060601_added_entity_Receptionist.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060701_added_entity_Accountant.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060801_added_entity_Material.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060901_added_entity_Booking.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061001_added_entity_Payment.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061101_added_entity_MedicalRecord.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061201_added_entity_Treatment.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061301_added_entity_TreatmentHistory.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061401_added_entity_GetMaterial.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210508061649_added_entity_Process.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210508061749_added_entity_Video.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210508061849_added_entity_ImgUrl.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210516213054_added_entity_PricingCard.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210516213154_added_entity_PricingContent.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210517104429_added_entity_Branch.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210312181417_added_entity_constraints_ServiceOption.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060301_added_entity_constraints_Patient.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060401_added_entity_constraints_Doctor.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060501_added_entity_constraints_Nurse.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060601_added_entity_constraints_Receptionist.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060701_added_entity_constraints_Accountant.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325060901_added_entity_constraints_Booking.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061001_added_entity_constraints_Payment.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061201_added_entity_constraints_Treatment.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061301_added_entity_constraints_TreatmentHistory.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325061401_added_entity_constraints_GetMaterial.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210325135344_changelog.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210312181617_added_entity_constraints_CustomerReview.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210312181717_added_entity_constraints_Achievement.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210312181817_added_entity_constraints_ServiceItem.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210508061649_added_entity_constraints_Process.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210508061749_added_entity_constraints_Video.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210508061849_added_entity_constraints_ImgUrl.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210312181917_added_entity_constraints_Blog.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210516213054_added_entity_constraints_PricingCard.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210516213154_added_entity_constraints_PricingContent.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

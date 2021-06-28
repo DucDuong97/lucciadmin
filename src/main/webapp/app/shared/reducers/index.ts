@@ -44,82 +44,6 @@ import singletonContent, {
 import page, {
   PageState
 } from 'app/entities/page/page.reducer';
-// prettier-ignore
-import person, {
-  PersonState
-} from 'app/entities/person/person.reducer';
-// prettier-ignore
-import patient, {
-  PatientState
-} from 'app/entities/patient/patient.reducer';
-// prettier-ignore
-import doctor, {
-  DoctorState
-} from 'app/entities/doctor/doctor.reducer';
-// prettier-ignore
-import nurse, {
-  NurseState
-} from 'app/entities/nurse/nurse.reducer';
-// prettier-ignore
-import receptionist, {
-  ReceptionistState
-} from 'app/entities/receptionist/receptionist.reducer';
-// prettier-ignore
-import accountant, {
-  AccountantState
-} from 'app/entities/accountant/accountant.reducer';
-// prettier-ignore
-import material, {
-  MaterialState
-} from 'app/entities/material/material.reducer';
-// prettier-ignore
-import booking, {
-  BookingState
-} from 'app/entities/booking/booking.reducer';
-// prettier-ignore
-import payment, {
-  PaymentState
-} from 'app/entities/payment/payment.reducer';
-// prettier-ignore
-import medicalRecord, {
-  MedicalRecordState
-} from 'app/entities/medical-record/medical-record.reducer';
-// prettier-ignore
-import treatment, {
-  TreatmentState
-} from 'app/entities/treatment/treatment.reducer';
-// prettier-ignore
-import treatmentHistory, {
-  TreatmentHistoryState
-} from 'app/entities/treatment-history/treatment-history.reducer';
-// prettier-ignore
-import getMaterial, {
-  GetMaterialState
-} from 'app/entities/get-material/get-material.reducer';
-// prettier-ignore
-import process, {
-  ProcessState
-} from 'app/entities/process/process.reducer';
-// prettier-ignore
-import video, {
-  VideoState
-} from 'app/entities/video/video.reducer';
-// prettier-ignore
-import imgUrl, {
-  ImgUrlState
-} from 'app/entities/img-url/img-url.reducer';
-// prettier-ignore
-import pricingCard, {
-  PricingCardState
-} from 'app/entities/pricing-card/pricing-card.reducer';
-// prettier-ignore
-import pricingContent, {
-  PricingContentState
-} from 'app/entities/pricing-content/pricing-content.reducer';
-// prettier-ignore
-import branch, {
-  BranchState
-} from 'app/entities/branch/branch.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -141,25 +65,6 @@ export interface IRootState {
   readonly blog: BlogState;
   readonly singletonContent: SingletonContentState;
   readonly page: PageState;
-  readonly person: PersonState;
-  readonly patient: PatientState;
-  readonly doctor: DoctorState;
-  readonly nurse: NurseState;
-  readonly receptionist: ReceptionistState;
-  readonly accountant: AccountantState;
-  readonly material: MaterialState;
-  readonly booking: BookingState;
-  readonly payment: PaymentState;
-  readonly medicalRecord: MedicalRecordState;
-  readonly treatment: TreatmentState;
-  readonly treatmentHistory: TreatmentHistoryState;
-  readonly getMaterial: GetMaterialState;
-  readonly process: ProcessState;
-  readonly video: VideoState;
-  readonly imgUrl: ImgUrlState;
-  readonly pricingCard: PricingCardState;
-  readonly pricingContent: PricingContentState;
-  readonly branch: BranchState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -183,25 +88,6 @@ const rootReducer = combineReducers<IRootState>({
   blog,
   singletonContent,
   page,
-  person,
-  patient,
-  doctor,
-  nurse,
-  receptionist,
-  accountant,
-  material,
-  booking,
-  payment,
-  medicalRecord,
-  treatment,
-  treatmentHistory,
-  getMaterial,
-  process,
-  video,
-  imgUrl,
-  pricingCard,
-  pricingContent,
-  branch,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });
