@@ -1,0 +1,95 @@
+
+entity Policy {
+	name String required unique,
+    content String required
+}
+
+entity CustomerReview {
+	customerName String required,
+	customerAddress String,
+    comment String required,
+}
+
+entity Achievement {
+	name String required unique,
+    number Long required,
+}
+
+entity ServiceItem {
+	name String required unique,
+    description String,
+}
+relationship OneToMany {
+	ServiceItem{options} to ServiceOption{service},
+	ServiceItem{processes} to Process,
+	ServiceItem{relatedBlogs} to Blog,
+	ServiceItem{relatedVideos} to Video,
+    ServiceItem{customerImgUrls} to ImgUrl,
+    ServiceItem{pricingCards} to PricingCard,
+}
+entity ServiceOption {
+ 	name String required unique,
+ 	benefits String required,
+    price Integer required
+}
+entity Process {
+    name String required,
+    order Long,
+}
+entity PricingCard {
+    name String required,
+    price Integer required,
+}
+relationship OneToMany {
+ 	PricingCard{contents} to PricingContent{pricingCard}
+ }
+entity PricingContent {
+    content String required,
+    pro Boolean required
+}
+
+entity Video {
+    url String required unique,
+}
+
+entity ImgUrl {
+    imgUrl String required unique,
+}
+relationship OneToOne {
+    Achievement{imgUrl} to ImgUrl,
+    ServiceItem{imgUrl} to ImgUrl,
+    CustomerReview{customerImgUrl} to ImgUrl,
+    Blog{titleImgUrl} to ImgUrl,
+}
+
+entity Blog {
+	title String required,
+	publishDate Instant required,
+    content String required,
+    description String,
+    content String required
+}
+
+entity Branch {
+    adress String required,
+    city String required,
+}
+
+entity SingletonContent {
+	type ContentType required unique,
+    content String
+}
+enum ContentType {
+	PHONE, EMAIL, ADDRESS, INTRO
+}
+
+enum SubPage {
+	HOME, INTRO, SERVICE, BLOG, CONTACT
+}
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+

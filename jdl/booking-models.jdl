@@ -1,0 +1,18 @@
+
+entity Booking {
+	date LocalDate required,
+	time ZonedDateTime required,
+	branch String required,
+}
+
+/*
+relationship OneToOne {
+	Booking{doctor} to Employee,
+	Booking{customer} to Customer,
+}
+*/
+
+// Set service options to all except few
+service all with serviceImpl
+dto all with mapstruct
+paginate all with pagination

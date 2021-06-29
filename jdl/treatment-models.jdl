@@ -1,0 +1,20 @@
+entity Treatment {
+}
+
+entity MedicalRecord {
+}
+
+/*
+relationship ManyToMany {
+    Treatment{doctor} to Employee,
+    Treatment{nurse} to Employee,
+}
+
+relationship ManyToOne {
+    Treatment{patient} to Customer{treatments},
+}
+
+relationship ManyToMany {
+    Treatment to MedicalRecord,
+}
+*/

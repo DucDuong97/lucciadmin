@@ -1,0 +1,109 @@
+
+
+enum Gender {
+	MALE, FEMALE, AMBIGIOUS
+}
+
+entity Customer {
+	name String required maxlength(60),
+    phone String required maxlength(20),
+    address String,
+    birth Instant required,
+    gender Gender required,
+	tier CustomerTier,
+}
+
+enum CustomerTier {
+	VIP
+}
+
+entity Employee {
+	name String required maxlength(60),
+    phone String required maxlength(20),
+    address String,
+    birth Instant required,
+    gender Gender required,
+	role EmployeeRole required,
+	salary Integer,
+}
+
+relationship OneToOne {
+	User{relatedEmployee} to Employee,
+}
+
+enum EmployeeRole {
+	DOCTOR, NURSE, MARKETING, RECEPTIONIST, ADMIN
+}
+
+//------------------------------------------
+
+entity ExportMaterial {
+	date Instant required,
+}
+
+entity ImportMaterial {
+	date Instant required,
+}
+
+entity Material {
+	name String required,
+    amount Integer required,
+    unit String required
+}
+
+relationship OneToOne {
+    ExportMaterial{material} to Material,
+    ExportMaterial{receptionist} to Employee,
+}
+
+//------------------------------------------
+
+entity Booking {
+	date Instant required,
+	hasPurchase Boolean
+}
+
+relationship OneToOne {
+	Booking{doctor} to Employee,
+	Booking{customer} to Customer,
+}
+
+//------------------------------------------
+
+entity Payment {
+	date Instant required,
+	amount Integer required
+}
+
+relationship OneToOne {
+    Payment{receptionist} to Employee,
+    Payment{item required} to Treatment,
+}
+
+//------------------------------------------
+
+entity Treatment {
+}
+
+entity MedicalRecord {
+}
+
+relationship ManyToMany {
+    Treatment{doctor} to Employee,
+    Treatment{nurse} to Employee,
+}
+
+relationship ManyToOne {
+    Treatment{patient} to Customer{treatments},
+}
+
+relationship ManyToMany {
+    Treatment to MedicalRecord,
+}
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl
+

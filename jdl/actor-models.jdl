@@ -1,0 +1,35 @@
+enum Gender {
+	MALE, FEMALE, AMBIGUOUS
+}
+
+entity Customer {
+	name String required maxlength(60),
+    phone String required maxlength(20),
+    address String,
+    birth Instant required,
+    gender Gender required,
+	tier CustomerTier,
+}
+
+enum CustomerTier {
+	VIP
+}
+
+entity Employee {
+	name String required maxlength(60),
+    phone String required maxlength(20),
+    address String,
+    birth Instant required,
+    gender Gender required,
+	role EmployeeRole required,
+	salary Integer,
+}
+
+enum EmployeeRole {
+	DOCTOR, NURSE, MARKETING, RECEPTIONIST, ADMIN
+}
+
+// Set service options to all except few
+// service all with serviceImpl
+// dto all with mapstruct
+paginate all with pagination
