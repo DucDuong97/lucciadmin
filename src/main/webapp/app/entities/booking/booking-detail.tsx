@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity } from './booking.reducer';
 import { IBooking } from 'app/shared/model/booking.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT} from 'app/config/constants';
 
 export interface IBookingDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -36,13 +36,21 @@ export const BookingDetail = (props: IBookingDetailProps) => {
               <Translate contentKey="lucciadminApp.booking.time">Time</Translate>
             </span>
           </dt>
-          <dd>{bookingEntity.time ? <TextFormat value={bookingEntity.time} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>{bookingEntity.time ? <TextFormat value={bookingEntity.time} type="number" format={APP_TIME_FORMAT} /> : null}</dd>
           <dt>
             <span id="branch">
               <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
             </span>
           </dt>
           <dd>{bookingEntity.branch}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>
+          </dt>
+          <dd>{bookingEntity.correspondDoctorId ? bookingEntity.correspondDoctorId : ''}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
+          </dt>
+          <dd>{bookingEntity.customerId ? bookingEntity.customerId : ''}</dd>
         </dl>
         <Button tag={Link} to="/booking" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

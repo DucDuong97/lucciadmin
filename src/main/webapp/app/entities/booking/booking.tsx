@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './booking.reducer';
 import { IBooking } from 'app/shared/model/booking.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT} from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 
@@ -92,6 +92,13 @@ export const Booking = (props: IBookingProps) => {
                 <th className="hand" onClick={sort('branch')}>
                   <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -104,8 +111,16 @@ export const Booking = (props: IBookingProps) => {
                     </Button>
                   </td>
                   <td>{booking.date ? <TextFormat type="date" value={booking.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
-                  <td>{booking.time ? <TextFormat type="date" value={booking.time} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{booking.time ? <TextFormat type="number" value={booking.time} format={APP_TIME_FORMAT} /> : null}</td>
                   <td>{booking.branch}</td>
+                  <td>
+                    {booking.correspondDoctorId ? (
+                      <Link to={`employee/${booking.correspondDoctorId}`}>{booking.correspondDoctorId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>{booking.customerId ? <Link to={`customer/${booking.customerId}`}>{booking.customerId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${booking.id}`} color="info" size="sm">

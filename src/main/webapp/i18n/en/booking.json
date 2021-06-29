@@ -18,7 +18,9 @@
       },
       "date": "Date",
       "time": "Time",
-      "branch": "Branch"
+      "branch": "Branch",
+      "correspondDoctor": "Correspond Doctor",
+      "customer": "Customer"
     }
   }
 }

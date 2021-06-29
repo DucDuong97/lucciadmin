@@ -2,41 +2,33 @@
   "name": "Booking",
   "fields": [
     {
-      "fieldName": "date",
-      "fieldType": "LocalDate",
-      "fieldValidateRules": [
-        "required"
-      ]
-    },
-    {
       "fieldName": "time",
       "fieldType": "ZonedDateTime",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "branch",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
     {
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "otherEntityName": "employee",
       "relationshipName": "correspondDoctor",
       "otherEntityField": "id",
-      "ownerSide": true
+      "ownerSide": true,
+      "otherEntityRelationshipName": "booking"
     },
     {
-      "relationshipType": "one-to-one",
+      "relationshipType": "many-to-one",
       "otherEntityName": "customer",
       "relationshipName": "customer",
       "otherEntityField": "id",
-      "ownerSide": true
+      "ownerSide": true,
+      "fieldValidateRules": ["required"],
+      "otherEntityRelationshipName": "booking"
     }
   ],
   "changelogDate": "20210628111350",
@@ -49,5 +41,7 @@
   "readOnly": false,
   "embedded": false,
   "clientRootFolder": "",
-  "applications": "*"
+  "applications": "*",
+  "searchEngine": false,
+  "databaseType": "sql"
 }

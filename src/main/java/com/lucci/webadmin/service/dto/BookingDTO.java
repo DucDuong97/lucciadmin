@@ -1,6 +1,7 @@
 package com.lucci.webadmin.service.dto;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -9,19 +10,23 @@ import java.io.Serializable;
  * A DTO for the {@link com.lucci.webadmin.domain.Booking} entity.
  */
 public class BookingDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
     private LocalDate date;
 
     @NotNull
-    private ZonedDateTime time;
+    private LocalTime time;
 
     @NotNull
     private String branch;
 
-    
+
+    private Long correspondDoctorId;
+
+    private Long customerId;
+
     public Long getId() {
         return id;
     }
@@ -38,11 +43,11 @@ public class BookingDTO implements Serializable {
         this.date = date;
     }
 
-    public ZonedDateTime getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(ZonedDateTime time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
@@ -52,6 +57,22 @@ public class BookingDTO implements Serializable {
 
     public void setBranch(String branch) {
         this.branch = branch;
+    }
+
+    public Long getCorrespondDoctorId() {
+        return correspondDoctorId;
+    }
+
+    public void setCorrespondDoctorId(Long employeeId) {
+        this.correspondDoctorId = employeeId;
+    }
+
+    public Long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     @Override
@@ -79,6 +100,8 @@ public class BookingDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", time='" + getTime() + "'" +
             ", branch='" + getBranch() + "'" +
+            ", correspondDoctorId=" + getCorrespondDoctorId() +
+            ", customerId=" + getCustomerId() +
             "}";
     }
 }

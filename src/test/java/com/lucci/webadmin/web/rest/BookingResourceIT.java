@@ -17,7 +17,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
-import java.time.LocalDate;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
@@ -37,9 +36,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser
 public class BookingResourceIT {
-
-    private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATE = LocalDate.now(ZoneId.systemDefault());
 
     private static final ZonedDateTime DEFAULT_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
@@ -72,7 +68,6 @@ public class BookingResourceIT {
      */
     public static Booking createEntity(EntityManager em) {
         Booking booking = new Booking()
-            .date(DEFAULT_DATE)
             .time(DEFAULT_TIME)
             .branch(DEFAULT_BRANCH);
         return booking;
@@ -85,7 +80,6 @@ public class BookingResourceIT {
      */
     public static Booking createUpdatedEntity(EntityManager em) {
         Booking booking = new Booking()
-            .date(UPDATED_DATE)
             .time(UPDATED_TIME)
             .branch(UPDATED_BRANCH);
         return booking;
@@ -111,7 +105,6 @@ public class BookingResourceIT {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList).hasSize(databaseSizeBeforeCreate + 1);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
-        assertThat(testBooking.getDate()).isEqualTo(DEFAULT_DATE);
         assertThat(testBooking.getTime()).isEqualTo(DEFAULT_TIME);
         assertThat(testBooking.getBranch()).isEqualTo(DEFAULT_BRANCH);
     }
@@ -136,26 +129,6 @@ public class BookingResourceIT {
         assertThat(bookingList).hasSize(databaseSizeBeforeCreate);
     }
 
-
-    @Test
-    @Transactional
-    public void checkDateIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bookingRepository.findAll().size();
-        // set the field null
-        booking.setDate(null);
-
-        // Create the Booking, which fails.
-        BookingDTO bookingDTO = bookingMapper.toDto(booking);
-
-
-        restBookingMockMvc.perform(post("/api/bookings")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Booking> bookingList = bookingRepository.findAll();
-        assertThat(bookingList).hasSize(databaseSizeBeforeTest);
-    }
 
     @Test
     @Transactional
@@ -208,7 +181,6 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(booking.getId().intValue())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
             .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))))
             .andExpect(jsonPath("$.[*].branch").value(hasItem(DEFAULT_BRANCH)));
     }
@@ -224,7 +196,6 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(booking.getId().intValue()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)))
             .andExpect(jsonPath("$.branch").value(DEFAULT_BRANCH));
     }
@@ -249,7 +220,6 @@ public class BookingResourceIT {
         // Disconnect from session so that the updates on updatedBooking are not directly saved in db
         em.detach(updatedBooking);
         updatedBooking
-            .date(UPDATED_DATE)
             .time(UPDATED_TIME)
             .branch(UPDATED_BRANCH);
         BookingDTO bookingDTO = bookingMapper.toDto(updatedBooking);
@@ -263,7 +233,6 @@ public class BookingResourceIT {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList).hasSize(databaseSizeBeforeUpdate);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
-        assertThat(testBooking.getDate()).isEqualTo(UPDATED_DATE);
         assertThat(testBooking.getTime()).isEqualTo(UPDATED_TIME);
         assertThat(testBooking.getBranch()).isEqualTo(UPDATED_BRANCH);
     }

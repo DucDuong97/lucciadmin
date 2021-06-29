@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 
 /**
@@ -26,16 +26,20 @@ public class Booking implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
-
-    @NotNull
     @Column(name = "time", nullable = false)
     private ZonedDateTime time;
 
     @NotNull
     @Column(name = "branch", nullable = false)
     private String branch;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "bookings", allowSetters = true)
+    private Employee correspondDoctor;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "bookings", allowSetters = true)
+    private Customer customer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -44,19 +48,6 @@ public class Booking implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public Booking date(LocalDate date) {
-        this.date = date;
-        return this;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public ZonedDateTime getTime() {
@@ -84,6 +75,32 @@ public class Booking implements Serializable {
     public void setBranch(String branch) {
         this.branch = branch;
     }
+
+    public Employee getCorrespondDoctor() {
+        return correspondDoctor;
+    }
+
+    public Booking correspondDoctor(Employee employee) {
+        this.correspondDoctor = employee;
+        return this;
+    }
+
+    public void setCorrespondDoctor(Employee employee) {
+        this.correspondDoctor = employee;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Booking customer(Customer customer) {
+        this.customer = customer;
+        return this;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -107,7 +124,6 @@ public class Booking implements Serializable {
     public String toString() {
         return "Booking{" +
             "id=" + getId() +
-            ", date='" + getDate() + "'" +
             ", time='" + getTime() + "'" +
             ", branch='" + getBranch() + "'" +
             "}";

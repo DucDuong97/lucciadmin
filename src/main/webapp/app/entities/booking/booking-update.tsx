@@ -7,17 +7,18 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
+import { getEntities as getCustomers } from 'app/entities/customer/customer.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './booking.reducer';
-import { IBooking } from 'app/shared/model/booking.model';
-import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
-import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IBookingUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const BookingUpdate = (props: IBookingUpdateProps) => {
+  const [correspondDoctorId, setCorrespondDoctorId] = useState('0');
+  const [customerId, setCustomerId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { bookingEntity, loading, updating } = props;
+  const { bookingEntity, employees, customers, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/booking' + props.location.search);
@@ -29,6 +30,9 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
+
+    props.getEmployees();
+    props.getCustomers();
   }, []);
 
   useEffect(() => {
@@ -38,8 +42,6 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
   }, [props.updateSuccess]);
 
   const saveEntity = (event, errors, values) => {
-    values.time = convertDateTimeToServer(values.time);
-
     if (errors.length === 0) {
       const entity = {
         ...bookingEntity,
@@ -97,11 +99,9 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 </Label>
                 <AvInput
                   id="booking-time"
-                  type="datetime-local"
+                  type="time"
                   className="form-control"
                   name="time"
-                  placeholder={'YYYY-MM-DD HH:mm'}
-                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.bookingEntity.time)}
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
@@ -119,6 +119,36 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
                 />
+              </AvGroup>
+              <AvGroup>
+                <Label for="booking-correspondDoctor">
+                  <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>
+                </Label>
+                <AvInput id="booking-correspondDoctor" type="select" className="form-control" name="correspondDoctorId">
+                  <option value="" key="0" />
+                  {employees
+                    ? employees.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="booking-customer">
+                  <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
+                </Label>
+                <AvInput id="booking-customer" type="select" className="form-control" name="customerId">
+                  <option value="" key="0" />
+                  {customers
+                    ? customers.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/booking" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -142,6 +172,8 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  employees: storeState.employee.entities,
+  customers: storeState.customer.entities,
   bookingEntity: storeState.booking.entity,
   loading: storeState.booking.loading,
   updating: storeState.booking.updating,
@@ -149,6 +181,8 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getEmployees,
+  getCustomers,
   getEntity,
   updateEntity,
   createEntity,

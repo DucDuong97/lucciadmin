@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Set;
 
 import com.lucci.webadmin.domain.enumeration.Gender;
 
@@ -53,6 +55,11 @@ public class Customer implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "tier")
     private CustomerTier tier;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
+    private Set<Booking> bookings;
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
