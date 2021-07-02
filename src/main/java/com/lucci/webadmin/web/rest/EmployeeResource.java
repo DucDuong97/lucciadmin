@@ -2,6 +2,7 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.repository.EmployeeRepository;
+import com.lucci.webadmin.service.UserService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,9 +41,11 @@ public class EmployeeResource {
     private String applicationName;
 
     private final EmployeeRepository employeeRepository;
+    private final UserService userService;
 
-    public EmployeeResource(EmployeeRepository employeeRepository) {
+    public EmployeeResource(EmployeeRepository employeeRepository, UserService userService) {
         this.employeeRepository = employeeRepository;
+        this.userService = userService;
     }
 
     /**
@@ -122,6 +124,8 @@ public class EmployeeResource {
     @DeleteMapping("/employees/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         log.debug("REST request to delete Employee : {}", id);
+        employeeRepository.findById(id).ifPresent(employee -> employee.getUsers()
+            .forEach(user -> userService.setAuthorities(user, null)));
         employeeRepository.deleteById(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }

@@ -70,7 +70,6 @@ public class Employee implements Serializable {
 
     @PreRemove
     private void preRemove() {
-        users.forEach(user -> user.setRelatedEmployee(null));
         bookings.forEach(booking -> booking.setCorrespondDoctor(null));
     }
 
@@ -173,6 +172,11 @@ public class Employee implements Serializable {
     public void setSalary(Integer salary) {
         this.salary = salary;
     }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
