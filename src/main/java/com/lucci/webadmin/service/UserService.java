@@ -209,6 +209,8 @@ public class UserService {
                 if (userDTO.getRelatedEmployeeId() != null) {
                     employeeRepository.findById(userDTO.getRelatedEmployeeId())
                         .ifPresent(user::setRelatedEmployee);
+                } else {
+                    user.setRelatedEmployee(null);
                 }
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
