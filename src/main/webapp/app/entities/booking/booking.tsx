@@ -6,11 +6,12 @@ import { Translate, ICrudGetAllAction, TextFormat, getSortState, IPaginationBase
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './booking.reducer';
+import { getEntities, updateEntity } from './booking.reducer';
 import { IBooking } from 'app/shared/model/booking.model';
-import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT} from 'app/config/constants';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT, AUTHORITIES} from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+import {hasAnyAuthority} from "app/shared/auth/private-route";
 
 export interface IBookingProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -64,7 +65,21 @@ export const Booking = (props: IBookingProps) => {
       activePage: currentPage,
     });
 
-  const { bookingList, match, loading, totalItems } = props;
+  const assignBookingToDoctor = booking => {
+    const entity = {
+      ...booking,
+      correspondDoctorId: props.correspondDoctorId
+    };
+    props.updateEntity(entity);
+  }
+
+  useEffect(() => {
+    if (props.updateSuccess) {
+      props.history.push('/booking/' + props.entity.id);
+    }
+  }, [props.updateSuccess]);
+
+  const { bookingList, match, loading, totalItems, isDoctor, isReceptionist, correspondDoctorId } = props;
   return (
     <div>
       <h2 id="booking-heading">
@@ -103,7 +118,14 @@ export const Booking = (props: IBookingProps) => {
               </tr>
             </thead>
             <tbody>
-              {bookingList.map((booking, i) => (
+              {bookingList
+              .filter((booking) =>
+                props.isAdmin ||
+                isReceptionist ||
+                !booking.correspondDoctorId ||
+                booking.correspondDoctorId === correspondDoctorId)
+              .map((booking, i) =>
+              (
                 <tr key={`entity-${i}`}>
                   <td>
                     <Button tag={Link} to={`${match.url}/${booking.id}`} color="link" size="sm">
@@ -123,34 +145,56 @@ export const Booking = (props: IBookingProps) => {
                   <td>{booking.customerId ? <Link to={`customer/${booking.customerId}`}>{booking.customerId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
+
+                      {/*View*/}
                       <Button tag={Link} to={`${match.url}/${booking.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-                      <Button
-                        tag={Link}
-                        to={`${match.url}/${booking.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="primary"
-                        size="sm"
-                      >
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`${match.url}/${booking.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
+
+                      {/*Check*/}
+                      {isDoctor && !booking.correspondDoctorId &&
+                        <Button
+                          onClick={() => assignBookingToDoctor(booking)}
+                          color="success" size="sm"
+                        >
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.check">Check</Translate>
+                          </span>
+                        </Button>
+                      }
+
+                      {/*Edit*/}
+                      {isReceptionist &&
+                        <Button
+                          tag={Link}
+                          to={`${match.url}/${booking.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                          color="primary"
+                          size="sm"
+                        >
+                          <FontAwesomeIcon icon="pencil-alt" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.edit">Edit</Translate>
+                          </span>
+                        </Button>
+                      }
+
+                      {/*Delete*/}
+                      {isReceptionist &&
+                        <Button
+                          tag={Link}
+                          to={`${match.url}/${booking.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                          color="danger"
+                          size="sm"
+                        >
+                          <FontAwesomeIcon icon="trash" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.delete">Delete</Translate>
+                          </span>
+                        </Button>
+                      }
                     </div>
                   </td>
                 </tr>
@@ -187,14 +231,23 @@ export const Booking = (props: IBookingProps) => {
   );
 };
 
-const mapStateToProps = ({ booking }: IRootState) => ({
+const mapStateToProps = ({ booking, authentication }: IRootState) => ({
   bookingList: booking.entities,
+  entity: booking.entity,
   loading: booking.loading,
   totalItems: booking.totalItems,
+  updating: booking.updating,
+  updateSuccess: booking.updateSuccess,
+
+  isDoctor: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.DOCTOR]),
+  isReceptionist: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.RECEPTIONIST]),
+  isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
+  correspondDoctorId: authentication.account.relatedEmployeeId,
 });
 
 const mapDispatchToProps = {
   getEntities,
+  updateEntity
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
