@@ -177,23 +177,11 @@ export const UserManagementUpdate = (props: IUserManagementUpdateProps) => {
                 </AvField>
               </AvGroup>
               <AvGroup>
-                <Label for="authorities">
-                  <Translate contentKey="userManagement.profiles">Profiles</Translate>
-                </Label>
-                <AvInput type="select" className="form-control" name="authorities" value={user.authorities} multiple>
-                  {roles.map(role => (
-                    <option value={role} key={role}>
-                      {role}
-                    </option>
-                  ))}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="relatedEmployeeId">
                   <Translate contentKey="userManagement.relatedEmployee">Related Employee</Translate>
                 </Label>
                 <AvInput type="select" className="form-control" name="relatedEmployeeId" value={user.relatedEmployeeId}>
-                  <option value={null}>Select an Item</option>
+                  <option/>
                   {employees.map(employee => (
                     <option value={employee.id} key={employee.id}>
                       {`${employee.id} - ${employee.name}`}

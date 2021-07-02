@@ -2,7 +2,6 @@ package com.lucci.webadmin.service;
 
 import com.lucci.webadmin.config.Constants;
 import com.lucci.webadmin.domain.Authority;
-import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.domain.User;
 import com.lucci.webadmin.repository.AuthorityRepository;
 import com.lucci.webadmin.repository.EmployeeRepository;
@@ -142,35 +141,12 @@ public class UserService {
 
     public User createUser(UserDTO userDTO) {
         User user = new User();
-        user.setLogin(userDTO.getLogin().toLowerCase());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        if (userDTO.getEmail() != null) {
-            user.setEmail(userDTO.getEmail().toLowerCase());
-        }
-        user.setImageUrl(userDTO.getImageUrl());
-        if (userDTO.getLangKey() == null) {
-            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
-        } else {
-            user.setLangKey(userDTO.getLangKey());
-        }
+        transferData(userDTO, user);
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
-        if (userDTO.getAuthorities() != null) {
-            Set<Authority> authorities = userDTO.getAuthorities().stream()
-                .map(authorityRepository::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
-        }
-        if (userDTO.getRelatedEmployeeId() != null) {
-            employeeRepository.findById(userDTO.getRelatedEmployeeId())
-                .ifPresent(user::setRelatedEmployee);
-        }
         userRepository.save(user);
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
@@ -190,33 +166,48 @@ public class UserService {
             .map(Optional::get)
             .map(user -> {
                 this.clearUserCaches(user);
-                user.setLogin(userDTO.getLogin().toLowerCase());
-                user.setFirstName(userDTO.getFirstName());
-                user.setLastName(userDTO.getLastName());
-                if (userDTO.getEmail() != null) {
-                    user.setEmail(userDTO.getEmail().toLowerCase());
-                }
-                user.setImageUrl(userDTO.getImageUrl());
-                user.setActivated(userDTO.isActivated());
-                user.setLangKey(userDTO.getLangKey());
-                Set<Authority> managedAuthorities = user.getAuthorities();
-                managedAuthorities.clear();
-                userDTO.getAuthorities().stream()
-                    .map(authorityRepository::findById)
-                    .filter(Optional::isPresent)
-                    .map(Optional::get)
-                    .forEach(managedAuthorities::add);
-                if (userDTO.getRelatedEmployeeId() != null) {
-                    employeeRepository.findById(userDTO.getRelatedEmployeeId())
-                        .ifPresent(user::setRelatedEmployee);
-                } else {
-                    user.setRelatedEmployee(null);
-                }
+                transferData(userDTO, user);
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
                 return user;
             })
             .map(UserDTO::new);
+    }
+
+    private void transferData(UserDTO userDTO, User user) {
+        user.setLogin(userDTO.getLogin().toLowerCase());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setActivated(userDTO.isActivated());
+        user.setImageUrl(userDTO.getImageUrl());
+        if (userDTO.getEmail() != null) {
+            user.setEmail(userDTO.getEmail().toLowerCase());
+        }
+        if (userDTO.getLangKey() == null) {
+            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
+        } else {
+            user.setLangKey(userDTO.getLangKey());
+        }
+        if (userDTO.getRelatedEmployeeId() != null) {
+            user.setRelatedEmployee(employeeRepository
+                .findById(userDTO.getRelatedEmployeeId()).orElse(null));
+        } else {
+            user.setRelatedEmployee(null);
+        }
+        setAuthorities(user);
+    }
+
+    private void setAuthorities(User user) {
+        Set<Authority> managedAuthorities = user.getAuthorities();
+        managedAuthorities.clear();
+        if (user.getRelatedEmployee() != null) {
+            user.getRelatedEmployee().getRole().getAuthorities()
+                .stream()
+                .map(authorityRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .forEach(managedAuthorities::add);
+        }
     }
 
     public void deleteUser(String login) {

@@ -72,10 +72,10 @@ export const UserManagement = (props: IUserManagementProps) => {
       <Table responsive striped>
         <thead>
           <tr>
-            <th className="hand" onClick={sort('id')}>
-              <Translate contentKey="global.field.id">ID</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
+            {/*<th className="hand" onClick={sort('id')}>*/}
+            {/*  <Translate contentKey="global.field.id">ID</Translate>*/}
+            {/*  <FontAwesomeIcon icon="sort" />*/}
+            {/*</th>*/}
             <th className="hand" onClick={sort('login')}>
               <Translate contentKey="userManagement.login">Login</Translate>
               <FontAwesomeIcon icon="sort" />
@@ -84,39 +84,42 @@ export const UserManagement = (props: IUserManagementProps) => {
               <Translate contentKey="userManagement.email">Email</Translate>
               <FontAwesomeIcon icon="sort" />
             </th>
-            <th />
-            <th className="hand" onClick={sort('langKey')}>
-              <Translate contentKey="userManagement.langKey">Lang Key</Translate>
-              <FontAwesomeIcon icon="sort" />
+            <th className="hand">
+              <Translate contentKey="userManagement.relatedEmployee">Related Employee</Translate>
             </th>
             <th>
               <Translate contentKey="userManagement.profiles">Profiles</Translate>
             </th>
-            <th className="hand" onClick={sort('createdDate')}>
-              <Translate contentKey="userManagement.createdDate">Created Date</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th className="hand" onClick={sort('lastModifiedBy')}>
-              <Translate contentKey="userManagement.lastModifiedBy">Last Modified By</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
-            <th id="modified-date-sort" className="hand" onClick={sort('lastModifiedDate')}>
-              <Translate contentKey="userManagement.lastModifiedDate">Last Modified Date</Translate>
-              <FontAwesomeIcon icon="sort" />
-            </th>
+            <th />
             <th />
           </tr>
         </thead>
         <tbody>
           {users.map((user, i) => (
             <tr id={user.login} key={`user-${i}`}>
-              <td>
-                <Button tag={Link} to={`${match.url}/${user.login}`} color="link" size="sm">
-                  {user.id}
-                </Button>
-              </td>
+              {/*<td>*/}
+              {/*  <Button tag={Link} to={`${match.url}/${user.login}`} color="link" size="sm">*/}
+              {/*    {user.id}*/}
+              {/*  </Button>*/}
+              {/*</td>*/}
               <td>{user.login}</td>
               <td>{user.email}</td>
+              <td>
+                {user.relatedEmployeeId ? (
+                  <Link to={`/employee/${user.relatedEmployeeId}`}>{user.relatedEmployeeId}</Link>
+                ) : (
+                  ''
+                )}
+              </td>
+              <td>
+                {user.authorities
+                  ? user.authorities.map((authority, j) => (
+                    <div key={`user-auth-${i}-${j}`}>
+                      <Badge color="info">{authority}</Badge>
+                    </div>
+                  ))
+                  : null}
+              </td>
               <td>
                 {user.activated ? (
                   <Button color="success" onClick={toggleActive(user)}>
@@ -127,25 +130,6 @@ export const UserManagement = (props: IUserManagementProps) => {
                     <Translate contentKey="userManagement.deactivated">Deactivated</Translate>
                   </Button>
                 )}
-              </td>
-              <td>{user.langKey}</td>
-              <td>
-                {user.authorities
-                  ? user.authorities.map((authority, j) => (
-                      <div key={`user-auth-${i}-${j}`}>
-                        <Badge color="info">{authority}</Badge>
-                      </div>
-                    ))
-                  : null}
-              </td>
-              <td>
-                {user.createdDate ? <TextFormat value={user.createdDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid /> : null}
-              </td>
-              <td>{user.lastModifiedBy}</td>
-              <td>
-                {user.lastModifiedDate ? (
-                  <TextFormat value={user.lastModifiedDate} type="date" format={APP_DATE_FORMAT} blankOnInvalid />
-                ) : null}
               </td>
               <td className="text-right">
                 <div className="btn-group flex-btn-group-container">
