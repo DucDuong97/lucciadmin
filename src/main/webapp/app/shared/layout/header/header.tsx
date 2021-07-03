@@ -22,6 +22,7 @@ export interface IHeaderProps {
   isDoctor: boolean;
   isNurse: boolean;
   isMarketing: boolean;
+  isManager: boolean;
   // isAccountant: boolean;
   ribbonEnv: string;
   isInProduction: boolean;

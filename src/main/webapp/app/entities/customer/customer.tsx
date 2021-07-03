@@ -92,9 +92,6 @@ export const Customer = (props: ICustomerProps) => {
                 <th className="hand" onClick={sort('phone')}>
                   <Translate contentKey="lucciadminApp.customer.phone">Phone</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('address')}>
-                  <Translate contentKey="lucciadminApp.customer.address">Address</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('birth')}>
                   <Translate contentKey="lucciadminApp.customer.birth">Birth</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -117,8 +114,7 @@ export const Customer = (props: ICustomerProps) => {
                   </td>
                   <td>{customer.name}</td>
                   <td>{customer.phone}</td>
-                  <td>{customer.address}</td>
-                  <td>{customer.birth ? <TextFormat type="date" value={customer.birth} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{customer.birth ? <TextFormat type="date" value={customer.birth} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>
                     <Translate contentKey={`lucciadminApp.Gender.${customer.gender}`} />
                   </td>

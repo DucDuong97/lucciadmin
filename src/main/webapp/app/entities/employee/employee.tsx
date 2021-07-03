@@ -89,9 +89,6 @@ export const Employee = (props: IEmployeeProps) => {
                 <th className="hand" onClick={sort('phone')}>
                   <Translate contentKey="lucciadminApp.employee.phone">Phone</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('address')}>
-                  <Translate contentKey="lucciadminApp.employee.address">Address</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('birth')}>
                   <Translate contentKey="lucciadminApp.employee.birth">Birth</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -117,8 +114,7 @@ export const Employee = (props: IEmployeeProps) => {
                   </td>
                   <td>{employee.name}</td>
                   <td>{employee.phone}</td>
-                  <td>{employee.address}</td>
-                  <td>{employee.birth ? <TextFormat type="date" value={employee.birth} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{employee.birth ? <TextFormat type="date" value={employee.birth} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>
                     <Translate contentKey={`lucciadminApp.Gender.${employee.gender}`} />
                   </td>

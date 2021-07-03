@@ -14,6 +14,7 @@ export const AUTHORITIES = {
   DOCTOR: 'ROLE_DOCTOR',
   NURSE: 'ROLE_NURSE',
   MARKETING: 'ROLE_MARKETING',
+  MANAGER: 'ROLE_MANAGER',
 };
 
 export const messages = {
