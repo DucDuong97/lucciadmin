@@ -139,7 +139,12 @@ export const UserManagement = (props: IUserManagementProps) => {
                       <Translate contentKey="entity.action.view">View</Translate>
                     </span>
                   </Button>
-                  <Button tag={Link} to={`${match.url}/${user.login}/edit`} color="primary" size="sm">
+                  <Button
+                    tag={Link}
+                    to={`${match.url}/${user.login}/edit`}
+                    color="primary" size="sm"
+                    disabled={account.login === user.login || user.login === 'admin' || user.login === 'system'}
+                  >
                     <FontAwesomeIcon icon="pencil-alt" />{' '}
                     <span className="d-none d-md-inline">
                       <Translate contentKey="entity.action.edit">Edit</Translate>
@@ -150,7 +155,7 @@ export const UserManagement = (props: IUserManagementProps) => {
                     to={`${match.url}/${user.login}/delete`}
                     color="danger"
                     size="sm"
-                    disabled={account.login === user.login}
+                    disabled={account.login === user.login || user.login === 'admin' || user.login === 'system'}
                   >
                     <FontAwesomeIcon icon="trash" />{' '}
                     <span className="d-none d-md-inline">
