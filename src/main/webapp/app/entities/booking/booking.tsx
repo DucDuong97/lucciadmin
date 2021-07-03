@@ -84,11 +84,13 @@ export const Booking = (props: IBookingProps) => {
     <div>
       <h2 id="booking-heading">
         <Translate contentKey="lucciadminApp.booking.home.title">Bookings</Translate>
-        <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-          <FontAwesomeIcon icon="plus" />
-          &nbsp;
-          <Translate contentKey="lucciadminApp.booking.home.createLabel">Create new Booking</Translate>
-        </Link>
+        {isReceptionist &&
+          <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
+            <FontAwesomeIcon icon="plus" />
+            &nbsp;
+            <Translate contentKey="lucciadminApp.booking.home.createLabel">Create new Booking</Translate>
+          </Link>
+        }
       </h2>
       <div className="table-responsive">
         {bookingList && bookingList.length > 0 ? (
