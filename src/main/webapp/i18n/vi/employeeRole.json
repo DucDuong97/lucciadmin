@@ -6,7 +6,10 @@
       "NURSE": "Y tá",
       "MARKETING": "Marketer",
       "RECEPTIONIST": "Lễ tân",
-      "ADMIN": "Admin"
+      "ADMIN": "Admin",
+      "OPERATIONS_DIRECTOR": "Giám đốc chuyên môn",
+      "BRANCH_BOSS_DOCTOR": "Bác sỹ tổng Chi nhánh",
+      "CONSULTANT": "Tư vấn viên"
     }
   }
 }

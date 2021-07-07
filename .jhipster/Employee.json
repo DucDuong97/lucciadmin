@@ -41,7 +41,7 @@
     {
       "fieldName": "role",
       "fieldType": "EmployeeRole",
-      "fieldValues": "DOCTOR,NURSE,MARKETING,RECEPTIONIST,ADMIN",
+      "fieldValues": "DOCTOR,NURSE,MARKETING,RECEPTIONIST,ADMIN,OPERATIONS_DIRECTOR,BRANCH_BOSS_DOCTOR,CONSULTANT",
       "fieldValidateRules": [
         "required"
       ]
