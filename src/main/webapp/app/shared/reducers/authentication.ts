@@ -3,6 +3,8 @@ import { Storage } from 'react-jhipster';
 
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 import { setLocale } from 'app/shared/reducers/locale';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
+import { AUTHORITIES } from 'app/config/constants';
 
 export const ACTION_TYPES = {
   LOGIN: 'authentication/LOGIN',
@@ -17,6 +19,15 @@ const AUTH_TOKEN_KEY = 'jhi-authenticationToken';
 const initialState = {
   loading: false,
   isAuthenticated: false,
+  isAdmin: false,
+  isReceptionist: false,
+  isDoctor: false,
+  isNurse: false,
+  isMarketing: false,
+  isManager: false,
+  isOperationsDirector: false,
+  isBranchBossDoctor: false,
+  isConsultant: false,
   loginSuccess: false,
   loginError: false, // Errors returned from server side
   showModalLogin: false,
@@ -31,6 +42,18 @@ const initialState = {
 export type AuthenticationState = Readonly<typeof initialState>;
 
 // Reducer
+
+const setAuthorities = authorities => ({
+  isAdmin: hasAnyAuthority(authorities, [AUTHORITIES.ADMIN]),
+  isReceptionist: hasAnyAuthority(authorities, [AUTHORITIES.RECEPTIONIST]),
+  isDoctor: hasAnyAuthority(authorities, [AUTHORITIES.DOCTOR]),
+  isNurse: hasAnyAuthority(authorities, [AUTHORITIES.NURSE]),
+  isMarketing: hasAnyAuthority(authorities, [AUTHORITIES.MARKETING]),
+  isManager: hasAnyAuthority(authorities, [AUTHORITIES.MANAGER]),
+  isOperationsDirector: hasAnyAuthority(authorities, [AUTHORITIES.OPERATIONS_DIRECTOR]),
+  isBranchBossDoctor: hasAnyAuthority(authorities, [AUTHORITIES.BRANCH_BOSS_DOCTOR]),
+  isConsultant: hasAnyAuthority(authorities, [AUTHORITIES.CONSULTANT]),
+});
 
 export default (state: AuthenticationState = initialState, action): AuthenticationState => {
   switch (action.type) {
@@ -77,6 +100,7 @@ export default (state: AuthenticationState = initialState, action): Authenticati
         loading: false,
         sessionHasBeenFetched: true,
         account: action.payload.data,
+        ...setAuthorities(action.payload.data.authorities),
       };
     }
     case ACTION_TYPES.ERROR_MESSAGE:
