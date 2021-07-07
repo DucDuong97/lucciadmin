@@ -20,6 +20,8 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
+import static com.lucci.webadmin.security.AuthoritiesConstants.*;
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport.class)
@@ -84,6 +86,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/account/reset-password/finish").permitAll()
 //            .antMatchers("/api/**").authenticated()
             .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+
+            .antMatchers(HttpMethod.POST, "/api/customers").permitAll()
+            .antMatchers(HttpMethod.PUT, "/api/customers").hasAuthority(RECEPTIONIST)
+            .antMatchers(HttpMethod.GET, "/api/customers").hasAnyAuthority(RECEPTIONIST, ADMIN, CONSULTANT)
+            .antMatchers(HttpMethod.GET, "/api/customers/**").permitAll()
+            .antMatchers(HttpMethod.DELETE, "/api/customers/**").hasAuthority(ADMIN)
+
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()

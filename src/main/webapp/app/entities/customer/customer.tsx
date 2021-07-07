@@ -197,8 +197,8 @@ const mapStateToProps = ({ customer, authentication }: IRootState) => ({
   customerList: customer.entities,
   loading: customer.loading,
   totalItems: customer.totalItems,
-  isReceptionist: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.RECEPTIONIST]),
-  isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
+  isReceptionist: authentication.isReceptionist,
+  isAdmin: authentication.isAdmin,
 });
 
 const mapDispatchToProps = {
