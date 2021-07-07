@@ -51,7 +51,17 @@
       "fieldType": "Integer"
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "branch",
+      "relationshipName": "workAt",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "fieldValidateRules": ["required"],
+      "otherEntityRelationshipName": "employee"
+    }
+  ],
   "changelogDate": "20210628105133",
   "entityTableName": "employee",
   "dto": "no",

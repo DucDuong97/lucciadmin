@@ -22,6 +22,7 @@ describe('Header', () => {
     isDoctor: false,
     isNurse: false,
     isMarketing: false,
+    isManager: false,
     currentLocale: 'en',
     onLocaleChange: localeSpy,
     ribbonEnv: 'dev',

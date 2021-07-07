@@ -7,6 +7,8 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './employee.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -15,9 +17,10 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IEmployeeUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
+  const [workAtId, setWorkAtId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { employeeEntity, loading, updating } = props;
+  const { employeeEntity, branches, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/employee' + props.location.search);
@@ -29,6 +32,8 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
+
+    props.getBranches();
   }, []);
 
   useEffect(() => {
@@ -167,6 +172,21 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                 </Label>
                 <AvField id="employee-salary" type="string" className="form-control" name="salary" />
               </AvGroup>
+              <AvGroup>
+                <Label for="employee-workAt">
+                  <Translate contentKey="lucciadminApp.employee.workAt">Work At</Translate>
+                </Label>
+                <AvInput id="employee-workAt" type="select" className="form-control" name="workAt.id">
+                  <option value="" key="0" />
+                  {branches
+                    ? branches.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/employee" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -189,6 +209,7 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
+  branches: storeState.branch.entities,
   employeeEntity: storeState.employee.entity,
   loading: storeState.employee.loading,
   updating: storeState.employee.updating,
@@ -196,6 +217,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
+  getBranches,
   getEntity,
   updateEntity,
   createEntity,

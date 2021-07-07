@@ -122,7 +122,11 @@ export const UserManagement = (props: IUserManagementProps) => {
               </td>
               <td>
                 {user.activated ? (
-                  <Button color="success" onClick={toggleActive(user)}>
+                  <Button
+                    color="success"
+                    onClick={toggleActive(user)}
+                    disabled={user.login === 'admin' || user.login === 'system'}
+                  >
                     <Translate contentKey="userManagement.activated">Activated</Translate>
                   </Button>
                 ) : (

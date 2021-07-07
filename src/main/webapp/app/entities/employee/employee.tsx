@@ -101,6 +101,9 @@ export const Employee = (props: IEmployeeProps) => {
                 <th className="hand" onClick={sort('salary')}>
                   <Translate contentKey="lucciadminApp.employee.salary">Salary</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.employee.workAt">Work At</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -122,6 +125,7 @@ export const Employee = (props: IEmployeeProps) => {
                     <Translate contentKey={`lucciadminApp.EmployeeRole.${employee.role}`} />
                   </td>
                   <td>{employee.salary}</td>
+                  <td>{employee.workAt ? <Link to={`branch/${employee.workAt.id}`}>{employee.workAt.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${employee.id}`} color="info" size="sm">

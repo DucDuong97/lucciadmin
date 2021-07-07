@@ -1,6 +1,7 @@
 package com.lucci.webadmin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -60,6 +61,10 @@ public class Employee implements Serializable {
     @Column(name = "salary")
     private Integer salary;
 
+    @ManyToOne
+    @JsonIgnoreProperties(value = "employees", allowSetters = true)
+    private Branch workAt;
+
     @JsonIgnore
     @OneToMany(mappedBy = "relatedEmployee", cascade = CascadeType.PERSIST)
     private Set<User> users;
@@ -71,6 +76,8 @@ public class Employee implements Serializable {
     @PreRemove
     private void preRemove() {
         bookings.forEach(booking -> booking.setCorrespondDoctor(null));
+        users.forEach(user -> user.setRelatedEmployee(null));
+        users.forEach(user -> user.getAuthorities().clear());
     }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -173,10 +180,18 @@ public class Employee implements Serializable {
         this.salary = salary;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Branch getWorkAt() {
+        return workAt;
     }
 
+    public Employee workAt(Branch branch) {
+        this.workAt = branch;
+        return this;
+    }
+
+    public void setWorkAt(Branch branch) {
+        this.workAt = branch;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
