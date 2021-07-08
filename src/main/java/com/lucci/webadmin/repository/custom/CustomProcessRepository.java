@@ -1,4 +1,4 @@
-package com.lucci.webadmin.repository;
+package com.lucci.webadmin.repository.custom;
 
 import com.lucci.webadmin.domain.Process;
 import org.springframework.data.jpa.repository.Query;
