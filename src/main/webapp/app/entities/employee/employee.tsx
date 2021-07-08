@@ -89,9 +89,6 @@ export const Employee = (props: IEmployeeProps) => {
                 <th className="hand" onClick={sort('phone')}>
                   <Translate contentKey="lucciadminApp.employee.phone">Phone</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('address')}>
-                  <Translate contentKey="lucciadminApp.employee.address">Address</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('birth')}>
                   <Translate contentKey="lucciadminApp.employee.birth">Birth</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -103,6 +100,9 @@ export const Employee = (props: IEmployeeProps) => {
                 </th>
                 <th className="hand" onClick={sort('salary')}>
                   <Translate contentKey="lucciadminApp.employee.salary">Salary</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.employee.workAt">Work At</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -117,8 +117,7 @@ export const Employee = (props: IEmployeeProps) => {
                   </td>
                   <td>{employee.name}</td>
                   <td>{employee.phone}</td>
-                  <td>{employee.address}</td>
-                  <td>{employee.birth ? <TextFormat type="date" value={employee.birth} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{employee.birth ? <TextFormat type="date" value={employee.birth} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>
                     <Translate contentKey={`lucciadminApp.Gender.${employee.gender}`} />
                   </td>
@@ -126,6 +125,7 @@ export const Employee = (props: IEmployeeProps) => {
                     <Translate contentKey={`lucciadminApp.EmployeeRole.${employee.role}`} />
                   </td>
                   <td>{employee.salary}</td>
+                  <td>{employee.workAt ? <Link to={`branch/${employee.workAt.id}`}>{employee.workAt.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${employee.id}`} color="info" size="sm">

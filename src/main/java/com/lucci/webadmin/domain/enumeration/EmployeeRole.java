@@ -32,6 +32,34 @@ public enum EmployeeRole {
         public List<String> getAuthorities() {
             return Arrays.asList("ROLE_ADMIN", "ROLE_USER");
         }
+    },
+
+    MANAGER {
+        @Override
+        public List<String> getAuthorities() {
+            return Arrays.asList("ROLE_MANAGER", "ROLE_USER");
+        }
+    },
+
+    OPERATIONS_DIRECTOR {
+        @Override
+        public List<String> getAuthorities() {
+            return Arrays.asList("ROLE_OPERATIONS_DIRECTOR", "ROLE_USER");
+        }
+    },
+
+    BRANCH_BOSS_DOCTOR {
+        @Override
+        public List<String> getAuthorities() {
+            return Arrays.asList("ROLE_BRANCH_BOSS_DOCTOR", "ROLE_USER");
+        }
+    },
+
+    CONSULTANT {
+        @Override
+        public List<String> getAuthorities() {
+            return Arrays.asList("ROLE_CONSULTANT", "ROLE_USER");
+        }
     };
 
     public abstract List<String> getAuthorities();

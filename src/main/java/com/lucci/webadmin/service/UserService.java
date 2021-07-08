@@ -188,16 +188,16 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        if (userDTO.getRelatedEmployeeId() != null) {
+        setAuthorities(user, userDTO.getRelatedEmployeeId());
+    }
+
+    public void setAuthorities(User user, Long employeeId) {
+        if (employeeId != null) {
             user.setRelatedEmployee(employeeRepository
-                .findById(userDTO.getRelatedEmployeeId()).orElse(null));
+                .findById(employeeId).orElse(null));
         } else {
             user.setRelatedEmployee(null);
         }
-        setAuthorities(user);
-    }
-
-    private void setAuthorities(User user) {
         Set<Authority> managedAuthorities = user.getAuthorities();
         managedAuthorities.clear();
         if (user.getRelatedEmployee() != null) {

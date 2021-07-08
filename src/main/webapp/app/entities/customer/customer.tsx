@@ -8,9 +8,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './customer.reducer';
 import { ICustomer } from 'app/shared/model/customer.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
 export interface ICustomerProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -64,16 +65,18 @@ export const Customer = (props: ICustomerProps) => {
       activePage: currentPage,
     });
 
-  const { customerList, match, loading, totalItems } = props;
+  const { customerList, match, loading, totalItems, isReceptionist, isAdmin } = props;
   return (
     <div>
       <h2 id="customer-heading">
         <Translate contentKey="lucciadminApp.customer.home.title">Customers</Translate>
-        <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-          <FontAwesomeIcon icon="plus" />
-          &nbsp;
-          <Translate contentKey="lucciadminApp.customer.home.createLabel">Create new Customer</Translate>
-        </Link>
+        {isReceptionist &&
+          <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
+            <FontAwesomeIcon icon="plus"/>
+            &nbsp;
+            <Translate contentKey="lucciadminApp.customer.home.createLabel">Create new Customer</Translate>
+          </Link>
+        }
       </h2>
       <div className="table-responsive">
         {customerList && customerList.length > 0 ? (
@@ -88,9 +91,6 @@ export const Customer = (props: ICustomerProps) => {
                 </th>
                 <th className="hand" onClick={sort('phone')}>
                   <Translate contentKey="lucciadminApp.customer.phone">Phone</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('address')}>
-                  <Translate contentKey="lucciadminApp.customer.address">Address</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('birth')}>
                   <Translate contentKey="lucciadminApp.customer.birth">Birth</Translate> <FontAwesomeIcon icon="sort" />
@@ -114,8 +114,7 @@ export const Customer = (props: ICustomerProps) => {
                   </td>
                   <td>{customer.name}</td>
                   <td>{customer.phone}</td>
-                  <td>{customer.address}</td>
-                  <td>{customer.birth ? <TextFormat type="date" value={customer.birth} format={APP_DATE_FORMAT} /> : null}</td>
+                  <td>{customer.birth ? <TextFormat type="date" value={customer.birth} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>
                     <Translate contentKey={`lucciadminApp.Gender.${customer.gender}`} />
                   </td>
@@ -124,34 +123,40 @@ export const Customer = (props: ICustomerProps) => {
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${customer.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`${match.url}/${customer.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="primary"
-                        size="sm"
-                      >
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
-                      <Button
-                        tag={Link}
-                        to={`${match.url}/${customer.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                        color="danger"
-                        size="sm"
-                      >
-                        <FontAwesomeIcon icon="trash" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.delete">Delete</Translate>
-                        </span>
-                      </Button>
+                      {isReceptionist &&
+                        <Button tag={Link} to={`${match.url}/${customer.id}`} color="info" size="sm">
+                          <FontAwesomeIcon icon="eye"/>{' '}
+                          <span className="d-none d-md-inline">
+                              <Translate contentKey="entity.action.view">View</Translate>
+                            </span>
+                        </Button>
+                      }
+                      {isReceptionist &&
+                        <Button
+                          tag={Link}
+                          to={`${match.url}/${customer.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                          color="primary"
+                          size="sm"
+                        >
+                          <FontAwesomeIcon icon="pencil-alt"/>{' '}
+                          <span className="d-none d-md-inline">
+                              <Translate contentKey="entity.action.edit">Edit</Translate>
+                          </span>
+                        </Button>
+                      }
+                      {isAdmin &&
+                        <Button
+                          tag={Link}
+                          to={`${match.url}/${customer.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                          color="danger"
+                          size="sm"
+                        >
+                          <FontAwesomeIcon icon="trash" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.delete">Delete</Translate>
+                          </span>
+                        </Button>
+                      }
                     </div>
                   </td>
                 </tr>
@@ -188,10 +193,12 @@ export const Customer = (props: ICustomerProps) => {
   );
 };
 
-const mapStateToProps = ({ customer }: IRootState) => ({
+const mapStateToProps = ({ customer, authentication }: IRootState) => ({
   customerList: customer.entities,
   loading: customer.loading,
   totalItems: customer.totalItems,
+  isReceptionist: authentication.isReceptionist,
+  isAdmin: authentication.isAdmin,
 });
 
 const mapDispatchToProps = {

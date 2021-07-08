@@ -22,7 +22,8 @@
       "birth": "Birth",
       "gender": "Gender",
       "role": "Role",
-      "salary": "Salary"
+      "salary": "Salary",
+      "workAt": "Work At"
     }
   }
 }

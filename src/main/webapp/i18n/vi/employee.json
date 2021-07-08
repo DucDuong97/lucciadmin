@@ -22,7 +22,8 @@
       "birth": "Ngày sinh",
       "gender": "Giới tính",
       "role": "Vai trò",
-      "salary": "Lương"
+      "salary": "Lương",
+      "workAt": "Cơ sở"
     }
   }
 }

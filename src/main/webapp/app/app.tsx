@@ -42,6 +42,10 @@ export const App = (props: IAppProps) => {
             isDoctor={props.isDoctor}
             isNurse={props.isNurse}
             isMarketing={props.isMarketing}
+            isManager={props.isManager}
+            isOperationsDirector={props.isOperationsDirector}
+            isBranchBossDoctor={props.isBranchBossDoctor}
+            isConsultant={props.isConsultant}
             currentLocale={props.currentLocale}
             onLocaleChange={props.setLocale}
             ribbonEnv={props.ribbonEnv}
@@ -65,11 +69,15 @@ export const App = (props: IAppProps) => {
 const mapStateToProps = ({ authentication, applicationProfile, locale }: IRootState) => ({
   currentLocale: locale.currentLocale,
   isAuthenticated: authentication.isAuthenticated,
-  isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
-  isReceptionist: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.RECEPTIONIST]),
-  isDoctor: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.DOCTOR]),
-  isNurse: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.NURSE]),
-  isMarketing: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.MARKETING]),
+  isAdmin: authentication.isAdmin,
+  isReceptionist: authentication.isReceptionist,
+  isDoctor: authentication.isDoctor,
+  isNurse: authentication.isNurse,
+  isMarketing: authentication.isMarketing,
+  isManager: authentication.isManager,
+  isOperationsDirector: authentication.isOperationsDirector,
+  isBranchBossDoctor: authentication.isBranchBossDoctor,
+  isConsultant: authentication.isConsultant,
   ribbonEnv: applicationProfile.ribbonEnv,
   isInProduction: applicationProfile.inProduction,
   isSwaggerEnabled: applicationProfile.isSwaggerEnabled,

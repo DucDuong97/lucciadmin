@@ -41,7 +41,7 @@
     {
       "fieldName": "role",
       "fieldType": "EmployeeRole",
-      "fieldValues": "DOCTOR,NURSE,MARKETING,RECEPTIONIST,ADMIN",
+      "fieldValues": "DOCTOR,NURSE,MARKETING,RECEPTIONIST,ADMIN,OPERATIONS_DIRECTOR,BRANCH_BOSS_DOCTOR,CONSULTANT",
       "fieldValidateRules": [
         "required"
       ]
@@ -51,7 +51,17 @@
       "fieldType": "Integer"
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "branch",
+      "relationshipName": "workAt",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "fieldValidateRules": ["required"],
+      "otherEntityRelationshipName": "employee"
+    }
+  ],
   "changelogDate": "20210628105133",
   "entityTableName": "employee",
   "dto": "no",

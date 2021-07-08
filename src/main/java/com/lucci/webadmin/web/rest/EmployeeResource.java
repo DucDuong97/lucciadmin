@@ -1,9 +1,13 @@
 package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.Employee;
+import com.lucci.webadmin.domain.enumeration.EmployeeRole;
 import com.lucci.webadmin.repository.EmployeeRepository;
+import com.lucci.webadmin.security.AuthoritiesConstants;
+import com.lucci.webadmin.security.SecurityUtils;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
+import com.lucci.webadmin.web.rest.errors.NoEmployeeForCurrentUserException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -13,7 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +25,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static com.lucci.webadmin.domain.enumeration.EmployeeRole.*;
 
 /**
  * REST controller for managing {@link com.lucci.webadmin.domain.Employee}.
@@ -32,6 +38,8 @@ import java.util.Optional;
 @RequestMapping("/api")
 @Transactional
 public class EmployeeResource {
+
+    private static final List<EmployeeRole> FORBIDDEN_ROLES = Arrays.asList(ADMIN, OPERATIONS_DIRECTOR, MANAGER);
 
     private final Logger log = LoggerFactory.getLogger(EmployeeResource.class);
 
@@ -57,8 +65,17 @@ public class EmployeeResource {
     public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) throws URISyntaxException {
         log.debug("REST request to save Employee : {}", employee);
         if (employee.getId() != null) {
-            throw new BadRequestAlertException("A new employee cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new employee cannot already have an ID", ENTITY_NAME, "id_exists");
         }
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.MANAGER)) {
+            if (FORBIDDEN_ROLES.contains(employee.getRole())) {
+                throw new BadRequestAlertException("A Manager cannot add an Admin or Director", ENTITY_NAME, "forbidden_role");
+            }
+            SecurityUtils.getCurrentUserLogin()
+                .flatMap(employeeRepository::findByUsersLogin)
+                .ifPresent(manager -> employee.setWorkAt(manager.getWorkAt()));
+        }
+
         Employee result = employeeRepository.save(employee);
         return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -95,7 +112,15 @@ public class EmployeeResource {
     @GetMapping("/employees")
     public ResponseEntity<List<Employee>> getAllEmployees(Pageable pageable) {
         log.debug("REST request to get a page of Employees");
-        Page<Employee> page = employeeRepository.findAll(pageable);
+        Page<Employee> page;
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.MANAGER)) {
+            Employee manager = SecurityUtils.getCurrentUserLogin()
+                .flatMap(employeeRepository::findByUsersLogin)
+                .orElseThrow(NoEmployeeForCurrentUserException::new);
+            page = employeeRepository.findByWorkAtAndIdNot(manager.getWorkAt(), manager.getId(), pageable);
+        } else {
+            page = employeeRepository.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -2,10 +2,9 @@ package com.lucci.webadmin.repository;
 
 import com.lucci.webadmin.domain.ImgUrl;
 
+import com.lucci.webadmin.repository.custom.CustomImgUrlRepository;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 /**
  * Spring Data  repository for the ImgUrl entity.
