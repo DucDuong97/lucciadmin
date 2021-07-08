@@ -1,15 +1,13 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.domain.Authority;
 import com.lucci.webadmin.domain.Employee;
-import com.lucci.webadmin.domain.User;
 import com.lucci.webadmin.domain.enumeration.EmployeeRole;
 import com.lucci.webadmin.repository.EmployeeRepository;
 import com.lucci.webadmin.security.AuthoritiesConstants;
 import com.lucci.webadmin.security.SecurityUtils;
-import com.lucci.webadmin.service.UserService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
+import com.lucci.webadmin.web.rest.errors.NoEmployeeForCurrentUserException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -114,7 +112,15 @@ public class EmployeeResource {
     @GetMapping("/employees")
     public ResponseEntity<List<Employee>> getAllEmployees(Pageable pageable) {
         log.debug("REST request to get a page of Employees");
-        Page<Employee> page = employeeRepository.findAll(pageable);
+        Page<Employee> page;
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.MANAGER)) {
+            Employee manager = SecurityUtils.getCurrentUserLogin()
+                .flatMap(employeeRepository::findByUsersLogin)
+                .orElseThrow(NoEmployeeForCurrentUserException::new);
+            page = employeeRepository.findByWorkAtAndIdNot(manager.getWorkAt(), manager.getId(), pageable);
+        } else {
+            page = employeeRepository.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
