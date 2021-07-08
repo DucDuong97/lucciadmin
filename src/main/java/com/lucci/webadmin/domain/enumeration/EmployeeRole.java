@@ -33,6 +33,14 @@ public enum EmployeeRole {
             return Arrays.asList("ROLE_ADMIN", "ROLE_USER");
         }
     },
+
+    MANAGER {
+        @Override
+        public List<String> getAuthorities() {
+            return Arrays.asList("ROLE_MANAGER", "ROLE_USER");
+        }
+    },
+
     OPERATIONS_DIRECTOR {
         @Override
         public List<String> getAuthorities() {

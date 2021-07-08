@@ -158,12 +158,21 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                   className="form-control"
                   name="role"
                   value={(!isNew && employeeEntity.role) || 'DOCTOR'}
+                  disabled={!isNew}
                 >
                   <option value="DOCTOR">{translate('lucciadminApp.EmployeeRole.DOCTOR')}</option>
                   <option value="NURSE">{translate('lucciadminApp.EmployeeRole.NURSE')}</option>
                   <option value="MARKETING">{translate('lucciadminApp.EmployeeRole.MARKETING')}</option>
                   <option value="RECEPTIONIST">{translate('lucciadminApp.EmployeeRole.RECEPTIONIST')}</option>
-                  <option value="ADMIN">{translate('lucciadminApp.EmployeeRole.ADMIN')}</option>
+                  <option value="BRANCH_BOSS_DOCTOR">{translate('lucciadminApp.EmployeeRole.BRANCH_BOSS_DOCTOR')}</option>
+                  <option value="CONSULTANT">{translate('lucciadminApp.EmployeeRole.CONSULTANT')}</option>
+                  {props.isAdmin &&
+                  <>
+                    <option value="MANAGER">{translate('lucciadminApp.EmployeeRole.MANAGER')}</option>
+                    <option value="ADMIN">{translate('lucciadminApp.EmployeeRole.ADMIN')}</option>
+                    <option value="OPERATIONS_DIRECTOR">{translate('lucciadminApp.EmployeeRole.OPERATIONS_DIRECTOR')}</option>
+                  </>
+                  }
                 </AvInput>
               </AvGroup>
               <AvGroup>
@@ -176,8 +185,12 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                 <Label for="employee-workAt">
                   <Translate contentKey="lucciadminApp.employee.workAt">Work At</Translate>
                 </Label>
-                <AvInput id="employee-workAt" type="select" className="form-control" name="workAt.id">
-                  <option value="" key="0" />
+                <AvInput
+                  id="employee-workAt" name="workAt.id"
+                  type="select" className="form-control"
+                  disabled={props.isManager}
+                >
+                  <option/>
                   {branches
                     ? branches.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -208,12 +221,15 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
   );
 };
 
-const mapStateToProps = (storeState: IRootState) => ({
-  branches: storeState.branch.entities,
-  employeeEntity: storeState.employee.entity,
-  loading: storeState.employee.loading,
-  updating: storeState.employee.updating,
-  updateSuccess: storeState.employee.updateSuccess,
+const mapStateToProps = ({employee, branch, authentication}: IRootState) => ({
+  branches: branch.entities,
+  employeeEntity: employee.entity,
+  loading: employee.loading,
+  updating: employee.updating,
+  updateSuccess: employee.updateSuccess,
+  isAdmin: authentication.isAdmin,
+  isManager: authentication.isManager,
+  account: authentication.account.relatedEmployeeId,
 });
 
 const mapDispatchToProps = {

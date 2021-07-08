@@ -1,7 +1,12 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.domain.Authority;
 import com.lucci.webadmin.domain.Employee;
+import com.lucci.webadmin.domain.User;
+import com.lucci.webadmin.domain.enumeration.EmployeeRole;
 import com.lucci.webadmin.repository.EmployeeRepository;
+import com.lucci.webadmin.security.AuthoritiesConstants;
+import com.lucci.webadmin.security.SecurityUtils;
 import com.lucci.webadmin.service.UserService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
@@ -22,8 +27,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static com.lucci.webadmin.domain.enumeration.EmployeeRole.*;
 
 /**
  * REST controller for managing {@link com.lucci.webadmin.domain.Employee}.
@@ -33,6 +41,8 @@ import java.util.Optional;
 @Transactional
 public class EmployeeResource {
 
+    private static final List<EmployeeRole> FORBIDDEN_ROLES = Arrays.asList(ADMIN, OPERATIONS_DIRECTOR, MANAGER);
+
     private final Logger log = LoggerFactory.getLogger(EmployeeResource.class);
 
     private static final String ENTITY_NAME = "employee";
@@ -41,11 +51,9 @@ public class EmployeeResource {
     private String applicationName;
 
     private final EmployeeRepository employeeRepository;
-    private final UserService userService;
 
-    public EmployeeResource(EmployeeRepository employeeRepository, UserService userService) {
+    public EmployeeResource(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
-        this.userService = userService;
     }
 
     /**
@@ -59,7 +67,11 @@ public class EmployeeResource {
     public ResponseEntity<Employee> createEmployee(@Valid @RequestBody Employee employee) throws URISyntaxException {
         log.debug("REST request to save Employee : {}", employee);
         if (employee.getId() != null) {
-            throw new BadRequestAlertException("A new employee cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new employee cannot already have an ID", ENTITY_NAME, "id_exists");
+        }
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.MANAGER) &&
+                FORBIDDEN_ROLES.contains(employee.getRole())) {
+            throw new BadRequestAlertException("A Manager cannot add an Admin or Director", ENTITY_NAME, "forbidden_role");
         }
         Employee result = employeeRepository.save(employee);
         return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
