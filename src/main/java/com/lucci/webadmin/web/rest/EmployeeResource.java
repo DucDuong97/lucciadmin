@@ -69,10 +69,15 @@ public class EmployeeResource {
         if (employee.getId() != null) {
             throw new BadRequestAlertException("A new employee cannot already have an ID", ENTITY_NAME, "id_exists");
         }
-        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.MANAGER) &&
-                FORBIDDEN_ROLES.contains(employee.getRole())) {
-            throw new BadRequestAlertException("A Manager cannot add an Admin or Director", ENTITY_NAME, "forbidden_role");
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.MANAGER)) {
+            if (FORBIDDEN_ROLES.contains(employee.getRole())) {
+                throw new BadRequestAlertException("A Manager cannot add an Admin or Director", ENTITY_NAME, "forbidden_role");
+            }
+            SecurityUtils.getCurrentUserLogin()
+                .flatMap(employeeRepository::findByUsersLogin)
+                .ifPresent(manager -> employee.setWorkAt(manager.getWorkAt()));
         }
+
         Employee result = employeeRepository.save(employee);
         return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
