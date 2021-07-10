@@ -19,13 +19,11 @@ public class BookingDTO implements Serializable {
     @NotNull
     private LocalTime time;
 
-    @NotNull
-    private String branch;
-
-
     private Long correspondDoctorId;
 
     private Long customerId;
+
+    private Long branchId;
 
     public Long getId() {
         return id;
@@ -51,14 +49,6 @@ public class BookingDTO implements Serializable {
         this.time = time;
     }
 
-    public String getBranch() {
-        return branch;
-    }
-
-    public void setBranch(String branch) {
-        this.branch = branch;
-    }
-
     public Long getCorrespondDoctorId() {
         return correspondDoctorId;
     }
@@ -73,6 +63,14 @@ public class BookingDTO implements Serializable {
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
     }
 
     @Override
@@ -99,9 +97,9 @@ public class BookingDTO implements Serializable {
             "id=" + getId() +
             ", date='" + getDate() + "'" +
             ", time='" + getTime() + "'" +
-            ", branch='" + getBranch() + "'" +
             ", correspondDoctorId=" + getCorrespondDoctorId() +
             ", customerId=" + getCustomerId() +
+            ", branchId=" + getBranchId() +
             "}";
     }
 }

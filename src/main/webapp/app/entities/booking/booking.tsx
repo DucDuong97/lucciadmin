@@ -106,9 +106,6 @@ export const Booking = (props: IBookingProps) => {
                 <th className="hand" onClick={sort('time')}>
                   <Translate contentKey="lucciadminApp.booking.time">Time</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('branch')}>
-                  <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th>
                   <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
@@ -116,18 +113,14 @@ export const Booking = (props: IBookingProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {bookingList
-              .filter((booking) =>
-                props.isAdmin ||
-                isReceptionist ||
-                !booking.correspondDoctorId ||
-                booking.correspondDoctorId === correspondDoctorId)
-              .map((booking, i) =>
-              (
+              {bookingList.map((booking, i) => (
                 <tr key={`entity-${i}`}>
                   <td>
                     <Button tag={Link} to={`${match.url}/${booking.id}`} color="link" size="sm">
@@ -136,7 +129,6 @@ export const Booking = (props: IBookingProps) => {
                   </td>
                   <td>{booking.date ? <TextFormat type="date" value={booking.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{booking.time ? <TextFormat type="number" value={booking.time} format={APP_TIME_FORMAT} /> : null}</td>
-                  <td>{booking.branch}</td>
                   <td>
                     {booking.correspondDoctorId ? (
                       <Link to={`employee/${booking.correspondDoctorId}`}>{booking.correspondDoctorId}</Link>
@@ -145,6 +137,7 @@ export const Booking = (props: IBookingProps) => {
                     )}
                   </td>
                   <td>{booking.customerId ? <Link to={`customer/${booking.customerId}`}>{booking.customerId}</Link> : ''}</td>
+                  <td>{booking.branchId ? <Link to={`branch/${booking.branchId}`}>{booking.branchId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
 

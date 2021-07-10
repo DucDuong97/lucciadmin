@@ -2,6 +2,7 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Booking;
+import com.lucci.webadmin.domain.Branch;
 import com.lucci.webadmin.repository.BookingRepository;
 import com.lucci.webadmin.service.BookingService;
 import com.lucci.webadmin.service.dto.BookingDTO;
@@ -40,9 +41,6 @@ public class BookingResourceIT {
     private static final ZonedDateTime DEFAULT_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
-    private static final String DEFAULT_BRANCH = "AAAAAAAAAA";
-    private static final String UPDATED_BRANCH = "BBBBBBBBBB";
-
     @Autowired
     private BookingRepository bookingRepository;
 
@@ -68,8 +66,17 @@ public class BookingResourceIT {
      */
     public static Booking createEntity(EntityManager em) {
         Booking booking = new Booking()
-            .time(DEFAULT_TIME)
-            .branch(DEFAULT_BRANCH);
+            .time(DEFAULT_TIME);
+        // Add required entity
+        Branch branch;
+        if (TestUtil.findAll(em, Branch.class).isEmpty()) {
+            branch = BranchResourceIT.createEntity(em);
+            em.persist(branch);
+            em.flush();
+        } else {
+            branch = TestUtil.findAll(em, Branch.class).get(0);
+        }
+        booking.setBranch(branch);
         return booking;
     }
     /**
@@ -80,8 +87,17 @@ public class BookingResourceIT {
      */
     public static Booking createUpdatedEntity(EntityManager em) {
         Booking booking = new Booking()
-            .time(UPDATED_TIME)
-            .branch(UPDATED_BRANCH);
+            .time(UPDATED_TIME);
+        // Add required entity
+        Branch branch;
+        if (TestUtil.findAll(em, Branch.class).isEmpty()) {
+            branch = BranchResourceIT.createUpdatedEntity(em);
+            em.persist(branch);
+            em.flush();
+        } else {
+            branch = TestUtil.findAll(em, Branch.class).get(0);
+        }
+        booking.setBranch(branch);
         return booking;
     }
 
@@ -106,7 +122,6 @@ public class BookingResourceIT {
         assertThat(bookingList).hasSize(databaseSizeBeforeCreate + 1);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
         assertThat(testBooking.getTime()).isEqualTo(DEFAULT_TIME);
-        assertThat(testBooking.getBranch()).isEqualTo(DEFAULT_BRANCH);
     }
 
     @Test
@@ -152,26 +167,6 @@ public class BookingResourceIT {
 
     @Test
     @Transactional
-    public void checkBranchIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bookingRepository.findAll().size();
-        // set the field null
-        booking.setBranch(null);
-
-        // Create the Booking, which fails.
-        BookingDTO bookingDTO = bookingMapper.toDto(booking);
-
-
-        restBookingMockMvc.perform(post("/api/bookings")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Booking> bookingList = bookingRepository.findAll();
-        assertThat(bookingList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     public void getAllBookings() throws Exception {
         // Initialize the database
         bookingRepository.saveAndFlush(booking);
@@ -181,8 +176,7 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(booking.getId().intValue())))
-            .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))))
-            .andExpect(jsonPath("$.[*].branch").value(hasItem(DEFAULT_BRANCH)));
+            .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))));
     }
     
     @Test
@@ -196,8 +190,7 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(booking.getId().intValue()))
-            .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)))
-            .andExpect(jsonPath("$.branch").value(DEFAULT_BRANCH));
+            .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)));
     }
     @Test
     @Transactional
@@ -220,8 +213,7 @@ public class BookingResourceIT {
         // Disconnect from session so that the updates on updatedBooking are not directly saved in db
         em.detach(updatedBooking);
         updatedBooking
-            .time(UPDATED_TIME)
-            .branch(UPDATED_BRANCH);
+            .time(UPDATED_TIME);
         BookingDTO bookingDTO = bookingMapper.toDto(updatedBooking);
 
         restBookingMockMvc.perform(put("/api/bookings")
@@ -234,7 +226,6 @@ public class BookingResourceIT {
         assertThat(bookingList).hasSize(databaseSizeBeforeUpdate);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
         assertThat(testBooking.getTime()).isEqualTo(UPDATED_TIME);
-        assertThat(testBooking.getBranch()).isEqualTo(UPDATED_BRANCH);
     }
 
     @Test

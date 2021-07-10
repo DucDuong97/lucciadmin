@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity Booking.
     -->
@@ -18,14 +18,14 @@
             <column name="time" type="datetime">
                 <constraints nullable="false" />
             </column>
-            <column name="branch" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
             <column name="correspond_doctor_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="customer_id" type="bigint">
                 <constraints nullable="true" />
+            </column>
+            <column name="branch_id" type="bigint">
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -52,7 +52,7 @@
                   tableName="booking">
             <column name="id" type="numeric"/>
             <column name="time" type="datetime"/>
-            <column name="branch" type="string"/>
+            <column name="branch_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -4,9 +4,9 @@ export interface IBooking {
   id?: number;
   date?: string;
   time?: string;
-  branch?: string;
   correspondDoctorId?: number;
   customerId?: number;
+  branchId?: number;
 }
 
 export const defaultValue: Readonly<IBooking> = {};

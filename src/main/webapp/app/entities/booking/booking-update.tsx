@@ -9,6 +9,7 @@ import { IRootState } from 'app/shared/reducers';
 
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { getEntities as getCustomers } from 'app/entities/customer/customer.reducer';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './booking.reducer';
 
 export interface IBookingUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -16,9 +17,10 @@ export interface IBookingUpdateProps extends StateProps, DispatchProps, RouteCom
 export const BookingUpdate = (props: IBookingUpdateProps) => {
   const [correspondDoctorId, setCorrespondDoctorId] = useState('0');
   const [customerId, setCustomerId] = useState('0');
+  const [branchId, setBranchId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { bookingEntity, employees, customers, loading, updating } = props;
+  const { bookingEntity, employees, customers, branches, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/booking' + props.location.search);
@@ -33,6 +35,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
 
     props.getEmployees();
     props.getCustomers();
+    props.getBranches();
   }, []);
 
   useEffect(() => {
@@ -108,19 +111,6 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label id="branchLabel" for="booking-branch">
-                  <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
-                </Label>
-                <AvField
-                  id="booking-branch"
-                  type="text"
-                  name="branch"
-                  validate={{
-                    required: { value: true, errorMessage: translate('entity.validation.required') },
-                  }}
-                />
-              </AvGroup>
-              <AvGroup>
                 <Label for="booking-correspondDoctor">
                   <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>
                 </Label>
@@ -150,6 +140,23 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
+              <AvGroup>
+                <Label for="booking-branch">
+                  <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
+                </Label>
+                <AvInput id="booking-branch" type="select" className="form-control" name="branchId" required>
+                  {branches
+                    ? branches.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/booking" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -174,6 +181,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
 const mapStateToProps = (storeState: IRootState) => ({
   employees: storeState.employee.entities,
   customers: storeState.customer.entities,
+  branches: storeState.branch.entities,
   bookingEntity: storeState.booking.entity,
   loading: storeState.booking.loading,
   updating: storeState.booking.updating,
@@ -183,6 +191,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getEmployees,
   getCustomers,
+  getBranches,
   getEntity,
   updateEntity,
   createEntity,

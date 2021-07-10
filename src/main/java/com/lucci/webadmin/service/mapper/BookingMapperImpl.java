@@ -48,10 +48,10 @@ public class BookingMapperImpl implements BookingMapper {
 
         bookingDTO.setCorrespondDoctorId( bookingCorrespondDoctorId( booking ) );
         bookingDTO.setCustomerId( bookingCustomerId( booking ) );
+        bookingDTO.setBranchId( bookingBranchId( booking ) );
         bookingDTO.setId( booking.getId() );
         bookingDTO.setDate( booking.getTime().toLocalDate() );
         bookingDTO.setTime( booking.getTime().toLocalTime() );
-        bookingDTO.setBranch( booking.getBranch() );
 
         return bookingDTO;
     }
@@ -65,9 +65,9 @@ public class BookingMapperImpl implements BookingMapper {
 
         booking.setCorrespondDoctor( idToDoctor( bookingDTO.getCorrespondDoctorId() ) );
         booking.setCustomer( idToCustomer( bookingDTO.getCustomerId() ) );
+        booking.setBranch( idToBranch( bookingDTO.getBranchId() ) );
         booking.setId( bookingDTO.getId() );
         booking.setTime( ZonedDateTime.of(bookingDTO.getDate(), bookingDTO.getTime(), ZoneId.of("Asia/Ho_Chi_Minh")) );
-        booking.setBranch( bookingDTO.getBranch() );
 
         return booking;
     }
@@ -90,13 +90,13 @@ public class BookingMapperImpl implements BookingMapper {
         return customer;
     }
 
-    public Booking fromId(Long id) {
+    private Branch idToBranch(Long id) {
         if (id == null) {
             return null;
         }
-        Booking booking = new Booking();
-        booking.setId(id);
-        return booking;
+        Branch branch = new Branch();
+        branch.setId(id);
+        return branch;
     }
 
     private Long bookingCorrespondDoctorId(Booking booking) {
@@ -107,11 +107,7 @@ public class BookingMapperImpl implements BookingMapper {
         if ( correspondDoctor == null ) {
             return null;
         }
-        Long id = correspondDoctor.getId();
-        if ( id == null ) {
-            return null;
-        }
-        return id;
+        return correspondDoctor.getId();
     }
 
     private Long bookingCustomerId(Booking booking) {
@@ -122,10 +118,26 @@ public class BookingMapperImpl implements BookingMapper {
         if ( customer == null ) {
             return null;
         }
-        Long id = customer.getId();
-        if ( id == null ) {
+        return customer.getId();
+    }
+
+    private Long bookingBranchId(Booking booking) {
+        if ( booking == null ) {
             return null;
         }
-        return id;
+        Branch branch = booking.getBranch();
+        if ( branch == null ) {
+            return null;
+        }
+        return branch.getId();
+    }
+
+    public Booking fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Booking booking = new Booking();
+        booking.setId(id);
+        return booking;
     }
 }

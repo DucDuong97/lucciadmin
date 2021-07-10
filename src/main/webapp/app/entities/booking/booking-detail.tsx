@@ -38,12 +38,6 @@ export const BookingDetail = (props: IBookingDetailProps) => {
           </dt>
           <dd>{bookingEntity.time ? <TextFormat value={bookingEntity.time} type="number" format={APP_TIME_FORMAT} /> : null}</dd>
           <dt>
-            <span id="branch">
-              <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
-            </span>
-          </dt>
-          <dd>{bookingEntity.branch}</dd>
-          <dt>
             <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>
           </dt>
           <dd>{bookingEntity.correspondDoctorId ? bookingEntity.correspondDoctorId : ''}</dd>
@@ -51,6 +45,10 @@ export const BookingDetail = (props: IBookingDetailProps) => {
             <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
           </dt>
           <dd>{bookingEntity.customerId ? bookingEntity.customerId : ''}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
+          </dt>
+          <dd>{bookingEntity.branchId ? bookingEntity.branchId : ''}</dd>
         </dl>
         <Button tag={Link} to="/booking" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

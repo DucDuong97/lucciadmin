@@ -5,11 +5,6 @@
       "fieldName": "time",
       "fieldType": "ZonedDateTime",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "branch",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [
@@ -25,6 +20,15 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "customer",
       "relationshipName": "customer",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "fieldValidateRules": ["required"],
+      "otherEntityRelationshipName": "booking"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "branch",
+      "relationshipName": "branch",
       "otherEntityField": "id",
       "ownerSide": true,
       "fieldValidateRules": ["required"],

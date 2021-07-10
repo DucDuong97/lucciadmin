@@ -29,10 +29,6 @@ public class Booking implements Serializable {
     @Column(name = "time", nullable = false)
     private ZonedDateTime time;
 
-    @NotNull
-    @Column(name = "branch", nullable = false)
-    private String branch;
-
     @ManyToOne
     @JsonIgnoreProperties(value = "bookings", allowSetters = true)
     private Employee correspondDoctor;
@@ -40,6 +36,11 @@ public class Booking implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = "bookings", allowSetters = true)
     private Customer customer;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "bookings", allowSetters = true)
+    private Branch branch;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -61,19 +62,6 @@ public class Booking implements Serializable {
 
     public void setTime(ZonedDateTime time) {
         this.time = time;
-    }
-
-    public String getBranch() {
-        return branch;
-    }
-
-    public Booking branch(String branch) {
-        this.branch = branch;
-        return this;
-    }
-
-    public void setBranch(String branch) {
-        this.branch = branch;
     }
 
     public Employee getCorrespondDoctor() {
@@ -101,6 +89,19 @@ public class Booking implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public Booking branch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -125,7 +126,6 @@ public class Booking implements Serializable {
         return "Booking{" +
             "id=" + getId() +
             ", time='" + getTime() + "'" +
-            ", branch='" + getBranch() + "'" +
             "}";
     }
 }
