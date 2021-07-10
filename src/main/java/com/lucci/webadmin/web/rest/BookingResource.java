@@ -1,9 +1,15 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.domain.Employee;
+import com.lucci.webadmin.repository.EmployeeRepository;
+import com.lucci.webadmin.security.AuthoritiesConstants;
+import com.lucci.webadmin.security.SecurityUtils;
 import com.lucci.webadmin.service.BookingService;
+import com.lucci.webadmin.service.UserService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 import com.lucci.webadmin.service.dto.BookingDTO;
 
+import com.lucci.webadmin.web.rest.errors.NoEmployeeForCurrentUserException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -13,7 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +44,11 @@ public class BookingResource {
     private String applicationName;
 
     private final BookingService bookingService;
+    private final EmployeeRepository employeeRepository;
 
-    public BookingResource(BookingService bookingService) {
+    public BookingResource(BookingService bookingService, EmployeeRepository employeeRepository) {
         this.bookingService = bookingService;
+        this.employeeRepository = employeeRepository;
     }
 
     /**
@@ -93,7 +100,13 @@ public class BookingResource {
     @GetMapping("/bookings")
     public ResponseEntity<List<BookingDTO>> getAllBookings(Pageable pageable) {
         log.debug("REST request to get a page of Bookings");
-        Page<BookingDTO> page = bookingService.findAll(pageable);
+
+        Employee employee = SecurityUtils.getCurrentUserLogin()
+            .flatMap(employeeRepository::findByUsersLogin)
+            .orElse(null);
+
+        Page<BookingDTO> page = bookingService.findWithEmployee(employee, pageable);
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -93,6 +93,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.GET, "/api/customers/**").permitAll()
             .antMatchers(HttpMethod.DELETE, "/api/customers/**").hasAuthority(ADMIN)
 
+            .antMatchers(HttpMethod.POST, "/api/bookings").hasAuthority(RECEPTIONIST)
+            .antMatchers(HttpMethod.PUT, "/api/bookings").hasAnyAuthority(RECEPTIONIST, OPERATIONS_DIRECTOR, BRANCH_BOSS_DOCTOR)
+            .antMatchers(HttpMethod.GET, "/api/bookings").hasAnyAuthority(RECEPTIONIST, OPERATIONS_DIRECTOR, BRANCH_BOSS_DOCTOR, DOCTOR, ADMIN)
+            .antMatchers(HttpMethod.GET, "/api/bookings/**").hasAnyAuthority(RECEPTIONIST, OPERATIONS_DIRECTOR, BRANCH_BOSS_DOCTOR, DOCTOR, ADMIN)
+            .antMatchers(HttpMethod.DELETE, "/api/bookings/**").hasAuthority(RECEPTIONIST)
+
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()

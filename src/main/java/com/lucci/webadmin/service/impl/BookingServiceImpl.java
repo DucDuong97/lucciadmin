@@ -1,5 +1,9 @@
 package com.lucci.webadmin.service.impl;
 
+import com.lucci.webadmin.domain.Branch;
+import com.lucci.webadmin.domain.Employee;
+import com.lucci.webadmin.security.AuthoritiesConstants;
+import com.lucci.webadmin.security.SecurityUtils;
 import com.lucci.webadmin.service.BookingService;
 import com.lucci.webadmin.domain.Booking;
 import com.lucci.webadmin.repository.BookingRepository;
@@ -62,5 +66,25 @@ public class BookingServiceImpl implements BookingService {
     public void delete(Long id) {
         log.debug("Request to delete Booking : {}", id);
         bookingRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<BookingDTO> findWithEmployee(Employee employee, Pageable pageable) {
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.OPERATIONS_DIRECTOR) ||
+                    SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.RECEPTIONIST) ||
+                            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            return bookingRepository.findAll(pageable).map(bookingMapper::toDto);
+        }
+        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.BRANCH_BOSS_DOCTOR)) {
+            return bookingRepository.findByBranch(employee.getWorkAt(), pageable)
+                .map(bookingMapper::toDto);
+        }
+        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.DOCTOR)) {
+            return bookingRepository.findByCorrespondDoctor(employee, pageable)
+                .map(bookingMapper::toDto);
+        }
+        else {
+            return Page.empty();
+        }
     }
 }
