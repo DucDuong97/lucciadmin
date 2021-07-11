@@ -46,5 +46,5 @@ public interface BookingService {
      */
     void delete(Long id);
 
-    Page<BookingDTO> findWithEmployee(Employee employee, Pageable pageable);
+    Page<BookingDTO> findWithEmployee(Pageable pageable);
 }

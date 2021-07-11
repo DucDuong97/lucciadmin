@@ -44,11 +44,9 @@ public class BookingResource {
     private String applicationName;
 
     private final BookingService bookingService;
-    private final EmployeeRepository employeeRepository;
 
-    public BookingResource(BookingService bookingService, EmployeeRepository employeeRepository) {
+    public BookingResource(BookingService bookingService) {
         this.bookingService = bookingService;
-        this.employeeRepository = employeeRepository;
     }
 
     /**
@@ -101,11 +99,7 @@ public class BookingResource {
     public ResponseEntity<List<BookingDTO>> getAllBookings(Pageable pageable) {
         log.debug("REST request to get a page of Bookings");
 
-        Employee employee = SecurityUtils.getCurrentUserLogin()
-            .flatMap(employeeRepository::findByUsersLogin)
-            .orElse(null);
-
-        Page<BookingDTO> page = bookingService.findWithEmployee(employee, pageable);
+        Page<BookingDTO> page = bookingService.findWithEmployee(pageable);
 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
