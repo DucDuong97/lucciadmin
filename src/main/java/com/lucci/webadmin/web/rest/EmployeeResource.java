@@ -26,6 +26,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,6 +124,22 @@ public class EmployeeResource {
         }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/employees/as-doctor-for-booking")
+    public List<Employee> getAllDoctorsForBooking() {
+        log.debug("REST request to get a list of doctors");
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.OPERATIONS_DIRECTOR)) {
+            return employeeRepository.findByRole(DOCTOR);
+        }
+        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.BRANCH_BOSS_DOCTOR)) {
+            Employee branchDoctor = SecurityUtils.getCurrentUserLogin()
+                .flatMap(employeeRepository::findByUsersLogin)
+                .orElseThrow(NoEmployeeForCurrentUserException::new);
+            return employeeRepository.findByWorkAtAndRole(branchDoctor.getWorkAt(), DOCTOR);
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     /**
