@@ -65,14 +65,6 @@ export const Booking = (props: IBookingProps) => {
       activePage: currentPage,
     });
 
-  const assignBookingToDoctor = booking => {
-    const entity = {
-      ...booking,
-      correspondDoctorId: props.correspondDoctorId
-    };
-    props.updateEntity(entity);
-  }
-
   useEffect(() => {
     if (props.updateSuccess) {
       props.history.push('/booking/' + props.entity.id);
@@ -148,18 +140,6 @@ export const Booking = (props: IBookingProps) => {
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
-
-                      {/*Check*/}
-                      {isDoctor && !booking.correspondDoctorId &&
-                        <Button
-                          onClick={() => assignBookingToDoctor(booking)}
-                          color="success" size="sm"
-                        >
-                          <span className="d-none d-md-inline">
-                            <Translate contentKey="entity.action.check">Check</Translate>
-                          </span>
-                        </Button>
-                      }
 
                       {/*Edit*/}
                       {isReceptionist &&

@@ -6,8 +6,8 @@ import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntity } from './booking.reducer';
-import { IBooking } from 'app/shared/model/booking.model';
+import { getEntity, assignDoctor } from './booking.reducer';
+import { getDoctorsForBooking as getDoctors } from '../employee/employee.reducer';
 import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT} from 'app/config/constants';
 
 export interface IBookingDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
@@ -15,9 +15,18 @@ export interface IBookingDetailProps extends StateProps, DispatchProps, RouteCom
 export const BookingDetail = (props: IBookingDetailProps) => {
   useEffect(() => {
     props.getEntity(props.match.params.id);
+    props.getDoctors();
   }, []);
 
-  const { bookingEntity } = props;
+  const { bookingEntity,  doctors } = props;
+
+  const assignBookingToDoctor = event => {
+    props.assignToDoctor({
+      ...bookingEntity,
+      correspondDoctorId: event.target.value
+    });
+  }
+
   return (
     <Row>
       <Col md="8">
@@ -40,11 +49,24 @@ export const BookingDetail = (props: IBookingDetailProps) => {
           <dt>
             <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>
           </dt>
-          <dd>{bookingEntity.correspondDoctorId ? bookingEntity.correspondDoctorId : ''}</dd>
+          {props.isOperationsDirector || props.isBranchBossDoctor ?
+            <select value={bookingEntity.correspondDoctorId} onChange={assignBookingToDoctor}>
+              <option value="" key="0" />
+              {doctors
+                ? doctors.map(otherEntity => (
+                  <option value={otherEntity.id} key={otherEntity.id}>
+                    {otherEntity.name + " - " + otherEntity.id}
+                  </option>
+                ))
+                : null}
+            </select>
+          :
+            <dd>{bookingEntity.correspondDoctorId ? bookingEntity.correspondDoctorId : ''}</dd>
+          }
           <dt>
             <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
           </dt>
-          <dd>{bookingEntity.customerId ? bookingEntity.customerId : ''}</dd>
+          <dd>{bookingEntity.customerId ? <Link to={`/customer/${bookingEntity.customerId}`}>{bookingEntity.customerId}</Link> : ''}</dd>
           <dt>
             <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
           </dt>
@@ -68,11 +90,14 @@ export const BookingDetail = (props: IBookingDetailProps) => {
   );
 };
 
-const mapStateToProps = ({ booking }: IRootState) => ({
+const mapStateToProps = ({ booking, employee, authentication }: IRootState) => ({
   bookingEntity: booking.entity,
+  doctors: employee.entities,
+  isOperationsDirector: authentication.isOperationsDirector,
+  isBranchBossDoctor: authentication.isBranchBossDoctor,
 });
 
-const mapDispatchToProps = { getEntity };
+const mapDispatchToProps = { getEntity, getDoctors, assignToDoctor: assignDoctor };
 
 type StateProps = ReturnType<typeof mapStateToProps>;
 type DispatchProps = typeof mapDispatchToProps;

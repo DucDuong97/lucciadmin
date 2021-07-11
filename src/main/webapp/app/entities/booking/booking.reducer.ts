@@ -134,6 +134,14 @@ export const updateEntity: ICrudPutAction<IBooking> = entity => async dispatch =
   return result;
 };
 
+export const assignDoctor: ICrudPutAction<IBooking> = entity => async dispatch => {
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_BOOKING,
+    payload: axios.put(`${apiUrl}/assign-doctor`, cleanEntity(entity)),
+  });
+  return result;
+};
+
 export const deleteEntity: ICrudDeleteAction<IBooking> = id => async dispatch => {
   const requestUrl = `${apiUrl}/${id}`;
   const result = await dispatch({

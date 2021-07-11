@@ -83,6 +83,24 @@ public class BookingResource {
         if (bookingDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if (bookingDTO.getCorrespondDoctorId() != null) {
+            throw new BadRequestAlertException("No Permission to assign doctor", ENTITY_NAME, "has-no-right-to-assign-doctor");
+        }
+        BookingDTO result = bookingService.save(bookingDTO);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bookingDTO.getId().toString()))
+            .body(result);
+    }
+
+    @PutMapping("/bookings/assign-doctor")
+    public ResponseEntity<BookingDTO> assignDoctorToBooking(@Valid @RequestBody BookingDTO bookingDTO) throws URISyntaxException {
+        log.debug("REST request to update Booking : {}", bookingDTO);
+        if (bookingDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        if (bookingDTO.getCorrespondDoctorId() == null) {
+            throw new BadRequestAlertException("Invalid Doctor Id", ENTITY_NAME, "doctoridnull");
+        }
         BookingDTO result = bookingService.save(bookingDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bookingDTO.getId().toString()))

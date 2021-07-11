@@ -111,21 +111,6 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label for="booking-correspondDoctor">
-                  <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>
-                </Label>
-                <AvInput id="booking-correspondDoctor" type="select" className="form-control" name="correspondDoctorId">
-                  <option value="" key="0" />
-                  {employees
-                    ? employees.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label for="booking-customer">
                   <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
                 </Label>
