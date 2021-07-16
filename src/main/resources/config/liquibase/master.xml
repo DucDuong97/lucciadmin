@@ -16,6 +16,12 @@
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312181417_added_entity_ServiceOption.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312181517_added_entity_Policy.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061849_added_entity_ImgUrl.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210517104429_added_entity_Branch.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210516213054_added_entity_PricingCard.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210516213154_added_entity_PricingContent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061649_added_entity_Process.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210508061749_added_entity_Video.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312181617_added_entity_CustomerReview.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312181717_added_entity_Achievement.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312181817_added_entity_ServiceItem.xml" relativeToChangelogFile="false"/>
@@ -31,6 +37,7 @@
     <include file="config/liquibase/changelog/20210628111350_added_entity_constraints_Booking.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628105133_added_entity_constraints_Employee.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628105033_added_entity_constraints_Customer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210312181617_added_entity_constraints_CustomerReview.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

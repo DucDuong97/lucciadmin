@@ -264,7 +264,7 @@ public class CustomerResourceIT {
             .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER.toString())))
             .andExpect(jsonPath("$.[*].newCustomer").value(hasItem(DEFAULT_NEW_CUSTOMER.booleanValue())));
     }
-    
+
     @Test
     @Transactional
     public void getCustomer() throws Exception {
@@ -294,6 +294,7 @@ public class CustomerResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void updateCustomer() throws Exception {
         // Initialize the database
         customerRepository.saveAndFlush(customer);
