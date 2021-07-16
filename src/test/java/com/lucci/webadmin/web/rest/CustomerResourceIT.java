@@ -2,6 +2,7 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Customer;
+import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.repository.CustomerRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -51,6 +52,9 @@ public class CustomerResourceIT {
     private static final CustomerTier DEFAULT_TIER = CustomerTier.VIP;
     private static final CustomerTier UPDATED_TIER = CustomerTier.VIP;
 
+    private static final Boolean DEFAULT_NEW_CUSTOMER = false;
+    private static final Boolean UPDATED_NEW_CUSTOMER = true;
+
     @Autowired
     private CustomerRepository customerRepository;
 
@@ -75,7 +79,18 @@ public class CustomerResourceIT {
             .address(DEFAULT_ADDRESS)
             .birth(DEFAULT_BIRTH)
             .gender(DEFAULT_GENDER)
-            .tier(DEFAULT_TIER);
+            .tier(DEFAULT_TIER)
+            .newCustomer(DEFAULT_NEW_CUSTOMER);
+        // Add required entity
+        Employee employee;
+        if (TestUtil.findAll(em, Employee.class).isEmpty()) {
+            employee = EmployeeResourceIT.createEntity(em);
+            em.persist(employee);
+            em.flush();
+        } else {
+            employee = TestUtil.findAll(em, Employee.class).get(0);
+        }
+        customer.setCorrespondConsultant(employee);
         return customer;
     }
     /**
@@ -91,7 +106,18 @@ public class CustomerResourceIT {
             .address(UPDATED_ADDRESS)
             .birth(UPDATED_BIRTH)
             .gender(UPDATED_GENDER)
-            .tier(UPDATED_TIER);
+            .tier(UPDATED_TIER)
+            .newCustomer(UPDATED_NEW_CUSTOMER);
+        // Add required entity
+        Employee employee;
+        if (TestUtil.findAll(em, Employee.class).isEmpty()) {
+            employee = EmployeeResourceIT.createUpdatedEntity(em);
+            em.persist(employee);
+            em.flush();
+        } else {
+            employee = TestUtil.findAll(em, Employee.class).get(0);
+        }
+        customer.setCorrespondConsultant(employee);
         return customer;
     }
 
@@ -120,6 +146,7 @@ public class CustomerResourceIT {
         assertThat(testCustomer.getBirth()).isEqualTo(DEFAULT_BIRTH);
         assertThat(testCustomer.getGender()).isEqualTo(DEFAULT_GENDER);
         assertThat(testCustomer.getTier()).isEqualTo(DEFAULT_TIER);
+        assertThat(testCustomer.isNewCustomer()).isEqualTo(DEFAULT_NEW_CUSTOMER);
     }
 
     @Test
@@ -234,7 +261,8 @@ public class CustomerResourceIT {
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
             .andExpect(jsonPath("$.[*].birth").value(hasItem(DEFAULT_BIRTH.toString())))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
-            .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER.toString())));
+            .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER.toString())))
+            .andExpect(jsonPath("$.[*].newCustomer").value(hasItem(DEFAULT_NEW_CUSTOMER.booleanValue())));
     }
     
     @Test
@@ -253,7 +281,8 @@ public class CustomerResourceIT {
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
             .andExpect(jsonPath("$.birth").value(DEFAULT_BIRTH.toString()))
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
-            .andExpect(jsonPath("$.tier").value(DEFAULT_TIER.toString()));
+            .andExpect(jsonPath("$.tier").value(DEFAULT_TIER.toString()))
+            .andExpect(jsonPath("$.newCustomer").value(DEFAULT_NEW_CUSTOMER.booleanValue()));
     }
     @Test
     @Transactional
@@ -281,7 +310,8 @@ public class CustomerResourceIT {
             .address(UPDATED_ADDRESS)
             .birth(UPDATED_BIRTH)
             .gender(UPDATED_GENDER)
-            .tier(UPDATED_TIER);
+            .tier(UPDATED_TIER)
+            .newCustomer(UPDATED_NEW_CUSTOMER);
 
         restCustomerMockMvc.perform(put("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
@@ -298,6 +328,7 @@ public class CustomerResourceIT {
         assertThat(testCustomer.getBirth()).isEqualTo(UPDATED_BIRTH);
         assertThat(testCustomer.getGender()).isEqualTo(UPDATED_GENDER);
         assertThat(testCustomer.getTier()).isEqualTo(UPDATED_TIER);
+        assertThat(testCustomer.isNewCustomer()).isEqualTo(UPDATED_NEW_CUSTOMER);
     }
 
     @Test

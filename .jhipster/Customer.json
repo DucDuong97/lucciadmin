@@ -4,19 +4,13 @@
     {
       "fieldName": "name",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
+      "fieldValidateRules": ["required", "maxlength"],
       "fieldValidateRulesMaxlength": "60"
     },
     {
       "fieldName": "phone",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
+      "fieldValidateRules": ["required", "maxlength"],
       "fieldValidateRulesMaxlength": "20"
     },
     {
@@ -26,25 +20,35 @@
     {
       "fieldName": "birth",
       "fieldType": "Instant",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "gender",
       "fieldType": "Gender",
       "fieldValues": "MALE,FEMALE,AMBIGUOUS",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "tier",
       "fieldType": "CustomerTier",
       "fieldValues": "VIP"
+    },
+    {
+      "fieldName": "newCustomer",
+      "fieldType": "Boolean",
+      "fieldValidateRules": []
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipName": "correspondConsultant",
+      "otherEntityName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "id",
+      "otherEntityRelationshipName": "customer"
+    }
+  ],
   "changelogDate": "20210628105033",
   "entityTableName": "customer",
   "dto": "no",

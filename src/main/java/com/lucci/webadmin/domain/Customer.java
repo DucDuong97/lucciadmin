@@ -1,6 +1,7 @@
 package com.lucci.webadmin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -60,6 +61,13 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Set<Booking> bookings;
 
+    @Column(name = "new_customer")
+    private Boolean newCustomer;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "customers", allowSetters = true)
+    private Employee correspondConsultant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -147,6 +155,32 @@ public class Customer implements Serializable {
     public void setTier(CustomerTier tier) {
         this.tier = tier;
     }
+
+    public Boolean isNewCustomer() {
+        return newCustomer;
+    }
+
+    public Customer newCustomer(Boolean newCustomer) {
+        this.newCustomer = newCustomer;
+        return this;
+    }
+
+    public void setNewCustomer(Boolean newCustomer) {
+        this.newCustomer = newCustomer;
+    }
+
+    public Employee getCorrespondConsultant() {
+        return correspondConsultant;
+    }
+
+    public Customer correspondConsultant(Employee employee) {
+        this.correspondConsultant = employee;
+        return this;
+    }
+
+    public void setCorrespondConsultant(Employee employee) {
+        this.correspondConsultant = employee;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -176,6 +210,7 @@ public class Customer implements Serializable {
             ", birth='" + getBirth() + "'" +
             ", gender='" + getGender() + "'" +
             ", tier='" + getTier() + "'" +
+            ", newCustomer='" + isNewCustomer() + "'" +
             "}";
     }
 }

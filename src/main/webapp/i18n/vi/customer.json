@@ -21,7 +21,9 @@
       "address": "Địa chỉ",
       "birth": "Ngày sinh",
       "gender": "Giới tính",
-      "tier": "Tier"
+      "tier": "Tier",
+      "newCustomer": "Mới",
+      "correspondConsultant": "Tư vấn viên"
     }
   }
 }

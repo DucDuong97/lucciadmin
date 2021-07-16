@@ -33,6 +33,12 @@
             <column name="tier" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
+            <column name="new_customer" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="correspond_consultant_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="customer" columnName="birth" columnDataType="datetime"/>
@@ -63,6 +69,8 @@
             <column name="birth" type="datetime"/>
             <column name="gender" type="string"/>
             <column name="tier" type="string"/>
+            <column name="new_customer" type="boolean"/>
+            <column name="correspond_consultant_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

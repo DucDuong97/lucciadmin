@@ -61,7 +61,30 @@ export const CustomerDetail = (props: ICustomerDetailProps) => {
             </span>
           </dt>
           <dd>{customerEntity.tier}</dd>
+          <dt>
+            <span id="newCustomer">
+              <Translate contentKey="lucciadminApp.customer.newCustomer">New Customer</Translate>
+            </span>
+          </dt>
+          <dd>{customerEntity.newCustomer ? 'true' : 'false'}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.customer.correspondConsultant">Correspond Consultant</Translate>
+          </dt>
+          <dd>{customerEntity.correspondConsultant ? customerEntity.correspondConsultant.id : ''}</dd>
         </dl>
+        <Button tag={Link} to="/customer" replace color="info">
+          <FontAwesomeIcon icon="arrow-left" />{' '}
+          <span className="d-none d-md-inline">
+            <Translate contentKey="entity.action.back">Back</Translate>
+          </span>
+        </Button>
+        &nbsp;
+        <Button tag={Link} to={`/customer/${customerEntity.id}/edit`} replace color="primary">
+          <FontAwesomeIcon icon="pencil-alt" />{' '}
+          <span className="d-none d-md-inline">
+            <Translate contentKey="entity.action.edit">Edit</Translate>
+          </span>
+        </Button>
       </Col>
     </Row>
   );

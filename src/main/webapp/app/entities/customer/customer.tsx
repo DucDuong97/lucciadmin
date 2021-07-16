@@ -101,6 +101,13 @@ export const Customer = (props: ICustomerProps) => {
                 <th className="hand" onClick={sort('tier')}>
                   <Translate contentKey="lucciadminApp.customer.tier">Tier</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('newCustomer')}>
+                  <Translate contentKey="lucciadminApp.customer.newCustomer">New Customer</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.customer.correspondConsultant">Correspond Consultant</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -120,6 +127,14 @@ export const Customer = (props: ICustomerProps) => {
                   </td>
                   <td>
                     <Translate contentKey={`lucciadminApp.CustomerTier.${customer.tier}`} />
+                  </td>
+                  <td>{customer.newCustomer ? 'true' : 'false'}</td>
+                  <td>
+                    {customer.correspondConsultant ? (
+                      <Link to={`employee/${customer.correspondConsultant.id}`}>{customer.correspondConsultant.id}</Link>
+                    ) : (
+                      ''
+                    )}
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
