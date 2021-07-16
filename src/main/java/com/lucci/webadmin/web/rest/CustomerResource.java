@@ -2,6 +2,7 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.Customer;
 import com.lucci.webadmin.repository.CustomerRepository;
+import com.lucci.webadmin.service.UserService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -13,7 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,9 +41,11 @@ public class CustomerResource {
     private String applicationName;
 
     private final CustomerRepository customerRepository;
+    private final UserService userService;
 
-    public CustomerResource(CustomerRepository customerRepository) {
+    public CustomerResource(CustomerRepository customerRepository, UserService userService) {
         this.customerRepository = customerRepository;
+        this.userService = userService;
     }
 
     /**
@@ -59,6 +61,7 @@ public class CustomerResource {
         if (customer.getId() != null) {
             throw new BadRequestAlertException("A new customer cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        customer.setNewCustomer(false);
         Customer result = customerRepository.save(customer);
         return ResponseEntity.created(new URI("/api/customers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))

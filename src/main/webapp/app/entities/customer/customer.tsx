@@ -65,12 +65,12 @@ export const Customer = (props: ICustomerProps) => {
       activePage: currentPage,
     });
 
-  const { customerList, match, loading, totalItems, isReceptionist, isAdmin } = props;
+  const { customerList, match, loading, totalItems, isReceptionist, isAdmin, isConsultant } = props;
   return (
     <div>
       <h2 id="customer-heading">
         <Translate contentKey="lucciadminApp.customer.home.title">Customers</Translate>
-        {isReceptionist &&
+        {isConsultant &&
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus"/>
             &nbsp;
@@ -213,6 +213,7 @@ const mapStateToProps = ({ customer, authentication }: IRootState) => ({
   loading: customer.loading,
   totalItems: customer.totalItems,
   isReceptionist: authentication.isReceptionist,
+  isConsultant: authentication.isConsultant,
   isAdmin: authentication.isAdmin,
 });
 

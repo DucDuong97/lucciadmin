@@ -128,6 +128,7 @@ public class CustomerResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "CONSULTANT")
     public void createCustomer() throws Exception {
         int databaseSizeBeforeCreate = customerRepository.findAll().size();
         // Create the Customer
@@ -146,7 +147,18 @@ public class CustomerResourceIT {
         assertThat(testCustomer.getBirth()).isEqualTo(DEFAULT_BIRTH);
         assertThat(testCustomer.getGender()).isEqualTo(DEFAULT_GENDER);
         assertThat(testCustomer.getTier()).isEqualTo(DEFAULT_TIER);
-        assertThat(testCustomer.isNewCustomer()).isEqualTo(DEFAULT_NEW_CUSTOMER);
+        assertThat(testCustomer.isNewCustomer()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
+    public void createCustomerForbidden() throws Exception {
+        // Create the Customer
+        restCustomerMockMvc.perform(post("/api/customers")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(customer)))
+            .andExpect(status().isForbidden());
     }
 
     @Test
