@@ -1,6 +1,7 @@
 package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.Customer;
+import com.lucci.webadmin.security.SecurityUtils;
 import com.lucci.webadmin.service.CustomerService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 
@@ -23,6 +24,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import static com.lucci.webadmin.security.AuthoritiesConstants.*;
 
 /**
  * REST controller for managing {@link com.lucci.webadmin.domain.Customer}.
@@ -52,13 +55,13 @@ public class CustomerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/customers")
-    @Secured("ROLE_CONSULTANT")
+    @Secured(CONSULTANT)
     public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) throws URISyntaxException {
         log.debug("REST request to save Customer : {}", customer);
         if (customer.getId() != null) {
             throw new BadRequestAlertException("A new customer cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        customer.setNewCustomer(false);
+        customer.setNewCustomer(true);
         Customer result = customerService.save(customer);
         return ResponseEntity.created(new URI("/api/customers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
@@ -75,7 +78,7 @@ public class CustomerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/customers")
-    @Secured("ROLE_RECEPTIONIST")
+    @Secured(RECEPTIONIST)
     public ResponseEntity<Customer> updateCustomer(@Valid @RequestBody Customer customer) throws URISyntaxException {
         log.debug("REST request to update Customer : {}", customer);
         if (customer.getId() == null) {
@@ -94,10 +97,15 @@ public class CustomerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of customers in body.
      */
     @GetMapping("/customers")
-    @Secured({"ROLE_RECEPTIONIST", "ROLE_ADMIN"})
+    @Secured({RECEPTIONIST, ADMIN, CONSULTANT})
     public ResponseEntity<List<Customer>> getAllCustomers(Pageable pageable) {
         log.debug("REST request to get a page of Customers");
-        Page<Customer> page = customerService.findAll(pageable);
+        Page<Customer> page;
+        if (SecurityUtils.isCurrentUserInRole(CONSULTANT)) {
+            page = customerService.findByCorrespondConsultantIsCurrentUser(pageable);
+        } else {
+            page = customerService.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -122,7 +130,7 @@ public class CustomerResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/customers/{id}")
-    @Secured("ROLE_ADMIN")
+    @Secured(ADMIN)
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         log.debug("REST request to delete Customer : {}", id);
         customerService.delete(id);

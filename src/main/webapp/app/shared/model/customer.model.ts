@@ -14,5 +14,5 @@ export interface ICustomer {
 }
 
 export const defaultValue: Readonly<ICustomer> = {
-  newCustomer: false,
+  newCustomer: true,
 };

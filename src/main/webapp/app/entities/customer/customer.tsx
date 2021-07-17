@@ -8,10 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import {getEntities, getEntitiesAsConsultant} from './customer.reducer';
 import { ICustomer } from 'app/shared/model/customer.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
+import { APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
-import { hasAnyAuthority } from 'app/shared/auth/private-route';
 
 export interface ICustomerProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -21,11 +20,7 @@ export const Customer = (props: ICustomerProps) => {
   );
 
   const getAllEntities = () => {
-    if (props.isConsultant) {
-      props.getEntitiesAsConsultant(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
-    } else {
       props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
-    }
   };
 
   const sortEntities = () => {

@@ -72,4 +72,8 @@ public class CustomerService {
         log.debug("Request to delete Customer : {}", id);
         customerRepository.deleteById(id);
     }
+
+    public Page<Customer> findByCorrespondConsultantIsCurrentUser(Pageable pageable) {
+        return customerRepository.findByCorrespondConsultantIsCurrentUser(pageable);
+    }
 }

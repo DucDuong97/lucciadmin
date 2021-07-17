@@ -1,7 +1,6 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.service.CustomerService;
-import com.lucci.webadmin.service.dto.CustomerDTO;
+import com.lucci.webadmin.domain.Customer;
 import io.github.jhipster.web.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +25,11 @@ import java.util.List;
 public class AsConsultantResource {
     private final Logger log = LoggerFactory.getLogger(CustomerResource.class);
 
-    private final CustomerService customerService;
-
-    public AsConsultantResource(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
-    @GetMapping("/customers")
-    public ResponseEntity<List<CustomerDTO>> getAllCustomersAsConsultant(Pageable pageable) {
-        log.debug("REST request to get a page of Customers");
-        Page<CustomerDTO> page = customerService.findByCorrespondConsultantIsCurrentUser(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
+//    @GetMapping("/customers")
+//    public ResponseEntity<List<Customer>> getAllCustomersAsConsultant(Pageable pageable) {
+//        log.debug("REST request to get a page of Customers");
+//        Page<Customer> page = customerRepository.findByCreatedByIsCurrentUser(pageable);
+//        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+//        return ResponseEntity.ok().headers(headers).body(page.getContent());
+//    }
 }

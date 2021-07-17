@@ -16,6 +16,6 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query("select customer from Customer customer where customer.correspondConsultant.login = ?#{principal.username}")
+    @Query("select customer from Customer customer where customer.createdBy = ?#{principal.username}")
     Page<Customer> findByCorrespondConsultantIsCurrentUser(Pageable pageable);
 }
