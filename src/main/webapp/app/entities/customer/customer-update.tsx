@@ -44,7 +44,6 @@ export const CustomerUpdate = (props: ICustomerUpdateProps) => {
       const entity = {
         ...customerEntity,
         ...values,
-        correspondConsultant: { id: props.correspondConsultantId }
       };
 
       if (isNew) {
@@ -184,7 +183,6 @@ const mapStateToProps = (storeState: IRootState) => ({
   loading: storeState.customer.loading,
   updating: storeState.customer.updating,
   updateSuccess: storeState.customer.updateSuccess,
-  correspondConsultantId: storeState.authentication.account.id,
 });
 
 const mapDispatchToProps = {

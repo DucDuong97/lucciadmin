@@ -11,7 +11,6 @@ export interface ICustomer {
   gender?: Gender;
   tier?: CustomerTier;
   newCustomer?: boolean;
-  correspondConsultantId?: number;
 }
 
 export const defaultValue: Readonly<ICustomer> = {

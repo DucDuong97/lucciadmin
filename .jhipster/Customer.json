@@ -36,24 +36,15 @@
     {
       "fieldName": "newCustomer",
       "fieldType": "Boolean",
-      "fieldValidateRules": []
+      "fieldValidateRules": ["required"]
     }
   ],
-  "relationships": [
-    {
-      "relationshipName": "correspondConsultant",
-      "otherEntityName": "user",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": ["required"],
-      "otherEntityField": "id",
-      "otherEntityRelationshipName": "customer"
-    }
-  ],
+  "relationships": [],
   "changelogDate": "20210628105033",
   "entityTableName": "customer",
-  "dto": "mapstruct",
+  "dto": "no",
   "pagination": "pagination",
-  "service": "serviceImpl",
+  "service": "serviceClass",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

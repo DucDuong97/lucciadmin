@@ -22,8 +22,7 @@
       "birth": "Ngày sinh",
       "gender": "Giới tính",
       "tier": "Tier",
-      "newCustomer": "Mới",
-      "correspondConsultant": "Tư vấn viên"
+      "newCustomer": "Mới"
     }
   }
 }

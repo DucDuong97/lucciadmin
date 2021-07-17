@@ -67,10 +67,6 @@ export const CustomerDetail = (props: ICustomerDetailProps) => {
             </span>
           </dt>
           <dd>{customerEntity.newCustomer ? 'true' : 'false'}</dd>
-          <dt>
-            <Translate contentKey="lucciadminApp.customer.correspondConsultant">Correspond Consultant</Translate>
-          </dt>
-          <dd>{customerEntity.correspondConsultantId ? customerEntity.correspondConsultantId : ''}</dd>
         </dl>
         <Button tag={Link} to="/customer" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

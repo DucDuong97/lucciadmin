@@ -1,9 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.repository.CustomerRepository;
+import com.lucci.webadmin.domain.Customer;
 import com.lucci.webadmin.service.CustomerService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
-import com.lucci.webadmin.service.dto.CustomerDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
@@ -48,19 +47,19 @@ public class CustomerResource {
     /**
      * {@code POST  /customers} : Create a new customer.
      *
-     * @param customerDTO the customerDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new customerDTO, or with status {@code 400 (Bad Request)} if the customer has already an ID.
+     * @param customer the customer to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new customer, or with status {@code 400 (Bad Request)} if the customer has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/customers")
     @Secured("ROLE_CONSULTANT")
-    public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO customerDTO) throws URISyntaxException {
-        log.debug("REST request to save Customer : {}", customerDTO);
-        if (customerDTO.getId() != null) {
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody Customer customer) throws URISyntaxException {
+        log.debug("REST request to save Customer : {}", customer);
+        if (customer.getId() != null) {
             throw new BadRequestAlertException("A new customer cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        customerDTO.setNewCustomer(false);
-        CustomerDTO result = customerService.save(customerDTO);
+        customer.setNewCustomer(false);
+        Customer result = customerService.save(customer);
         return ResponseEntity.created(new URI("/api/customers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -69,22 +68,22 @@ public class CustomerResource {
     /**
      * {@code PUT  /customers} : Updates an existing customer.
      *
-     * @param customerDTO the customerDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated customerDTO,
-     * or with status {@code 400 (Bad Request)} if the customerDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the customerDTO couldn't be updated.
+     * @param customer the customer to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated customer,
+     * or with status {@code 400 (Bad Request)} if the customer is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the customer couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/customers")
     @Secured("ROLE_RECEPTIONIST")
-    public ResponseEntity<CustomerDTO> updateCustomer(@Valid @RequestBody CustomerDTO customerDTO) throws URISyntaxException {
-        log.debug("REST request to update Customer : {}", customerDTO);
-        if (customerDTO.getId() == null) {
+    public ResponseEntity<Customer> updateCustomer(@Valid @RequestBody Customer customer) throws URISyntaxException {
+        log.debug("REST request to update Customer : {}", customer);
+        if (customer.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        CustomerDTO result = customerService.save(customerDTO);
+        Customer result = customerService.save(customer);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, customerDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, customer.getId().toString()))
             .body(result);
     }
 
@@ -96,9 +95,9 @@ public class CustomerResource {
      */
     @GetMapping("/customers")
     @Secured({"ROLE_RECEPTIONIST", "ROLE_ADMIN"})
-    public ResponseEntity<List<CustomerDTO>> getAllCustomers(Pageable pageable) {
+    public ResponseEntity<List<Customer>> getAllCustomers(Pageable pageable) {
         log.debug("REST request to get a page of Customers");
-        Page<CustomerDTO> page = customerService.findAll(pageable);
+        Page<Customer> page = customerService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -106,21 +105,20 @@ public class CustomerResource {
     /**
      * {@code GET  /customers/:id} : get the "id" customer.
      *
-     * @param id the id of the customerDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status {@code 404 (Not Found)}.
+     * @param id the id of the customer to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customer, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/customers/{id}")
-    @Secured("ROLE_RECEPTIONIST")
-    public ResponseEntity<CustomerDTO> getCustomer(@PathVariable Long id) {
+    public ResponseEntity<Customer> getCustomer(@PathVariable Long id) {
         log.debug("REST request to get Customer : {}", id);
-        Optional<CustomerDTO> customerDTO = customerService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(customerDTO);
+        Optional<Customer> customer = customerService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(customer);
     }
 
     /**
      * {@code DELETE  /customers/:id} : delete the "id" customer.
      *
-     * @param id the id of the customerDTO to delete.
+     * @param id the id of the customer to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/customers/{id}")

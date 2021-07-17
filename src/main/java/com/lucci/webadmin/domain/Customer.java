@@ -1,7 +1,6 @@
 package com.lucci.webadmin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -61,13 +60,9 @@ public class Customer implements Serializable {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
     private Set<Booking> bookings;
 
-    @Column(name = "new_customer")
-    private Boolean newCustomer;
-
-    @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = "customers", allowSetters = true)
-    private User correspondConsultant;
+    @Column(name = "new_customer", nullable = false)
+    private Boolean newCustomer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -167,19 +162,6 @@ public class Customer implements Serializable {
 
     public void setNewCustomer(Boolean newCustomer) {
         this.newCustomer = newCustomer;
-    }
-
-    public User getCorrespondConsultant() {
-        return correspondConsultant;
-    }
-
-    public Customer correspondConsultant(User user) {
-        this.correspondConsultant = user;
-        return this;
-    }
-
-    public void setCorrespondConsultant(User user) {
-        this.correspondConsultant = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

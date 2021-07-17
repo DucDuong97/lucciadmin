@@ -1,24 +1,42 @@
 package com.lucci.webadmin.service;
 
-import com.lucci.webadmin.service.dto.CustomerDTO;
+import com.lucci.webadmin.domain.Customer;
+import com.lucci.webadmin.repository.CustomerRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 /**
- * Service Interface for managing {@link com.lucci.webadmin.domain.Customer}.
+ * Service Implementation for managing {@link Customer}.
  */
-public interface CustomerService {
+@Service
+@Transactional
+public class CustomerService {
+
+    private final Logger log = LoggerFactory.getLogger(CustomerService.class);
+
+    private final CustomerRepository customerRepository;
+
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     /**
      * Save a customer.
      *
-     * @param customerDTO the entity to save.
+     * @param customer the entity to save.
      * @return the persisted entity.
      */
-    CustomerDTO save(CustomerDTO customerDTO);
+    public Customer save(Customer customer) {
+        log.debug("Request to save Customer : {}", customer);
+        return customerRepository.save(customer);
+    }
 
     /**
      * Get all the customers.
@@ -26,23 +44,32 @@ public interface CustomerService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<CustomerDTO> findAll(Pageable pageable);
+    @Transactional(readOnly = true)
+    public Page<Customer> findAll(Pageable pageable) {
+        log.debug("Request to get all Customers");
+        return customerRepository.findAll(pageable);
+    }
 
 
     /**
-     * Get the "id" customer.
+     * Get one customer by id.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<CustomerDTO> findOne(Long id);
+    @Transactional(readOnly = true)
+    public Optional<Customer> findOne(Long id) {
+        log.debug("Request to get Customer : {}", id);
+        return customerRepository.findById(id);
+    }
 
     /**
-     * Delete the "id" customer.
+     * Delete the customer by id.
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);
-
-    Page<CustomerDTO> findByCorrespondConsultantIsCurrentUser(Pageable pageable);
+    public void delete(Long id) {
+        log.debug("Request to delete Customer : {}", id);
+        customerRepository.deleteById(id);
+    }
 }
