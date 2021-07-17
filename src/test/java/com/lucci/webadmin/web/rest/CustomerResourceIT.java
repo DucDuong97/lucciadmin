@@ -2,8 +2,11 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Customer;
-import com.lucci.webadmin.domain.Employee;
+import com.lucci.webadmin.domain.User;
 import com.lucci.webadmin.repository.CustomerRepository;
+import com.lucci.webadmin.service.CustomerService;
+import com.lucci.webadmin.service.dto.CustomerDTO;
+import com.lucci.webadmin.service.mapper.CustomerMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,6 +62,12 @@ public class CustomerResourceIT {
     private CustomerRepository customerRepository;
 
     @Autowired
+    private CustomerMapper customerMapper;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -82,15 +91,10 @@ public class CustomerResourceIT {
             .tier(DEFAULT_TIER)
             .newCustomer(DEFAULT_NEW_CUSTOMER);
         // Add required entity
-        Employee employee;
-        if (TestUtil.findAll(em, Employee.class).isEmpty()) {
-            employee = EmployeeResourceIT.createEntity(em);
-            em.persist(employee);
-            em.flush();
-        } else {
-            employee = TestUtil.findAll(em, Employee.class).get(0);
-        }
-        customer.setCorrespondConsultant(employee);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        customer.setCorrespondConsultant(user);
         return customer;
     }
     /**
@@ -109,15 +113,10 @@ public class CustomerResourceIT {
             .tier(UPDATED_TIER)
             .newCustomer(UPDATED_NEW_CUSTOMER);
         // Add required entity
-        Employee employee;
-        if (TestUtil.findAll(em, Employee.class).isEmpty()) {
-            employee = EmployeeResourceIT.createUpdatedEntity(em);
-            em.persist(employee);
-            em.flush();
-        } else {
-            employee = TestUtil.findAll(em, Employee.class).get(0);
-        }
-        customer.setCorrespondConsultant(employee);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        customer.setCorrespondConsultant(user);
         return customer;
     }
 
@@ -132,9 +131,10 @@ public class CustomerResourceIT {
     public void createCustomer() throws Exception {
         int databaseSizeBeforeCreate = customerRepository.findAll().size();
         // Create the Customer
+        CustomerDTO customerDTO = customerMapper.toDto(customer);
         restCustomerMockMvc.perform(post("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(customer)))
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Customer in the database
@@ -168,11 +168,12 @@ public class CustomerResourceIT {
 
         // Create the Customer with an existing ID
         customer.setId(1L);
+        CustomerDTO customerDTO = customerMapper.toDto(customer);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restCustomerMockMvc.perform(post("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(customer)))
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Customer in the database
@@ -189,11 +190,12 @@ public class CustomerResourceIT {
         customer.setName(null);
 
         // Create the Customer, which fails.
+        CustomerDTO customerDTO = customerMapper.toDto(customer);
 
 
         restCustomerMockMvc.perform(post("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(customer)))
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
             .andExpect(status().isBadRequest());
 
         List<Customer> customerList = customerRepository.findAll();
@@ -208,11 +210,12 @@ public class CustomerResourceIT {
         customer.setPhone(null);
 
         // Create the Customer, which fails.
+        CustomerDTO customerDTO = customerMapper.toDto(customer);
 
 
         restCustomerMockMvc.perform(post("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(customer)))
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
             .andExpect(status().isBadRequest());
 
         List<Customer> customerList = customerRepository.findAll();
@@ -227,11 +230,12 @@ public class CustomerResourceIT {
         customer.setBirth(null);
 
         // Create the Customer, which fails.
+        CustomerDTO customerDTO = customerMapper.toDto(customer);
 
 
         restCustomerMockMvc.perform(post("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(customer)))
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
             .andExpect(status().isBadRequest());
 
         List<Customer> customerList = customerRepository.findAll();
@@ -246,11 +250,12 @@ public class CustomerResourceIT {
         customer.setGender(null);
 
         // Create the Customer, which fails.
+        CustomerDTO customerDTO = customerMapper.toDto(customer);
 
 
         restCustomerMockMvc.perform(post("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(customer)))
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
             .andExpect(status().isBadRequest());
 
         List<Customer> customerList = customerRepository.findAll();
@@ -306,7 +311,6 @@ public class CustomerResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser(roles = "RECEPTIONIST")
     public void updateCustomer() throws Exception {
         // Initialize the database
         customerRepository.saveAndFlush(customer);
@@ -325,10 +329,11 @@ public class CustomerResourceIT {
             .gender(UPDATED_GENDER)
             .tier(UPDATED_TIER)
             .newCustomer(UPDATED_NEW_CUSTOMER);
+        CustomerDTO customerDTO = customerMapper.toDto(updatedCustomer);
 
         restCustomerMockMvc.perform(put("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedCustomer)))
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
             .andExpect(status().isOk());
 
         // Validate the Customer in the database
@@ -349,10 +354,13 @@ public class CustomerResourceIT {
     public void updateNonExistingCustomer() throws Exception {
         int databaseSizeBeforeUpdate = customerRepository.findAll().size();
 
+        // Create the Customer
+        CustomerDTO customerDTO = customerMapper.toDto(customer);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restCustomerMockMvc.perform(put("/api/customers")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(customer)))
+            .content(TestUtil.convertObjectToJsonBytes(customerDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Customer in the database

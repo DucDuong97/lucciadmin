@@ -1,5 +1,4 @@
 import { Moment } from 'moment';
-import { IEmployee } from 'app/shared/model/employee.model';
 import { Gender } from 'app/shared/model/enumerations/gender.model';
 import { CustomerTier } from 'app/shared/model/enumerations/customer-tier.model';
 
@@ -12,7 +11,7 @@ export interface ICustomer {
   gender?: Gender;
   tier?: CustomerTier;
   newCustomer?: boolean;
-  correspondConsultant?: IEmployee;
+  correspondConsultantId?: number;
 }
 
 export const defaultValue: Readonly<ICustomer> = {

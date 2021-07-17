@@ -42,7 +42,7 @@
   "relationships": [
     {
       "relationshipName": "correspondConsultant",
-      "otherEntityName": "employee",
+      "otherEntityName": "user",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": ["required"],
       "otherEntityField": "id",
@@ -51,9 +51,9 @@
   ],
   "changelogDate": "20210628105033",
   "entityTableName": "customer",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "pagination",
-  "service": "no",
+  "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

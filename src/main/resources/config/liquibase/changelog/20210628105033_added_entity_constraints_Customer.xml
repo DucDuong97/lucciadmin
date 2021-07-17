@@ -12,7 +12,7 @@
                                  baseTableName="customer"
                                  constraintName="fk_customer_correspond_consultant_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="employee"/>
+                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

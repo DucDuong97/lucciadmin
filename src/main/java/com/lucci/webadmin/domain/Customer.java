@@ -67,7 +67,7 @@ public class Customer implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = "customers", allowSetters = true)
-    private Employee correspondConsultant;
+    private User correspondConsultant;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -169,17 +169,17 @@ public class Customer implements Serializable {
         this.newCustomer = newCustomer;
     }
 
-    public Employee getCorrespondConsultant() {
+    public User getCorrespondConsultant() {
         return correspondConsultant;
     }
 
-    public Customer correspondConsultant(Employee employee) {
-        this.correspondConsultant = employee;
+    public Customer correspondConsultant(User user) {
+        this.correspondConsultant = user;
         return this;
     }
 
-    public void setCorrespondConsultant(Employee employee) {
-        this.correspondConsultant = employee;
+    public void setCorrespondConsultant(User user) {
+        this.correspondConsultant = user;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
