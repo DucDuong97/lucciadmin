@@ -63,4 +63,11 @@ public class CustomerServiceImpl implements CustomerService {
         log.debug("Request to delete Customer : {}", id);
         customerRepository.deleteById(id);
     }
+
+    @Override
+    public Page<CustomerDTO> findByCorrespondConsultantIsCurrentUser(Pageable pageable) {
+        log.debug("Request to get all Customers");
+        return customerRepository.findByCorrespondConsultantIsCurrentUser(pageable)
+            .map(customerMapper::toDto);
+    }
 }

@@ -87,13 +87,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //            .antMatchers("/api/**").authenticated()
             .antMatchers(HttpMethod.GET, "/api/**").permitAll()
 
-            .antMatchers(HttpMethod.POST, "/api/customers").hasAuthority(CONSULTANT)
-            .antMatchers(HttpMethod.PUT, "/api/customers/release-customer").hasAuthority(CONSULTANT)
-            .antMatchers(HttpMethod.PUT, "/api/customers").hasAuthority(RECEPTIONIST)
-            .antMatchers(HttpMethod.GET, "/api/customers").hasAnyAuthority(RECEPTIONIST, ADMIN, CONSULTANT)
-            .antMatchers(HttpMethod.GET, "/api/customers/**").permitAll()
-            .antMatchers(HttpMethod.DELETE, "/api/customers/**").hasAuthority(ADMIN)
-
             .antMatchers(HttpMethod.POST, "/api/bookings").hasAuthority(RECEPTIONIST)
             .antMatchers(HttpMethod.PUT, "/api/bookings").hasAnyAuthority(RECEPTIONIST)
             .antMatchers(HttpMethod.PUT, "/api/bookings/assign-doctor").hasAnyAuthority(OPERATIONS_DIRECTOR, BRANCH_BOSS_DOCTOR)

@@ -2,6 +2,8 @@ package com.lucci.webadmin.repository;
 
 import com.lucci.webadmin.domain.Customer;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,5 @@ import java.util.List;
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query("select customer from Customer customer where customer.correspondConsultant.login = ?#{principal.username}")
-    List<Customer> findByCorrespondConsultantIsCurrentUser();
+    Page<Customer> findByCorrespondConsultantIsCurrentUser(Pageable pageable);
 }

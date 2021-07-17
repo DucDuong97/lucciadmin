@@ -1,5 +1,6 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.repository.CustomerRepository;
 import com.lucci.webadmin.service.CustomerService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 import com.lucci.webadmin.service.dto.CustomerDTO;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,7 @@ public class CustomerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/customers")
+    @Secured("ROLE_CONSULTANT")
     public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO customerDTO) throws URISyntaxException {
         log.debug("REST request to save Customer : {}", customerDTO);
         if (customerDTO.getId() != null) {
@@ -74,6 +76,7 @@ public class CustomerResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/customers")
+    @Secured("ROLE_RECEPTIONIST")
     public ResponseEntity<CustomerDTO> updateCustomer(@Valid @RequestBody CustomerDTO customerDTO) throws URISyntaxException {
         log.debug("REST request to update Customer : {}", customerDTO);
         if (customerDTO.getId() == null) {
@@ -92,6 +95,7 @@ public class CustomerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of customers in body.
      */
     @GetMapping("/customers")
+    @Secured({"ROLE_RECEPTIONIST", "ROLE_ADMIN"})
     public ResponseEntity<List<CustomerDTO>> getAllCustomers(Pageable pageable) {
         log.debug("REST request to get a page of Customers");
         Page<CustomerDTO> page = customerService.findAll(pageable);
@@ -106,6 +110,7 @@ public class CustomerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the customerDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/customers/{id}")
+    @Secured("ROLE_RECEPTIONIST")
     public ResponseEntity<CustomerDTO> getCustomer(@PathVariable Long id) {
         log.debug("REST request to get Customer : {}", id);
         Optional<CustomerDTO> customerDTO = customerService.findOne(id);
@@ -119,6 +124,7 @@ public class CustomerResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/customers/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
         log.debug("REST request to delete Customer : {}", id);
         customerService.delete(id);

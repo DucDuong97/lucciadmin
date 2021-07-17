@@ -6,7 +6,7 @@ import { Translate, ICrudGetAllAction, TextFormat, getSortState, IPaginationBase
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities } from './customer.reducer';
+import {getEntities, getEntitiesAsConsultant} from './customer.reducer';
 import { ICustomer } from 'app/shared/model/customer.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
@@ -21,7 +21,11 @@ export const Customer = (props: ICustomerProps) => {
   );
 
   const getAllEntities = () => {
-    props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
+    if (props.isConsultant) {
+      props.getEntitiesAsConsultant(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
+    } else {
+      props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
+    }
   };
 
   const sortEntities = () => {
@@ -208,6 +212,7 @@ const mapStateToProps = ({ customer, authentication }: IRootState) => ({
 
 const mapDispatchToProps = {
   getEntities,
+  getEntitiesAsConsultant,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

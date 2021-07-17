@@ -37,6 +37,9 @@ import com.lucci.webadmin.domain.enumeration.CustomerTier;
 @WithMockUser
 public class CustomerResourceIT {
 
+    private static final String CONSULTANT_1 = "consultant1";
+    private static final String CONSULTANT_2 = "consultant2";
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -152,7 +155,7 @@ public class CustomerResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser(roles = "RECEPTIONIST")
+    @WithMockUser(roles = {"RECEPTIONIST", "ADMIN"})
     public void createCustomerForbidden() throws Exception {
         // Create the Customer
         restCustomerMockMvc.perform(post("/api/customers")
@@ -264,6 +267,7 @@ public class CustomerResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void getAllCustomers() throws Exception {
         // Initialize the database
         customerRepository.saveAndFlush(customer);
@@ -279,7 +283,71 @@ public class CustomerResourceIT {
             .andExpect(jsonPath("$.[*].birth").value(hasItem(DEFAULT_BIRTH.toString())))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
             .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER.toString())))
-            .andExpect(jsonPath("$.[*].newCustomer").value(hasItem(DEFAULT_NEW_CUSTOMER.booleanValue())));
+            .andExpect(jsonPath("$.[*].newCustomer").value(hasItem(DEFAULT_NEW_CUSTOMER)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(roles = "CONSULTANT")
+    public void getAllCustomersForbidden() throws Exception {
+        // Get all the customerList
+        restCustomerMockMvc.perform(get("/api/customers?sort=id,desc"))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(roles = "CONSULTANT", username = CONSULTANT_1)
+    public void getAllCustomersAsConsultant() throws Exception {
+        // set consultant
+        User consultant = UserResourceIT.createEntity(em);
+        consultant.setLogin(CONSULTANT_1);
+        em.persist(consultant);
+        em.flush();
+        customer.setCorrespondConsultant(consultant);
+        // Initialize the database
+        customerRepository.saveAndFlush(customer);
+
+        // Get all the customerList
+        restCustomerMockMvc.perform(get("/api/as-consultant/customers?sort=id,desc"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(customer.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].birth").value(hasItem(DEFAULT_BIRTH.toString())))
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
+            .andExpect(jsonPath("$.[*].tier").value(hasItem(DEFAULT_TIER.toString())))
+            .andExpect(jsonPath("$.[*].newCustomer").value(hasItem(DEFAULT_NEW_CUSTOMER)));
+    }
+
+    @Test
+    @Transactional
+    @WithMockUser(roles = "CONSULTANT", username = CONSULTANT_2)
+    public void getNoCustomersAsAnotherConsultant() throws Exception {
+        // set consultant
+        User consultant = UserResourceIT.createEntity(em);
+        consultant.setLogin(CONSULTANT_1);
+        em.persist(consultant);
+        em.flush();
+        customer.setCorrespondConsultant(consultant);
+        // Initialize the database
+        customerRepository.saveAndFlush(customer);
+
+        // Get all the customerList
+        restCustomerMockMvc.perform(get("/api/as-consultant/customers?sort=id,desc"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("[]"));
+    }
+    @Test
+    @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
+    public void getAllCustomersAsConsultantForbidden() throws Exception {
+        // Get all the customerList
+        restCustomerMockMvc.perform(get("/api/as-consultant/customers?sort=id,desc"))
+            .andExpect(status().isForbidden());
     }
 
     @Test
