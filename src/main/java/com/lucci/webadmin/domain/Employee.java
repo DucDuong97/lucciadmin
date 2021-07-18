@@ -66,8 +66,8 @@ public class Employee implements Serializable {
     private Branch workAt;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "relatedEmployee", cascade = CascadeType.PERSIST)
-    private Set<User> users;
+    @OneToOne(mappedBy = "relatedEmployee", cascade = CascadeType.PERSIST)
+    private User user;
 
     @JsonIgnore
     @OneToMany(mappedBy = "correspondDoctor", cascade = CascadeType.PERSIST)
@@ -76,8 +76,8 @@ public class Employee implements Serializable {
     @PreRemove
     private void preRemove() {
         bookings.forEach(booking -> booking.setCorrespondDoctor(null));
-        users.forEach(user -> user.setRelatedEmployee(null));
-        users.forEach(user -> user.getAuthorities().clear());
+        user.setRelatedEmployee(null);
+        user.getAuthorities().clear();
     }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

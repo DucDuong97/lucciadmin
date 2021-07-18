@@ -19,7 +19,7 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-    Optional<Employee> findByUsersLogin(String login);
+    Optional<Employee> findByUserLogin(String login);
 
     Page<Employee> findByWorkAtAndIdNot(Branch branch, Long managerId, Pageable pageable);
 

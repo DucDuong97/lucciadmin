@@ -96,8 +96,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Set<Authority> authorities = new HashSet<>();
 
     @JsonIgnore
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.NO_ACTION)
+    @OneToOne
     private Employee relatedEmployee;
 
     public Long getId() {

@@ -73,7 +73,7 @@ public class EmployeeResource {
                 throw new BadRequestAlertException("A Manager cannot add an Admin or Director", ENTITY_NAME, "forbidden_role");
             }
             SecurityUtils.getCurrentUserLogin()
-                .flatMap(employeeRepository::findByUsersLogin)
+                .flatMap(employeeRepository::findByUserLogin)
                 .ifPresent(manager -> employee.setWorkAt(manager.getWorkAt()));
         }
 
@@ -116,7 +116,7 @@ public class EmployeeResource {
         Page<Employee> page;
         if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.MANAGER)) {
             Employee manager = SecurityUtils.getCurrentUserLogin()
-                .flatMap(employeeRepository::findByUsersLogin)
+                .flatMap(employeeRepository::findByUserLogin)
                 .orElseThrow(NoEmployeeForCurrentUserException::new);
             page = employeeRepository.findByWorkAtAndIdNot(manager.getWorkAt(), manager.getId(), pageable);
         } else {
@@ -134,7 +134,7 @@ public class EmployeeResource {
         }
         else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.BRANCH_BOSS_DOCTOR)) {
             Employee branchDoctor = SecurityUtils.getCurrentUserLogin()
-                .flatMap(employeeRepository::findByUsersLogin)
+                .flatMap(employeeRepository::findByUserLogin)
                 .orElseThrow(NoEmployeeForCurrentUserException::new);
             return employeeRepository.findByWorkAtAndRole(branchDoctor.getWorkAt(), DOCTOR);
         } else {
