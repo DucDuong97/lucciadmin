@@ -306,6 +306,22 @@ public class UserService {
         return user.getRelatedEmployee().getId();
     }
 
+    @Transactional(readOnly = true)
+    public Long getUserBranchId() {
+        Optional<User> userOpt = SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin);
+        if (!userOpt.isPresent()) {
+            return null;
+        }
+        User user = userOpt.get();
+        if (user.getRelatedEmployee() == null) {
+            return null;
+        }
+        if (user.getRelatedEmployee().getWorkAt() == null) {
+            return null;
+        }
+        return user.getRelatedEmployee().getWorkAt().getId();
+    }
+
     /**
      * Not activated users should be automatically deleted after 3 days.
      * <p>
