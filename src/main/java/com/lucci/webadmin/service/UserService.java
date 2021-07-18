@@ -2,7 +2,6 @@ package com.lucci.webadmin.service;
 
 import com.lucci.webadmin.config.Constants;
 import com.lucci.webadmin.domain.Authority;
-import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.domain.User;
 import com.lucci.webadmin.repository.AuthorityRepository;
 import com.lucci.webadmin.repository.EmployeeRepository;
@@ -193,38 +192,21 @@ public class UserService {
     }
 
     public void setAuthorities(User user, Long employeeId) {
-        Set<Authority> managedAuthorities = user.getAuthorities();
-        Optional<Employee> employeeOpt = employeeRepository.findById(employeeId);
-
-        if (!employeeOpt.isPresent()) {
-            managedAuthorities.clear();
-            return;
-        }
-        Employee employee = employeeOpt.get();
-        user.setRelatedEmployee(employee);
-        employee.getRole().getAuthorities()
-            .stream()
-            .map(authorityRepository::findById)
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .forEach(managedAuthorities::add);
-        if (employee.getWorkAt() == null) {
-            return;
-        }
-        Optional<String> branchAuthorityOpt = employee.getWorkAt().getBranchAuthority();
-        if (!branchAuthorityOpt.isPresent()) {
-            return;
-        }
-        Optional<Authority> authorityOptional =
-            branchAuthorityOpt.flatMap(authorityRepository::findById);
-
-        if (!authorityOptional.isPresent()) {
-            Authority newBranchAuthority = new Authority();
-            newBranchAuthority.setName(branchAuthorityOpt.get());
-            authorityRepository.save(newBranchAuthority);
-            managedAuthorities.add(newBranchAuthority);
+        if (employeeId != null) {
+            user.setRelatedEmployee(employeeRepository
+                .findById(employeeId).orElse(null));
         } else {
-            authorityOptional.ifPresent(managedAuthorities::add);
+            user.setRelatedEmployee(null);
+        }
+        Set<Authority> managedAuthorities = user.getAuthorities();
+        managedAuthorities.clear();
+        if (user.getRelatedEmployee() != null) {
+            user.getRelatedEmployee().getRole().getAuthorities()
+                .stream()
+                .map(authorityRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .forEach(managedAuthorities::add);
         }
     }
 
