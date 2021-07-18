@@ -15,7 +15,7 @@
   "relationships": [],
   "changelogDate": "20210517104429",
   "entityTableName": "branch",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
