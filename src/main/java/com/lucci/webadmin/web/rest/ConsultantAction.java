@@ -22,7 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/as-consultant")
 @Secured("ROLE_CONSULTANT")
-public class AsConsultantResource {
+public class ConsultantAction {
     private final Logger log = LoggerFactory.getLogger(CustomerResource.class);
 
 //    @GetMapping("/customers")

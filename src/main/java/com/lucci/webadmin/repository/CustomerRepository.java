@@ -16,6 +16,7 @@ import java.util.List;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    @Query("select customer from Customer customer where customer.createdBy = ?#{principal.username}")
-    Page<Customer> findByCorrespondConsultantIsCurrentUser(Pageable pageable);
+    @Query("select customer from Customer customer where customer.createdBy = ?#{principal.username} " +
+                "or true= ?#{hasAnyRole('ROLE_RECEPTIONIST', 'ROLE_ADMIN')}")
+    Page<Customer> findAllWithAuthorization(Pageable pageable);
 }

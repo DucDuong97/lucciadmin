@@ -100,12 +100,7 @@ public class CustomerResource {
     @Secured({RECEPTIONIST, ADMIN, CONSULTANT})
     public ResponseEntity<List<Customer>> getAllCustomers(Pageable pageable) {
         log.debug("REST request to get a page of Customers");
-        Page<Customer> page;
-        if (SecurityUtils.isCurrentUserInRole(CONSULTANT)) {
-            page = customerService.findByCorrespondConsultantIsCurrentUser(pageable);
-        } else {
-            page = customerService.findAll(pageable);
-        }
+        Page<Customer> page = customerService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

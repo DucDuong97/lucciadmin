@@ -47,7 +47,7 @@ public class CustomerService {
     @Transactional(readOnly = true)
     public Page<Customer> findAll(Pageable pageable) {
         log.debug("Request to get all Customers");
-        return customerRepository.findAll(pageable);
+        return customerRepository.findAllWithAuthorization(pageable);
     }
 
 
@@ -71,9 +71,5 @@ public class CustomerService {
     public void delete(Long id) {
         log.debug("Request to delete Customer : {}", id);
         customerRepository.deleteById(id);
-    }
-
-    public Page<Customer> findByCorrespondConsultantIsCurrentUser(Pageable pageable) {
-        return customerRepository.findByCorrespondConsultantIsCurrentUser(pageable);
     }
 }
