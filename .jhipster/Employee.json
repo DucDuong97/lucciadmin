@@ -52,7 +52,7 @@
   ],
   "changelogDate": "20210628105133",
   "entityTableName": "employee",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "pagination",
   "service": "no",
   "jpaMetamodelFiltering": false,
