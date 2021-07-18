@@ -16,11 +16,12 @@
       "detail": {
         "title": "Lịch hẹn"
       },
+      "type": "Loại",
       "date": "Ngày",
       "time": "Giờ",
-      "branch": "Cơ sở",
       "correspondDoctor": "Bác sỹ phụ trách",
-      "customer": "Khách hàng"
+      "customer": "Khách hàng",
+      "branch": "Cơ sở"
     }
   }
 }

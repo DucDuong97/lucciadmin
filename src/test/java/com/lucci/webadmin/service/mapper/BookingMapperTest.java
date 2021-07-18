@@ -1,14 +1,17 @@
 package com.lucci.webadmin.service.mapper;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BookingMapperTest {
 
-    @Autowired
     private BookingMapper bookingMapper;
+
+    @BeforeEach
+    public void setUp() {
+        bookingMapper = new BookingMapperImpl();
+    }
 
     @Test
     public void testEntityFromId() {

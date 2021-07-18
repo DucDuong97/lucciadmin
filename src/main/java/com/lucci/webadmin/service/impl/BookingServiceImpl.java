@@ -1,9 +1,5 @@
 package com.lucci.webadmin.service.impl;
 
-import com.lucci.webadmin.domain.Employee;
-import com.lucci.webadmin.repository.EmployeeRepository;
-import com.lucci.webadmin.security.AuthoritiesConstants;
-import com.lucci.webadmin.security.SecurityUtils;
 import com.lucci.webadmin.service.BookingService;
 import com.lucci.webadmin.domain.Booking;
 import com.lucci.webadmin.repository.BookingRepository;
@@ -29,13 +25,11 @@ public class BookingServiceImpl implements BookingService {
     private final Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
 
     private final BookingRepository bookingRepository;
-    private final EmployeeRepository employeeRepository;
 
     private final BookingMapper bookingMapper;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, EmployeeRepository employeeRepository, BookingMapper bookingMapper) {
+    public BookingServiceImpl(BookingRepository bookingRepository, BookingMapper bookingMapper) {
         this.bookingRepository = bookingRepository;
-        this.employeeRepository = employeeRepository;
         this.bookingMapper = bookingMapper;
     }
 
@@ -51,7 +45,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional(readOnly = true)
     public Page<BookingDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Bookings");
-        return bookingRepository.findAll(pageable)
+        return bookingRepository.findAllWithAuthority(pageable)
             .map(bookingMapper::toDto);
     }
 
@@ -70,29 +64,24 @@ public class BookingServiceImpl implements BookingService {
         bookingRepository.deleteById(id);
     }
 
-    @Override
-    public Page<BookingDTO> findWithEmployee(Pageable pageable) {
-
-        Employee employee = SecurityUtils.getCurrentUserLogin()
-            .flatMap(employeeRepository::findByUsersLogin)
-            .orElse(null);
-
-        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.OPERATIONS_DIRECTOR) ||
-                    SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.RECEPTIONIST) ||
-                            SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
-            return bookingRepository.findAll(pageable).map(bookingMapper::toDto);
-        }
-        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.BRANCH_BOSS_DOCTOR)) {
-            assert employee != null;
-            return bookingRepository.findByBranch(employee.getWorkAt(), pageable)
-                .map(bookingMapper::toDto);
-        }
-        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.DOCTOR)) {
-            return bookingRepository.findByCorrespondDoctor(employee, pageable)
-                .map(bookingMapper::toDto);
-        }
-        else {
-            return Page.empty();
-        }
-    }
+//    @Override
+//    public Page<BookingDTO> findWithEmployee(Pageable pageable) {
+//
+//        Employee employee = SecurityUtils.getCurrentUserLogin()
+//            .flatMap(employeeRepository::findByUsersLogin)
+//            .orElse(null);
+//
+//        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.BRANCH_BOSS_DOCTOR)) {
+//            assert employee != null;
+//            return bookingRepository.findByBranch(employee.getWorkAt(), pageable)
+//                .map(bookingMapper::toDto);
+//        }
+//        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.DOCTOR)) {
+//            return bookingRepository.findByCorrespondDoctor(employee, pageable)
+//                .map(bookingMapper::toDto);
+//        }
+//        else {
+//            return Page.empty();
+//        }
+//    }
 }

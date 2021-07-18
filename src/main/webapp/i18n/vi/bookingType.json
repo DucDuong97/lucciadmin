@@ -1,0 +1,9 @@
+{
+  "lucciadminApp": {
+    "BookingType": {
+      "null": "",
+      "CONSULTING": "TƯ VẤN",
+      "TREATMENT": "THĂM KHÁM"
+    }
+  }
+}

@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import com.lucci.webadmin.domain.enumeration.BookingType;
 
 /**
  * A DTO for the {@link com.lucci.webadmin.domain.Booking} entity.
@@ -12,6 +13,9 @@ import java.io.Serializable;
 public class BookingDTO implements Serializable {
 
     private Long id;
+
+    @NotNull
+    private BookingType type;
 
     @NotNull
     private LocalDate date;
@@ -31,6 +35,14 @@ public class BookingDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BookingType getType() {
+        return type;
+    }
+
+    public void setType(BookingType type) {
+        this.type = type;
     }
 
     public LocalDate getDate() {
@@ -95,7 +107,7 @@ public class BookingDTO implements Serializable {
     public String toString() {
         return "BookingDTO{" +
             "id=" + getId() +
-            ", date='" + getDate() + "'" +
+            ", type='" + getType() + "'" +
             ", time='" + getTime() + "'" +
             ", correspondDoctorId=" + getCorrespondDoctorId() +
             ", customerId=" + getCustomerId() +

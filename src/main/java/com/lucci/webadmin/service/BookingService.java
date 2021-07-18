@@ -1,7 +1,5 @@
 package com.lucci.webadmin.service;
 
-import com.lucci.webadmin.domain.Branch;
-import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.service.dto.BookingDTO;
 
 import org.springframework.data.domain.Page;
@@ -45,6 +43,4 @@ public interface BookingService {
      * @param id the id of the entity.
      */
     void delete(Long id);
-
-    Page<BookingDTO> findWithEmployee(Pageable pageable);
 }

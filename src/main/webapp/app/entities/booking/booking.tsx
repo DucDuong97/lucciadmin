@@ -6,12 +6,11 @@ import { Translate, ICrudGetAllAction, TextFormat, getSortState, IPaginationBase
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import { getEntities, updateEntity } from './booking.reducer';
+import { getEntities } from './booking.reducer';
 import { IBooking } from 'app/shared/model/booking.model';
 import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT, AUTHORITIES} from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
-import {hasAnyAuthority} from "app/shared/auth/private-route";
 
 export interface IBookingProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -65,13 +64,7 @@ export const Booking = (props: IBookingProps) => {
       activePage: currentPage,
     });
 
-  useEffect(() => {
-    if (props.updateSuccess) {
-      props.history.push('/booking/' + props.entity.id);
-    }
-  }, [props.updateSuccess]);
-
-  const { bookingList, match, loading, totalItems, isDoctor, isReceptionist, correspondDoctorId } = props;
+  const { bookingList, match, loading, totalItems, isDoctor, isReceptionist } = props;
   return (
     <div>
       <h2 id="booking-heading">
@@ -91,6 +84,9 @@ export const Booking = (props: IBookingProps) => {
               <tr>
                 <th className="hand" onClick={sort('id')}>
                   <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('type')}>
+                  <Translate contentKey="lucciadminApp.booking.type">Type</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('date')}>
                   <Translate contentKey="lucciadminApp.booking.date">Date</Translate> <FontAwesomeIcon icon="sort" />
@@ -118,6 +114,9 @@ export const Booking = (props: IBookingProps) => {
                     <Button tag={Link} to={`${match.url}/${booking.id}`} color="link" size="sm">
                       {booking.id}
                     </Button>
+                  </td>
+                  <td>
+                    <Translate contentKey={`lucciadminApp.BookingType.${booking.type}`} />
                   </td>
                   <td>{booking.date ? <TextFormat type="date" value={booking.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{booking.time ? <TextFormat type="number" value={booking.time} format={APP_TIME_FORMAT} /> : null}</td>
@@ -208,21 +207,16 @@ export const Booking = (props: IBookingProps) => {
 
 const mapStateToProps = ({ booking, authentication }: IRootState) => ({
   bookingList: booking.entities,
-  entity: booking.entity,
   loading: booking.loading,
   totalItems: booking.totalItems,
-  updating: booking.updating,
-  updateSuccess: booking.updateSuccess,
 
-  isDoctor: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.DOCTOR]),
-  isReceptionist: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.RECEPTIONIST]),
-  isAdmin: hasAnyAuthority(authentication.account.authorities, [AUTHORITIES.ADMIN]),
-  correspondDoctorId: authentication.account.relatedEmployeeId,
+  isDoctor: authentication.isDoctor,
+  isReceptionist: authentication.isReceptionist,
+  isAdmin: authentication.isAdmin,
 });
 
 const mapDispatchToProps = {
   getEntities,
-  updateEntity
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

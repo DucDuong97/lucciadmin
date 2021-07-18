@@ -7,8 +7,11 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
+import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
+import { ICustomer } from 'app/shared/model/customer.model';
 import { getEntities as getCustomers } from 'app/entities/customer/customer.reducer';
+import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './booking.reducer';
 
@@ -83,6 +86,21 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 </AvGroup>
               ) : null}
               <AvGroup>
+                <Label id="typeLabel" for="booking-type">
+                  <Translate contentKey="lucciadminApp.booking.type">Type</Translate>
+                </Label>
+                <AvInput
+                  id="booking-type"
+                  type="select"
+                  className="form-control"
+                  name="type"
+                  value={(!isNew && bookingEntity.type) || 'CONSULTING'}
+                >
+                  <option value="CONSULTING">{translate('lucciadminApp.BookingType.CONSULTING')}</option>
+                  <option value="TREATMENT">{translate('lucciadminApp.BookingType.TREATMENT')}</option>
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
                 <Label id="dateLabel" for="booking-date">
                   <Translate contentKey="lucciadminApp.booking.date">Date</Translate>
                 </Label>
@@ -114,8 +132,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 <Label for="booking-customer">
                   <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
                 </Label>
-                <AvInput id="booking-customer" type="select" className="form-control" name="customerId">
-                  <option value="" key="0" />
+                <AvInput id="booking-customer" type="select" className="form-control" name="customerId" required>
                   {customers
                     ? customers.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -124,6 +141,9 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="booking-branch">
