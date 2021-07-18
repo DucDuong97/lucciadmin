@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * A Branch.
@@ -66,6 +67,13 @@ public class Branch implements Serializable {
         this.city = city;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public Optional<String> getBranchAuthority() {
+        if (id == null) {
+            return Optional.empty();
+        }
+        return Optional.of("BRANCH_" + id);
+    }
 
     @Override
     public boolean equals(Object o) {
