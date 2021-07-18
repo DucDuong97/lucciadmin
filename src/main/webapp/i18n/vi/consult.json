@@ -1,0 +1,26 @@
+{
+  "lucciadminApp": {
+    "consult": {
+      "home": {
+        "title": "Consults",
+        "createLabel": "Thêm mới một Consult",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Consult",
+        "notFound": "No Consults found"
+      },
+      "created": "Một Consult mới được tạo với định danh {{ param }}",
+      "updated": "Một Consult cập nhật với định danh {{ param }}",
+      "deleted": "Một Consult đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Consult {{ id }}?"
+      },
+      "detail": {
+        "title": "Consult"
+      },
+      "time": "Time",
+      "note": "Note",
+      "customer": "Customer",
+      "consultingDoctor": "Consulting Doctor",
+      "service": "Service"
+    }
+  }
+}

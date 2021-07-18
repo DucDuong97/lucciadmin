@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {NavLink as Link} from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
-import {Home, Brand, Customer, Payment, Booking, Employee} from './header-components';
+import {Home, Brand, Customer, Payment, Booking, Employee, Consult} from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
 import MenuItem from "app/shared/layout/menus/menu-item";
 import {WebContentMenu} from "app/shared/layout/menus/web-content";

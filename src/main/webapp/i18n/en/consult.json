@@ -1,0 +1,26 @@
+{
+  "lucciadminApp": {
+    "consult": {
+      "home": {
+        "title": "Consults",
+        "createLabel": "Create a new Consult",
+        "createOrEditLabel": "Create or edit a Consult",
+        "notFound": "No Consults found"
+      },
+      "created": "A new Consult is created with identifier {{ param }}",
+      "updated": "A Consult is updated with identifier {{ param }}",
+      "deleted": "A Consult is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Consult {{ id }}?"
+      },
+      "detail": {
+        "title": "Consult"
+      },
+      "time": "Time",
+      "note": "Note",
+      "customer": "Customer",
+      "consultingDoctor": "Consulting Doctor",
+      "service": "Service"
+    }
+  }
+}

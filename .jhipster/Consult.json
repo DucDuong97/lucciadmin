@@ -1,0 +1,50 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "customer",
+      "otherEntityName": "customer",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "name",
+      "otherEntityRelationshipName": "consult"
+    },
+    {
+      "relationshipName": "consultingDoctor",
+      "otherEntityName": "employee",
+      "relationshipType": "many-to-one",
+      "otherEntityField": "name",
+      "otherEntityRelationshipName": "consult"
+    },
+    {
+      "relationshipName": "service",
+      "otherEntityName": "pricingCard",
+      "relationshipType": "many-to-many",
+      "relationshipValidateRules": [],
+      "otherEntityField": "name",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "consult"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "time",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "note",
+      "fieldType": "String"
+    }
+  ],
+  "changelogDate": "20210718191832",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "consult",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}
