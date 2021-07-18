@@ -35,12 +35,6 @@ export const BookingDetail = (props: IBookingDetailProps) => {
         </h2>
         <dl className="jh-entity-details">
           <dt>
-            <span id="type">
-              <Translate contentKey="lucciadminApp.booking.type">Type</Translate>
-            </span>
-          </dt>
-          <dd>{bookingEntity.type}</dd>
-          <dt>
             <span id="date">
               <Translate contentKey="lucciadminApp.booking.date">Date</Translate>
             </span>

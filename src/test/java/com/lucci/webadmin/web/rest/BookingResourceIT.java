@@ -2,7 +2,6 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Booking;
-import com.lucci.webadmin.domain.Customer;
 import com.lucci.webadmin.domain.Branch;
 import com.lucci.webadmin.repository.BookingRepository;
 import com.lucci.webadmin.service.BookingService;
@@ -31,7 +30,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.lucci.webadmin.domain.enumeration.BookingType;
 /**
  * Integration tests for the {@link BookingResource} REST controller.
  */
@@ -39,9 +37,6 @@ import com.lucci.webadmin.domain.enumeration.BookingType;
 @AutoConfigureMockMvc
 @WithMockUser
 public class BookingResourceIT {
-
-    private static final BookingType DEFAULT_TYPE = BookingType.CONSULTING;
-    private static final BookingType UPDATED_TYPE = BookingType.TREATMENT;
 
     private static final ZonedDateTime DEFAULT_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
@@ -71,18 +66,7 @@ public class BookingResourceIT {
      */
     public static Booking createEntity(EntityManager em) {
         Booking booking = new Booking()
-            .type(DEFAULT_TYPE)
             .time(DEFAULT_TIME);
-        // Add required entity
-        Customer customer;
-        if (TestUtil.findAll(em, Customer.class).isEmpty()) {
-            customer = CustomerResourceIT.createEntity(em);
-            em.persist(customer);
-            em.flush();
-        } else {
-            customer = TestUtil.findAll(em, Customer.class).get(0);
-        }
-        booking.setCustomer(customer);
         // Add required entity
         Branch branch;
         if (TestUtil.findAll(em, Branch.class).isEmpty()) {
@@ -103,18 +87,7 @@ public class BookingResourceIT {
      */
     public static Booking createUpdatedEntity(EntityManager em) {
         Booking booking = new Booking()
-            .type(UPDATED_TYPE)
             .time(UPDATED_TIME);
-        // Add required entity
-        Customer customer;
-        if (TestUtil.findAll(em, Customer.class).isEmpty()) {
-            customer = CustomerResourceIT.createUpdatedEntity(em);
-            em.persist(customer);
-            em.flush();
-        } else {
-            customer = TestUtil.findAll(em, Customer.class).get(0);
-        }
-        booking.setCustomer(customer);
         // Add required entity
         Branch branch;
         if (TestUtil.findAll(em, Branch.class).isEmpty()) {
@@ -148,7 +121,6 @@ public class BookingResourceIT {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList).hasSize(databaseSizeBeforeCreate + 1);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
-        assertThat(testBooking.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testBooking.getTime()).isEqualTo(DEFAULT_TIME);
     }
 
@@ -172,26 +144,6 @@ public class BookingResourceIT {
         assertThat(bookingList).hasSize(databaseSizeBeforeCreate);
     }
 
-
-    @Test
-    @Transactional
-    public void checkTypeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = bookingRepository.findAll().size();
-        // set the field null
-        booking.setType(null);
-
-        // Create the Booking, which fails.
-        BookingDTO bookingDTO = bookingMapper.toDto(booking);
-
-
-        restBookingMockMvc.perform(post("/api/bookings")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(bookingDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Booking> bookingList = bookingRepository.findAll();
-        assertThat(bookingList).hasSize(databaseSizeBeforeTest);
-    }
 
     @Test
     @Transactional
@@ -224,7 +176,6 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(booking.getId().intValue())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))));
     }
     
@@ -239,7 +190,6 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(booking.getId().intValue()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)));
     }
     @Test
@@ -263,7 +213,6 @@ public class BookingResourceIT {
         // Disconnect from session so that the updates on updatedBooking are not directly saved in db
         em.detach(updatedBooking);
         updatedBooking
-            .type(UPDATED_TYPE)
             .time(UPDATED_TIME);
         BookingDTO bookingDTO = bookingMapper.toDto(updatedBooking);
 
@@ -276,7 +225,6 @@ public class BookingResourceIT {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList).hasSize(databaseSizeBeforeUpdate);
         Booking testBooking = bookingList.get(bookingList.size() - 1);
-        assertThat(testBooking.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testBooking.getTime()).isEqualTo(UPDATED_TIME);
     }
 

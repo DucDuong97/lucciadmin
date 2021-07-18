@@ -2,12 +2,6 @@
   "name": "Booking",
   "fields": [
     {
-      "fieldName": "type",
-      "fieldType": "BookingType",
-      "fieldValues": "CONSULTING,TREATMENT",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "time",
       "fieldType": "ZonedDateTime",
       "fieldValidateRules": ["required"]
@@ -28,7 +22,7 @@
       "relationshipName": "customer",
       "otherEntityField": "id",
       "ownerSide": true,
-      "relationshipValidateRules": ["required"],
+      "fieldValidateRules": ["required"],
       "otherEntityRelationshipName": "booking"
     },
     {
@@ -37,7 +31,7 @@
       "relationshipName": "branch",
       "otherEntityField": "id",
       "ownerSide": true,
-      "relationshipValidateRules": ["required"],
+      "fieldValidateRules": ["required"],
       "otherEntityRelationshipName": "booking"
     }
   ],

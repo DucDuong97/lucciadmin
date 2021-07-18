@@ -10,8 +10,6 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
-import com.lucci.webadmin.domain.enumeration.BookingType;
-
 /**
  * A Booking.
  */
@@ -26,11 +24,6 @@ public class Booking implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
-    private BookingType type;
 
     @NotNull
     @Column(name = "time", nullable = false)
@@ -57,19 +50,6 @@ public class Booking implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public BookingType getType() {
-        return type;
-    }
-
-    public Booking type(BookingType type) {
-        this.type = type;
-        return this;
-    }
-
-    public void setType(BookingType type) {
-        this.type = type;
     }
 
     public ZonedDateTime getTime() {
@@ -146,7 +126,6 @@ public class Booking implements Serializable {
     public String toString() {
         return "Booking{" +
             "id=" + getId() +
-            ", type='" + getType() + "'" +
             ", time='" + getTime() + "'" +
             "}";
     }

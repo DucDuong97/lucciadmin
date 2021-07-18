@@ -1,9 +1,0 @@
-{
-  "lucciadminApp": {
-    "BookingType": {
-      "null": "",
-      "CONSULTING": "CONSULTING",
-      "TREATMENT": "TREATMENT"
-    }
-  }
-}

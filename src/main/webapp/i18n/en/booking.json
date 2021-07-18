@@ -16,12 +16,11 @@
       "detail": {
         "title": "Booking"
       },
-      "type": "Type",
       "date": "Date",
       "time": "Time",
+      "branch": "Branch",
       "correspondDoctor": "Correspond Doctor",
-      "customer": "Customer",
-      "branch": "Branch"
+      "customer": "Customer"
     }
   }
 }

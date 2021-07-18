@@ -85,9 +85,6 @@ export const Booking = (props: IBookingProps) => {
                 <th className="hand" onClick={sort('id')}>
                   <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('type')}>
-                  <Translate contentKey="lucciadminApp.booking.type">Type</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('date')}>
                   <Translate contentKey="lucciadminApp.booking.date">Date</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -114,9 +111,6 @@ export const Booking = (props: IBookingProps) => {
                     <Button tag={Link} to={`${match.url}/${booking.id}`} color="link" size="sm">
                       {booking.id}
                     </Button>
-                  </td>
-                  <td>
-                    <Translate contentKey={`lucciadminApp.BookingType.${booking.type}`} />
                   </td>
                   <td>{booking.date ? <TextFormat type="date" value={booking.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{booking.time ? <TextFormat type="number" value={booking.time} format={APP_TIME_FORMAT} /> : null}</td>

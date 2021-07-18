@@ -86,21 +86,6 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 </AvGroup>
               ) : null}
               <AvGroup>
-                <Label id="typeLabel" for="booking-type">
-                  <Translate contentKey="lucciadminApp.booking.type">Type</Translate>
-                </Label>
-                <AvInput
-                  id="booking-type"
-                  type="select"
-                  className="form-control"
-                  name="type"
-                  value={(!isNew && bookingEntity.type) || 'CONSULTING'}
-                >
-                  <option value="CONSULTING">{translate('lucciadminApp.BookingType.CONSULTING')}</option>
-                  <option value="TREATMENT">{translate('lucciadminApp.BookingType.TREATMENT')}</option>
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
                 <Label id="dateLabel" for="booking-date">
                   <Translate contentKey="lucciadminApp.booking.date">Date</Translate>
                 </Label>
@@ -141,6 +126,9 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                       ))
                     : null}
                 </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
                 <AvFeedback>
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
