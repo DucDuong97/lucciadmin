@@ -4,24 +4,17 @@
     {
       "fieldName": "name",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "unique"
-      ]
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "benefits",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "price",
       "fieldType": "Integer",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [

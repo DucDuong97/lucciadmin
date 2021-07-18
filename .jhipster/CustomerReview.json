@@ -4,9 +4,7 @@
     {
       "fieldName": "customerName",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "customerAddress",
@@ -15,9 +13,7 @@
     {
       "fieldName": "comment",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [

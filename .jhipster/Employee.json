@@ -4,19 +4,13 @@
     {
       "fieldName": "name",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
+      "fieldValidateRules": ["required", "maxlength"],
       "fieldValidateRulesMaxlength": "60"
     },
     {
       "fieldName": "phone",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "maxlength"
-      ],
+      "fieldValidateRules": ["required", "maxlength"],
       "fieldValidateRulesMaxlength": "20"
     },
     {
@@ -26,25 +20,19 @@
     {
       "fieldName": "birth",
       "fieldType": "Instant",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "gender",
       "fieldType": "Gender",
       "fieldValues": "MALE,FEMALE,AMBIGUOUS",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "role",
       "fieldType": "EmployeeRole",
       "fieldValues": "DOCTOR,NURSE,MARKETING,RECEPTIONIST,ADMIN,OPERATIONS_DIRECTOR,BRANCH_BOSS_DOCTOR,CONSULTANT",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "salary",

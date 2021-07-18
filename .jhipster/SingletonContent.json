@@ -5,10 +5,7 @@
       "fieldName": "type",
       "fieldType": "ContentType",
       "fieldValues": "PHONE,EMAIL,ADDRESS,INTRO",
-      "fieldValidateRules": [
-        "required",
-        "unique"
-      ]
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "content",

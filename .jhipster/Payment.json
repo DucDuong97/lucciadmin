@@ -4,16 +4,12 @@
     {
       "fieldName": "date",
       "fieldType": "Instant",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "amount",
       "fieldType": "Integer",
-      "fieldValidateRules": [
-        "required"
-      ]
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [],

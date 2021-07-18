@@ -41,6 +41,7 @@
     "blueprints": [],
     "herokuAppName": "lucciadmin",
     "herokuDeployType": "jar",
-    "herokuJavaVersion": "11"
+    "herokuJavaVersion": "11",
+    "lastLiquibaseTimestamp": 1626635912000
   }
 }

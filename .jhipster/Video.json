@@ -4,10 +4,7 @@
     {
       "fieldName": "url",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "unique"
-      ]
+      "fieldValidateRules": ["required", "unique"]
     }
   ],
   "relationships": [

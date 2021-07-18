@@ -4,14 +4,10 @@
     {
       "fieldName": "imgUrl",
       "fieldType": "String",
-      "fieldValidateRules": [
-        "required",
-        "unique"
-      ]
+      "fieldValidateRules": ["required", "unique"]
     }
   ],
-  "relationships": [
-  ],
+  "relationships": [],
   "changelogDate": "20210508061849",
   "entityTableName": "img_url",
   "dto": "no",

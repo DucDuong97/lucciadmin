@@ -16,6 +16,7 @@ import Customer from './customer';
 import Employee from './employee';
 import Booking from './booking';
 import Payment from './payment';
+import Consult from './consult';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -34,6 +35,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}employee`} component={Employee} />
       <ErrorBoundaryRoute path={`${match.url}booking`} component={Booking} />
       <ErrorBoundaryRoute path={`${match.url}payment`} component={Payment} />
+      <ErrorBoundaryRoute path={`${match.url}consult`} component={Consult} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

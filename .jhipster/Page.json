@@ -5,10 +5,7 @@
       "fieldName": "page",
       "fieldType": "SubPage",
       "fieldValues": "HOME,INTRO,SERVICE,BLOG,CONTACT",
-      "fieldValidateRules": [
-        "required",
-        "unique"
-      ]
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "description",
