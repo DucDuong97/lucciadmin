@@ -54,7 +54,7 @@ public class ConsultService {
     @Transactional(readOnly = true)
     public Page<ConsultDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Consults");
-        return consultRepository.findAll(pageable)
+        return consultRepository.findAllWithAuthority(pageable)
             .map(consultMapper::toDto);
     }
 

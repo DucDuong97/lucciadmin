@@ -38,9 +38,10 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
-
-    props.getCustomers();
-    props.getEmployees();
+    if (props.isConsultant) {
+      props.getCustomers();
+      props.getEmployees();
+    }
     props.getPricingCards();
   }, []);
 
@@ -105,46 +106,51 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
+                  disabled={!props.isConsultant}
                 />
               </AvGroup>
               <AvGroup>
                 <Label id="noteLabel" for="consult-note">
                   <Translate contentKey="lucciadminApp.consult.note">Note</Translate>
                 </Label>
-                <AvField id="consult-note" type="text" name="note" />
+                <AvField id="consult-note" type="textarea" name="note" />
               </AvGroup>
-              <AvGroup>
-                <Label for="consult-customer">
-                  <Translate contentKey="lucciadminApp.consult.customer">Customer</Translate>
-                </Label>
-                <AvInput id="consult-customer" type="select" className="form-control" name="customerId" required>
-                  {customers
-                    ? customers.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-                <AvFeedback>
-                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
-                </AvFeedback>
-              </AvGroup>
-              <AvGroup>
-                <Label for="consult-consultingDoctor">
-                  <Translate contentKey="lucciadminApp.consult.consultingDoctor">Consulting Doctor</Translate>
-                </Label>
-                <AvInput id="consult-consultingDoctor" type="select" className="form-control" name="consultingDoctorId">
-                  <option value="" key="0" />
-                  {employees
-                    ? employees.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-              </AvGroup>
+              {props.isConsultant &&
+                <AvGroup>
+                  <Label for="consult-customer">
+                    <Translate contentKey="lucciadminApp.consult.customer">Customer</Translate>
+                  </Label>
+                  <AvInput id="consult-customer" type="select" className="form-control" name="customerId" required>
+                    {customers
+                      ? customers.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.name}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                  <AvFeedback>
+                    <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                  </AvFeedback>
+                </AvGroup>
+              }
+              {props.isConsultant &&
+                <AvGroup>
+                  <Label for="consult-consultingDoctor">
+                    <Translate contentKey="lucciadminApp.consult.consultingDoctor">Consulting Doctor</Translate>
+                  </Label>
+                  <AvInput id="consult-consultingDoctor" type="select" className="form-control" name="consultingDoctorId">
+                    <option value="" key="0" />
+                    {employees
+                      ? employees.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.name}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+              }
               <AvGroup>
                 <Label for="consult-service">
                   <Translate contentKey="lucciadminApp.consult.service">Service</Translate>
@@ -156,6 +162,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                   className="form-control"
                   name="services"
                   value={consultEntity.services && consultEntity.services.map(e => e.id)}
+                  disabled={!props.isDoctor}
                 >
                   <option value="" key="0" />
                   {pricingCards
@@ -196,6 +203,9 @@ const mapStateToProps = (storeState: IRootState) => ({
   loading: storeState.consult.loading,
   updating: storeState.consult.updating,
   updateSuccess: storeState.consult.updateSuccess,
+
+  isConsultant: storeState.authentication.isConsultant,
+  isDoctor: storeState.authentication.isDoctor,
 });
 
 const mapDispatchToProps = {

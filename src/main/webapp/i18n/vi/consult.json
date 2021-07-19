@@ -2,25 +2,25 @@
   "lucciadminApp": {
     "consult": {
       "home": {
-        "title": "Consults",
-        "createLabel": "Thêm mới một Consult",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Consult",
-        "notFound": "No Consults found"
+        "title": "Tư vấn",
+        "createLabel": "Thêm mới một Tư vấn",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Tư vấn",
+        "notFound": "No Tư vấn found"
       },
-      "created": "Một Consult mới được tạo với định danh {{ param }}",
-      "updated": "Một Consult cập nhật với định danh {{ param }}",
-      "deleted": "Một Consult đã xóa với định danh {{ param }}",
+      "created": "Một Tư vấn mới được tạo với định danh {{ param }}",
+      "updated": "Một Tư vấn cập nhật với định danh {{ param }}",
+      "deleted": "Một Tư vấn đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Consult {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Tư vấn {{ id }}?"
       },
       "detail": {
-        "title": "Consult"
+        "title": "Tư vấn"
       },
-      "time": "Time",
-      "note": "Note",
-      "customer": "Customer",
-      "consultingDoctor": "Consulting Doctor",
-      "service": "Service"
+      "time": "Thời gian",
+      "note": "Ghi chú",
+      "customer": "Khách hàng",
+      "consultingDoctor": "Bác sỹ tư vấn",
+      "service": "Dịch vụ tư vấn"
     }
   }
 }

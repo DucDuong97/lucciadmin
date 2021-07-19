@@ -27,7 +27,7 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
             "(true= ?#{hasRole('DOCTOR')} " +
                 "and booking.correspondDoctor.user.login = ?#{principal.username}) or  " +
             "(true= ?#{hasRole('BRANCH_BOSS_DOCTOR')} " +
-                "and booking.branch.id ?#{userService.getUserBranchId()}) or  " +
+                "and booking.branch.id = ?#{userService.getUserBranchId()}) or  " +
             "true= ?#{hasAnyRole('RECEPTIONIST', 'ADMIN', 'OPERATIONS_DIRECTOR')}"
     )
     Page<Booking> findAllWithAuthority(Pageable pageable);

@@ -9,13 +9,11 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Customer} and its DTO {@link CustomerDTO}.
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface CustomerMapper extends EntityMapper<CustomerDTO, Customer> {
 
-    @Mapping(source = "correspondConsultant.id", target = "correspondConsultantId")
     CustomerDTO toDto(Customer customer);
 
-    @Mapping(source = "correspondConsultantId", target = "correspondConsultant")
     Customer toEntity(CustomerDTO customerDTO);
 
     default Customer fromId(Long id) {
