@@ -9,15 +9,17 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Treatment} and its DTO {@link TreatmentDTO}.
  */
-@Mapper(componentModel = "spring", uses = {EmployeeMapper.class, ImgUrlMapper.class})
+@Mapper(componentModel = "spring", uses = {EmployeeMapper.class, ImgUrlMapper.class, TreatmentPlanMapper.class})
 public interface TreatmentMapper extends EntityMapper<TreatmentDTO, Treatment> {
 
     @Mapping(source = "doctor.id", target = "doctorId")
     @Mapping(source = "doctor.name", target = "doctorName")
+    @Mapping(source = "treatmentPlan.id", target = "treatmentPlanId")
     TreatmentDTO toDto(Treatment treatment);
 
     @Mapping(source = "doctorId", target = "doctor")
     @Mapping(target = "removeTreatmentImgUrl", ignore = true)
+    @Mapping(source = "treatmentPlanId", target = "treatmentPlan")
     Treatment toEntity(TreatmentDTO treatmentDTO);
 
     default Treatment fromId(Long id) {

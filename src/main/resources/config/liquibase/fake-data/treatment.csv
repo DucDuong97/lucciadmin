@@ -1,11 +1,11 @@
-id;description;date;next_plan;revisit_date;doctor_id
-1;Inverse Tonga SDD;2021-07-19;Multi-lateral Accounts platforms;2021-07-19;1
-2;Steel groupware;2021-07-18;monitor transmit paradigms;2021-07-18;2
-3;matrix;2021-07-19;Cheese;2021-07-19;3
-4;methodical;2021-07-18;platforms;2021-07-19;4
-5;hack;2021-07-18;architect Operations;2021-07-18;5
-6;hacking visualize firewall;2021-07-18;infomediaries interactive;2021-07-19;6
-7;Outdoors SDD web-readiness;2021-07-19;Plaza;2021-07-19;7
-8;Rwanda Franc Ergonomic Soft Gloves;2021-07-19;middleware Florida;2021-07-19;8
-9;grow;2021-07-18;Security Squares;2021-07-19;9
-10;Avon;2021-07-19;Lead Refined Fresh Chair invoice;2021-07-18;10
+id;description;date;next_plan;revisit_date;doctor_id;treatment_plan_id
+1;Inverse Tonga SDD;2021-07-19;Multi-lateral Accounts platforms;2021-07-19;1;1
+2;Steel groupware;2021-07-18;monitor transmit paradigms;2021-07-18;2;2
+3;matrix;2021-07-19;Cheese;2021-07-19;3;3
+4;methodical;2021-07-18;platforms;2021-07-19;4;4
+5;hack;2021-07-18;architect Operations;2021-07-18;5;5
+6;hacking visualize firewall;2021-07-18;infomediaries interactive;2021-07-19;6;6
+7;Outdoors SDD web-readiness;2021-07-19;Plaza;2021-07-19;7;7
+8;Rwanda Franc Ergonomic Soft Gloves;2021-07-19;middleware Florida;2021-07-19;8;8
+9;grow;2021-07-18;Security Squares;2021-07-19;9;9
+10;Avon;2021-07-19;Lead Refined Fresh Chair invoice;2021-07-18;10;10

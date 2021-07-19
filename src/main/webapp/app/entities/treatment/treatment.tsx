@@ -98,6 +98,9 @@ export const Treatment = (props: ITreatmentProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.treatment.doctor">Doctor</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.treatment.treatmentPlan">Treatment Plan</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th />
               </tr>
             </thead>
@@ -116,6 +119,13 @@ export const Treatment = (props: ITreatmentProps) => {
                     {treatment.revisitDate ? <TextFormat type="date" value={treatment.revisitDate} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{treatment.doctorName ? <Link to={`employee/${treatment.doctorId}`}>{treatment.doctorName}</Link> : ''}</td>
+                  <td>
+                    {treatment.treatmentPlanId ? (
+                      <Link to={`treatment-plan/${treatment.treatmentPlanId}`}>{treatment.treatmentPlanId}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${treatment.id}`} color="info" size="sm">

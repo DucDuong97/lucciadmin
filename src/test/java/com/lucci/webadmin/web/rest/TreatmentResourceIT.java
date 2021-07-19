@@ -3,6 +3,7 @@ package com.lucci.webadmin.web.rest;
 import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Treatment;
 import com.lucci.webadmin.domain.Employee;
+import com.lucci.webadmin.domain.TreatmentPlan;
 import com.lucci.webadmin.repository.TreatmentRepository;
 import com.lucci.webadmin.service.TreatmentService;
 import com.lucci.webadmin.service.dto.TreatmentDTO;
@@ -100,6 +101,16 @@ public class TreatmentResourceIT {
             employee = TestUtil.findAll(em, Employee.class).get(0);
         }
         treatment.setDoctor(employee);
+        // Add required entity
+        TreatmentPlan treatmentPlan;
+        if (TestUtil.findAll(em, TreatmentPlan.class).isEmpty()) {
+            treatmentPlan = TreatmentPlanResourceIT.createEntity(em);
+            em.persist(treatmentPlan);
+            em.flush();
+        } else {
+            treatmentPlan = TestUtil.findAll(em, TreatmentPlan.class).get(0);
+        }
+        treatment.setTreatmentPlan(treatmentPlan);
         return treatment;
     }
     /**
@@ -124,6 +135,16 @@ public class TreatmentResourceIT {
             employee = TestUtil.findAll(em, Employee.class).get(0);
         }
         treatment.setDoctor(employee);
+        // Add required entity
+        TreatmentPlan treatmentPlan;
+        if (TestUtil.findAll(em, TreatmentPlan.class).isEmpty()) {
+            treatmentPlan = TreatmentPlanResourceIT.createUpdatedEntity(em);
+            em.persist(treatmentPlan);
+            em.flush();
+        } else {
+            treatmentPlan = TestUtil.findAll(em, TreatmentPlan.class).get(0);
+        }
+        treatment.setTreatmentPlan(treatmentPlan);
         return treatment;
     }
 

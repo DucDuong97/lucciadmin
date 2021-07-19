@@ -26,5 +26,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="img_url"/>
         
+        <addForeignKeyConstraint baseColumnNames="treatment_plan_id"
+                                 baseTableName="treatment"
+                                 constraintName="fk_treatment_treatment_plan_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="treatment_plan"/>
+
     </changeSet>
 </databaseChangeLog>

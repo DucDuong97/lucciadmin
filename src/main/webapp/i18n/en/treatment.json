@@ -21,7 +21,8 @@
       "nextPlan": "Next Plan",
       "revisitDate": "Revisit Date",
       "doctor": "Doctor",
-      "treatmentImgUrl": "Treatment Img Url"
+      "treatmentImgUrl": "Treatment Img Url",
+      "treatmentPlan": "Treatment Plan"
     }
   }
 }

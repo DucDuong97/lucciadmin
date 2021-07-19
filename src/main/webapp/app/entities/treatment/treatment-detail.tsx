@@ -70,6 +70,10 @@ export const TreatmentDetail = (props: ITreatmentDetailProps) => {
                 ))
               : null}
           </dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.treatment.treatmentPlan">Treatment Plan</Translate>
+          </dt>
+          <dd>{treatmentEntity.treatmentPlanId ? treatmentEntity.treatmentPlanId : ''}</dd>
         </dl>
         <Button tag={Link} to="/treatment" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

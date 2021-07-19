@@ -21,7 +21,8 @@
       "nextPlan": "Nội dung điều trị tiếp theo",
       "revisitDate": "Lịch tái khám",
       "doctor": "Bác sỹ phụ trách",
-      "treatmentImgUrl": "Hình ảnh điều trị"
+      "treatmentImgUrl": "Hình ảnh điều trị",
+      "treatmentPlan": "Hồ sơ diều trị"
     }
   }
 }

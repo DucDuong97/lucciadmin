@@ -10,6 +10,7 @@ export interface ITreatment {
   doctorName?: string;
   doctorId?: number;
   treatmentImgUrls?: IImgUrl[];
+  treatmentPlanId?: number;
 }
 
 export const defaultValue: Readonly<ITreatment> = {};

@@ -15,6 +15,15 @@
       "otherEntityName": "imgUrl",
       "relationshipType": "many-to-many",
       "ownerSide": true,
+      "otherEntityRelationshipName": "treatment",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipName": "treatmentPlan",
+      "otherEntityName": "treatmentPlan",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "id",
       "otherEntityRelationshipName": "treatment"
     }
   ],

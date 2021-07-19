@@ -27,6 +27,8 @@ public class TreatmentDTO implements Serializable {
 
     private String doctorName;
     private Set<ImgUrlDTO> treatmentImgUrls = new HashSet<>();
+
+    private Long treatmentPlanId;
     
     public Long getId() {
         return id;
@@ -92,6 +94,14 @@ public class TreatmentDTO implements Serializable {
         this.treatmentImgUrls = imgUrls;
     }
 
+    public Long getTreatmentPlanId() {
+        return treatmentPlanId;
+    }
+
+    public void setTreatmentPlanId(Long treatmentPlanId) {
+        this.treatmentPlanId = treatmentPlanId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -121,6 +131,7 @@ public class TreatmentDTO implements Serializable {
             ", doctorId=" + getDoctorId() +
             ", doctorName='" + getDoctorName() + "'" +
             ", treatmentImgUrls='" + getTreatmentImgUrls() + "'" +
+            ", treatmentPlanId=" + getTreatmentPlanId() +
             "}";
     }
 }

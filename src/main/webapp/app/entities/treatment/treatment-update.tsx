@@ -11,6 +11,8 @@ import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { IImgUrl } from 'app/shared/model/img-url.model';
 import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
+import { ITreatmentPlan } from 'app/shared/model/treatment-plan.model';
+import { getEntities as getTreatmentPlans } from 'app/entities/treatment-plan/treatment-plan.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './treatment.reducer';
 import { ITreatment } from 'app/shared/model/treatment.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -21,9 +23,10 @@ export interface ITreatmentUpdateProps extends StateProps, DispatchProps, RouteC
 export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
   const [idstreatmentImgUrl, setIdstreatmentImgUrl] = useState([]);
   const [doctorId, setDoctorId] = useState('0');
+  const [treatmentPlanId, setTreatmentPlanId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { treatmentEntity, employees, imgUrls, loading, updating } = props;
+  const { treatmentEntity, employees, imgUrls, treatmentPlans, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/treatment' + props.location.search);
@@ -38,6 +41,7 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
 
     props.getEmployees();
     props.getImgUrls();
+    props.getTreatmentPlans();
   }, []);
 
   useEffect(() => {
@@ -156,6 +160,23 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
+              <AvGroup>
+                <Label for="treatment-treatmentPlan">
+                  <Translate contentKey="lucciadminApp.treatment.treatmentPlan">Treatment Plan</Translate>
+                </Label>
+                <AvInput id="treatment-treatmentPlan" type="select" className="form-control" name="treatmentPlanId" required>
+                  {treatmentPlans
+                    ? treatmentPlans.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/treatment" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -180,6 +201,7 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
 const mapStateToProps = (storeState: IRootState) => ({
   employees: storeState.employee.entities,
   imgUrls: storeState.imgUrl.entities,
+  treatmentPlans: storeState.treatmentPlan.entities,
   treatmentEntity: storeState.treatment.entity,
   loading: storeState.treatment.loading,
   updating: storeState.treatment.updating,
@@ -189,6 +211,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getEmployees,
   getImgUrls,
+  getTreatmentPlans,
   getEntity,
   updateEntity,
   createEntity,
