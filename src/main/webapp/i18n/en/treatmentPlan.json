@@ -1,0 +1,26 @@
+{
+  "lucciadminApp": {
+    "treatmentPlan": {
+      "home": {
+        "title": "Treatment Plans",
+        "createLabel": "Create a new Treatment Plan",
+        "createOrEditLabel": "Create or edit a Treatment Plan",
+        "notFound": "No Treatment Plans found"
+      },
+      "created": "A new Treatment Plan is created with identifier {{ param }}",
+      "updated": "A Treatment Plan is updated with identifier {{ param }}",
+      "deleted": "A Treatment Plan is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Treatment Plan {{ id }}?"
+      },
+      "detail": {
+        "title": "Treatment Plan"
+      },
+      "presentComplaint": "Present Complaint",
+      "pastMedicalHistory": "Past Medical History",
+      "note": "Note",
+      "customer": "Customer",
+      "service": "Service"
+    }
+  }
+}

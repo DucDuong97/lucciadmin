@@ -21,6 +21,7 @@
         "payment": "Payment",
         "consult": "Consult",
         "treatment": "Treatment",
+        "treatmentPlan": "Treatment Plan",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {

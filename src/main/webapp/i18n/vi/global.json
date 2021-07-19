@@ -26,6 +26,8 @@
         "booking": "Lịch hẹn",
         "payment": "Thanh toán",
         "consult": "Consult",
+        "treatment": "Buổi điều trị",
+        "treatmentPlan": "Hồ sơ điều trị",
         "treatment": "Treatment",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },

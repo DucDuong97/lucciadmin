@@ -52,6 +52,11 @@ public class Treatment implements Serializable {
                inverseJoinColumns = @JoinColumn(name = "treatment_img_url_id", referencedColumnName = "id"))
     private Set<ImgUrl> treatmentImgUrls = new HashSet<>();
 
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "treatments", allowSetters = true)
+    private TreatmentPlan treatmentPlan;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -149,6 +154,19 @@ public class Treatment implements Serializable {
 
     public void setTreatmentImgUrls(Set<ImgUrl> imgUrls) {
         this.treatmentImgUrls = imgUrls;
+    }
+
+    public TreatmentPlan getTreatmentPlan() {
+        return treatmentPlan;
+    }
+
+    public Treatment treatmentPlan(TreatmentPlan treatmentPlan) {
+        this.treatmentPlan = treatmentPlan;
+        return this;
+    }
+
+    public void setTreatmentPlan(TreatmentPlan treatmentPlan) {
+        this.treatmentPlan = treatmentPlan;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

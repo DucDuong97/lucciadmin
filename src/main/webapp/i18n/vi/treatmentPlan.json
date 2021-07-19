@@ -1,0 +1,26 @@
+{
+  "lucciadminApp": {
+    "treatmentPlan": {
+      "home": {
+        "title": "Treatment Plans",
+        "createLabel": "Thêm mới một Treatment Plan",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Treatment Plan",
+        "notFound": "No Treatment Plans found"
+      },
+      "created": "Một Treatment Plan mới được tạo với định danh {{ param }}",
+      "updated": "Một Treatment Plan cập nhật với định danh {{ param }}",
+      "deleted": "Một Treatment Plan đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Treatment Plan {{ id }}?"
+      },
+      "detail": {
+        "title": "Treatment Plan"
+      },
+      "presentComplaint": "Present Complaint",
+      "pastMedicalHistory": "Past Medical History",
+      "note": "Note",
+      "customer": "Customer",
+      "service": "Service"
+    }
+  }
+}

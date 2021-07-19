@@ -42,6 +42,6 @@
     "herokuAppName": "lucciadmin",
     "herokuDeployType": "jar",
     "herokuJavaVersion": "11",
-    "lastLiquibaseTimestamp": 1626718735000
+    "lastLiquibaseTimestamp": 1626720519000
   }
 }
