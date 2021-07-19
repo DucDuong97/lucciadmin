@@ -1,0 +1,49 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [
+    {
+      "relationshipName": "doctor",
+      "otherEntityName": "employee",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"],
+      "otherEntityField": "name",
+      "otherEntityRelationshipName": "treatment"
+    },
+    {
+      "relationshipName": "treatmentImgUrl",
+      "otherEntityName": "imgUrl",
+      "relationshipType": "many-to-many",
+      "ownerSide": true,
+      "otherEntityRelationshipName": "treatment"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nextPlan",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "revisitDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "changelogDate": "20210719181855",
+  "dto": "mapstruct",
+  "searchEngine": false,
+  "service": "serviceClass",
+  "entityTableName": "treatment",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "pagination"
+}

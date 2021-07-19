@@ -1,0 +1,27 @@
+{
+  "lucciadminApp": {
+    "treatment": {
+      "home": {
+        "title": "Buổi điều trị",
+        "createLabel": "Thêm mới một Buổi điều trị",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Buổi điều trị",
+        "notFound": "No Treatments found"
+      },
+      "created": "Một Buổi điều trị mới được tạo với định danh {{ param }}",
+      "updated": "Một Buổi điều trị cập nhật với định danh {{ param }}",
+      "deleted": "Một Buổi điều trị đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Buổi điều trị {{ id }}?"
+      },
+      "detail": {
+        "title": "Buổi điều trị"
+      },
+      "description": "Nội dung",
+      "date": "Ngày",
+      "nextPlan": "Nội dung điều trị tiếp theo",
+      "revisitDate": "Lịch tái khám",
+      "doctor": "Bác sỹ phụ trách",
+      "treatmentImgUrl": "Hình ảnh điều trị"
+    }
+  }
+}

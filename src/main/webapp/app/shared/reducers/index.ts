@@ -85,6 +85,10 @@ import payment, {
 import consult, {
   ConsultState
 } from 'app/entities/consult/consult.reducer';
+// prettier-ignore
+import treatment, {
+  TreatmentState
+} from 'app/entities/treatment/treatment.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -117,6 +121,7 @@ export interface IRootState {
   readonly branch: BranchState;
   readonly payment: PaymentState;
   readonly consult: ConsultState;
+  readonly treatment: TreatmentState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -151,6 +156,7 @@ const rootReducer = combineReducers<IRootState>({
   branch,
   payment,
   consult,
+  treatment,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });

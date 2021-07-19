@@ -20,6 +20,7 @@
         "booking": "Booking",
         "payment": "Payment",
         "consult": "Consult",
+        "treatment": "Treatment",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {
