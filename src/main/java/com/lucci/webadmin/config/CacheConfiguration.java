@@ -48,7 +48,6 @@ public class CacheConfiguration {
             createCache(cm, com.lucci.webadmin.domain.User.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Authority.class.getName());
             createCache(cm, com.lucci.webadmin.domain.User.class.getName() + ".authorities");
-            createCache(cm, com.lucci.webadmin.domain.ServiceOption.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Policy.class.getName());
             createCache(cm, com.lucci.webadmin.domain.CustomerReview.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Achievement.class.getName());
@@ -56,7 +55,6 @@ public class CacheConfiguration {
             createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".options");
             createCache(cm, com.lucci.webadmin.domain.Blog.class.getName());
             createCache(cm, com.lucci.webadmin.domain.SingletonContent.class.getName());
-            createCache(cm, com.lucci.webadmin.domain.Page.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Customer.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Employee.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Booking.class.getName());
