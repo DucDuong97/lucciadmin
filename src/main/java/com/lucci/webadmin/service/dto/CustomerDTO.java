@@ -1,10 +1,9 @@
 package com.lucci.webadmin.service.dto;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import com.lucci.webadmin.domain.enumeration.Gender;
-import com.lucci.webadmin.domain.enumeration.CustomerTier;
 
 /**
  * A DTO for the {@link com.lucci.webadmin.domain.Customer} entity.
@@ -14,27 +13,23 @@ public class CustomerDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 60)
+    @Size(max = 30)
     private String name;
 
     @NotNull
-    @Size(max = 20)
-    private String phone;
+    private Integer phone;
 
     private String address;
 
     @NotNull
-    private Instant birth;
+    private LocalDate birth;
 
     @NotNull
     private Gender gender;
 
-    private CustomerTier tier;
-
+    @NotNull
     private Boolean newCustomer;
 
-
-    private Long correspondConsultantId;
     
     public Long getId() {
         return id;
@@ -52,11 +47,11 @@ public class CustomerDTO implements Serializable {
         this.name = name;
     }
 
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -68,11 +63,11 @@ public class CustomerDTO implements Serializable {
         this.address = address;
     }
 
-    public Instant getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public void setBirth(Instant birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
@@ -84,28 +79,12 @@ public class CustomerDTO implements Serializable {
         this.gender = gender;
     }
 
-    public CustomerTier getTier() {
-        return tier;
-    }
-
-    public void setTier(CustomerTier tier) {
-        this.tier = tier;
-    }
-
     public Boolean isNewCustomer() {
         return newCustomer;
     }
 
     public void setNewCustomer(Boolean newCustomer) {
         this.newCustomer = newCustomer;
-    }
-
-    public Long getCorrespondConsultantId() {
-        return correspondConsultantId;
-    }
-
-    public void setCorrespondConsultantId(Long userId) {
-        this.correspondConsultantId = userId;
     }
 
     @Override
@@ -131,13 +110,11 @@ public class CustomerDTO implements Serializable {
         return "CustomerDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", phone='" + getPhone() + "'" +
+            ", phone=" + getPhone() +
             ", address='" + getAddress() + "'" +
             ", birth='" + getBirth() + "'" +
             ", gender='" + getGender() + "'" +
-            ", tier='" + getTier() + "'" +
             ", newCustomer='" + isNewCustomer() + "'" +
-            ", correspondConsultantId=" + getCorrespondConsultantId() +
             "}";
     }
 }

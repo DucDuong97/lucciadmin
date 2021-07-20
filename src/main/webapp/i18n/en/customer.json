@@ -21,9 +21,7 @@
       "address": "Address",
       "birth": "Birth",
       "gender": "Gender",
-      "tier": "Tier",
-      "newCustomer": "New Customer",
-      "correspondConsultant": "Correspond Consultant"
+      "newCustomer": "New Customer"
     }
   }
 }

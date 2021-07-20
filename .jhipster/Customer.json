@@ -5,13 +5,12 @@
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "60"
+      "fieldValidateRulesMaxlength": "30"
     },
     {
       "fieldName": "phone",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "20"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "address",
@@ -29,11 +28,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "tier",
-      "fieldType": "CustomerTier",
-      "fieldValues": "VIP"
-    },
-    {
       "fieldName": "newCustomer",
       "fieldType": "Boolean",
       "fieldValidateRules": ["required"]
@@ -42,9 +36,9 @@
   "relationships": [],
   "changelogDate": "20210628105033",
   "entityTableName": "customer",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "pagination",
-  "service": "serviceClass",
+  "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

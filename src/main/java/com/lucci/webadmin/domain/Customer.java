@@ -1,6 +1,5 @@
 package com.lucci.webadmin.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -8,12 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.Set;
+import java.time.LocalDate;
 
 import com.lucci.webadmin.domain.enumeration.Gender;
-
-import com.lucci.webadmin.domain.enumeration.CustomerTier;
 
 /**
  * A Customer.
@@ -31,34 +27,25 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 60)
-    @Column(name = "name", length = 60, nullable = false)
+    @Size(max = 30)
+    @Column(name = "name", length = 30, nullable = false)
     private String name;
 
     @NotNull
-    @Size(max = 20)
-    @Column(name = "phone", length = 20, nullable = false)
-    private String phone;
+    @Column(name = "phone", nullable = false, unique = true)
+    private Integer phone;
 
     @Column(name = "address")
     private String address;
 
     @NotNull
     @Column(name = "birth", nullable = false)
-    private Instant birth;
+    private LocalDate birth;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
     private Gender gender;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "tier")
-    private CustomerTier tier;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.REMOVE)
-    private Set<Booking> bookings;
 
     @NotNull
     @Column(name = "new_customer", nullable = false)
@@ -86,16 +73,16 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
         this.name = name;
     }
 
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public Customer phone(String phone) {
+    public Customer phone(Integer phone) {
         this.phone = phone;
         return this;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -112,16 +99,16 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
         this.address = address;
     }
 
-    public Instant getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public Customer birth(Instant birth) {
+    public Customer birth(LocalDate birth) {
         this.birth = birth;
         return this;
     }
 
-    public void setBirth(Instant birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
@@ -136,19 +123,6 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
 
     public void setGender(Gender gender) {
         this.gender = gender;
-    }
-
-    public CustomerTier getTier() {
-        return tier;
-    }
-
-    public Customer tier(CustomerTier tier) {
-        this.tier = tier;
-        return this;
-    }
-
-    public void setTier(CustomerTier tier) {
-        this.tier = tier;
     }
 
     public Boolean isNewCustomer() {
@@ -187,11 +161,10 @@ public class Customer extends AbstractAuditingEntity implements Serializable {
         return "Customer{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", phone='" + getPhone() + "'" +
+            ", phone=" + getPhone() +
             ", address='" + getAddress() + "'" +
             ", birth='" + getBirth() + "'" +
             ", gender='" + getGender() + "'" +
-            ", tier='" + getTier() + "'" +
             ", newCustomer='" + isNewCustomer() + "'" +
             "}";
     }

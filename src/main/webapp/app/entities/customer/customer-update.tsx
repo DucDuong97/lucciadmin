@@ -38,8 +38,6 @@ export const CustomerUpdate = (props: ICustomerUpdateProps) => {
   }, [props.updateSuccess]);
 
   const saveEntity = (event, errors, values) => {
-    values.birth = convertDateTimeToServer(values.birth);
-
     if (errors.length === 0) {
       const entity = {
         ...customerEntity,
@@ -87,7 +85,7 @@ export const CustomerUpdate = (props: ICustomerUpdateProps) => {
                   name="name"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    maxLength: { value: 60, errorMessage: translate('entity.validation.maxlength', { max: 60 }) },
+                    maxLength: { value: 30, errorMessage: translate('entity.validation.maxlength', { max: 30 }) },
                   }}
                 />
               </AvGroup>
@@ -97,11 +95,12 @@ export const CustomerUpdate = (props: ICustomerUpdateProps) => {
                 </Label>
                 <AvField
                   id="customer-phone"
-                  type="text"
+                  type="string"
+                  className="form-control"
                   name="phone"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    maxLength: { value: 20, errorMessage: translate('entity.validation.maxlength', { max: 20 }) },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
                   }}
                 />
               </AvGroup>
@@ -115,13 +114,11 @@ export const CustomerUpdate = (props: ICustomerUpdateProps) => {
                 <Label id="birthLabel" for="customer-birth">
                   <Translate contentKey="lucciadminApp.customer.birth">Birth</Translate>
                 </Label>
-                <AvInput
+                <AvField
                   id="customer-birth"
-                  type="datetime-local"
+                  type="date"
                   className="form-control"
                   name="birth"
-                  placeholder={'YYYY-MM-DD HH:mm'}
-                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.customerEntity.birth)}
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
@@ -141,20 +138,6 @@ export const CustomerUpdate = (props: ICustomerUpdateProps) => {
                   <option value="MALE">{translate('lucciadminApp.Gender.MALE')}</option>
                   <option value="FEMALE">{translate('lucciadminApp.Gender.FEMALE')}</option>
                   <option value="AMBIGUOUS">{translate('lucciadminApp.Gender.AMBIGUOUS')}</option>
-                </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label id="tierLabel" for="customer-tier">
-                  <Translate contentKey="lucciadminApp.customer.tier">Tier</Translate>
-                </Label>
-                <AvInput
-                  id="customer-tier"
-                  type="select"
-                  className="form-control"
-                  name="tier"
-                  value={(!isNew && customerEntity.tier) || 'VIP'}
-                >
-                  <option value="VIP">{translate('lucciadminApp.CustomerTier.VIP')}</option>
                 </AvInput>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/customer" replace color="info">

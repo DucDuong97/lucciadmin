@@ -48,19 +48,13 @@ export const CustomerDetail = (props: ICustomerDetailProps) => {
               <Translate contentKey="lucciadminApp.customer.birth">Birth</Translate>
             </span>
           </dt>
-          <dd>{customerEntity.birth ? <TextFormat value={customerEntity.birth} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>{customerEntity.birth ? <TextFormat value={customerEntity.birth} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
           <dt>
             <span id="gender">
               <Translate contentKey="lucciadminApp.customer.gender">Gender</Translate>
             </span>
           </dt>
           <dd>{customerEntity.gender}</dd>
-          <dt>
-            <span id="tier">
-              <Translate contentKey="lucciadminApp.customer.tier">Tier</Translate>
-            </span>
-          </dt>
-          <dd>{customerEntity.tier}</dd>
           <dt>
             <span id="newCustomer">
               <Translate contentKey="lucciadminApp.customer.newCustomer">New Customer</Translate>

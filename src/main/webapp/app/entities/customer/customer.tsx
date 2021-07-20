@@ -6,9 +6,9 @@ import { Translate, ICrudGetAllAction, TextFormat, getSortState, IPaginationBase
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
-import {getEntities, getEntitiesAsConsultant} from './customer.reducer';
+import { getEntities } from './customer.reducer';
 import { ICustomer } from 'app/shared/model/customer.model';
-import { APP_LOCAL_DATE_FORMAT, AUTHORITIES } from 'app/config/constants';
+import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 
@@ -20,7 +20,7 @@ export const Customer = (props: ICustomerProps) => {
   );
 
   const getAllEntities = () => {
-      props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
+    props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
   };
 
   const sortEntities = () => {
@@ -64,12 +64,12 @@ export const Customer = (props: ICustomerProps) => {
       activePage: currentPage,
     });
 
-  const { customerList, match, loading, totalItems, isReceptionist, isAdmin, isConsultant } = props;
+  const { customerList, match, loading, totalItems } = props;
   return (
     <div>
       <h2 id="customer-heading">
         <Translate contentKey="lucciadminApp.customer.home.title">Customers</Translate>
-        {isConsultant &&
+        {props.createPermission &&
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus"/>
             &nbsp;
@@ -97,9 +97,6 @@ export const Customer = (props: ICustomerProps) => {
                 <th className="hand" onClick={sort('gender')}>
                   <Translate contentKey="lucciadminApp.customer.gender">Gender</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('tier')}>
-                  <Translate contentKey="lucciadminApp.customer.tier">Tier</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('newCustomer')}>
                   <Translate contentKey="lucciadminApp.customer.newCustomer">New Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -120,13 +117,10 @@ export const Customer = (props: ICustomerProps) => {
                   <td>
                     <Translate contentKey={`lucciadminApp.Gender.${customer.gender}`} />
                   </td>
-                  <td>
-                    <Translate contentKey={`lucciadminApp.CustomerTier.${customer.tier}`} />
-                  </td>
                   <td>{customer.newCustomer ? 'true' : 'false'}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      {isReceptionist &&
+                      {props.viewPermission &&
                         <Button tag={Link} to={`${match.url}/${customer.id}`} color="info" size="sm">
                           <FontAwesomeIcon icon="eye"/>{' '}
                           <span className="d-none d-md-inline">
@@ -134,7 +128,7 @@ export const Customer = (props: ICustomerProps) => {
                             </span>
                         </Button>
                       }
-                      {isReceptionist &&
+                      {props.editPermission &&
                         <Button
                           tag={Link}
                           to={`${match.url}/${customer.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -147,7 +141,7 @@ export const Customer = (props: ICustomerProps) => {
                           </span>
                         </Button>
                       }
-                      {isAdmin &&
+                      {props.deletePermission &&
                         <Button
                           tag={Link}
                           to={`${match.url}/${customer.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -200,14 +194,14 @@ const mapStateToProps = ({ customer, authentication }: IRootState) => ({
   customerList: customer.entities,
   loading: customer.loading,
   totalItems: customer.totalItems,
-  isReceptionist: authentication.isReceptionist,
-  isConsultant: authentication.isConsultant,
-  isAdmin: authentication.isAdmin,
+  createPermission: authentication.isConsultant,
+  viewPermission: authentication.isReceptionist || authentication.isConsultant,
+  editPermission: authentication.isReceptionist || authentication.isConsultant,
+  deletePermission: authentication.isAdmin,
 });
 
 const mapDispatchToProps = {
   getEntities,
-  getEntitiesAsConsultant,
 };
 
 type StateProps = ReturnType<typeof mapStateToProps>;

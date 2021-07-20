@@ -109,14 +109,6 @@ export const getEntities: ICrudGetAllAction<ICustomer> = (page, size, sort) => {
   };
 };
 
-export const getEntitiesAsConsultant: ICrudGetAllAction<ICustomer> = (page, size, sort) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
-  return {
-    type: ACTION_TYPES.FETCH_CUSTOMER_LIST,
-    payload: axios.get<ICustomer>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`),
-  };
-};
-
 export const getEntity: ICrudGetAction<ICustomer> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {

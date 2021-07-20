@@ -39,11 +39,6 @@ public class ServiceItem implements Serializable {
     @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
     private ImgUrl imgUrl;
 
-    @OneToMany(mappedBy = "service")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
-    private Set<ServiceOption> options = new HashSet<>();
-
     @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnore
@@ -117,31 +112,6 @@ public class ServiceItem implements Serializable {
 
     public void setImgUrl(ImgUrl imgUrl) {
         this.imgUrl = imgUrl;
-    }
-
-    public Set<ServiceOption> getOptions() {
-        return options;
-    }
-
-    public ServiceItem options(Set<ServiceOption> serviceOptions) {
-        this.options = serviceOptions;
-        return this;
-    }
-
-    public ServiceItem addOptions(ServiceOption serviceOption) {
-        this.options.add(serviceOption);
-        serviceOption.setService(this);
-        return this;
-    }
-
-    public ServiceItem removeOptions(ServiceOption serviceOption) {
-        this.options.remove(serviceOption);
-        serviceOption.setService(null);
-        return this;
-    }
-
-    public void setOptions(Set<ServiceOption> serviceOptions) {
-        this.options = serviceOptions;
     }
 
     public Set<Process> getProcesses() {
