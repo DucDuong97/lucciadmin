@@ -20,6 +20,8 @@ public interface TreatmentPlanMapper extends EntityMapper<TreatmentPlanDTO, Trea
 
     @Mapping(source = "customerId", target = "customer")
     @Mapping(source = "serviceId", target = "service")
+    @Mapping(target = "treatments", ignore = true)
+    @Mapping(target = "removeTreatment", ignore = true)
     TreatmentPlan toEntity(TreatmentPlanDTO treatmentPlanDTO);
 
     default TreatmentPlan fromId(Long id) {

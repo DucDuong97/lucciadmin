@@ -142,13 +142,11 @@ public class Treatment implements Serializable {
 
     public Treatment addTreatmentImgUrl(ImgUrl imgUrl) {
         this.treatmentImgUrls.add(imgUrl);
-        imgUrl.getTreatments().add(this);
         return this;
     }
 
     public Treatment removeTreatmentImgUrl(ImgUrl imgUrl) {
         this.treatmentImgUrls.remove(imgUrl);
-        imgUrl.getTreatments().remove(this);
         return this;
     }
 

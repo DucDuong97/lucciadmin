@@ -3,24 +3,25 @@
     "treatmentPlan": {
       "home": {
         "title": "Treatment Plans",
-        "createLabel": "Thêm mới một Treatment Plan",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Treatment Plan",
+        "createLabel": "Thêm mới một Hồ sơ Điều trị",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Hồ sơ Điều trị",
         "notFound": "No Treatment Plans found"
       },
-      "created": "Một Treatment Plan mới được tạo với định danh {{ param }}",
-      "updated": "Một Treatment Plan cập nhật với định danh {{ param }}",
-      "deleted": "Một Treatment Plan đã xóa với định danh {{ param }}",
+      "created": "Một Hồ sơ Điều trị mới được tạo với định danh {{ param }}",
+      "updated": "Một Hồ sơ Điều trị cập nhật với định danh {{ param }}",
+      "deleted": "Một Hồ sơ Điều trị đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Treatment Plan {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Hồ sơ Điều trị {{ id }}?"
       },
       "detail": {
-        "title": "Treatment Plan"
+        "title": "Hồ sơ Điều trị"
       },
-      "presentComplaint": "Present Complaint",
-      "pastMedicalHistory": "Past Medical History",
-      "note": "Note",
-      "customer": "Customer",
-      "service": "Service"
+      "presentComplaint": "Lời khai Y tế",
+      "pastMedicalHistory": "Bệnh Sử/ Lịch sử dùng thuốc",
+      "note": "Ghi chú",
+      "customer": "Khách hàng",
+      "service": "Dịch vụ Sử dụng",
+      "treatment": "Các buổi điều trị"
     }
   }
 }

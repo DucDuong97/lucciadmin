@@ -20,7 +20,8 @@
       "pastMedicalHistory": "Past Medical History",
       "note": "Note",
       "customer": "Customer",
-      "service": "Service"
+      "service": "Service",
+      "treatment": "Treatment"
     }
   }
 }

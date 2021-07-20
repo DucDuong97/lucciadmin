@@ -1,3 +1,5 @@
+import { ITreatment } from 'app/shared/model/treatment.model';
+
 export interface ITreatmentPlan {
   id?: number;
   presentComplaint?: string;
@@ -7,6 +9,7 @@ export interface ITreatmentPlan {
   customerId?: number;
   serviceName?: string;
   serviceId?: number;
+  treatments?: ITreatment[];
 }
 
 export const defaultValue: Readonly<ITreatmentPlan> = {};

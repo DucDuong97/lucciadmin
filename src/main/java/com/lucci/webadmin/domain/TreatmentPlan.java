@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A TreatmentPlan.
@@ -42,6 +44,10 @@ public class TreatmentPlan implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = "treatmentPlans", allowSetters = true)
     private PricingCard service;
+
+    @OneToMany(mappedBy = "treatmentPlan")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Treatment> treatments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -115,6 +121,31 @@ public class TreatmentPlan implements Serializable {
 
     public void setService(PricingCard pricingCard) {
         this.service = pricingCard;
+    }
+
+    public Set<Treatment> getTreatments() {
+        return treatments;
+    }
+
+    public TreatmentPlan treatments(Set<Treatment> treatments) {
+        this.treatments = treatments;
+        return this;
+    }
+
+    public TreatmentPlan addTreatment(Treatment treatment) {
+        this.treatments.add(treatment);
+        treatment.setTreatmentPlan(this);
+        return this;
+    }
+
+    public TreatmentPlan removeTreatment(Treatment treatment) {
+        this.treatments.remove(treatment);
+        treatment.setTreatmentPlan(null);
+        return this;
+    }
+
+    public void setTreatments(Set<Treatment> treatments) {
+        this.treatments = treatments;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
