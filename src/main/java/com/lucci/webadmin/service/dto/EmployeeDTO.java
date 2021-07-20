@@ -33,6 +33,8 @@ public class EmployeeDTO implements Serializable {
 
 
     private Long workAtId;
+
+    private String workAtAdress;
     
     public Long getId() {
         return id;
@@ -98,6 +100,14 @@ public class EmployeeDTO implements Serializable {
         this.workAtId = branchId;
     }
 
+    public String getWorkAtAdress() {
+        return workAtAdress;
+    }
+
+    public void setWorkAtAdress(String branchAdress) {
+        this.workAtAdress = branchAdress;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -127,6 +137,7 @@ public class EmployeeDTO implements Serializable {
             ", gender='" + getGender() + "'" +
             ", role='" + getRole() + "'" +
             ", workAtId=" + getWorkAtId() +
+            ", workAtAdress='" + getWorkAtAdress() + "'" +
             "}";
     }
 }

@@ -64,7 +64,7 @@ export const EmployeeDetail = (props: IEmployeeDetailProps) => {
           <dt>
             <Translate contentKey="lucciadminApp.employee.workAt">Work At</Translate>
           </dt>
-          <dd>{employeeEntity.workAtId ? employeeEntity.workAtId : ''}</dd>
+          <dd>{employeeEntity.workAtAdress ? employeeEntity.workAtAdress : ''}</dd>
         </dl>
         <Button tag={Link} to="/employee" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

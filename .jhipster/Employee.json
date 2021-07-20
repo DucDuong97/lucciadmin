@@ -5,13 +5,12 @@
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "60"
+      "fieldValidateRulesMaxlength": "30"
     },
     {
       "fieldName": "phone",
-      "fieldType": "String",
-      "fieldValidateRules": ["required", "maxlength"],
-      "fieldValidateRulesMaxlength": "20"
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "address",
@@ -19,7 +18,7 @@
     },
     {
       "fieldName": "birth",
-      "fieldType": "Instant",
+      "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
     },
     {
@@ -33,10 +32,6 @@
       "fieldType": "EmployeeRole",
       "fieldValues": "DOCTOR,NURSE,MARKETING,RECEPTIONIST,ADMIN,OPERATIONS_DIRECTOR,BRANCH_BOSS_DOCTOR,CONSULTANT",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "salary",
-      "fieldType": "Integer"
     }
   ],
   "relationships": [
@@ -44,7 +39,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "branch",
       "relationshipName": "workAt",
-      "otherEntityField": "id",
+      "otherEntityField": "adress",
       "ownerSide": true,
       "fieldValidateRules": ["required"],
       "otherEntityRelationshipName": "employee"
@@ -54,7 +49,7 @@
   "entityTableName": "employee",
   "dto": "mapstruct",
   "pagination": "pagination",
-  "service": "no",
+  "service": "serviceImpl",
   "jpaMetamodelFiltering": false,
   "fluentMethods": true,
   "readOnly": false,

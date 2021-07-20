@@ -13,6 +13,7 @@ import org.mapstruct.*;
 public interface EmployeeMapper extends EntityMapper<EmployeeDTO, Employee> {
 
     @Mapping(source = "workAt.id", target = "workAtId")
+    @Mapping(source = "workAt.adress", target = "workAtAdress")
     EmployeeDTO toDto(Employee employee);
 
     @Mapping(source = "workAtId", target = "workAt")

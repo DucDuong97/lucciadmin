@@ -121,7 +121,7 @@ export const Employee = (props: IEmployeeProps) => {
                   <td>
                     <Translate contentKey={`lucciadminApp.EmployeeRole.${employee.role}`} />
                   </td>
-                  <td>{employee.workAtId ? <Link to={`branch/${employee.workAtId}`}>{employee.workAtId}</Link> : ''}</td>
+                  <td>{employee.workAtAdress ? <Link to={`branch/${employee.workAtId}`}>{employee.workAtAdress}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${employee.id}`} color="info" size="sm">

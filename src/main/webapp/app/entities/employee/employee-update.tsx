@@ -176,7 +176,7 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                   {branches
                     ? branches.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.adress}
                         </option>
                       ))
                     : null}

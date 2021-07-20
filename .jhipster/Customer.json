@@ -18,7 +18,7 @@
     },
     {
       "fieldName": "birth",
-      "fieldType": "Instant",
+      "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
     },
     {

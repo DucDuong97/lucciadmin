@@ -10,6 +10,7 @@ export interface IEmployee {
   birth?: string;
   gender?: Gender;
   role?: EmployeeRole;
+  workAtAdress?: string;
   workAtId?: number;
 }
 
