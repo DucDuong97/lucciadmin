@@ -1,6 +1,6 @@
 package com.lucci.webadmin.service.dto;
 
-import java.time.Instant;
+import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import com.lucci.webadmin.domain.enumeration.Gender;
@@ -14,25 +14,22 @@ public class EmployeeDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 60)
+    @Size(max = 30)
     private String name;
 
     @NotNull
-    @Size(max = 20)
-    private String phone;
+    private Integer phone;
 
     private String address;
 
     @NotNull
-    private Instant birth;
+    private LocalDate birth;
 
     @NotNull
     private Gender gender;
 
     @NotNull
     private EmployeeRole role;
-
-    private Integer salary;
 
 
     private Long workAtId;
@@ -53,11 +50,11 @@ public class EmployeeDTO implements Serializable {
         this.name = name;
     }
 
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -69,11 +66,11 @@ public class EmployeeDTO implements Serializable {
         this.address = address;
     }
 
-    public Instant getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public void setBirth(Instant birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
@@ -91,14 +88,6 @@ public class EmployeeDTO implements Serializable {
 
     public void setRole(EmployeeRole role) {
         this.role = role;
-    }
-
-    public Integer getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Integer salary) {
-        this.salary = salary;
     }
 
     public Long getWorkAtId() {
@@ -132,12 +121,11 @@ public class EmployeeDTO implements Serializable {
         return "EmployeeDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", phone='" + getPhone() + "'" +
+            ", phone=" + getPhone() +
             ", address='" + getAddress() + "'" +
             ", birth='" + getBirth() + "'" +
             ", gender='" + getGender() + "'" +
             ", role='" + getRole() + "'" +
-            ", salary=" + getSalary() +
             ", workAtId=" + getWorkAtId() +
             "}";
     }

@@ -3,6 +3,9 @@ package com.lucci.webadmin.web.rest;
 import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.repository.EmployeeRepository;
+import com.lucci.webadmin.service.EmployeeService;
+import com.lucci.webadmin.service.dto.EmployeeDTO;
+import com.lucci.webadmin.service.mapper.EmployeeMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,8 +17,8 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,14 +39,14 @@ public class EmployeeResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_PHONE = "AAAAAAAAAA";
-    private static final String UPDATED_PHONE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_PHONE = 1;
+    private static final Integer UPDATED_PHONE = 2;
 
     private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
     private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_BIRTH = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_BIRTH = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final LocalDate DEFAULT_BIRTH = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_BIRTH = LocalDate.now(ZoneId.systemDefault());
 
     private static final Gender DEFAULT_GENDER = Gender.MALE;
     private static final Gender UPDATED_GENDER = Gender.FEMALE;
@@ -51,11 +54,14 @@ public class EmployeeResourceIT {
     private static final EmployeeRole DEFAULT_ROLE = EmployeeRole.DOCTOR;
     private static final EmployeeRole UPDATED_ROLE = EmployeeRole.NURSE;
 
-    private static final Integer DEFAULT_SALARY = 1;
-    private static final Integer UPDATED_SALARY = 2;
-
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
+    @Autowired
+    private EmployeeService employeeService;
 
     @Autowired
     private EntityManager em;
@@ -78,8 +84,7 @@ public class EmployeeResourceIT {
             .address(DEFAULT_ADDRESS)
             .birth(DEFAULT_BIRTH)
             .gender(DEFAULT_GENDER)
-            .role(DEFAULT_ROLE)
-            .salary(DEFAULT_SALARY);
+            .role(DEFAULT_ROLE);
         return employee;
     }
     /**
@@ -95,8 +100,7 @@ public class EmployeeResourceIT {
             .address(UPDATED_ADDRESS)
             .birth(UPDATED_BIRTH)
             .gender(UPDATED_GENDER)
-            .role(UPDATED_ROLE)
-            .salary(UPDATED_SALARY);
+            .role(UPDATED_ROLE);
         return employee;
     }
 
@@ -110,9 +114,10 @@ public class EmployeeResourceIT {
     public void createEmployee() throws Exception {
         int databaseSizeBeforeCreate = employeeRepository.findAll().size();
         // Create the Employee
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
         restEmployeeMockMvc.perform(post("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Employee in the database
@@ -125,7 +130,6 @@ public class EmployeeResourceIT {
         assertThat(testEmployee.getBirth()).isEqualTo(DEFAULT_BIRTH);
         assertThat(testEmployee.getGender()).isEqualTo(DEFAULT_GENDER);
         assertThat(testEmployee.getRole()).isEqualTo(DEFAULT_ROLE);
-        assertThat(testEmployee.getSalary()).isEqualTo(DEFAULT_SALARY);
     }
 
     @Test
@@ -135,11 +139,12 @@ public class EmployeeResourceIT {
 
         // Create the Employee with an existing ID
         employee.setId(1L);
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restEmployeeMockMvc.perform(post("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Employee in the database
@@ -156,11 +161,12 @@ public class EmployeeResourceIT {
         employee.setName(null);
 
         // Create the Employee, which fails.
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
 
 
         restEmployeeMockMvc.perform(post("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isBadRequest());
 
         List<Employee> employeeList = employeeRepository.findAll();
@@ -175,11 +181,12 @@ public class EmployeeResourceIT {
         employee.setPhone(null);
 
         // Create the Employee, which fails.
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
 
 
         restEmployeeMockMvc.perform(post("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isBadRequest());
 
         List<Employee> employeeList = employeeRepository.findAll();
@@ -194,11 +201,12 @@ public class EmployeeResourceIT {
         employee.setBirth(null);
 
         // Create the Employee, which fails.
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
 
 
         restEmployeeMockMvc.perform(post("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isBadRequest());
 
         List<Employee> employeeList = employeeRepository.findAll();
@@ -213,11 +221,12 @@ public class EmployeeResourceIT {
         employee.setGender(null);
 
         // Create the Employee, which fails.
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
 
 
         restEmployeeMockMvc.perform(post("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isBadRequest());
 
         List<Employee> employeeList = employeeRepository.findAll();
@@ -232,11 +241,12 @@ public class EmployeeResourceIT {
         employee.setRole(null);
 
         // Create the Employee, which fails.
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
 
 
         restEmployeeMockMvc.perform(post("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isBadRequest());
 
         List<Employee> employeeList = employeeRepository.findAll();
@@ -259,8 +269,7 @@ public class EmployeeResourceIT {
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
             .andExpect(jsonPath("$.[*].birth").value(hasItem(DEFAULT_BIRTH.toString())))
             .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
-            .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE.toString())))
-            .andExpect(jsonPath("$.[*].salary").value(hasItem(DEFAULT_SALARY)));
+            .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE.toString())));
     }
     
     @Test
@@ -279,8 +288,7 @@ public class EmployeeResourceIT {
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
             .andExpect(jsonPath("$.birth").value(DEFAULT_BIRTH.toString()))
             .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
-            .andExpect(jsonPath("$.role").value(DEFAULT_ROLE.toString()))
-            .andExpect(jsonPath("$.salary").value(DEFAULT_SALARY));
+            .andExpect(jsonPath("$.role").value(DEFAULT_ROLE.toString()));
     }
     @Test
     @Transactional
@@ -308,12 +316,12 @@ public class EmployeeResourceIT {
             .address(UPDATED_ADDRESS)
             .birth(UPDATED_BIRTH)
             .gender(UPDATED_GENDER)
-            .role(UPDATED_ROLE)
-            .salary(UPDATED_SALARY);
+            .role(UPDATED_ROLE);
+        EmployeeDTO employeeDTO = employeeMapper.toDto(updatedEmployee);
 
         restEmployeeMockMvc.perform(put("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedEmployee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isOk());
 
         // Validate the Employee in the database
@@ -326,7 +334,6 @@ public class EmployeeResourceIT {
         assertThat(testEmployee.getBirth()).isEqualTo(UPDATED_BIRTH);
         assertThat(testEmployee.getGender()).isEqualTo(UPDATED_GENDER);
         assertThat(testEmployee.getRole()).isEqualTo(UPDATED_ROLE);
-        assertThat(testEmployee.getSalary()).isEqualTo(UPDATED_SALARY);
     }
 
     @Test
@@ -334,10 +341,13 @@ public class EmployeeResourceIT {
     public void updateNonExistingEmployee() throws Exception {
         int databaseSizeBeforeUpdate = employeeRepository.findAll().size();
 
+        // Create the Employee
+        EmployeeDTO employeeDTO = employeeMapper.toDto(employee);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restEmployeeMockMvc.perform(put("/api/employees")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(employee)))
+            .content(TestUtil.convertObjectToJsonBytes(employeeDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Employee in the database

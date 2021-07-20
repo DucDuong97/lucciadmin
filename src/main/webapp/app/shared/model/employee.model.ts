@@ -1,18 +1,16 @@
 import { Moment } from 'moment';
-import { IBranch } from 'app/shared/model/branch.model';
 import { Gender } from 'app/shared/model/enumerations/gender.model';
 import { EmployeeRole } from 'app/shared/model/enumerations/employee-role.model';
 
 export interface IEmployee {
   id?: number;
   name?: string;
-  phone?: string;
+  phone?: number;
   address?: string;
   birth?: string;
   gender?: Gender;
   role?: EmployeeRole;
-  salary?: number;
-  workAt?: IBranch;
+  workAtId?: number;
 }
 
 export const defaultValue: Readonly<IEmployee> = {};

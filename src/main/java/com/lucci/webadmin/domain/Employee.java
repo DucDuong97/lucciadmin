@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Set;
 
 import com.lucci.webadmin.domain.enumeration.Gender;
@@ -32,21 +32,20 @@ public class Employee implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 60)
-    @Column(name = "name", length = 60, nullable = false)
+    @Size(max = 30)
+    @Column(name = "name", length = 30, nullable = false)
     private String name;
 
     @NotNull
-    @Size(max = 20)
-    @Column(name = "phone", length = 20, nullable = false)
-    private String phone;
+    @Column(name = "phone", nullable = false, unique = true)
+    private Integer phone;
 
     @Column(name = "address")
     private String address;
 
     @NotNull
     @Column(name = "birth", nullable = false)
-    private Instant birth;
+    private LocalDate birth;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -57,9 +56,6 @@ public class Employee implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private EmployeeRole role;
-
-    @Column(name = "salary")
-    private Integer salary;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "employees", allowSetters = true)
@@ -102,16 +98,16 @@ public class Employee implements Serializable {
         this.name = name;
     }
 
-    public String getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public Employee phone(String phone) {
+    public Employee phone(Integer phone) {
         this.phone = phone;
         return this;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -128,16 +124,16 @@ public class Employee implements Serializable {
         this.address = address;
     }
 
-    public Instant getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public Employee birth(Instant birth) {
+    public Employee birth(LocalDate birth) {
         this.birth = birth;
         return this;
     }
 
-    public void setBirth(Instant birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
@@ -165,19 +161,6 @@ public class Employee implements Serializable {
 
     public void setRole(EmployeeRole role) {
         this.role = role;
-    }
-
-    public Integer getSalary() {
-        return salary;
-    }
-
-    public Employee salary(Integer salary) {
-        this.salary = salary;
-        return this;
-    }
-
-    public void setSalary(Integer salary) {
-        this.salary = salary;
     }
 
     public Branch getWorkAt() {
@@ -216,12 +199,11 @@ public class Employee implements Serializable {
         return "Employee{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", phone='" + getPhone() + "'" +
+            ", phone=" + getPhone() +
             ", address='" + getAddress() + "'" +
             ", birth='" + getBirth() + "'" +
             ", gender='" + getGender() + "'" +
             ", role='" + getRole() + "'" +
-            ", salary=" + getSalary() +
             "}";
     }
 }

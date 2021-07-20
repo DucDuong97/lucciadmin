@@ -48,7 +48,7 @@ export const EmployeeDetail = (props: IEmployeeDetailProps) => {
               <Translate contentKey="lucciadminApp.employee.birth">Birth</Translate>
             </span>
           </dt>
-          <dd>{employeeEntity.birth ? <TextFormat value={employeeEntity.birth} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>{employeeEntity.birth ? <TextFormat value={employeeEntity.birth} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}</dd>
           <dt>
             <span id="gender">
               <Translate contentKey="lucciadminApp.employee.gender">Gender</Translate>
@@ -62,15 +62,9 @@ export const EmployeeDetail = (props: IEmployeeDetailProps) => {
           </dt>
           <dd>{employeeEntity.role}</dd>
           <dt>
-            <span id="salary">
-              <Translate contentKey="lucciadminApp.employee.salary">Salary</Translate>
-            </span>
-          </dt>
-          <dd>{employeeEntity.salary}</dd>
-          <dt>
             <Translate contentKey="lucciadminApp.employee.workAt">Work At</Translate>
           </dt>
-          <dd>{employeeEntity.workAt ? employeeEntity.workAt.id : ''}</dd>
+          <dd>{employeeEntity.workAtId ? employeeEntity.workAtId : ''}</dd>
         </dl>
         <Button tag={Link} to="/employee" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

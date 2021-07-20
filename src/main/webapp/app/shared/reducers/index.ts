@@ -13,10 +13,6 @@ import password, { PasswordState } from 'app/modules/account/password/password.r
 import settings, { SettingsState } from 'app/modules/account/settings/settings.reducer';
 import passwordReset, { PasswordResetState } from 'app/modules/account/password-reset/password-reset.reducer';
 // prettier-ignore
-import serviceOption, {
-  ServiceOptionState
-} from 'app/entities/service-option/service-option.reducer';
-// prettier-ignore
 import policy, {
   PolicyState
 } from 'app/entities/policy/policy.reducer';
@@ -40,10 +36,6 @@ import blog, {
 import singletonContent, {
   SingletonContentState
 } from 'app/entities/singleton-content/singleton-content.reducer';
-// prettier-ignore
-import page, {
-  PageState
-} from 'app/entities/page/page.reducer';
 // prettier-ignore
 import customer, {
   CustomerState
@@ -106,14 +98,12 @@ export interface IRootState {
   readonly passwordReset: PasswordResetState;
   readonly password: PasswordState;
   readonly settings: SettingsState;
-  readonly serviceOption: ServiceOptionState;
   readonly policy: PolicyState;
   readonly customerReview: CustomerReviewState;
   readonly achievement: AchievementState;
   readonly serviceItem: ServiceItemState;
   readonly blog: BlogState;
   readonly singletonContent: SingletonContentState;
-  readonly page: PageState;
   readonly customer: CustomerState;
   readonly employee: EmployeeState;
   readonly booking: BookingState;
@@ -142,14 +132,12 @@ const rootReducer = combineReducers<IRootState>({
   passwordReset,
   password,
   settings,
-  serviceOption,
   policy,
   customerReview,
   achievement,
   serviceItem,
   blog,
   singletonContent,
-  page,
   customer,
   employee,
   booking,

@@ -43,8 +43,6 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
   }, [props.updateSuccess]);
 
   const saveEntity = (event, errors, values) => {
-    values.birth = convertDateTimeToServer(values.birth);
-
     if (errors.length === 0) {
       const entity = {
         ...employeeEntity,
@@ -92,7 +90,7 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                   name="name"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    maxLength: { value: 60, errorMessage: translate('entity.validation.maxlength', { max: 60 }) },
+                    maxLength: { value: 30, errorMessage: translate('entity.validation.maxlength', { max: 30 }) },
                   }}
                 />
               </AvGroup>
@@ -102,11 +100,12 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                 </Label>
                 <AvField
                   id="employee-phone"
-                  type="text"
+                  type="string"
+                  className="form-control"
                   name="phone"
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
-                    maxLength: { value: 20, errorMessage: translate('entity.validation.maxlength', { max: 20 }) },
+                    number: { value: true, errorMessage: translate('entity.validation.number') },
                   }}
                 />
               </AvGroup>
@@ -120,13 +119,11 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                 <Label id="birthLabel" for="employee-birth">
                   <Translate contentKey="lucciadminApp.employee.birth">Birth</Translate>
                 </Label>
-                <AvInput
+                <AvField
                   id="employee-birth"
-                  type="datetime-local"
+                  type="date"
                   className="form-control"
                   name="birth"
-                  placeholder={'YYYY-MM-DD HH:mm'}
-                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.employeeEntity.birth)}
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
@@ -164,33 +161,18 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                   <option value="NURSE">{translate('lucciadminApp.EmployeeRole.NURSE')}</option>
                   <option value="MARKETING">{translate('lucciadminApp.EmployeeRole.MARKETING')}</option>
                   <option value="RECEPTIONIST">{translate('lucciadminApp.EmployeeRole.RECEPTIONIST')}</option>
+                  <option value="ADMIN">{translate('lucciadminApp.EmployeeRole.ADMIN')}</option>
+                  <option value="OPERATIONS_DIRECTOR">{translate('lucciadminApp.EmployeeRole.OPERATIONS_DIRECTOR')}</option>
                   <option value="BRANCH_BOSS_DOCTOR">{translate('lucciadminApp.EmployeeRole.BRANCH_BOSS_DOCTOR')}</option>
                   <option value="CONSULTANT">{translate('lucciadminApp.EmployeeRole.CONSULTANT')}</option>
-                  {props.isAdmin &&
-                  <>
-                    <option value="MANAGER">{translate('lucciadminApp.EmployeeRole.MANAGER')}</option>
-                    <option value="ADMIN">{translate('lucciadminApp.EmployeeRole.ADMIN')}</option>
-                    <option value="OPERATIONS_DIRECTOR">{translate('lucciadminApp.EmployeeRole.OPERATIONS_DIRECTOR')}</option>
-                  </>
-                  }
                 </AvInput>
-              </AvGroup>
-              <AvGroup>
-                <Label id="salaryLabel" for="employee-salary">
-                  <Translate contentKey="lucciadminApp.employee.salary">Salary</Translate>
-                </Label>
-                <AvField id="employee-salary" type="string" className="form-control" name="salary" />
               </AvGroup>
               <AvGroup>
                 <Label for="employee-workAt">
                   <Translate contentKey="lucciadminApp.employee.workAt">Work At</Translate>
                 </Label>
-                <AvInput
-                  id="employee-workAt" name="workAt.id"
-                  type="select" className="form-control"
-                  disabled={props.isManager}
-                >
-                  <option/>
+                <AvInput id="employee-workAt" type="select" className="form-control" name="workAtId">
+                  <option value="" key="0" />
                   {branches
                     ? branches.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -221,15 +203,12 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
   );
 };
 
-const mapStateToProps = ({employee, branch, authentication}: IRootState) => ({
-  branches: branch.entities,
-  employeeEntity: employee.entity,
-  loading: employee.loading,
-  updating: employee.updating,
-  updateSuccess: employee.updateSuccess,
-  isAdmin: authentication.isAdmin,
-  isManager: authentication.isManager,
-  account: authentication.account.relatedEmployeeId,
+const mapStateToProps = (storeState: IRootState) => ({
+  branches: storeState.branch.entities,
+  employeeEntity: storeState.employee.entity,
+  loading: storeState.employee.loading,
+  updating: storeState.employee.updating,
+  updateSuccess: storeState.employee.updateSuccess,
 });
 
 const mapDispatchToProps = {
