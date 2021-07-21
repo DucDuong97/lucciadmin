@@ -5,7 +5,9 @@ const config = {
 export default config;
 
 export const SERVER_API_URL = process.env.SERVER_API_URL;
-export const IMAGE_FILE_SYSTEM_URL = 'https://lucci.s3-ap-southeast-1.amazonaws.com/';
+export const IMAGE_FILE_SYSTEM_URL = `https://lucci${
+  process.env.NODE_ENV !== 'development' ? '-dev' : ''
+}.s3-ap-southeast-1.amazonaws.com/`;
 
 export const AUTHORITIES = {
   ADMIN: 'ROLE_ADMIN',

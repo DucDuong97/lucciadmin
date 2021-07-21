@@ -48,7 +48,7 @@ export const ServiceItem = (props: IServiceItemProps) => {
                 <tr key={`entity-${i}`}>
                   <td>{serviceItem.name}</td>
                   <td>{serviceItem.description}</td>
-                  <td>{serviceItem.imgUrl ? serviceItem.imgUrl.imgUrl : ''}</td>
+                  <td>{serviceItem.imgUrl ? serviceItem.imgUrl.name : ''}</td>
 
                   {/*item buttons*/}
                   <td className="text-right">

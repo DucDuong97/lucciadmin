@@ -121,7 +121,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   <input type="file" name="file" onChange={changeHandler}/>
                   {file && <p>Size in bytes: {file.size}</p>}
                   {serviceItemEntity.imgUrl &&
-                  <img src={`${IMAGE_FILE_SYSTEM_URL+serviceItemEntity.imgUrl.imgUrl}`}
+                  <img src={`${IMAGE_FILE_SYSTEM_URL+serviceItemEntity.imgUrl.path}/${serviceItemEntity.imgUrl.name}`}
                        style={{maxWidth: 200, margin:20}} alt="hello world"/>}
                 </div>
               </AvGroup>
@@ -136,7 +136,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   {imgUrls
                     ? imgUrls.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.imgUrl}
+                        {otherEntity.name}
                       </option>
                     ))
                     : null}

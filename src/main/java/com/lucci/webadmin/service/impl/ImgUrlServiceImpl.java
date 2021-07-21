@@ -83,7 +83,7 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         ImgUrlDTO newImg = new ImgUrlDTO();
         newImg.setName(fileName);
         newImg.setPath(folderName);
-        return this.save(newImg);
+        return newImg;
     }
 
     @Override
