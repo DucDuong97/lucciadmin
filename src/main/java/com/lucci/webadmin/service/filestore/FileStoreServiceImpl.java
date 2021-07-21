@@ -17,9 +17,6 @@ import java.util.Map;
 @Service
 public class FileStoreServiceImpl implements FileStoreService {
 
-    @Value("${amazon.s3.lucci.erp.bucketName}")
-    private String erpBucketName;
-
     private final Logger log = LoggerFactory.getLogger(FileStoreServiceImpl.class);
     private final AmazonS3 amazonS3;
 
@@ -28,11 +25,11 @@ public class FileStoreServiceImpl implements FileStoreService {
     }
 
     @Override
-    public void upload(String key, Map<String, String> metaData, InputStream is) {
+    public void upload(String bucket, String key, Map<String, String> metaData, InputStream is) {
         ObjectMetadata omd = new ObjectMetadata();
         metaData.forEach(omd::addUserMetadata);
         try {
-            PutObjectRequest por = new PutObjectRequest(erpBucketName, key, is, omd);
+            PutObjectRequest por = new PutObjectRequest(bucket, key, is, omd);
             amazonS3.putObject(por);
         } catch (AmazonServiceException e) {
             throw new IllegalStateException("Failed to upload the file", e);
@@ -40,16 +37,16 @@ public class FileStoreServiceImpl implements FileStoreService {
     }
 
     @Override
-    public void delete(String key) {
-        log.debug("Request to delete file: {}/{} on S3", erpBucketName, key);
-        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(erpBucketName, key);
+    public void delete(String bucket, String key) {
+        log.debug("Request to delete file: {}/{} on S3", bucket, key);
+        DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, key);
         amazonS3.deleteObject(deleteObjectRequest);
     }
 
     @Override
-    public byte[] download(String key) {
+    public byte[] download(String bucket, String key) {
         try {
-            S3Object object = amazonS3.getObject(erpBucketName, key);
+            S3Object object = amazonS3.getObject(bucket, key);
             S3ObjectInputStream objectContent = object.getObjectContent();
             return IOUtils.toByteArray(objectContent);
         } catch (AmazonServiceException | IOException e) {
@@ -58,14 +55,9 @@ public class FileStoreServiceImpl implements FileStoreService {
     }
 
     @Override
-    public void copy(String sourceKey, String destKey) {
-        log.debug("Request to copy file: {}/{} to {}/{} on S3", erpBucketName, sourceKey, erpBucketName, destKey);
-        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(erpBucketName, sourceKey, erpBucketName, destKey);
+    public void copy(String bucket, String sourceKey, String destKey) {
+        log.debug("Request to copy file: {}/{} to {}/{} on S3", bucket, sourceKey, bucket, destKey);
+        CopyObjectRequest copyObjectRequest = new CopyObjectRequest(bucket, sourceKey, bucket, destKey);
         amazonS3.copyObject(copyObjectRequest);
-    }
-
-    @Override
-    public String getBucketName() {
-        return erpBucketName;
     }
 }

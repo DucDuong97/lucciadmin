@@ -10,6 +10,7 @@ import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +29,9 @@ import static org.apache.http.entity.ContentType.IMAGE_JPEG;
 @Service
 @Transactional
 public class ImgUrlServiceImpl implements ImgUrlService {
+
+    @Value("${amazon.s3.lucci.erp.bucketName}")
+    private String bucket;
 
     private static final List<String> IMAGE_TYPES =
         Stream.of(IMAGE_PNG,IMAGE_BMP,IMAGE_GIF,IMAGE_JPEG)
@@ -74,7 +78,7 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         imgUrlDTO.setPath(DEFAULT_PATH);
         //Save Image in S3 and then save ImgUrl in the database
         try {
-            fileStoreService.upload(imgUrlDTO.createAccessKey(), metadata, file.getInputStream());
+            fileStoreService.upload(bucket, imgUrlDTO.createAccessKey(), metadata, file.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException("Failed to upload file", e);
         }
@@ -106,7 +110,7 @@ public class ImgUrlServiceImpl implements ImgUrlService {
             log.debug("ImgUrl {} does not exist", id);
             return;
         }
-        fileStoreService.delete(imgUrlOpt.get().createAccessKey());
+        fileStoreService.delete(bucket, imgUrlOpt.get().createAccessKey());
         imgUrlRepository.deleteById(id);
     }
 }
