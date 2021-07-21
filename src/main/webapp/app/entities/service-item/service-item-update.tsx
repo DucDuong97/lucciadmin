@@ -7,18 +7,26 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import {getEntities as getImgUrls} from 'app/entities/img-url/img-url.reducer';
+import { IImgUrl } from 'app/shared/model/img-url.model';
+import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
 import { getEntities as getVideos } from 'app/entities/video/video.reducer';
+
 import { getEntity, updateEntity, createEntity, reset } from './service-item.reducer';
+import { IServiceItem } from 'app/shared/model/service-item.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
+
 import {IMAGE_FILE_SYSTEM_URL} from "app/config/constants";
 import {toast} from "react-toastify";
 
 export interface IServiceItemUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
+  const [idscustomerImgUrls, setIdscustomerImgUrls] = useState([]);
+  const [iconId, setIconId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { serviceItemEntity, imgUrls, videos, loading, updating } = props;
+  const { serviceItemEntity, imgUrls, loading, updating } = props;
 
   const handleClose = () => {
     props.history.goBack();
@@ -30,6 +38,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
+
     props.getImgUrls();
     props.getVideos();
   }, []);
@@ -55,9 +64,9 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
       const entity = {
         ...serviceItemEntity,
         ...values,
-        file,
-        customerImgUrls: values.customerImgUrls.map(value => ({id: value})),
-        relatedVideos:   values.relatedVideos.map(value => ({id: value}))
+        customerImgUrls: mapIdList(values.customerImgUrls),
+        relatedVideos:   mapIdList(values.relatedVideos),
+        file
       };
 
       if (isNew) {
@@ -91,7 +100,6 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   <AvInput id="service-item-id" type="text" className="form-control" name="id" required readOnly />
                 </AvGroup>
               ) : null}
-
               <AvGroup>
                 <Label id="nameLabel" for="service-item-name">
                   <Translate contentKey="lucciadminApp.serviceItem.name">Name</Translate>
@@ -105,34 +113,38 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   }}
                 />
               </AvGroup>
-
               <AvGroup>
                 <Label id="descriptionLabel" for="service-item-description">
                   <Translate contentKey="lucciadminApp.serviceItem.description">Description</Translate>
                 </Label>
                 <AvField id="service-item-description" type="text" name="description" />
               </AvGroup>
-              {/* -------------------------------------------------------------------------------------------------------*/}
               <AvGroup>
-                <Label for="service-item-imgUrl">
-                  <Translate contentKey="lucciadminApp.serviceItem.imgUrl">Img Url</Translate>
+                <Label for="service-item-icon">
+                  <Translate contentKey="lucciadminApp.serviceItem.icon">Icon</Translate>
                 </Label>
                 <div className="form-group">
                   <input type="file" name="file" onChange={changeHandler}/>
                   {file && <p>Size in bytes: {file.size}</p>}
-                  {serviceItemEntity.imgUrl &&
-                  <img src={`${IMAGE_FILE_SYSTEM_URL+serviceItemEntity.imgUrl.path}/${serviceItemEntity.imgUrl.name}`}
-                       style={{maxWidth: 200, margin:20}} alt="hello world"/>}
+                  {serviceItemEntity.iconName &&
+                  <img src={`${IMAGE_FILE_SYSTEM_URL}${serviceItemEntity.iconName}`}
+                       style={{maxWidth: 200, margin:20}} alt="hello world"/>
+                  }
                 </div>
               </AvGroup>
-              {/* -------------------------------------------------------------------------------------------------------*/}
               <AvGroup>
-                <Label for="customerImgUrls">
-                  <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Image URLS</Translate>
+                <Label for="service-item-customerImgUrls">
+                  <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Img Urls</Translate>
                 </Label>
-                <AvInput type="select" className="form-control"
-                         name="customerImgUrls" value={serviceItemEntity.customerImgUrls ? serviceItemEntity.customerImgUrls.map(img => img.id) : []}
-                         multiple>
+                <AvInput
+                  id="service-item-customerImgUrls"
+                  type="select"
+                  multiple
+                  className="form-control"
+                  name="customerImgUrls"
+                  value={serviceItemEntity.customerImgUrls && serviceItemEntity.customerImgUrls.map(e => e.id)}
+                >
+                  <option value="" key="0" />
                   {imgUrls
                     ? imgUrls.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
@@ -142,7 +154,6 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
-              {/* -------------------------------------------------------------------------------------------------------*/}
               <AvGroup>
                 <Label for="relatedVideos">
                   <Translate contentKey="lucciadminApp.serviceItem.relatedVideos">Realated Videos</Translate>
@@ -150,8 +161,8 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                 <AvInput type="select" className="form-control"
                          name="relatedVideos" value={serviceItemEntity.relatedVideos ? serviceItemEntity.relatedVideos.map(video => video.id) : []}
                          multiple>
-                  {videos
-                    ? videos.map(otherEntity => (
+                  {props.videos
+                    ? props.videos.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.url}
                       </option>
@@ -159,7 +170,6 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
-
 
               <Button tag={Link} id="cancel-save" to="/service-item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

@@ -4,21 +4,30 @@ import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.ServiceItem;
 import com.lucci.webadmin.repository.ServiceItemRepository;
 import com.lucci.webadmin.service.ServiceItemService;
+import com.lucci.webadmin.service.dto.ServiceItemDTO;
+import com.lucci.webadmin.service.mapper.ServiceItemMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -26,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ServiceItemResource} REST controller.
  */
 @SpringBootTest(classes = LucciadminApp.class)
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 public class ServiceItemResourceIT {
@@ -38,6 +48,15 @@ public class ServiceItemResourceIT {
 
     @Autowired
     private ServiceItemRepository serviceItemRepository;
+
+    @Mock
+    private ServiceItemRepository serviceItemRepositoryMock;
+
+    @Autowired
+    private ServiceItemMapper serviceItemMapper;
+
+    @Mock
+    private ServiceItemService serviceItemServiceMock;
 
     @Autowired
     private ServiceItemService serviceItemService;
@@ -85,9 +104,10 @@ public class ServiceItemResourceIT {
     public void createServiceItem() throws Exception {
         int databaseSizeBeforeCreate = serviceItemRepository.findAll().size();
         // Create the ServiceItem
+        ServiceItemDTO serviceItemDTO = serviceItemMapper.toDto(serviceItem);
         restServiceItemMockMvc.perform(post("/api/service-items")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(serviceItem)))
+            .content(TestUtil.convertObjectToJsonBytes(serviceItemDTO)))
             .andExpect(status().isCreated());
 
         // Validate the ServiceItem in the database
@@ -105,11 +125,12 @@ public class ServiceItemResourceIT {
 
         // Create the ServiceItem with an existing ID
         serviceItem.setId(1L);
+        ServiceItemDTO serviceItemDTO = serviceItemMapper.toDto(serviceItem);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restServiceItemMockMvc.perform(post("/api/service-items")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(serviceItem)))
+            .content(TestUtil.convertObjectToJsonBytes(serviceItemDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the ServiceItem in the database
@@ -126,11 +147,12 @@ public class ServiceItemResourceIT {
         serviceItem.setName(null);
 
         // Create the ServiceItem, which fails.
+        ServiceItemDTO serviceItemDTO = serviceItemMapper.toDto(serviceItem);
 
 
         restServiceItemMockMvc.perform(post("/api/service-items")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(serviceItem)))
+            .content(TestUtil.convertObjectToJsonBytes(serviceItemDTO)))
             .andExpect(status().isBadRequest());
 
         List<ServiceItem> serviceItemList = serviceItemRepository.findAll();
@@ -152,6 +174,26 @@ public class ServiceItemResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
     
+    @SuppressWarnings({"unchecked"})
+    public void getAllServiceItemsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(serviceItemServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restServiceItemMockMvc.perform(get("/api/service-items?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(serviceItemServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public void getAllServiceItemsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(serviceItemServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restServiceItemMockMvc.perform(get("/api/service-items?eagerload=true"))
+            .andExpect(status().isOk());
+
+        verify(serviceItemServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
     @Test
     @Transactional
     public void getServiceItem() throws Exception {
@@ -178,7 +220,7 @@ public class ServiceItemResourceIT {
     @Transactional
     public void updateServiceItem() throws Exception {
         // Initialize the database
-        serviceItemService.save(serviceItem);
+        serviceItemRepository.saveAndFlush(serviceItem);
 
         int databaseSizeBeforeUpdate = serviceItemRepository.findAll().size();
 
@@ -189,10 +231,11 @@ public class ServiceItemResourceIT {
         updatedServiceItem
             .name(UPDATED_NAME)
             .description(UPDATED_DESCRIPTION);
+        ServiceItemDTO serviceItemDTO = serviceItemMapper.toDto(updatedServiceItem);
 
         restServiceItemMockMvc.perform(put("/api/service-items")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedServiceItem)))
+            .content(TestUtil.convertObjectToJsonBytes(serviceItemDTO)))
             .andExpect(status().isOk());
 
         // Validate the ServiceItem in the database
@@ -208,10 +251,13 @@ public class ServiceItemResourceIT {
     public void updateNonExistingServiceItem() throws Exception {
         int databaseSizeBeforeUpdate = serviceItemRepository.findAll().size();
 
+        // Create the ServiceItem
+        ServiceItemDTO serviceItemDTO = serviceItemMapper.toDto(serviceItem);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restServiceItemMockMvc.perform(put("/api/service-items")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(serviceItem)))
+            .content(TestUtil.convertObjectToJsonBytes(serviceItemDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the ServiceItem in the database
@@ -223,7 +269,7 @@ public class ServiceItemResourceIT {
     @Transactional
     public void deleteServiceItem() throws Exception {
         // Initialize the database
-        serviceItemService.save(serviceItem);
+        serviceItemRepository.saveAndFlush(serviceItem);
 
         int databaseSizeBeforeDelete = serviceItemRepository.findAll().size();
 

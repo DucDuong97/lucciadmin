@@ -5,7 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IServiceItem, defaultValue } from 'app/shared/model/service-item.model';
-import {upload} from "app/entities/img-url/img-url.reducer";
+import { upload } from 'app/entities/img-url/img-url.reducer';
 
 export const ACTION_TYPES = {
   FETCH_SERVICEITEM_LIST: 'serviceItem/FETCH_SERVICEITEM_LIST',
@@ -13,7 +13,7 @@ export const ACTION_TYPES = {
   CREATE_SERVICEITEM: 'serviceItem/CREATE_SERVICEITEM',
   UPDATE_SERVICEITEM: 'serviceItem/UPDATE_SERVICEITEM',
   DELETE_SERVICEITEM: 'serviceItem/DELETE_SERVICEITEM',
-  RESET: 'serviceItem/RESET'
+  RESET: 'serviceItem/RESET',
 };
 
 const initialState = {
@@ -115,7 +115,9 @@ export const getEntity: ICrudGetAction<IServiceItem> = id => {
 
 export const createEntity: ICrudPutAction<IServiceItem> = entity => async dispatch => {
   if (entity.file != null) {
-    entity.imgUrl = (await upload(entity.file)).data;
+    const imgUrl = (await upload(entity.file)).data;
+    entity.iconId = imgUrl.id;
+    entity.iconName = imgUrl.name;
   }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_SERVICEITEM,
@@ -127,7 +129,9 @@ export const createEntity: ICrudPutAction<IServiceItem> = entity => async dispat
 
 export const updateEntity: ICrudPutAction<IServiceItem> = entity => async dispatch => {
   if (entity.file != null) {
-    entity.imgUrl = (await upload(entity.file)).data;
+    const imgUrl = (await upload(entity.file)).data;
+    entity.iconId = imgUrl.id;
+    entity.iconName = imgUrl.name;
   }
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_SERVICEITEM,

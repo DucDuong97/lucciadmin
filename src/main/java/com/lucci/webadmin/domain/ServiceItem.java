@@ -1,7 +1,5 @@
 package com.lucci.webadmin.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -34,30 +32,9 @@ public class ServiceItem implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(unique = true)
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
-    private ImgUrl imgUrl;
-
-    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
-    private Set<Process> processes = new HashSet<>();
-
-    @OneToMany(mappedBy = "serviceItem")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
-    private Set<Blog> relatedBlogs = new HashSet<>();
-
-    @OneToMany(mappedBy = "serviceItem", cascade = CascadeType.ALL)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnore
-    private Set<PricingCard> pricingCards = new HashSet<>();
-
-    @OneToMany(mappedBy = "serviceItem", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<Video> relatedVideos = new HashSet<>();
+    private ImgUrl icon;
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -65,6 +42,31 @@ public class ServiceItem implements Serializable {
                joinColumns = @JoinColumn(name = "service_item_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "customer_img_urls_id", referencedColumnName = "id"))
     private Set<ImgUrl> customerImgUrls = new HashSet<>();
+
+    @OneToMany(mappedBy = "serviceItem")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Process> processes = new HashSet<>();
+
+    @OneToMany(mappedBy = "serviceItem")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Blog> relatedBlogs = new HashSet<>();
+
+    @OneToMany(mappedBy = "serviceItem")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<Video> relatedVideos = new HashSet<>();
+
+    @OneToMany(mappedBy = "serviceItem")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    private Set<PricingCard> pricingCards = new HashSet<>();
+
+    @PreRemove
+    private void preRemove() {
+        customerImgUrls.clear();
+        processes.forEach(item -> item.setServiceItem(null));
+        relatedBlogs.forEach(item -> item.setServiceItem(null));
+        relatedVideos.forEach(item -> item.setServiceItem(null));
+        pricingCards.forEach(item -> item.setServiceItem(null));
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -101,17 +103,40 @@ public class ServiceItem implements Serializable {
         this.description = description;
     }
 
-    public ImgUrl getImgUrl() {
-        return imgUrl;
+    public ImgUrl getIcon() {
+        return icon;
     }
 
-    public ServiceItem imgUrl(ImgUrl imgUrl) {
-        this.imgUrl = imgUrl;
+    public ServiceItem icon(ImgUrl imgUrl) {
+        this.icon = imgUrl;
         return this;
     }
 
-    public void setImgUrl(ImgUrl imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setIcon(ImgUrl imgUrl) {
+        this.icon = imgUrl;
+    }
+
+    public Set<ImgUrl> getCustomerImgUrls() {
+        return customerImgUrls;
+    }
+
+    public ServiceItem customerImgUrls(Set<ImgUrl> imgUrls) {
+        this.customerImgUrls = imgUrls;
+        return this;
+    }
+
+    public ServiceItem addCustomerImgUrls(ImgUrl imgUrl) {
+        this.customerImgUrls.add(imgUrl);
+        return this;
+    }
+
+    public ServiceItem removeCustomerImgUrls(ImgUrl imgUrl) {
+        this.customerImgUrls.remove(imgUrl);
+        return this;
+    }
+
+    public void setCustomerImgUrls(Set<ImgUrl> imgUrls) {
+        this.customerImgUrls = imgUrls;
     }
 
     public Set<Process> getProcesses() {
@@ -187,29 +212,6 @@ public class ServiceItem implements Serializable {
 
     public void setRelatedVideos(Set<Video> videos) {
         this.relatedVideos = videos;
-    }
-
-    public Set<ImgUrl> getCustomerImgUrls() {
-        return customerImgUrls;
-    }
-
-    public ServiceItem customerImgUrls(Set<ImgUrl> imgUrls) {
-        this.customerImgUrls = imgUrls;
-        return this;
-    }
-
-    public ServiceItem addCustomerImgUrls(ImgUrl imgUrl) {
-        this.customerImgUrls.add(imgUrl);
-        return this;
-    }
-
-    public ServiceItem removeCustomerImgUrls(ImgUrl imgUrl) {
-        this.customerImgUrls.remove(imgUrl);
-        return this;
-    }
-
-    public void setCustomerImgUrls(Set<ImgUrl> imgUrls) {
-        this.customerImgUrls = imgUrls;
     }
 
     public Set<PricingCard> getPricingCards() {

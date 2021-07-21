@@ -18,12 +18,11 @@
       },
       "name": "Tên dịch vụ",
       "description": "Mô tả",
-      "imgUrl": "Url Icon Dịch vụ",
-      "options": "Options",
+      "icon": "Icon Dịch vụ",
+      "customerImgUrls": "Khách hàng dùng d.vụ",
       "processes": "Quy trình",
       "relatedBlogs": "Blogs liên quan",
       "relatedVideos": "Videos liên quan",
-      "customerImgUrls": "Khách hàng dùng d.vụ",
       "pricingCards": "Các gói dịch vụ"
     }
   }

@@ -52,7 +52,6 @@ public class CacheConfiguration {
             createCache(cm, com.lucci.webadmin.domain.CustomerReview.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Achievement.class.getName());
             createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName());
-            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".options");
             createCache(cm, com.lucci.webadmin.domain.Blog.class.getName());
             createCache(cm, com.lucci.webadmin.domain.SingletonContent.class.getName());
             createCache(cm, com.lucci.webadmin.domain.Customer.class.getName());
@@ -67,6 +66,11 @@ public class CacheConfiguration {
             createCache(cm, com.lucci.webadmin.domain.TreatmentPlan.class.getName() + ".treatments");
             createCache(cm, com.lucci.webadmin.domain.TreatmentPlan.class.getName() + ".asds");
             createCache(cm, com.lucci.webadmin.domain.ImgUrl.class.getName());
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".customerImgUrls");
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".processes");
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".relatedBlogs");
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".relatedVideos");
+            createCache(cm, com.lucci.webadmin.domain.ServiceItem.class.getName() + ".pricingCards");
             // jhipster-needle-ehcache-add-entry
         };
     }

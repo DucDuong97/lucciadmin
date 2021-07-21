@@ -8,12 +8,24 @@
     -->
     <changeSet id="20210312181817-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="img_url_id"
+        <addForeignKeyConstraint baseColumnNames="icon_id"
                                  baseTableName="service_item"
-                                 constraintName="fk_service_item_img_url_id"
+                                 constraintName="fk_service_item_icon_id"
                                  referencedColumnNames="id"
                                  referencedTableName="img_url"/>
 
+        <addForeignKeyConstraint baseColumnNames="service_item_id"
+                                 baseTableName="service_item_customer_img_urls"
+                                 constraintName="fk_service_item_customer_img_urls_service_item_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="service_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="customer_img_urls_id"
+                                 baseTableName="service_item_customer_img_urls"
+                                 constraintName="fk_service_item_customer_img_urls_customer_img_urls_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="img_url"/>
+        
         <addForeignKeyConstraint baseColumnNames="service_item_id"
                                  baseTableName="service_item_customer_img_urls"
                                  constraintName="fk_service_item_customer_img_urls_service_item_id"

@@ -8,13 +8,14 @@ export interface IServiceItem {
   id?: number;
   name?: string;
   description?: string;
-  imgUrl?: IImgUrl;
-  file?: File;
+  iconName?: string;
+  iconId?: number;
+  customerImgUrls?: IImgUrl[];
   processes?: IProcess[];
   relatedBlogs?: IBlog[];
   relatedVideos?: IVideo[];
-  customerImgUrls?: IImgUrl[];
   pricingCards?: IPricingCard[];
+  file?: File;
 }
 
 export const defaultValue: Readonly<IServiceItem> = {};

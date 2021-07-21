@@ -16,15 +16,16 @@
       "relationshipType": "one-to-one",
       "otherEntityName": "imgUrl",
       "otherEntityRelationshipName": "serviceItem",
-      "relationshipName": "imgUrl",
-      "otherEntityField": "id",
+      "relationshipName": "icon",
+      "otherEntityField": "name",
       "ownerSide": true
     },
     {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "serviceOption",
-      "otherEntityRelationshipName": "service",
-      "relationshipName": "options"
+      "relationshipType": "many-to-many",
+      "otherEntityName": "imgUrl",
+      "relationshipName": "customerImgUrls",
+      "otherEntityField": "name",
+      "ownerSide": true
     },
     {
       "relationshipType": "one-to-many",
@@ -45,12 +46,6 @@
       "relationshipName": "relatedVideos"
     },
     {
-      "relationshipType": "many-to-many",
-      "otherEntityName": "imgUrl",
-      "relationshipName": "customerImgUrls",
-      "ownerSide": true
-    },
-    {
       "relationshipType": "one-to-many",
       "otherEntityName": "pricingCard",
       "otherEntityRelationshipName": "serviceItem",
@@ -59,7 +54,7 @@
   ],
   "changelogDate": "20210312181817",
   "entityTableName": "service_item",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,

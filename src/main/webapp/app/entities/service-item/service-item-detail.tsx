@@ -38,9 +38,9 @@ export const ServiceItemDetail = (props: IServiceItemDetailProps) => {
           </dt>
           <dd>{serviceItemEntity.description}</dd>
           <dt>
-            <Translate contentKey="lucciadminApp.serviceItem.imgUrl">Img Url</Translate>
+            <Translate contentKey="lucciadminApp.serviceItem.icon">Icon</Translate>
           </dt>
-          <dd>{serviceItemEntity.imgUrl ? serviceItemEntity.imgUrl.id : ''}</dd>
+          <dd>{serviceItemEntity.iconName ? serviceItemEntity.iconName : ''}</dd>
         </dl>
         <Button tag={Link} to="/service-item" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -18,12 +18,11 @@
       },
       "name": "Name",
       "description": "Description",
-      "imgUrl": "Img Url",
-      "options": "Options",
+      "icon": "Icon",
+      "customerImgUrls": "Customer Img Urls",
       "processes": "Processes",
       "relatedBlogs": "Related Blogs",
       "relatedVideos": "Related Videos",
-      "customerImgUrls": "Customer Img Urls",
       "pricingCards": "Pricing Cards"
     }
   }
