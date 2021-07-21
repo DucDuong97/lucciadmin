@@ -30,27 +30,18 @@ import static org.apache.http.entity.ContentType.IMAGE_JPEG;
 @Transactional
 public class ImgUrlServiceImpl implements ImgUrlService {
 
-    @Value("${amazon.s3.lucci.erp.bucketName}")
-    private String bucket;
-
-    private static final List<String> IMAGE_TYPES =
-        Stream.of(IMAGE_PNG,IMAGE_BMP,IMAGE_GIF,IMAGE_JPEG)
-            .map(ContentType::getMimeType)
-            .collect(Collectors.toList());
-
-    private static final String DEFAULT_PATH = "images";
-
     private final Logger log = LoggerFactory.getLogger(ImgUrlServiceImpl.class);
 
     private final ImgUrlRepository imgUrlRepository;
-    private final FileStoreService fileStoreService;
 
     private final ImgUrlMapper imgUrlMapper;
 
-    public ImgUrlServiceImpl(ImgUrlRepository imgUrlRepository, FileStoreService fileStoreService, ImgUrlMapper imgUrlMapper) {
+    private final FileStoreService fileStoreService;
+
+    public ImgUrlServiceImpl(ImgUrlRepository imgUrlRepository, ImgUrlMapper imgUrlMapper, FileStoreService fileStoreService) {
         this.imgUrlRepository = imgUrlRepository;
-        this.fileStoreService = fileStoreService;
         this.imgUrlMapper = imgUrlMapper;
+        this.fileStoreService = fileStoreService;
     }
 
     @Override
@@ -59,30 +50,6 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         ImgUrl imgUrl = imgUrlMapper.toEntity(imgUrlDTO);
         imgUrl = imgUrlRepository.save(imgUrl);
         return imgUrlMapper.toDto(imgUrl);
-    }
-
-    @Override
-    public ImgUrlDTO upload(MultipartFile file) {
-        if (file.isEmpty()) {
-            throw new IllegalStateException("Cannot upload empty file");
-        }
-        if (!IMAGE_TYPES.contains(file.getContentType())) {
-            throw new IllegalStateException("File uploaded is not an image");
-        }
-        Map<String, String> metadata = new HashMap<>();
-        metadata.put("Content-Type", file.getContentType());
-        metadata.put("Content-Length", String.valueOf(file.getSize()));
-
-        ImgUrlDTO imgUrlDTO = new ImgUrlDTO();
-        imgUrlDTO.setName(file.getOriginalFilename());
-        imgUrlDTO.setPath(DEFAULT_PATH);
-        //Save Image in S3 and then save ImgUrl in the database
-        try {
-            fileStoreService.upload(bucket, imgUrlDTO.createAccessKey(), metadata, file.getInputStream());
-        } catch (IOException e) {
-            throw new IllegalStateException("Failed to upload file", e);
-        }
-        return imgUrlDTO;
     }
 
     @Override
@@ -112,5 +79,47 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         }
         fileStoreService.delete(bucket, imgUrlOpt.get().createAccessKey());
         imgUrlRepository.deleteById(id);
+    }
+
+    @Value("${amazon.s3.lucci.erp.bucketName}")
+    private String bucket;
+
+    private static final List<String> IMAGE_TYPES = Stream.of(IMAGE_PNG,IMAGE_BMP,IMAGE_GIF,IMAGE_JPEG)
+                                                    .map(ContentType::getMimeType)
+                                                    .collect(Collectors.toList());
+
+    private static final String DEFAULT_PATH = "images";
+
+    @Override
+    public ImgUrlDTO upload(MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new IllegalStateException("Cannot upload empty file");
+        }
+        if (!IMAGE_TYPES.contains(file.getContentType())) {
+            throw new IllegalStateException("File uploaded is not an image");
+        }
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("Content-Type", file.getContentType());
+        metadata.put("Content-Length", String.valueOf(file.getSize()));
+
+        String fileName = validFileName(DEFAULT_PATH, file.getOriginalFilename());
+        ImgUrlDTO imgUrlDTO = new ImgUrlDTO();
+        imgUrlDTO.setName(fileName);
+        imgUrlDTO.setPath(DEFAULT_PATH);
+        //Save Image in S3 and then save ImgUrl in the database
+        try {
+            fileStoreService.upload(bucket, imgUrlDTO.createAccessKey(), metadata, file.getInputStream());
+        } catch (IOException e) {
+            throw new IllegalStateException("Failed to upload file", e);
+        }
+        return imgUrlDTO;
+    }
+
+    private String validFileName(String path, String fileName) {
+        String result = fileName;
+        for (long duplicate = 0; !imgUrlRepository.findByPathAndName(path, result).isEmpty(); duplicate++) {
+            result = String.format("(%d)%s", duplicate, fileName);
+        }
+        return result;
     }
 }

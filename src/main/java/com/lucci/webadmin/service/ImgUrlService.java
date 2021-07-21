@@ -20,8 +20,6 @@ public interface ImgUrlService {
      */
     ImgUrlDTO save(ImgUrlDTO imgUrlDTO);
 
-    ImgUrlDTO upload(MultipartFile file);
-
     /**
      * Get all the imgUrls.
      *
@@ -44,4 +42,6 @@ public interface ImgUrlService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    ImgUrlDTO upload(MultipartFile file);
 }
