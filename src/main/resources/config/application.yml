@@ -187,3 +187,9 @@ jhipster:
 # ===================================================================
 
 # application:
+amazon:
+  s3:
+    credential:
+      accessKey: AKIAU4NWC3CKMDBOVHFY
+      secretKey: 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
+    region: ap-southeast-1
