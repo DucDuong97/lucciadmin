@@ -1,7 +1,6 @@
 package com.lucci.webadmin.service.impl;
 
-import com.lucci.webadmin.config.BucketName;
-import com.lucci.webadmin.service.FileStore;
+import com.lucci.webadmin.service.FileStoreService;
 import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.domain.ImgUrl;
 import com.lucci.webadmin.repository.ImgUrlRepository;
@@ -35,18 +34,18 @@ public class ImgUrlServiceImpl implements ImgUrlService {
             .map(ContentType::getMimeType)
             .collect(Collectors.toList());
 
-    private static final String folderName = "images";
+    private static final String DEFAULT_PATH = "images";
 
     private final Logger log = LoggerFactory.getLogger(ImgUrlServiceImpl.class);
 
     private final ImgUrlRepository imgUrlRepository;
-    private final FileStore fileStore;
+    private final FileStoreService fileStoreService;
 
     private final ImgUrlMapper imgUrlMapper;
 
-    public ImgUrlServiceImpl(ImgUrlRepository imgUrlRepository, FileStore fileStore, ImgUrlMapper imgUrlMapper) {
+    public ImgUrlServiceImpl(ImgUrlRepository imgUrlRepository, FileStoreService fileStoreService, ImgUrlMapper imgUrlMapper) {
         this.imgUrlRepository = imgUrlRepository;
-        this.fileStore = fileStore;
+        this.fileStoreService = fileStoreService;
         this.imgUrlMapper = imgUrlMapper;
     }
 
@@ -60,30 +59,26 @@ public class ImgUrlServiceImpl implements ImgUrlService {
 
     @Override
     public ImgUrlDTO upload(MultipartFile file) {
-        //check if the file is empty
         if (file.isEmpty()) {
             throw new IllegalStateException("Cannot upload empty file");
         }
-        //Check if the file is an image
         if (!IMAGE_TYPES.contains(file.getContentType())) {
             throw new IllegalStateException("File uploaded is not an image");
         }
-        //get file metadata
         Map<String, String> metadata = new HashMap<>();
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
+
+        ImgUrlDTO imgUrlDTO = new ImgUrlDTO();
+        imgUrlDTO.setName(file.getOriginalFilename());
+        imgUrlDTO.setPath(DEFAULT_PATH);
         //Save Image in S3 and then save ImgUrl in the database
-        String path = String.format("%s/%s", BucketName.IMAGE.getBucketName(), folderName);
-        String fileName = file.getOriginalFilename();
         try {
-            fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
+            fileStoreService.upload(imgUrlDTO.createAccessKey(), metadata, file.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException("Failed to upload file", e);
         }
-        ImgUrlDTO newImg = new ImgUrlDTO();
-        newImg.setName(fileName);
-        newImg.setPath(folderName);
-        return newImg;
+        return imgUrlDTO;
     }
 
     @Override
@@ -94,7 +89,6 @@ public class ImgUrlServiceImpl implements ImgUrlService {
             .map(imgUrlMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -112,7 +106,7 @@ public class ImgUrlServiceImpl implements ImgUrlService {
             log.debug("ImgUrl {} does not exist", id);
             return;
         }
-        fileStore.delete(BucketName.IMAGE.getBucketName(), imgUrlOpt.get().createAccessKey());
+        fileStoreService.delete(imgUrlOpt.get().createAccessKey());
         imgUrlRepository.deleteById(id);
     }
 }
