@@ -2,15 +2,20 @@
   "name": "ImgUrl",
   "fields": [
     {
-      "fieldName": "imgUrl",
+      "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "path",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     }
   ],
   "relationships": [],
   "changelogDate": "20210508061849",
   "entityTableName": "img_url",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,

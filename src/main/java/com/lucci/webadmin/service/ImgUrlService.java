@@ -1,32 +1,33 @@
 package com.lucci.webadmin.service;
 
 import com.lucci.webadmin.domain.ImgUrl;
+import com.lucci.webadmin.service.dto.ImgUrlDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Service Interface for managing {@link ImgUrl}.
+ * Service Interface for managing {@link com.lucci.webadmin.domain.ImgUrl}.
  */
 public interface ImgUrlService {
 
     /**
      * Save a imgUrl.
      *
-     * @param imgUrl the entity to save.
+     * @param imgUrlDTO the entity to save.
      * @return the persisted entity.
      */
-    ImgUrl save(ImgUrl imgUrl);
+    ImgUrlDTO save(ImgUrlDTO imgUrlDTO);
 
-    ImgUrl upload(MultipartFile file);
+    ImgUrlDTO upload(MultipartFile file);
 
     /**
      * Get all the imgUrls.
      *
      * @return the list of entities.
      */
-    List<ImgUrl> findAll();
+    List<ImgUrlDTO> findAll();
 
 
     /**
@@ -35,9 +36,7 @@ public interface ImgUrlService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<ImgUrl> findOne(Long id);
-
-    Optional<ImgUrl> findByURL(String url);
+    Optional<ImgUrlDTO> findOne(Long id);
 
     /**
      * Delete the "id" imgUrl.

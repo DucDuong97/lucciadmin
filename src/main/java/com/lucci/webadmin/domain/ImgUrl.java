@@ -1,6 +1,5 @@
 package com.lucci.webadmin.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,8 +24,12 @@ public class ImgUrl implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "img_url", nullable = false, unique = true)
-    private String imgUrl;
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
+
+    @NotNull
+    @Column(name = "path", nullable = false)
+    private String path;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -37,17 +40,30 @@ public class ImgUrl implements Serializable {
         this.id = id;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getName() {
+        return name;
     }
 
-    public ImgUrl imgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public ImgUrl name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public ImgUrl path(String path) {
+        this.path = path;
+        return this;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -72,7 +88,8 @@ public class ImgUrl implements Serializable {
     public String toString() {
         return "ImgUrl{" +
             "id=" + getId() +
-            ", imgUrl='" + getImgUrl() + "'" +
+            ", name='" + getName() + "'" +
+            ", path='" + getPath() + "'" +
             "}";
     }
 }

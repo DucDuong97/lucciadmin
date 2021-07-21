@@ -7,13 +7,16 @@ import java.io.Serializable;
  * A DTO for the {@link com.lucci.webadmin.domain.ImgUrl} entity.
  */
 public class ImgUrlDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
-    private String imgUrl;
+    private String name;
 
-    
+    @NotNull
+    private String path;
+
+
     public Long getId() {
         return id;
     }
@@ -22,12 +25,24 @@ public class ImgUrlDTO implements Serializable {
         this.id = id;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getName() {
+        return name;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String createAccessKey() {
+        return path + "/" + name;
     }
 
     @Override
@@ -52,7 +67,8 @@ public class ImgUrlDTO implements Serializable {
     public String toString() {
         return "ImgUrlDTO{" +
             "id=" + getId() +
-            ", imgUrl='" + getImgUrl() + "'" +
+            ", name='" + getName() + "'" +
+            ", path='" + getPath() + "'" +
             "}";
     }
 }

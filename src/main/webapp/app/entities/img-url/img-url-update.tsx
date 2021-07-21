@@ -7,9 +7,7 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IServiceItem } from 'app/shared/model/service-item.model';
-import { getEntities as getServiceItems } from 'app/entities/service-item/service-item.reducer';
-import {getEntity, updateEntity, createEntity, reset, uploadImage} from './img-url.reducer';
+import { getEntity, updateEntity, createEntity, reset, uploadImage } from './img-url.reducer';
 import { IImgUrl } from 'app/shared/model/img-url.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
@@ -18,17 +16,20 @@ import {toast} from "react-toastify";
 export interface IImgUrlUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
+  const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { loading, updating } = props;
+  const { imgUrlEntity, loading, updating } = props;
 
   const handleClose = () => {
     props.history.goBack();
   };
 
   useEffect(() => {
-    props.reset();
-
-    props.getServiceItems();
+    if (isNew) {
+      props.reset();
+    } else {
+      props.getEntity(props.match.params.id);
+    }
   }, []);
 
   useEffect(() => {
@@ -104,7 +105,6 @@ export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  serviceItems: storeState.serviceItem.entities,
   imgUrlEntity: storeState.imgUrl.entity,
   loading: storeState.imgUrl.loading,
   updating: storeState.imgUrl.updating,
@@ -112,7 +112,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getServiceItems,
   getEntity,
   updateEntity,
   uploadImage,

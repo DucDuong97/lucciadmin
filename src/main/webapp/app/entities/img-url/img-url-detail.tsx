@@ -26,11 +26,17 @@ export const ImgUrlDetail = (props: IImgUrlDetailProps) => {
         </h2>
         <dl className="jh-entity-details">
           <dt>
-            <span id="imgUrl">
-              <Translate contentKey="lucciadminApp.imgUrl.imgUrl">Img Url</Translate>
+            <span id="name">
+              <Translate contentKey="lucciadminApp.imgUrl.name">Name</Translate>
             </span>
           </dt>
-          <dd>{imgUrlEntity.imgUrl}</dd>
+          <dd>{imgUrlEntity.name}</dd>
+          <dt>
+            <span id="path">
+              <Translate contentKey="lucciadminApp.imgUrl.path">Path</Translate>
+            </span>
+          </dt>
+          <dd>{imgUrlEntity.path}</dd>
         </dl>
         <Button tag={Link} to="/img-url" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

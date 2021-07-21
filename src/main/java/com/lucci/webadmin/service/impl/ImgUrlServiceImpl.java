@@ -5,18 +5,23 @@ import com.lucci.webadmin.service.FileStore;
 import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.domain.ImgUrl;
 import com.lucci.webadmin.repository.ImgUrlRepository;
+import com.lucci.webadmin.service.dto.ImgUrlDTO;
+import com.lucci.webadmin.service.mapper.ImgUrlMapper;
+import org.apache.http.entity.ContentType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.apache.http.entity.ContentType.*;
+import static org.apache.http.entity.ContentType.IMAGE_JPEG;
 
 /**
  * Service Implementation for managing {@link ImgUrl}.
@@ -25,33 +30,42 @@ import static org.apache.http.entity.ContentType.*;
 @Transactional
 public class ImgUrlServiceImpl implements ImgUrlService {
 
+    private static final List<String> IMAGE_TYPES =
+        Stream.of(IMAGE_PNG,IMAGE_BMP,IMAGE_GIF,IMAGE_JPEG)
+            .map(ContentType::getMimeType)
+            .collect(Collectors.toList());
+
+    private static final String folderName = "images";
+
     private final Logger log = LoggerFactory.getLogger(ImgUrlServiceImpl.class);
 
     private final ImgUrlRepository imgUrlRepository;
     private final FileStore fileStore;
 
-    public ImgUrlServiceImpl(ImgUrlRepository imgUrlRepository, FileStore fileStore) {
+    private final ImgUrlMapper imgUrlMapper;
+
+    public ImgUrlServiceImpl(ImgUrlRepository imgUrlRepository, FileStore fileStore, ImgUrlMapper imgUrlMapper) {
         this.imgUrlRepository = imgUrlRepository;
         this.fileStore = fileStore;
+        this.imgUrlMapper = imgUrlMapper;
     }
 
     @Override
-    public ImgUrl save(ImgUrl imgUrl) {
-        log.debug("Request to save ImgUrl : {}", imgUrl);
-        return imgUrlRepository.save(imgUrl);
+    public ImgUrlDTO save(ImgUrlDTO imgUrlDTO) {
+        log.debug("Request to save ImgUrl : {}", imgUrlDTO);
+        ImgUrl imgUrl = imgUrlMapper.toEntity(imgUrlDTO);
+        imgUrl = imgUrlRepository.save(imgUrl);
+        return imgUrlMapper.toDto(imgUrl);
     }
 
     @Override
-    public ImgUrl upload(MultipartFile file) {
+    public ImgUrlDTO upload(MultipartFile file) {
         //check if the file is empty
         if (file.isEmpty()) {
             throw new IllegalStateException("Cannot upload empty file");
         }
         //Check if the file is an image
-        if (!Arrays.asList(IMAGE_PNG.getMimeType(),
-            IMAGE_BMP.getMimeType(),
-            IMAGE_GIF.getMimeType(),
-            IMAGE_JPEG.getMimeType()).contains(file.getContentType())) {
+        if (!IMAGE_TYPES.contains(file.getContentType())) {
             throw new IllegalStateException("File uploaded is not an image");
         }
         //get file metadata
@@ -59,49 +73,46 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         metadata.put("Content-Type", file.getContentType());
         metadata.put("Content-Length", String.valueOf(file.getSize()));
         //Save Image in S3 and then save ImgUrl in the database
-        String folderName = "images";
         String path = String.format("%s/%s", BucketName.IMAGE.getBucketName(), folderName);
-        String fileName = String.format("%s", file.getOriginalFilename());
+        String fileName = file.getOriginalFilename();
         try {
             fileStore.upload(path, fileName, Optional.of(metadata), file.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException("Failed to upload file", e);
         }
-        ImgUrl newImg = new ImgUrl();
-        newImg.setImgUrl(String.format("%s/%s", folderName, fileName));
+        ImgUrlDTO newImg = new ImgUrlDTO();
+        newImg.setName(fileName);
+        newImg.setPath(folderName);
         return this.save(newImg);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ImgUrl> findAll() {
+    public List<ImgUrlDTO> findAll() {
         log.debug("Request to get all ImgUrls");
-        return imgUrlRepository.findAll();
+        return imgUrlRepository.findAll().stream()
+            .map(imgUrlMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ImgUrl> findOne(Long id) {
+    public Optional<ImgUrlDTO> findOne(Long id) {
         log.debug("Request to get ImgUrl : {}", id);
-        return imgUrlRepository.findById(id);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<ImgUrl> findByURL(String url) {
-        return imgUrlRepository.findByURL(url);
+        return imgUrlRepository.findById(id)
+            .map(imgUrlMapper::toDto);
     }
 
     @Override
     public void delete(Long id) {
         log.debug("Request to delete ImgUrl : {}", id);
-        Optional<ImgUrl> imgUrlOpt = findOne(id);
+        Optional<ImgUrlDTO> imgUrlOpt = findOne(id);
         if (!imgUrlOpt.isPresent()) {
             log.debug("ImgUrl {} does not exist", id);
             return;
         }
-        fileStore.delete(BucketName.IMAGE.getBucketName(), imgUrlOpt.get().getImgUrl());
+        fileStore.delete(BucketName.IMAGE.getBucketName(), imgUrlOpt.get().createAccessKey());
         imgUrlRepository.deleteById(id);
     }
 }
