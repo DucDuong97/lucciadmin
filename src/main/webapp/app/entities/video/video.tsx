@@ -40,7 +40,7 @@ export const Video = (props: IVideoProps) => {
                   <Translate contentKey="lucciadminApp.video.url">Url</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="lucciadminApp.video.serviceItem">Service Item</Translate>
+                  <Translate contentKey="lucciadminApp.video.name">Name</Translate>
                 </th>
                 <th />
               </tr>
@@ -54,7 +54,7 @@ export const Video = (props: IVideoProps) => {
                     </Button>
                   </td>
                   <td>{video.url}</td>
-                  <td>{video.serviceItem ? <Link to={`service-item/${video.serviceItem.id}`}>{video.serviceItem.name}</Link> : ''}</td>
+                  <td>{video.name}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${video.id}`} color="info" size="sm">

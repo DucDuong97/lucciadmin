@@ -18,8 +18,8 @@
             <column name="url" type="varchar(255)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_video_url" />
             </column>
-            <column name="service_item_id" type="bigint">
-                <constraints nullable="true" />
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_video_name" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -45,6 +45,7 @@
                   tableName="video">
             <column name="id" type="numeric"/>
             <column name="url" type="string"/>
+            <column name="name" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

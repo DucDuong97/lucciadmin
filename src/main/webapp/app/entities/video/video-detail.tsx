@@ -32,9 +32,11 @@ export const VideoDetail = (props: IVideoDetailProps) => {
           </dt>
           <dd>{videoEntity.url}</dd>
           <dt>
-            <Translate contentKey="lucciadminApp.video.serviceItem">Service Item</Translate>
+            <span id="name">
+              <Translate contentKey="lucciadminApp.video.name">Name</Translate>
+            </span>
           </dt>
-          <dd>{videoEntity.serviceItem ? videoEntity.serviceItem.name : ''}</dd>
+          <dd>{videoEntity.name}</dd>
         </dl>
         <Button tag={Link} to="/video" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

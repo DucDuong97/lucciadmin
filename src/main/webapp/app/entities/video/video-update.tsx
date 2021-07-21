@@ -7,8 +7,6 @@ import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 
-import { IServiceItem } from 'app/shared/model/service-item.model';
-import { getEntities as getServiceItems } from 'app/entities/service-item/service-item.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './video.reducer';
 import { IVideo } from 'app/shared/model/video.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -17,10 +15,9 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 export interface IVideoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const VideoUpdate = (props: IVideoUpdateProps) => {
-  const [serviceItemId, setServiceItemId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { videoEntity, serviceItems, loading, updating } = props;
+  const { videoEntity, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/video');
@@ -32,8 +29,6 @@ export const VideoUpdate = (props: IVideoUpdateProps) => {
     } else {
       props.getEntity(props.match.params.id);
     }
-
-    props.getServiceItems();
   }, []);
 
   useEffect(() => {
@@ -94,19 +89,17 @@ export const VideoUpdate = (props: IVideoUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
-                <Label for="video-serviceItem">
-                  <Translate contentKey="lucciadminApp.video.serviceItem">Service Item</Translate>
+                <Label id="nameLabel" for="video-name">
+                  <Translate contentKey="lucciadminApp.video.name">Name</Translate>
                 </Label>
-                <AvInput id="video-serviceItem" type="select" className="form-control" name="serviceItem.id">
-                  <option value="" key="0" />
-                  {serviceItems
-                    ? serviceItems.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
+                <AvField
+                  id="video-name"
+                  type="text"
+                  name="name"
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/video" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
@@ -130,7 +123,6 @@ export const VideoUpdate = (props: IVideoUpdateProps) => {
 };
 
 const mapStateToProps = (storeState: IRootState) => ({
-  serviceItems: storeState.serviceItem.entities,
   videoEntity: storeState.video.entity,
   loading: storeState.video.loading,
   updating: storeState.video.updating,
@@ -138,7 +130,6 @@ const mapStateToProps = (storeState: IRootState) => ({
 });
 
 const mapDispatchToProps = {
-  getServiceItems,
   getEntity,
   updateEntity,
   createEntity,

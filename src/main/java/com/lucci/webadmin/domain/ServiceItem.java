@@ -64,7 +64,6 @@ public class ServiceItem implements Serializable {
         customerImgUrls.clear();
         processes.forEach(item -> item.setServiceItem(null));
         relatedBlogs.forEach(item -> item.setServiceItem(null));
-        relatedVideos.forEach(item -> item.setServiceItem(null));
         pricingCards.forEach(item -> item.setServiceItem(null));
     }
 
@@ -200,13 +199,11 @@ public class ServiceItem implements Serializable {
 
     public ServiceItem addRelatedVideos(Video video) {
         this.relatedVideos.add(video);
-        video.setServiceItem(this);
         return this;
     }
 
     public ServiceItem removeRelatedVideos(Video video) {
         this.relatedVideos.remove(video);
-        video.setServiceItem(null);
         return this;
     }
 

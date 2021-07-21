@@ -1,8 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.domain.Video;
 import com.lucci.webadmin.service.VideoService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
+import com.lucci.webadmin.service.dto.VideoDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -41,17 +41,17 @@ public class VideoResource {
     /**
      * {@code POST  /videos} : Create a new video.
      *
-     * @param video the video to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new video, or with status {@code 400 (Bad Request)} if the video has already an ID.
+     * @param videoDTO the videoDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new videoDTO, or with status {@code 400 (Bad Request)} if the video has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/videos")
-    public ResponseEntity<Video> createVideo(@Valid @RequestBody Video video) throws URISyntaxException {
-        log.debug("REST request to save Video : {}", video);
-        if (video.getId() != null) {
+    public ResponseEntity<VideoDTO> createVideo(@Valid @RequestBody VideoDTO videoDTO) throws URISyntaxException {
+        log.debug("REST request to save Video : {}", videoDTO);
+        if (videoDTO.getId() != null) {
             throw new BadRequestAlertException("A new video cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Video result = videoService.save(video);
+        VideoDTO result = videoService.save(videoDTO);
         return ResponseEntity.created(new URI("/api/videos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -60,21 +60,21 @@ public class VideoResource {
     /**
      * {@code PUT  /videos} : Updates an existing video.
      *
-     * @param video the video to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated video,
-     * or with status {@code 400 (Bad Request)} if the video is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the video couldn't be updated.
+     * @param videoDTO the videoDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated videoDTO,
+     * or with status {@code 400 (Bad Request)} if the videoDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the videoDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/videos")
-    public ResponseEntity<Video> updateVideo(@Valid @RequestBody Video video) throws URISyntaxException {
-        log.debug("REST request to update Video : {}", video);
-        if (video.getId() == null) {
+    public ResponseEntity<VideoDTO> updateVideo(@Valid @RequestBody VideoDTO videoDTO) throws URISyntaxException {
+        log.debug("REST request to update Video : {}", videoDTO);
+        if (videoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Video result = videoService.save(video);
+        VideoDTO result = videoService.save(videoDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, video.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, videoDTO.getId().toString()))
             .body(result);
     }
 
@@ -83,9 +83,8 @@ public class VideoResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of videos in body.
      */
-    @CrossOrigin
     @GetMapping("/videos")
-    public List<Video> getAllVideos() {
+    public List<VideoDTO> getAllVideos() {
         log.debug("REST request to get all Videos");
         return videoService.findAll();
     }
@@ -93,21 +92,20 @@ public class VideoResource {
     /**
      * {@code GET  /videos/:id} : get the "id" video.
      *
-     * @param id the id of the video to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the video, or with status {@code 404 (Not Found)}.
+     * @param id the id of the videoDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the videoDTO, or with status {@code 404 (Not Found)}.
      */
-    @CrossOrigin
     @GetMapping("/videos/{id}")
-    public ResponseEntity<Video> getVideo(@PathVariable Long id) {
+    public ResponseEntity<VideoDTO> getVideo(@PathVariable Long id) {
         log.debug("REST request to get Video : {}", id);
-        Optional<Video> video = videoService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(video);
+        Optional<VideoDTO> videoDTO = videoService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(videoDTO);
     }
 
     /**
      * {@code DELETE  /videos/:id} : delete the "id" video.
      *
-     * @param id the id of the video to delete.
+     * @param id the id of the videoDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/videos/{id}")

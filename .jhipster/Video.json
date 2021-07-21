@@ -5,20 +5,17 @@
       "fieldName": "url",
       "fieldType": "String",
       "fieldValidateRules": ["required", "unique"]
-    }
-  ],
-  "relationships": [
+    },
     {
-      "relationshipType": "many-to-one",
-      "otherEntityName": "serviceItem",
-      "otherEntityRelationshipName": "relatedVideos",
-      "relationshipName": "serviceItem",
-      "otherEntityField": "id"
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
     }
   ],
+  "relationships": [],
   "changelogDate": "20210508061749",
   "entityTableName": "video",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,

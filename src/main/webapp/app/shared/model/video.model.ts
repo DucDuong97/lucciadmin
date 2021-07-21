@@ -1,9 +1,7 @@
-import { IServiceItem } from 'app/shared/model/service-item.model';
-
 export interface IVideo {
   id?: number;
   url?: string;
-  serviceItem?: IServiceItem;
+  name?: string;
 }
 
 export const defaultValue: Readonly<IVideo> = {};

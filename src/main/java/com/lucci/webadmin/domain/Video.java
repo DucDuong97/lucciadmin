@@ -1,6 +1,5 @@
 package com.lucci.webadmin.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,9 +27,9 @@ public class Video implements Serializable {
     @Column(name = "url", nullable = false, unique = true)
     private String url;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = "relatedVideos", allowSetters = true)
-    private ServiceItem serviceItem;
+    @NotNull
+    @Column(name = "name", nullable = false, unique = true)
+    private String name;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -54,17 +53,17 @@ public class Video implements Serializable {
         this.url = url;
     }
 
-    public ServiceItem getServiceItem() {
-        return serviceItem;
+    public String getName() {
+        return name;
     }
 
-    public Video serviceItem(ServiceItem serviceItem) {
-        this.serviceItem = serviceItem;
+    public Video name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setServiceItem(ServiceItem serviceItem) {
-        this.serviceItem = serviceItem;
+    public void setName(String name) {
+        this.name = name;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
@@ -90,6 +89,7 @@ public class Video implements Serializable {
         return "Video{" +
             "id=" + getId() +
             ", url='" + getUrl() + "'" +
+            ", name='" + getName() + "'" +
             "}";
     }
 }
