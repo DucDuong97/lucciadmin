@@ -9,7 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link ServiceItem} and its DTO {@link ServiceItemDTO}.
  */
-@Mapper(componentModel = "spring", uses = {ImgUrlMapper.class})
+@Mapper(componentModel = "spring", uses = {ImgUrlMapper.class, VideoMapper.class})
 public interface ServiceItemMapper extends EntityMapper<ServiceItemDTO, ServiceItem> {
 
     @Mapping(source = "icon.id", target = "iconId")
@@ -22,7 +22,6 @@ public interface ServiceItemMapper extends EntityMapper<ServiceItemDTO, ServiceI
     @Mapping(target = "removeProcesses", ignore = true)
     @Mapping(target = "relatedBlogs", ignore = true)
     @Mapping(target = "removeRelatedBlogs", ignore = true)
-    @Mapping(target = "relatedVideos", ignore = true)
     @Mapping(target = "removeRelatedVideos", ignore = true)
     @Mapping(target = "pricingCards", ignore = true)
     @Mapping(target = "removePricingCards", ignore = true)

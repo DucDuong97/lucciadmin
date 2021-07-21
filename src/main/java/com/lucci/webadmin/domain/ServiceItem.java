@@ -51,8 +51,11 @@ public class ServiceItem implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Blog> relatedBlogs = new HashSet<>();
 
-    @OneToMany(mappedBy = "serviceItem")
+    @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JoinTable(name = "service_item_related_videos",
+               joinColumns = @JoinColumn(name = "service_item_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "related_videos_id", referencedColumnName = "id"))
     private Set<Video> relatedVideos = new HashSet<>();
 
     @OneToMany(mappedBy = "serviceItem")
@@ -62,6 +65,7 @@ public class ServiceItem implements Serializable {
     @PreRemove
     private void preRemove() {
         customerImgUrls.clear();
+        relatedVideos.clear();
         processes.forEach(item -> item.setServiceItem(null));
         relatedBlogs.forEach(item -> item.setServiceItem(null));
         pricingCards.forEach(item -> item.setServiceItem(null));

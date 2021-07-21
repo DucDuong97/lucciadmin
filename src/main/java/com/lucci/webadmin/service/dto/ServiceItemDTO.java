@@ -9,7 +9,7 @@ import java.util.Set;
  * A DTO for the {@link com.lucci.webadmin.domain.ServiceItem} entity.
  */
 public class ServiceItemDTO implements Serializable {
-
+    
     private Long id;
 
     @NotNull
@@ -22,7 +22,8 @@ public class ServiceItemDTO implements Serializable {
 
     private String iconName;
     private Set<ImgUrlDTO> customerImgUrls = new HashSet<>();
-
+    private Set<VideoDTO> relatedVideos = new HashSet<>();
+    
     public Long getId() {
         return id;
     }
@@ -71,6 +72,14 @@ public class ServiceItemDTO implements Serializable {
         this.customerImgUrls = imgUrls;
     }
 
+    public Set<VideoDTO> getRelatedVideos() {
+        return relatedVideos;
+    }
+
+    public void setRelatedVideos(Set<VideoDTO> videos) {
+        this.relatedVideos = videos;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -98,6 +107,7 @@ public class ServiceItemDTO implements Serializable {
             ", iconId=" + getIconId() +
             ", iconName='" + getIconName() + "'" +
             ", customerImgUrls='" + getCustomerImgUrls() + "'" +
+            ", relatedVideos='" + getRelatedVideos() + "'" +
             "}";
     }
 }

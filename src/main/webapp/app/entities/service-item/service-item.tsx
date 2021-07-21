@@ -45,6 +45,12 @@ export const ServiceItem = (props: IServiceItemProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.serviceItem.icon">Icon</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Img Urls</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.serviceItem.relatedVideos">Related Videos</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -59,7 +65,26 @@ export const ServiceItem = (props: IServiceItemProps) => {
                   <td>{serviceItem.name}</td>
                   <td>{serviceItem.description}</td>
                   <td>{serviceItem.iconName ? <Link to={`img-url/${serviceItem.iconId}`}>{serviceItem.iconName}</Link> : ''}</td>
-
+                  <td>
+                    {serviceItem.customerImgUrls
+                      ? serviceItem.customerImgUrls.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`img-url/${val.id}`}>{val.name}</Link>
+                            {j === serviceItem.customerImgUrls.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
+                  <td>
+                    {serviceItem.relatedVideos
+                      ? serviceItem.relatedVideos.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`video/${val.id}`}>{val.name}</Link>
+                            {j === serviceItem.relatedVideos.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${serviceItem.id}`} color="info" size="sm">

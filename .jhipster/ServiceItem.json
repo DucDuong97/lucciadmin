@@ -24,6 +24,7 @@
       "relationshipType": "many-to-many",
       "otherEntityName": "imgUrl",
       "relationshipName": "customerImgUrls",
+      "otherEntityRelationshipName": "serviceItem",
       "otherEntityField": "name",
       "ownerSide": true
     },
@@ -40,10 +41,12 @@
       "relationshipName": "relatedBlogs"
     },
     {
-      "relationshipType": "one-to-many",
+      "relationshipType": "many-to-many",
       "otherEntityName": "video",
+      "relationshipName": "relatedVideos",
       "otherEntityRelationshipName": "serviceItem",
-      "relationshipName": "relatedVideos"
+      "otherEntityField": "name",
+      "ownerSide": true
     },
     {
       "relationshipType": "one-to-many",

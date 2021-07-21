@@ -41,6 +41,32 @@ export const ServiceItemDetail = (props: IServiceItemDetailProps) => {
             <Translate contentKey="lucciadminApp.serviceItem.icon">Icon</Translate>
           </dt>
           <dd>{serviceItemEntity.iconName ? serviceItemEntity.iconName : ''}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Img Urls</Translate>
+          </dt>
+          <dd>
+            {serviceItemEntity.customerImgUrls
+              ? serviceItemEntity.customerImgUrls.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.name}</a>
+                    {serviceItemEntity.customerImgUrls && i === serviceItemEntity.customerImgUrls.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.serviceItem.relatedVideos">Related Videos</Translate>
+          </dt>
+          <dd>
+            {serviceItemEntity.relatedVideos
+              ? serviceItemEntity.relatedVideos.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.name}</a>
+                    {serviceItemEntity.relatedVideos && i === serviceItemEntity.relatedVideos.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/service-item" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

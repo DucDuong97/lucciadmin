@@ -9,8 +9,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IImgUrl } from 'app/shared/model/img-url.model';
 import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
+import { IVideo } from 'app/shared/model/video.model';
 import { getEntities as getVideos } from 'app/entities/video/video.reducer';
-
 import { getEntity, updateEntity, createEntity, reset } from './service-item.reducer';
 import { IServiceItem } from 'app/shared/model/service-item.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -23,13 +23,14 @@ export interface IServiceItemUpdateProps extends StateProps, DispatchProps, Rout
 
 export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
   const [idscustomerImgUrls, setIdscustomerImgUrls] = useState([]);
+  const [idsrelatedVideos, setIdsrelatedVideos] = useState([]);
   const [iconId, setIconId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { serviceItemEntity, imgUrls, loading, updating } = props;
+  const { serviceItemEntity, imgUrls, videos, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.goBack();
+    props.history.push('/service-item');
   };
 
   useEffect(() => {
@@ -65,7 +66,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
         ...serviceItemEntity,
         ...values,
         customerImgUrls: mapIdList(values.customerImgUrls),
-        relatedVideos:   mapIdList(values.relatedVideos),
+        relatedVideos: mapIdList(values.relatedVideos),
         file
       };
 
@@ -147,30 +148,35 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                   <option value="" key="0" />
                   {imgUrls
                     ? imgUrls.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.name}
-                      </option>
-                    ))
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
                     : null}
                 </AvInput>
               </AvGroup>
               <AvGroup>
-                <Label for="relatedVideos">
-                  <Translate contentKey="lucciadminApp.serviceItem.relatedVideos">Realated Videos</Translate>
+                <Label for="service-item-relatedVideos">
+                  <Translate contentKey="lucciadminApp.serviceItem.relatedVideos">Related Videos</Translate>
                 </Label>
-                <AvInput type="select" className="form-control"
-                         name="relatedVideos" value={serviceItemEntity.relatedVideos ? serviceItemEntity.relatedVideos.map(video => video.id) : []}
-                         multiple>
-                  {props.videos
-                    ? props.videos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.url}
-                      </option>
-                    ))
+                <AvInput
+                  id="service-item-relatedVideos"
+                  type="select"
+                  multiple
+                  className="form-control"
+                  name="relatedVideos"
+                  value={serviceItemEntity.relatedVideos && serviceItemEntity.relatedVideos.map(e => e.id)}
+                >
+                  <option value="" key="0" />
+                  {videos
+                    ? videos.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
                     : null}
                 </AvInput>
               </AvGroup>
-
               <Button tag={Link} id="cancel-save" to="/service-item" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

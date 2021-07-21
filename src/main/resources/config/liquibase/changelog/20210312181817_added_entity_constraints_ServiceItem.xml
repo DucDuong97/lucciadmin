@@ -27,16 +27,16 @@
                                  referencedTableName="img_url"/>
         
         <addForeignKeyConstraint baseColumnNames="service_item_id"
-                                 baseTableName="service_item_customer_img_urls"
-                                 constraintName="fk_service_item_customer_img_urls_service_item_id"
+                                 baseTableName="service_item_related_videos"
+                                 constraintName="fk_service_item_related_videos_service_item_id"
                                  referencedColumnNames="id"
                                  referencedTableName="service_item"/>
 
-        <addForeignKeyConstraint baseColumnNames="customer_img_urls_id"
-                                 baseTableName="service_item_customer_img_urls"
-                                 constraintName="fk_service_item_customer_img_urls_customer_img_urls_id"
+        <addForeignKeyConstraint baseColumnNames="related_videos_id"
+                                 baseTableName="service_item_related_videos"
+                                 constraintName="fk_service_item_related_videos_related_videos_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="img_url"/>
+                                 referencedTableName="video"/>
         
     </changeSet>
 </databaseChangeLog>

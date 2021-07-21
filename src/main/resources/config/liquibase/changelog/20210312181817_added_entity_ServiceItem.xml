@@ -41,8 +41,8 @@
 
         <addPrimaryKey columnNames="service_item_id, customer_img_urls_id" tableName="service_item_customer_img_urls"/>
         
-        <createTable tableName="service_item_customer_img_urls">
-            <column name="customer_img_urls_id" type="bigint">
+        <createTable tableName="service_item_related_videos">
+            <column name="related_videos_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="service_item_id" type="bigint">
@@ -50,7 +50,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="service_item_id, customer_img_urls_id" tableName="service_item_customer_img_urls"/>
+        <addPrimaryKey columnNames="service_item_id, related_videos_id" tableName="service_item_related_videos"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

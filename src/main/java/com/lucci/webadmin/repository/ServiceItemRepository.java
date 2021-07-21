@@ -17,13 +17,13 @@ import java.util.Optional;
 @Repository
 public interface ServiceItemRepository extends JpaRepository<ServiceItem, Long> {
 
-    @Query(value = "select distinct serviceItem from ServiceItem serviceItem left join fetch serviceItem.customerImgUrls left join fetch serviceItem.customerImgUrls",
+    @Query(value = "select distinct serviceItem from ServiceItem serviceItem left join fetch serviceItem.customerImgUrls left join fetch serviceItem.relatedVideos",
         countQuery = "select count(distinct serviceItem) from ServiceItem serviceItem")
     Page<ServiceItem> findAllWithEagerRelationships(Pageable pageable);
 
-    @Query("select distinct serviceItem from ServiceItem serviceItem left join fetch serviceItem.customerImgUrls left join fetch serviceItem.customerImgUrls")
+    @Query("select distinct serviceItem from ServiceItem serviceItem left join fetch serviceItem.customerImgUrls left join fetch serviceItem.relatedVideos")
     List<ServiceItem> findAllWithEagerRelationships();
 
-    @Query("select serviceItem from ServiceItem serviceItem left join fetch serviceItem.customerImgUrls left join fetch serviceItem.customerImgUrls where serviceItem.id =:id")
+    @Query("select serviceItem from ServiceItem serviceItem left join fetch serviceItem.customerImgUrls left join fetch serviceItem.relatedVideos where serviceItem.id =:id")
     Optional<ServiceItem> findOneWithEagerRelationships(@Param("id") Long id);
 }
