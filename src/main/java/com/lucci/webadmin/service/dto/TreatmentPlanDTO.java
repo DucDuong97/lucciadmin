@@ -2,12 +2,13 @@ package com.lucci.webadmin.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * A DTO for the {@link com.lucci.webadmin.domain.TreatmentPlan} entity.
  */
 public class TreatmentPlanDTO implements Serializable {
-    
+
     private Long id;
 
     private String presentComplaint;
@@ -24,7 +25,9 @@ public class TreatmentPlanDTO implements Serializable {
     private Long serviceId;
 
     private String serviceName;
-    
+
+    private List<TreatmentDTO> treatments;
+
     public Long getId() {
         return id;
     }
@@ -87,6 +90,14 @@ public class TreatmentPlanDTO implements Serializable {
 
     public void setServiceName(String pricingCardName) {
         this.serviceName = pricingCardName;
+    }
+
+    public List<TreatmentDTO> getTreatments() {
+        return treatments;
+    }
+
+    public void setTreatments(List<TreatmentDTO> treatments) {
+        this.treatments = treatments;
     }
 
     @Override

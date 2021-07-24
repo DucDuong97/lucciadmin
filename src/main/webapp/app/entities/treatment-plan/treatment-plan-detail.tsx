@@ -52,6 +52,19 @@ export const TreatmentPlanDetail = (props: ITreatmentPlanDetailProps) => {
           </dt>
           <dd>{treatmentPlanEntity.serviceName ? treatmentPlanEntity.serviceName : ''}</dd>
         </dl>
+        <dt>
+          <Translate contentKey="lucciadminApp.treatmentPlan.treatment">Treatment</Translate>
+        </dt>
+        <dd>
+          {treatmentPlanEntity.treatments
+            ? treatmentPlanEntity.treatments.map((val, i) => (
+              <span key={val.id}>
+                <Link to={`/treatment/${val.id}`}>{val.date}</Link>
+                {treatmentPlanEntity.treatments && i === treatmentPlanEntity.treatments.length - 1 ? '' : ', '}
+                  </span>
+            ))
+            : null}
+        </dd>
         <Button tag={Link} to="/treatment-plan" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
