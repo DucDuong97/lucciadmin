@@ -16,7 +16,7 @@
       "relationshipName": "branch",
       "otherEntityField": "adress",
       "ownerSide": true,
-      "fieldValidateRules": ["required"],
+      "relationshipValidateRules": ["required"],
       "otherEntityRelationshipName": "consult"
     },
     {

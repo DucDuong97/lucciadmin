@@ -12,7 +12,7 @@ import { getEntities as getCustomers } from 'app/entities/customer/customer.redu
 import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
-import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
+import { getDoctorsAtBranch as getDoctorsAtBranch } from 'app/entities/employee/employee.reducer';
 import { IPricingCard } from 'app/shared/model/pricing-card.model';
 import { getEntities as getPricingCards } from 'app/entities/pricing-card/pricing-card.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './consult.reducer';
@@ -44,7 +44,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
     if (props.isConsultant) {
       props.getCustomers();
       props.getBranches();
-      props.getEmployees();
+      props.getDoctorsAtBranch(props.consultEntity.branchId);
     }
     props.getPricingCards();
   }, []);
@@ -125,11 +125,11 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                   <Label for="consult-customer">
                     <Translate contentKey="lucciadminApp.consult.customer">Customer</Translate>
                   </Label>
-                  <AvInput id="consult-customer" type="select" className="form-control" name="customerId" required>
+                  <AvInput id="consult-customer" type="select" className="form-control" name="customerId" disabled={!isNew} required>
                     {customers
                       ? customers.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            `{otherEntity.name} - {otherEntity.id}`
+                            {`${otherEntity.name} - ${otherEntity.id}`}
                           </option>
                         ))
                       : null}
@@ -142,7 +142,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                 <Label for="consult-branch">
                 <Translate contentKey="lucciadminApp.consult.branch">Branch</Translate>
                 </Label>
-                <AvInput id="consult-branch" type="select" className="form-control" name="branchId">
+                <AvInput id="consult-branch" type="select" className="form-control" name="branchId" disabled={!isNew}>
                 <option value="" key="0" />
                 {branches
                   ? branches.map(otherEntity => (
@@ -157,12 +157,12 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                   <Label for="consult-consultingDoctor">
                     <Translate contentKey="lucciadminApp.consult.consultingDoctor">Consulting Doctor</Translate>
                   </Label>
-                  <AvInput id="consult-consultingDoctor" type="select" className="form-control" name="consultingDoctorId">
+                  <AvInput id="consult-consultingDoctor" type="select" className="form-control" name="consultingDoctorId" disabled={isNew}>
                     <option value="" key="0" />
                     {employees
                       ? employees.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            `{otherEntity.name} - {otherEntity.id}`
+                            {`${otherEntity.name} - ${otherEntity.id}`}
                           </option>
                         ))
                       : null}
@@ -231,7 +231,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getCustomers,
   getBranches,
-  getEmployees,
+  getDoctorsAtBranch,
   getPricingCards,
   getEntity,
   updateEntity,

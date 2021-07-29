@@ -69,7 +69,7 @@ export const Consult = (props: IConsultProps) => {
     <div>
       <h2 id="consult-heading">
         <Translate contentKey="lucciadminApp.consult.home.title">Consults</Translate>
-        {props.isConsultant &&
+        {props.createPermission &&
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
@@ -142,7 +142,7 @@ export const Consult = (props: IConsultProps) => {
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
                       </Button>
-                      {props.isConsultant &&
+                      {props.deletePermission &&
                         <Button
                           tag={Link}
                           to={`${match.url}/${consult.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -196,7 +196,8 @@ const mapStateToProps = ({ consult, authentication }: IRootState) => ({
   loading: consult.loading,
   totalItems: consult.totalItems,
 
-  isConsultant: authentication.isConsultant,
+  createPermission: authentication.isConsultant,
+  deletePermission: authentication.isConsultant,
 });
 
 const mapDispatchToProps = {
