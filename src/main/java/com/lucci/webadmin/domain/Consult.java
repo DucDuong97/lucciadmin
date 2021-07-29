@@ -41,6 +41,10 @@ public class Consult implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties(value = "consults", allowSetters = true)
+    private Branch branch;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = "consults", allowSetters = true)
     private Employee consultingDoctor;
 
     @ManyToMany
@@ -96,6 +100,19 @@ public class Consult implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public Consult branch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
     }
 
     public Employee getConsultingDoctor() {

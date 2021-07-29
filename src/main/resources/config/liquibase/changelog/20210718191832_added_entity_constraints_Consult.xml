@@ -14,6 +14,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="customer"/>
 
+        <addForeignKeyConstraint baseColumnNames="branch_id"
+                                 baseTableName="consult"
+                                 constraintName="fk_consult_branch_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="branch"/>
+
         <addForeignKeyConstraint baseColumnNames="consulting_doctor_id"
                                  baseTableName="consult"
                                  constraintName="fk_consult_consulting_doctor_id"

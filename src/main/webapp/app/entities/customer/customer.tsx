@@ -196,7 +196,7 @@ const mapStateToProps = ({ customer, authentication }: IRootState) => ({
   totalItems: customer.totalItems,
   createPermission: authentication.isConsultant,
   viewPermission: authentication.isReceptionist || authentication.isConsultant,
-  editPermission: authentication.isReceptionist || authentication.isConsultant,
+  editPermission: authentication.isReceptionist,
   deletePermission: authentication.isAdmin,
 });
 

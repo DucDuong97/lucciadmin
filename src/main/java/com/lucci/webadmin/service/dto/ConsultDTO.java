@@ -23,6 +23,10 @@ public class ConsultDTO implements Serializable {
 
     private String customerName;
 
+    private Long branchId;
+
+    private String branchAdress;
+
     private Long consultingDoctorId;
 
     private String consultingDoctorName;
@@ -66,6 +70,22 @@ public class ConsultDTO implements Serializable {
 
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
+    }
+
+    public Long getBranchId() {
+        return branchId;
+    }
+
+    public void setBranchId(Long branchId) {
+        this.branchId = branchId;
+    }
+
+    public String getBranchAdress() {
+        return branchAdress;
+    }
+
+    public void setBranchAdress(String branchAdress) {
+        this.branchAdress = branchAdress;
     }
 
     public Long getConsultingDoctorId() {
@@ -118,6 +138,8 @@ public class ConsultDTO implements Serializable {
             ", note='" + getNote() + "'" +
             ", customerId=" + getCustomerId() +
             ", customerName='" + getCustomerName() + "'" +
+            ", branchId=" + getBranchId() +
+            ", branchAdress='" + getBranchAdress() + "'" +
             ", consultingDoctorId=" + getConsultingDoctorId() +
             ", consultingDoctorName='" + getConsultingDoctorName() + "'" +
             ", services='" + getServices() + "'" +

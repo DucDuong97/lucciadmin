@@ -42,6 +42,10 @@ export const ConsultDetail = (props: IConsultDetailProps) => {
           </dt>
           <dd>{consultEntity.customerName ? consultEntity.customerName : ''}</dd>
           <dt>
+            <Translate contentKey="lucciadminApp.consult.branch">Branch</Translate>
+          </dt>
+          <dd>{consultEntity.branchAdress ? consultEntity.branchAdress : ''}</dd>
+          <dt>
             <Translate contentKey="lucciadminApp.consult.consultingDoctor">Consulting Doctor</Translate>
           </dt>
           <dd>{consultEntity.consultingDoctorName ? consultEntity.consultingDoctorName : ''}</dd>

@@ -7,6 +7,8 @@ export interface IConsult {
   note?: string;
   customerName?: string;
   customerId?: number;
+  branchAdress?: string;
+  branchId?: number;
   consultingDoctorName?: string;
   consultingDoctorId?: number;
   services?: IPricingCard[];

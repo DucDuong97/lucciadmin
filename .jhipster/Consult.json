@@ -11,6 +11,15 @@
       "otherEntityRelationshipName": "consult"
     },
     {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "branch",
+      "relationshipName": "branch",
+      "otherEntityField": "adress",
+      "ownerSide": true,
+      "fieldValidateRules": ["required"],
+      "otherEntityRelationshipName": "consult"
+    },
+    {
       "relationshipName": "consultingDoctor",
       "otherEntityName": "employee",
       "relationshipType": "many-to-one",
@@ -41,7 +50,7 @@
   "changelogDate": "20210718191832",
   "dto": "mapstruct",
   "searchEngine": false,
-  "service": "serviceClass",
+  "service": "serviceImpl",
   "entityTableName": "consult",
   "databaseType": "sql",
   "readOnly": false,

@@ -95,6 +95,9 @@ export const Consult = (props: IConsultProps) => {
                   <Translate contentKey="lucciadminApp.consult.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  <Translate contentKey="lucciadminApp.consult.branch">Branch</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   <Translate contentKey="lucciadminApp.consult.consultingDoctor">Consulting Doctor</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
                 </th>
@@ -112,6 +115,7 @@ export const Consult = (props: IConsultProps) => {
                   <td>{consult.time ? <TextFormat type="date" value={consult.time} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{consult.note}</td>
                   <td>{consult.customerName ? <Link to={`customer/${consult.customerId}`}>{consult.customerName}</Link> : ''}</td>
+                  <td>{consult.branchAdress ? <Link to={`branch/${consult.branchId}`}>{consult.branchAdress}</Link> : ''}</td>
                   <td>
                     {consult.consultingDoctorName ? (
                       <Link to={`employee/${consult.consultingDoctorId}`}>{consult.consultingDoctorName}</Link>

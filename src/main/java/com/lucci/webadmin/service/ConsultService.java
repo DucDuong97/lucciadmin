@@ -1,36 +1,16 @@
 package com.lucci.webadmin.service;
 
-import com.lucci.webadmin.domain.Consult;
-import com.lucci.webadmin.repository.ConsultRepository;
 import com.lucci.webadmin.service.dto.ConsultDTO;
-import com.lucci.webadmin.service.mapper.ConsultMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 /**
- * Service Implementation for managing {@link Consult}.
+ * Service Interface for managing {@link com.lucci.webadmin.domain.Consult}.
  */
-@Service
-@Transactional
-public class ConsultService {
-
-    private final Logger log = LoggerFactory.getLogger(ConsultService.class);
-
-    private final ConsultRepository consultRepository;
-
-    private final ConsultMapper consultMapper;
-
-    public ConsultService(ConsultRepository consultRepository, ConsultMapper consultMapper) {
-        this.consultRepository = consultRepository;
-        this.consultMapper = consultMapper;
-    }
+public interface ConsultService {
 
     /**
      * Save a consult.
@@ -38,12 +18,7 @@ public class ConsultService {
      * @param consultDTO the entity to save.
      * @return the persisted entity.
      */
-    public ConsultDTO save(ConsultDTO consultDTO) {
-        log.debug("Request to save Consult : {}", consultDTO);
-        Consult consult = consultMapper.toEntity(consultDTO);
-        consult = consultRepository.save(consult);
-        return consultMapper.toDto(consult);
-    }
+    ConsultDTO save(ConsultDTO consultDTO);
 
     /**
      * Get all the consults.
@@ -51,43 +26,28 @@ public class ConsultService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    @Transactional(readOnly = true)
-    public Page<ConsultDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Consults");
-        return consultRepository.findAllWithAuthority(pageable)
-            .map(consultMapper::toDto);
-    }
-
+    Page<ConsultDTO> findAll(Pageable pageable);
 
     /**
      * Get all the consults with eager load of many-to-many relationships.
      *
      * @return the list of entities.
      */
-    public Page<ConsultDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return consultRepository.findAllWithEagerRelationships(pageable).map(consultMapper::toDto);
-    }
+    Page<ConsultDTO> findAllWithEagerRelationships(Pageable pageable);
+
 
     /**
-     * Get one consult by id.
+     * Get the "id" consult.
      *
      * @param id the id of the entity.
      * @return the entity.
      */
-    @Transactional(readOnly = true)
-    public Optional<ConsultDTO> findOne(Long id) {
-        log.debug("Request to get Consult : {}", id);
-        return consultRepository.findOneWithEagerRelationships(id)
-            .map(consultMapper::toDto);
-    }
+    Optional<ConsultDTO> findOne(Long id);
 
     /**
-     * Delete the consult by id.
+     * Delete the "id" consult.
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
-        log.debug("Request to delete Consult : {}", id);
-        consultRepository.deleteById(id);
-    }
+    void delete(Long id);
 }

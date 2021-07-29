@@ -9,6 +9,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { ICustomer } from 'app/shared/model/customer.model';
 import { getEntities as getCustomers } from 'app/entities/customer/customer.reducer';
+import { IBranch } from 'app/shared/model/branch.model';
+import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { IPricingCard } from 'app/shared/model/pricing-card.model';
@@ -23,10 +25,11 @@ export interface IConsultUpdateProps extends StateProps, DispatchProps, RouteCom
 export const ConsultUpdate = (props: IConsultUpdateProps) => {
   const [idsservice, setIdsservice] = useState([]);
   const [customerId, setCustomerId] = useState('0');
+  const [branchId, setBranchId] = useState('0');
   const [consultingDoctorId, setConsultingDoctorId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { consultEntity, customers, employees, pricingCards, loading, updating } = props;
+  const { consultEntity, customers, branches, employees, pricingCards, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/consult' + props.location.search);
@@ -40,6 +43,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
     }
     if (props.isConsultant) {
       props.getCustomers();
+      props.getBranches();
       props.getEmployees();
     }
     props.getPricingCards();
@@ -116,6 +120,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                 <AvField id="consult-note" type="textarea" name="note" />
               </AvGroup>
               {props.isConsultant &&
+                <>
                 <AvGroup>
                   <Label for="consult-customer">
                     <Translate contentKey="lucciadminApp.consult.customer">Customer</Translate>
@@ -124,7 +129,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                     {customers
                       ? customers.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.name}
+                            `{otherEntity.name} - {otherEntity.id}`
                           </option>
                         ))
                       : null}
@@ -133,8 +138,21 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                     <Translate contentKey="entity.validation.required">This field is required.</Translate>
                   </AvFeedback>
                 </AvGroup>
-              }
-              {props.isConsultant &&
+                <AvGroup>
+                <Label for="consult-branch">
+                <Translate contentKey="lucciadminApp.consult.branch">Branch</Translate>
+                </Label>
+                <AvInput id="consult-branch" type="select" className="form-control" name="branchId">
+                <option value="" key="0" />
+                {branches
+                  ? branches.map(otherEntity => (
+                    <option value={otherEntity.id} key={otherEntity.id}>
+                      {otherEntity.adress}
+                    </option>
+                  ))
+                : null}
+                </AvInput>
+                </AvGroup>
                 <AvGroup>
                   <Label for="consult-consultingDoctor">
                     <Translate contentKey="lucciadminApp.consult.consultingDoctor">Consulting Doctor</Translate>
@@ -144,12 +162,13 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                     {employees
                       ? employees.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.name}
+                            `{otherEntity.name} - {otherEntity.id}`
                           </option>
                         ))
                       : null}
                   </AvInput>
                 </AvGroup>
+                </>
               }
               <AvGroup>
                 <Label for="consult-service">
@@ -197,6 +216,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   customers: storeState.customer.entities,
+  branches: storeState.branch.entities,
   employees: storeState.employee.entities,
   pricingCards: storeState.pricingCard.entities,
   consultEntity: storeState.consult.entity,
@@ -210,6 +230,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getCustomers,
+  getBranches,
   getEmployees,
   getPricingCards,
   getEntity,

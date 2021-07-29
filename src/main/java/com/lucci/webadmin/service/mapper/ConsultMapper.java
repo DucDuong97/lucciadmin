@@ -9,16 +9,19 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link Consult} and its DTO {@link ConsultDTO}.
  */
-@Mapper(componentModel = "spring", uses = {CustomerMapper.class, EmployeeMapper.class, PricingCardMapper.class})
+@Mapper(componentModel = "spring", uses = {CustomerMapper.class, BranchMapper.class, EmployeeMapper.class, PricingCardMapper.class})
 public interface ConsultMapper extends EntityMapper<ConsultDTO, Consult> {
 
     @Mapping(source = "customer.id", target = "customerId")
     @Mapping(source = "customer.name", target = "customerName")
+    @Mapping(source = "branch.id", target = "branchId")
+    @Mapping(source = "branch.adress", target = "branchAdress")
     @Mapping(source = "consultingDoctor.id", target = "consultingDoctorId")
     @Mapping(source = "consultingDoctor.name", target = "consultingDoctorName")
     ConsultDTO toDto(Consult consult);
 
     @Mapping(source = "customerId", target = "customer")
+    @Mapping(source = "branchId", target = "branch")
     @Mapping(source = "consultingDoctorId", target = "consultingDoctor")
     @Mapping(target = "removeService", ignore = true)
     Consult toEntity(ConsultDTO consultDTO);

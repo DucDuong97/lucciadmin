@@ -19,6 +19,7 @@
       "time": "Thời gian",
       "note": "Ghi chú",
       "customer": "Khách hàng",
+      "branch": "Cơ sở",
       "consultingDoctor": "Bác sỹ tư vấn",
       "service": "Dịch vụ tư vấn"
     }
