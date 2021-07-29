@@ -98,6 +98,14 @@ public class EmployeeResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/employees/as-doctor")
+    public ResponseEntity<List<EmployeeDTO>> getDoctorsAtBranch(Pageable pageable, Long branchId) {
+        log.debug("REST request to get a page of Employees");
+        Page<EmployeeDTO> page = employeeService.findDoctorAtBranch(pageable, branchId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
     /**
      * {@code GET  /employees/:id} : get the "id" employee.
      *

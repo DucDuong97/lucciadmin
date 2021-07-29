@@ -43,4 +43,6 @@ public interface EmployeeService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Page<EmployeeDTO> findDoctorAtBranch(Pageable pageable, Long branchId);
 }

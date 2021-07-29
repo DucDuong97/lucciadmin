@@ -114,6 +114,11 @@ export const getDoctorsForBooking: ICrudGetAllAction<IEmployee> = (page, size, s
   payload: axios.get<IEmployee>(`${apiUrl}/as-doctor-for-booking?cacheBuster=${new Date().getTime()}`),
 });
 
+export const getDoctorsAtBranch = (branchId: number, page?: number, size?: number, sort?: string) => ({
+  type: ACTION_TYPES.FETCH_EMPLOYEE_LIST,
+  payload: axios.get<IEmployee>(`${apiUrl}/as-doctor/?branchId=${branchId}&cacheBuster=${new Date().getTime()}`),
+});
+
 export const getEntity: ICrudGetAction<IEmployee> = id => {
   const requestUrl = `${apiUrl}/${id}`;
   return {

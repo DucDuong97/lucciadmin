@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static com.lucci.webadmin.domain.enumeration.EmployeeRole.*;
+
 /**
  * Service Implementation for managing {@link Employee}.
  */
@@ -49,6 +51,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             .map(employeeMapper::toDto);
     }
 
+    @Override
+    public Page<EmployeeDTO> findDoctorAtBranch(Pageable pageable, Long branchId) {
+        log.debug("Request to get Doctors at Branch {}", branchId);
+        return employeeRepository.findByWorkAtIdAndRole(branchId, DOCTOR, pageable)
+            .map(employeeMapper::toDto);
+    }
 
     @Override
     @Transactional(readOnly = true)
