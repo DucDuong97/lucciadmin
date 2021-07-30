@@ -7,7 +7,7 @@
         Added the constraints for entity Booking.
     -->
     <changeSet id="20210628111350-2" author="jhipster">
-
+        
         <addForeignKeyConstraint baseColumnNames="correspond_doctor_id"
                                  baseTableName="booking"
                                  constraintName="fk_booking_correspond_doctor_id"
@@ -19,6 +19,12 @@
                                  constraintName="fk_booking_customer_id"
                                  referencedColumnNames="id"
                                  referencedTableName="customer"/>
+
+        <addForeignKeyConstraint baseColumnNames="treatment_plan_id"
+                                 baseTableName="booking"
+                                 constraintName="fk_booking_treatment_plan_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="treatment_plan"/>
 
         <addForeignKeyConstraint baseColumnNames="branch_id"
                                  baseTableName="booking"

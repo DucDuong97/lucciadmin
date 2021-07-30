@@ -48,6 +48,7 @@ public class BookingMapperImpl implements BookingMapper {
 
         bookingDTO.setCorrespondDoctorId( bookingCorrespondDoctorId( booking ) );
         bookingDTO.setCustomerId( bookingCustomerId( booking ) );
+        bookingDTO.setTreatmentPlanId( bookingTreatmentPlanId( booking ) );
         bookingDTO.setBranchId( bookingBranchId( booking ) );
         bookingDTO.setId( booking.getId() );
         bookingDTO.setDate( booking.getTime().toLocalDate() );
@@ -66,10 +67,20 @@ public class BookingMapperImpl implements BookingMapper {
         booking.setCorrespondDoctor( idToDoctor( bookingDTO.getCorrespondDoctorId() ) );
         booking.setCustomer( idToCustomer( bookingDTO.getCustomerId() ) );
         booking.setBranch( idToBranch( bookingDTO.getBranchId() ) );
+        booking.setTreatmentPlan( idToPlan( bookingDTO.getTreatmentPlanId() ) );
         booking.setId( bookingDTO.getId() );
         booking.setTime( ZonedDateTime.of(bookingDTO.getDate(), bookingDTO.getTime(), ZoneId.of("Asia/Ho_Chi_Minh")) );
 
         return booking;
+    }
+
+    private TreatmentPlan idToPlan(Long id) {
+        if (id == null) {
+            return null;
+        }
+        TreatmentPlan plan = new TreatmentPlan();
+        plan.setId(id);
+        return plan;
     }
 
     private Employee idToDoctor(Long id) {
@@ -119,6 +130,17 @@ public class BookingMapperImpl implements BookingMapper {
             return null;
         }
         return customer.getId();
+    }
+
+    private Long bookingTreatmentPlanId(Booking booking) {
+        if ( booking == null ) {
+            return null;
+        }
+        TreatmentPlan plan = booking.getTreatmentPlan();
+        if ( plan == null ) {
+            return null;
+        }
+        return plan.getId();
     }
 
     private Long bookingBranchId(Booking booking) {

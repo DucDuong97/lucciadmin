@@ -6,6 +6,7 @@ export interface IBooking {
   time?: string;
   correspondDoctorId?: number;
   customerId?: number;
+  treatmentPlanId?: number;
   branchId?: number;
 }
 

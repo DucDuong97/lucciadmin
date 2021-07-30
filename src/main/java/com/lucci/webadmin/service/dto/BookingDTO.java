@@ -23,6 +23,8 @@ public class BookingDTO implements Serializable {
 
     private Long customerId;
 
+    private Long treatmentPlanId;
+
     private Long branchId;
 
     public Long getId() {
@@ -65,6 +67,14 @@ public class BookingDTO implements Serializable {
         this.customerId = customerId;
     }
 
+    public Long getTreatmentPlanId() {
+        return treatmentPlanId;
+    }
+
+    public void setTreatmentPlanId(Long treatmentPlanId) {
+        this.treatmentPlanId = treatmentPlanId;
+    }
+
     public Long getBranchId() {
         return branchId;
     }
@@ -99,6 +109,7 @@ public class BookingDTO implements Serializable {
             ", time='" + getTime() + "'" +
             ", correspondDoctorId=" + getCorrespondDoctorId() +
             ", customerId=" + getCustomerId() +
+            ", treatmentPlanId=" + getTreatmentPlanId() +
             ", branchId=" + getBranchId() +
             "}";
     }

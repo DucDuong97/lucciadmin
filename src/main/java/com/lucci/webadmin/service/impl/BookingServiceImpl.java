@@ -45,7 +45,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional(readOnly = true)
     public Page<BookingDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Bookings");
-        return bookingRepository.findAllWithAuthority(pageable)
+        return bookingRepository.findAll(pageable)
             .map(bookingMapper::toDto);
     }
 
@@ -63,25 +63,4 @@ public class BookingServiceImpl implements BookingService {
         log.debug("Request to delete Booking : {}", id);
         bookingRepository.deleteById(id);
     }
-
-//    @Override
-//    public Page<BookingDTO> findWithEmployee(Pageable pageable) {
-//
-//        Employee employee = SecurityUtils.getCurrentUserLogin()
-//            .flatMap(employeeRepository::findByUsersLogin)
-//            .orElse(null);
-//
-//        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.BRANCH_BOSS_DOCTOR)) {
-//            assert employee != null;
-//            return bookingRepository.findByBranch(employee.getWorkAt(), pageable)
-//                .map(bookingMapper::toDto);
-//        }
-//        else if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.DOCTOR)) {
-//            return bookingRepository.findByCorrespondDoctor(employee, pageable)
-//                .map(bookingMapper::toDto);
-//        }
-//        else {
-//            return Page.empty();
-//        }
-//    }
 }

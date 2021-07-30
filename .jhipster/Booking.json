@@ -22,7 +22,16 @@
       "relationshipName": "customer",
       "otherEntityField": "id",
       "ownerSide": true,
-      "fieldValidateRules": ["required"],
+      "relationshipValidateRules": ["required"],
+      "otherEntityRelationshipName": "booking"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "treatmentPlan",
+      "relationshipName": "treatmentPlan",
+      "otherEntityField": "id",
+      "ownerSide": true,
+      "relationshipValidateRules": ["required"],
       "otherEntityRelationshipName": "booking"
     },
     {
@@ -31,7 +40,7 @@
       "relationshipName": "branch",
       "otherEntityField": "id",
       "ownerSide": true,
-      "fieldValidateRules": ["required"],
+      "relationshipValidateRules": ["required"],
       "otherEntityRelationshipName": "booking"
     }
   ],

@@ -20,6 +20,7 @@
       "time": "Giờ",
       "branch": "Cơ sở",
       "correspondDoctor": "Bác sỹ phụ trách",
+      "treatmentPlan": "Hồ sơ điều trị",
       "customer": "Khách hàng"
     }
   }

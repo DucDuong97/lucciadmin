@@ -2,6 +2,8 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Booking;
+import com.lucci.webadmin.domain.Customer;
+import com.lucci.webadmin.domain.TreatmentPlan;
 import com.lucci.webadmin.domain.Branch;
 import com.lucci.webadmin.repository.BookingRepository;
 import com.lucci.webadmin.service.BookingService;
@@ -68,6 +70,26 @@ public class BookingResourceIT {
         Booking booking = new Booking()
             .time(DEFAULT_TIME);
         // Add required entity
+        Customer customer;
+        if (TestUtil.findAll(em, Customer.class).isEmpty()) {
+            customer = CustomerResourceIT.createEntity(em);
+            em.persist(customer);
+            em.flush();
+        } else {
+            customer = TestUtil.findAll(em, Customer.class).get(0);
+        }
+        booking.setCustomer(customer);
+        // Add required entity
+        TreatmentPlan treatmentPlan;
+        if (TestUtil.findAll(em, TreatmentPlan.class).isEmpty()) {
+            treatmentPlan = TreatmentPlanResourceIT.createEntity(em);
+            em.persist(treatmentPlan);
+            em.flush();
+        } else {
+            treatmentPlan = TestUtil.findAll(em, TreatmentPlan.class).get(0);
+        }
+        booking.setTreatmentPlan(treatmentPlan);
+        // Add required entity
         Branch branch;
         if (TestUtil.findAll(em, Branch.class).isEmpty()) {
             branch = BranchResourceIT.createEntity(em);
@@ -88,6 +110,26 @@ public class BookingResourceIT {
     public static Booking createUpdatedEntity(EntityManager em) {
         Booking booking = new Booking()
             .time(UPDATED_TIME);
+        // Add required entity
+        Customer customer;
+        if (TestUtil.findAll(em, Customer.class).isEmpty()) {
+            customer = CustomerResourceIT.createUpdatedEntity(em);
+            em.persist(customer);
+            em.flush();
+        } else {
+            customer = TestUtil.findAll(em, Customer.class).get(0);
+        }
+        booking.setCustomer(customer);
+        // Add required entity
+        TreatmentPlan treatmentPlan;
+        if (TestUtil.findAll(em, TreatmentPlan.class).isEmpty()) {
+            treatmentPlan = TreatmentPlanResourceIT.createUpdatedEntity(em);
+            em.persist(treatmentPlan);
+            em.flush();
+        } else {
+            treatmentPlan = TestUtil.findAll(em, TreatmentPlan.class).get(0);
+        }
+        booking.setTreatmentPlan(treatmentPlan);
         // Add required entity
         Branch branch;
         if (TestUtil.findAll(em, Branch.class).isEmpty()) {

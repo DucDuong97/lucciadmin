@@ -16,7 +16,7 @@ import java.time.ZonedDateTime;
 @Entity
 @Table(name = "booking")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class Booking implements Serializable {
+public class Booking extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -37,6 +37,11 @@ public class Booking implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = "bookings", allowSetters = true)
     private Customer customer;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = "bookings", allowSetters = true)
+    private TreatmentPlan treatmentPlan;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -89,6 +94,19 @@ public class Booking implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public TreatmentPlan getTreatmentPlan() {
+        return treatmentPlan;
+    }
+
+    public Booking treatmentPlan(TreatmentPlan treatmentPlan) {
+        this.treatmentPlan = treatmentPlan;
+        return this;
+    }
+
+    public void setTreatmentPlan(TreatmentPlan treatmentPlan) {
+        this.treatmentPlan = treatmentPlan;
     }
 
     public Branch getBranch() {

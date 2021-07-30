@@ -11,19 +11,25 @@ import { IEmployee } from 'app/shared/model/employee.model';
 import { getEntities as getEmployees } from 'app/entities/employee/employee.reducer';
 import { ICustomer } from 'app/shared/model/customer.model';
 import { getEntities as getCustomers } from 'app/entities/customer/customer.reducer';
+import { ITreatmentPlan } from 'app/shared/model/treatment-plan.model';
+import { getEntities as getTreatmentPlans } from 'app/entities/treatment-plan/treatment-plan.reducer';
 import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './booking.reducer';
+import { IBooking } from 'app/shared/model/booking.model';
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
 
 export interface IBookingUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const BookingUpdate = (props: IBookingUpdateProps) => {
   const [correspondDoctorId, setCorrespondDoctorId] = useState('0');
   const [customerId, setCustomerId] = useState('0');
+  const [treatmentPlanId, setTreatmentPlanId] = useState('0');
   const [branchId, setBranchId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { bookingEntity, employees, customers, branches, loading, updating } = props;
+  const { bookingEntity, employees, customers, treatmentPlans, branches, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/booking' + props.location.search);
@@ -38,6 +44,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
 
     props.getEmployees();
     props.getCustomers();
+    props.getTreatmentPlans();
     props.getBranches();
   }, []);
 
@@ -129,6 +136,20 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 <AvFeedback>
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
+              </AvGroup>
+              <AvGroup>
+                <Label for="booking-treatmentPlan">
+                  <Translate contentKey="lucciadminApp.booking.treatmentPlan">Treatment Plan</Translate>
+                </Label>
+                <AvInput id="booking-treatmentPlan" type="select" className="form-control" name="treatmentPlanId" required>
+                  {treatmentPlans
+                    ? treatmentPlans.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.id}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
                 <AvFeedback>
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
@@ -174,6 +195,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
 const mapStateToProps = (storeState: IRootState) => ({
   employees: storeState.employee.entities,
   customers: storeState.customer.entities,
+  treatmentPlans: storeState.treatmentPlan.entities,
   branches: storeState.branch.entities,
   bookingEntity: storeState.booking.entity,
   loading: storeState.booking.loading,
@@ -184,6 +206,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getEmployees,
   getCustomers,
+  getTreatmentPlans,
   getBranches,
   getEntity,
   updateEntity,

@@ -68,6 +68,10 @@ export const BookingDetail = (props: IBookingDetailProps) => {
           </dt>
           <dd>{bookingEntity.customerId ? <Link to={`/customer/${bookingEntity.customerId}`}>{bookingEntity.customerId}</Link> : ''}</dd>
           <dt>
+            <Translate contentKey="lucciadminApp.booking.treatmentPlan">Treatment Plan</Translate>
+          </dt>
+          <dd>{bookingEntity.treatmentPlanId ? bookingEntity.treatmentPlanId : ''}</dd>
+          <dt>
             <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
           </dt>
           <dd>{bookingEntity.branchId ? bookingEntity.branchId : ''}</dd>

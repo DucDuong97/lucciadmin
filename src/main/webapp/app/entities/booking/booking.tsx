@@ -64,12 +64,12 @@ export const Booking = (props: IBookingProps) => {
       activePage: currentPage,
     });
 
-  const { bookingList, match, loading, totalItems, isDoctor, isReceptionist } = props;
+  const { bookingList, match, loading, totalItems } = props;
   return (
     <div>
       <h2 id="booking-heading">
         <Translate contentKey="lucciadminApp.booking.home.title">Bookings</Translate>
-        {isReceptionist &&
+        {props.createPermission &&
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
             <FontAwesomeIcon icon="plus" />
             &nbsp;
@@ -99,6 +99,9 @@ export const Booking = (props: IBookingProps) => {
                   <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  <Translate contentKey="lucciadminApp.booking.treatmentPlan">Treatment Plan</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
                   <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
@@ -122,11 +125,12 @@ export const Booking = (props: IBookingProps) => {
                     )}
                   </td>
                   <td>{booking.customerId ? <Link to={`customer/${booking.customerId}`}>{booking.customerId}</Link> : ''}</td>
+                  <td>
+                    {booking.treatmentPlanId ? <Link to={`treatment-plan/${booking.treatmentPlanId}`}>{booking.treatmentPlanId}</Link> : ''}
+                  </td>
                   <td>{booking.branchId ? <Link to={`branch/${booking.branchId}`}>{booking.branchId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-
-                      {/*View*/}
                       <Button tag={Link} to={`${match.url}/${booking.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
@@ -135,7 +139,7 @@ export const Booking = (props: IBookingProps) => {
                       </Button>
 
                       {/*Edit*/}
-                      {isReceptionist &&
+                      {props.updatePermission &&
                         <Button
                           tag={Link}
                           to={`${match.url}/${booking.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -150,7 +154,7 @@ export const Booking = (props: IBookingProps) => {
                       }
 
                       {/*Delete*/}
-                      {isReceptionist &&
+                      {props.deletePermission &&
                         <Button
                           tag={Link}
                           to={`${match.url}/${booking.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -205,8 +209,9 @@ const mapStateToProps = ({ booking, authentication }: IRootState) => ({
   totalItems: booking.totalItems,
 
   isDoctor: authentication.isDoctor,
-  isReceptionist: authentication.isReceptionist,
-  isAdmin: authentication.isAdmin,
+  updatePermission: authentication.isReceptionist || authentication.isOperationsDirector,
+  deletePermission: authentication.isReceptionist,
+  createPermission: authentication.isReceptionist,
 });
 
 const mapDispatchToProps = {
