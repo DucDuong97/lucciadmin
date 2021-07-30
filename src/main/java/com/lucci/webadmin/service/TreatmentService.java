@@ -90,4 +90,8 @@ public class TreatmentService {
         log.debug("Request to delete Treatment : {}", id);
         treatmentRepository.deleteById(id);
     }
+
+    public Page<TreatmentDTO> findByPlanId(Pageable pageable, Long planId) {
+        return treatmentRepository.findByTreatmentPlanId(pageable, planId).map(treatmentMapper::toDto);
+    }
 }

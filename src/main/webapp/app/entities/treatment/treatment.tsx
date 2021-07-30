@@ -18,14 +18,20 @@ export const Treatment = (props: ITreatmentProps) => {
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE), props.location.search)
   );
+  const [planId, setPlanId] = useState(null);
 
   const getAllEntities = () => {
-    props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`);
+    const params = new URLSearchParams(props.location.search);
+    const planIdMaybe = params.get('planId');
+    setPlanId(planIdMaybe);
+    props.getEntities(paginationState.activePage - 1, paginationState.itemsPerPage, `${paginationState.sort},${paginationState.order}`, planIdMaybe);
   };
 
   const sortEntities = () => {
     getAllEntities();
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    const params = new URLSearchParams(props.location.search);
+    const planIdMaybe = params.get('planId');
+    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}${planIdMaybe ? `&planId=${planIdMaybe}` : ''}`;
     if (props.location.search !== endURL) {
       props.history.push(`${props.location.pathname}${endURL}`);
     }
@@ -69,6 +75,7 @@ export const Treatment = (props: ITreatmentProps) => {
     <div>
       <h2 id="treatment-heading">
         <Translate contentKey="lucciadminApp.treatment.home.title">Treatments</Translate>
+        {planId ? ` of Plan ${planId}` : ''}
         <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
           <FontAwesomeIcon icon="plus" />
           &nbsp;

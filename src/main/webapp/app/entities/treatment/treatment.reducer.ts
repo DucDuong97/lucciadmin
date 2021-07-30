@@ -101,11 +101,11 @@ const apiUrl = 'api/treatments';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<ITreatment> = (page, size, sort) => {
-  const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}` : ''}`;
+export const getEntities = (page?: number, size?: number, sort?: string, planId?: string) => {
+  const requestUrl = `${apiUrl}?${sort ? `?page=${page}&size=${size}&sort=${sort}&` : ''}${planId ? `planId=${planId}&` : ''}`;
   return {
     type: ACTION_TYPES.FETCH_TREATMENT_LIST,
-    payload: axios.get<ITreatment>(`${requestUrl}${sort ? '&' : '?'}cacheBuster=${new Date().getTime()}`),
+    payload: axios.get<ITreatment>(`${requestUrl}cacheBuster=${new Date().getTime()}`),
   };
 };
 

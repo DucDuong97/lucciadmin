@@ -27,6 +27,7 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { treatmentEntity, employees, imgUrls, treatmentPlans, loading, updating } = props;
+  const [lockPlan, setLockPlan] = useState(false);
 
   const handleClose = () => {
     props.history.push('/treatment' + props.location.search);
@@ -35,6 +36,12 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
   useEffect(() => {
     if (isNew) {
       props.reset();
+      const params = new URLSearchParams(props.location.search);
+      const planIdMaybe = params.get('planId');
+      if (planIdMaybe) {
+        setLockPlan(true);
+        setTreatmentPlanId(planIdMaybe);
+      }
     } else {
       props.getEntity(props.match.params.id);
     }
@@ -164,7 +171,7 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                 <Label for="treatment-treatmentPlan">
                   <Translate contentKey="lucciadminApp.treatment.treatmentPlan">Treatment Plan</Translate>
                 </Label>
-                <AvInput id="treatment-treatmentPlan" type="select" className="form-control" name="treatmentPlanId" required>
+                <AvInput id="treatment-treatmentPlan" type="select" className="form-control" name="treatmentPlanId" value={treatmentPlanId} disabled={lockPlan} required>
                   {treatmentPlans
                     ? treatmentPlans.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>

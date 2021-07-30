@@ -137,6 +137,22 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
+                      {props.createTreatmentPermission &&
+                      <Button tag={Link} to={`/treatment/new?planId=${treatmentPlan.id}`} color="link" size="sm">
+                        <FontAwesomeIcon icon="plus"/>{' '}
+                        <span className="d-none d-md-inline">
+                            <Translate contentKey="lucciadminApp.treatmentPlan.createTreatment">Create Treatment</Translate>
+                          </span>
+                      </Button>
+                      }
+                      {props.viewTreatmentPermission &&
+                      <Button tag={Link} to={`/treatment?planId=${treatmentPlan.id}`} color="warning" size="sm">
+                        <FontAwesomeIcon icon="eye"/>{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="lucciadminApp.treatmentPlan.viewTreatments">View all Treatments</Translate>
+                        </span>
+                      </Button>
+                      }
                       <Button tag={Link} to={`${match.url}/${treatmentPlan.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
@@ -201,10 +217,13 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
   );
 };
 
-const mapStateToProps = ({ treatmentPlan }: IRootState) => ({
+const mapStateToProps = ({ treatmentPlan, authentication }: IRootState) => ({
   treatmentPlanList: treatmentPlan.entities,
   loading: treatmentPlan.loading,
   totalItems: treatmentPlan.totalItems,
+
+  createTreatmentPermission: authentication.isReceptionist,
+  viewTreatmentPermission: authentication.isReceptionist || authentication.isDoctor,
 });
 
 const mapDispatchToProps = {

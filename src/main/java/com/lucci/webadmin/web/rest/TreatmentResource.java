@@ -88,18 +88,13 @@ public class TreatmentResource {
      * {@code GET  /treatments} : get all the treatments.
      *
      * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of treatments in body.
      */
     @GetMapping("/treatments")
-    public ResponseEntity<List<TreatmentDTO>> getAllTreatments(Pageable pageable, @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public ResponseEntity<List<TreatmentDTO>> getAllTreatments(Pageable pageable, Long planId) {
         log.debug("REST request to get a page of Treatments");
         Page<TreatmentDTO> page;
-        if (eagerload) {
-            page = treatmentService.findAllWithEagerRelationships(pageable);
-        } else {
-            page = treatmentService.findAll(pageable);
-        }
+        page = planId != null ? treatmentService.findByPlanId(pageable, planId) : treatmentService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

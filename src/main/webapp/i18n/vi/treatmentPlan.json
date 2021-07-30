@@ -16,12 +16,14 @@
       "detail": {
         "title": "Hồ sơ Điều trị"
       },
-      "presentComplaint": "Lời khai Y tế",
-      "pastMedicalHistory": "Bệnh Sử/ Lịch sử dùng thuốc",
+      "presentComplaint": "Lời khai bệnh",
+      "pastMedicalHistory": "Bệnh Sử",
       "note": "Ghi chú",
       "customer": "Khách hàng",
       "service": "Dịch vụ Sử dụng",
-      "treatment": "Các buổi điều trị"
+      "treatment": "Các buổi điều trị",
+      "createTreatment": "Tạo buổi Điều trị",
+      "viewTreatments": "Xem các buổi"
     }
   }
 }

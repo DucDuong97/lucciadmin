@@ -26,4 +26,6 @@ public interface TreatmentRepository extends JpaRepository<Treatment, Long> {
 
     @Query("select treatment from Treatment treatment left join fetch treatment.treatmentImgUrls where treatment.id =:id")
     Optional<Treatment> findOneWithEagerRelationships(@Param("id") Long id);
+
+    Page<Treatment> findByTreatmentPlanId(Pageable pageable, Long planId);
 }
