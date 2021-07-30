@@ -22,6 +22,7 @@ export const TreatmentPlanUpdate = (props: ITreatmentPlanUpdateProps) => {
   const [customerId, setCustomerId] = useState('0');
   const [serviceId, setServiceId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
+  const [lockCustomer, setLockCustomer] = useState(false);
 
   const { treatmentPlanEntity, customers, pricingCards, loading, updating } = props;
 
@@ -32,6 +33,12 @@ export const TreatmentPlanUpdate = (props: ITreatmentPlanUpdateProps) => {
   useEffect(() => {
     if (isNew) {
       props.reset();
+      const params = new URLSearchParams(props.location.search);
+      const customerIdMaybe = params.get('customerId');
+      if (customerIdMaybe) {
+        setLockCustomer(true);
+        setCustomerId(customerIdMaybe);
+      }
     } else {
       props.getEntity(props.match.params.id);
     }
@@ -106,11 +113,11 @@ export const TreatmentPlanUpdate = (props: ITreatmentPlanUpdateProps) => {
                 <Label for="treatment-plan-customer">
                   <Translate contentKey="lucciadminApp.treatmentPlan.customer">Customer</Translate>
                 </Label>
-                <AvInput id="treatment-plan-customer" type="select" className="form-control" name="customerId" required>
+                <AvInput id="treatment-plan-customer" type="select" className="form-control" name="customerId" value={customerId} disabled={lockCustomer} required>
                   {customers
                     ? customers.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
+                          {`${otherEntity.name} - ${otherEntity.id}`}
                         </option>
                       ))
                     : null}

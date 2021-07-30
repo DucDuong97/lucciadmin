@@ -91,9 +91,10 @@ public class TreatmentPlanResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of treatmentPlans in body.
      */
     @GetMapping("/treatment-plans")
-    public ResponseEntity<List<TreatmentPlanDTO>> getAllTreatmentPlans(Pageable pageable) {
+    public ResponseEntity<List<TreatmentPlanDTO>> getAllTreatmentPlans(Pageable pageable, Long customerId) {
         log.debug("REST request to get a page of TreatmentPlans");
-        Page<TreatmentPlanDTO> page = treatmentPlanService.findAll(pageable);
+        Page<TreatmentPlanDTO> page = customerId == null ? treatmentPlanService.findAll(pageable) :
+            treatmentPlanService.findByCustomerId(pageable, customerId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

@@ -21,7 +21,9 @@
       "address": "Địa chỉ",
       "birth": "Ngày sinh",
       "gender": "Giới tính",
-      "newCustomer": "Mới"
+      "newCustomer": "Mới",
+      "createPlan": "Tạo Hồ sơ",
+      "viewPlans": "Xem hồ sơ"
     }
   }
 }

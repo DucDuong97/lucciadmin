@@ -81,4 +81,9 @@ public class TreatmentPlanService {
         log.debug("Request to delete TreatmentPlan : {}", id);
         treatmentPlanRepository.deleteById(id);
     }
+
+    public Page<TreatmentPlanDTO> findByCustomerId(Pageable pageable, Long customerId) {
+        return treatmentPlanRepository.findByCustomerId(pageable, customerId)
+            .map(treatmentPlanMapper::toDto);
+    }
 }

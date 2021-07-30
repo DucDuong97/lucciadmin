@@ -120,6 +120,22 @@ export const Customer = (props: ICustomerProps) => {
                   <td>{customer.newCustomer ? 'true' : 'false'}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
+                      {props.createPlanPermission &&
+                      <Button tag={Link} to={`/treatment-plan/new?customerId=${customer.id}`} color="link" size="sm">
+                        <FontAwesomeIcon icon="plus"/>{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="lucciadminApp.customer.createPlan">Create Treatment Plan</Translate>
+                        </span>
+                      </Button>
+                      }
+                      {props.viewPlanPermission &&
+                      <Button tag={Link} to={`/treatment-plan?customerId=${customer.id}`} color="warning" size="sm">
+                        <FontAwesomeIcon icon="eye"/>{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="lucciadminApp.customer.viewPlans">View all Plans</Translate>
+                        </span>
+                      </Button>
+                      }
                       {props.viewPermission &&
                         <Button tag={Link} to={`${match.url}/${customer.id}`} color="info" size="sm">
                           <FontAwesomeIcon icon="eye"/>{' '}
@@ -195,6 +211,8 @@ const mapStateToProps = ({ customer, authentication }: IRootState) => ({
   loading: customer.loading,
   totalItems: customer.totalItems,
   createPermission: authentication.isConsultant,
+  viewPlanPermission: authentication.isReceptionist,
+  createPlanPermission: authentication.isReceptionist,
   viewPermission: authentication.isReceptionist || authentication.isConsultant,
   editPermission: authentication.isReceptionist,
   deletePermission: authentication.isAdmin,
