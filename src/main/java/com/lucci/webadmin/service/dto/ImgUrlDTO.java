@@ -2,6 +2,8 @@ package com.lucci.webadmin.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A DTO for the {@link com.lucci.webadmin.domain.ImgUrl} entity.
@@ -15,6 +17,10 @@ public class ImgUrlDTO implements Serializable {
 
     @NotNull
     private String path;
+
+    private Set<TreatmentDTO> treatments = new HashSet<>();
+
+    private Set<ServiceItemDTO> serviceItems = new HashSet<>();
 
 
     public Long getId() {
@@ -39,6 +45,22 @@ public class ImgUrlDTO implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Set<TreatmentDTO> getTreatments() {
+        return treatments;
+    }
+
+    public void setTreatments(Set<TreatmentDTO> treatments) {
+        this.treatments = treatments;
+    }
+
+    public Set<ServiceItemDTO> getServiceItems() {
+        return serviceItems;
+    }
+
+    public void setServiceItems(Set<ServiceItemDTO> serviceItems) {
+        this.serviceItems = serviceItems;
     }
 
     public String createAccessKey() {

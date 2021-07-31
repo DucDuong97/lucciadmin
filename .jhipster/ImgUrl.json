@@ -12,7 +12,24 @@
       "fieldValidateRules": ["required"]
     }
   ],
-  "relationships": [],
+  "relationships": [
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "serviceItem",
+      "relationshipName": "serviceItems",
+      "otherEntityRelationshipName": "customerImgUrls",
+      "otherEntityField": "id",
+      "ownerSide": false
+    },
+    {
+      "relationshipName": "treatment",
+      "otherEntityName": "treatment",
+      "relationshipType": "many-to-many",
+      "ownerSide": false,
+      "otherEntityRelationshipName": "treatmentImgUrl",
+      "otherEntityField": "id"
+    }
+  ],
   "changelogDate": "20210508061849",
   "entityTableName": "img_url",
   "dto": "mapstruct",

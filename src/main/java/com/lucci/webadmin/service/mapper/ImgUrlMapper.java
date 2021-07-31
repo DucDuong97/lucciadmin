@@ -9,7 +9,7 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link ImgUrl} and its DTO {@link ImgUrlDTO}.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {TreatmentMapper.class, ServiceItemMapper.class})
 public interface ImgUrlMapper extends EntityMapper<ImgUrlDTO, ImgUrl> {
 
 

@@ -16,6 +16,8 @@ import {toast} from "react-toastify";
 export interface IImgUrlUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
+  const [serviceItemId, setServiceItemId] = useState('0');
+  const [treatmentId, setTreatmentId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { imgUrlEntity, loading, updating } = props;

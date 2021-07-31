@@ -1,5 +1,6 @@
 package com.lucci.webadmin.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A ImgUrl.
@@ -30,6 +33,16 @@ public class ImgUrl implements Serializable {
     @NotNull
     @Column(name = "path", nullable = false)
     private String path;
+
+    @ManyToMany(mappedBy = "customerImgUrls")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnore
+    private Set<ServiceItem> serviceItems = new HashSet<>();
+
+    @ManyToMany(mappedBy = "treatmentImgUrls")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnore
+    private Set<Treatment> treatments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -64,6 +77,56 @@ public class ImgUrl implements Serializable {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Set<ServiceItem> getServiceItems() {
+        return serviceItems;
+    }
+
+    public ImgUrl serviceItems(Set<ServiceItem> serviceItems) {
+        this.serviceItems = serviceItems;
+        return this;
+    }
+
+    public ImgUrl addServiceItems(ServiceItem serviceItem) {
+        this.serviceItems.add(serviceItem);
+        serviceItem.getCustomerImgUrls().add(this);
+        return this;
+    }
+
+    public ImgUrl removeServiceItems(ServiceItem serviceItem) {
+        this.serviceItems.remove(serviceItem);
+        serviceItem.getCustomerImgUrls().remove(this);
+        return this;
+    }
+
+    public void setServiceItems(Set<ServiceItem> serviceItems) {
+        this.serviceItems = serviceItems;
+    }
+
+    public Set<Treatment> getTreatments() {
+        return treatments;
+    }
+
+    public ImgUrl treatments(Set<Treatment> treatments) {
+        this.treatments = treatments;
+        return this;
+    }
+
+    public ImgUrl addTreatment(Treatment treatment) {
+        this.treatments.add(treatment);
+        treatment.getTreatmentImgUrls().add(this);
+        return this;
+    }
+
+    public ImgUrl removeTreatment(Treatment treatment) {
+        this.treatments.remove(treatment);
+        treatment.getTreatmentImgUrls().remove(this);
+        return this;
+    }
+
+    public void setTreatments(Set<Treatment> treatments) {
+        this.treatments = treatments;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
