@@ -76,11 +76,6 @@ export const Treatment = (props: ITreatmentProps) => {
       <h2 id="treatment-heading">
         <Translate contentKey="lucciadminApp.treatment.home.title">Treatments</Translate>
         {planId ? ` of Plan ${planId}` : ''}
-        <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-          <FontAwesomeIcon icon="plus" />
-          &nbsp;
-          <Translate contentKey="lucciadminApp.treatment.home.createLabel">Create new Treatment</Translate>
-        </Link>
       </h2>
       <div className="table-responsive">
         {treatmentList && treatmentList.length > 0 ? (

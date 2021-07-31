@@ -5,6 +5,7 @@ import { Button, Row, Col, Label } from 'reactstrap';
 import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from "moment";
 import { IRootState } from 'app/shared/reducers';
 
 import { IEmployee } from 'app/shared/model/employee.model';
@@ -27,10 +28,9 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { treatmentEntity, employees, imgUrls, treatmentPlans, loading, updating } = props;
-  const [lockPlan, setLockPlan] = useState(false);
 
   const handleClose = () => {
-    props.history.push('/treatment' + props.location.search);
+    props.history.goBack();
   };
 
   useEffect(() => {
@@ -39,7 +39,6 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
       const params = new URLSearchParams(props.location.search);
       const planIdMaybe = params.get('planId');
       if (planIdMaybe) {
-        setLockPlan(true);
         setTreatmentPlanId(planIdMaybe);
       }
     } else {
@@ -72,6 +71,10 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
       }
     }
   };
+
+  const getCurrentDate = () => {
+    return moment().format("YYYY-MM-DD") ;
+  }
 
   return (
     <div>
@@ -111,6 +114,8 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                   type="date"
                   className="form-control"
                   name="date"
+                  disabled={true}
+                  value={isNew ? getCurrentDate() : treatmentEntity.date}
                   validate={{
                     required: { value: true, errorMessage: translate('entity.validation.required') },
                   }}
@@ -132,7 +137,7 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                 <Label for="treatment-doctor">
                   <Translate contentKey="lucciadminApp.treatment.doctor">Doctor</Translate>
                 </Label>
-                <AvInput id="treatment-doctor" type="select" className="form-control" name="doctorId" required>
+                <AvInput id="treatment-doctor" type="select" className="form-control" name="doctorId" required >
                   {employees
                     ? employees.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -171,7 +176,8 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                 <Label for="treatment-treatmentPlan">
                   <Translate contentKey="lucciadminApp.treatment.treatmentPlan">Treatment Plan</Translate>
                 </Label>
-                <AvInput id="treatment-treatmentPlan" type="select" className="form-control" name="treatmentPlanId" value={treatmentPlanId} disabled={lockPlan} required>
+                <AvInput id="treatment-treatmentPlan" type="select" className="form-control" name="treatmentPlanId"
+                         value={isNew ? treatmentPlanId : treatmentEntity.treatmentPlanId} disabled={true} required>
                   {treatmentPlans
                     ? treatmentPlans.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
