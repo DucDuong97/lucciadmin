@@ -1,8 +1,12 @@
 package com.lucci.webadmin.service;
 
 import com.lucci.webadmin.domain.Treatment;
+import com.lucci.webadmin.domain.TreatmentPlan;
+import com.lucci.webadmin.domain.enumeration.TreatmentState;
 import com.lucci.webadmin.repository.TreatmentRepository;
+import com.lucci.webadmin.service.dto.BookingDTO;
 import com.lucci.webadmin.service.dto.TreatmentDTO;
+import com.lucci.webadmin.service.dto.TreatmentPlanDTO;
 import com.lucci.webadmin.service.mapper.TreatmentMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalTime;
 import java.util.Optional;
+
+import static com.lucci.webadmin.domain.enumeration.TreatmentState.FINISH;
+import static com.lucci.webadmin.domain.enumeration.TreatmentState.IN_PROCESS;
 
 /**
  * Service Implementation for managing {@link Treatment}.
@@ -23,11 +31,16 @@ public class TreatmentService {
 
     private final Logger log = LoggerFactory.getLogger(TreatmentService.class);
 
+    private BookingService bookingService;
+    private TreatmentPlanService treatmentPlanService;
+
     private final TreatmentRepository treatmentRepository;
 
     private final TreatmentMapper treatmentMapper;
 
-    public TreatmentService(TreatmentRepository treatmentRepository, TreatmentMapper treatmentMapper) {
+    public TreatmentService(BookingService bookingService, TreatmentPlanService treatmentPlanService, TreatmentRepository treatmentRepository, TreatmentMapper treatmentMapper) {
+        this.bookingService = bookingService;
+        this.treatmentPlanService = treatmentPlanService;
         this.treatmentRepository = treatmentRepository;
         this.treatmentMapper = treatmentMapper;
     }
@@ -41,8 +54,32 @@ public class TreatmentService {
     public TreatmentDTO save(TreatmentDTO treatmentDTO) {
         log.debug("Request to save Treatment : {}", treatmentDTO);
         Treatment treatment = treatmentMapper.toEntity(treatmentDTO);
-        treatment = treatmentRepository.save(treatment);
-        return treatmentMapper.toDto(treatment);
+        if (treatment.getId() == null) {
+            treatment.setState(IN_PROCESS);
+        }
+        else {
+            TreatmentState state = treatmentRepository.findById(treatment.getId()).get().getState();
+            if (state.equals(IN_PROCESS)) {
+                treatment.setState(FINISH);
+                createNewBooking(treatment);
+            } else if (state.equals(FINISH)) {
+
+            }
+        }
+        Treatment savedTreatment = treatmentRepository.save(treatment);
+        return treatmentMapper.toDto(savedTreatment);
+    }
+
+    private void createNewBooking(Treatment treatment) {
+        if (treatment.getRevisitDate() != null) {
+            BookingDTO revisitBooking = new BookingDTO();
+            revisitBooking.setDate(treatment.getRevisitDate());
+            revisitBooking.setTime(LocalTime.MIDNIGHT);
+            revisitBooking.setTreatmentPlanId(treatment.getTreatmentPlan().getId());
+            TreatmentPlanDTO treatmentPlan = treatmentPlanService.findOne(treatment.getTreatmentPlan().getId()).get();
+            revisitBooking.setCustomerId(treatmentPlan.getCustomerId());
+            bookingService.save(revisitBooking);
+        }
     }
 
     /**

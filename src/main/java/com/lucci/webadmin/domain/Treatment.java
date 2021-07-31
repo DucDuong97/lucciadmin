@@ -1,6 +1,7 @@
 package com.lucci.webadmin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.lucci.webadmin.domain.enumeration.TreatmentState;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -56,6 +57,11 @@ public class Treatment implements Serializable {
     @NotNull
     @JsonIgnoreProperties(value = "treatments", allowSetters = true)
     private TreatmentPlan treatmentPlan;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private TreatmentState state;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -166,6 +172,15 @@ public class Treatment implements Serializable {
     public void setTreatmentPlan(TreatmentPlan treatmentPlan) {
         this.treatmentPlan = treatmentPlan;
     }
+
+    public TreatmentState getState() {
+        return state;
+    }
+
+    public void setState(TreatmentState state) {
+        this.state = state;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -193,6 +208,7 @@ public class Treatment implements Serializable {
             ", date='" + getDate() + "'" +
             ", nextPlan='" + getNextPlan() + "'" +
             ", revisitDate='" + getRevisitDate() + "'" +
+            ", state='" + getState() + "'" +
             "}";
     }
 }
