@@ -43,8 +43,7 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
     @JsonIgnoreProperties(value = "bookings", allowSetters = true)
     private TreatmentPlan treatmentPlan;
 
-    @ManyToOne(optional = false)
-    @NotNull
+    @ManyToOne
     @JsonIgnoreProperties(value = "bookings", allowSetters = true)
     private Branch branch;
 
