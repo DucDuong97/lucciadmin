@@ -99,10 +99,13 @@ const apiUrl = 'api/img-urls';
 
 // Actions
 
-export const getEntities: ICrudGetAllAction<IImgUrl> = (page, size, sort) => ({
-  type: ACTION_TYPES.FETCH_IMGURL_LIST,
-  payload: axios.get<IImgUrl>(`${apiUrl}?cacheBuster=${new Date().getTime()}`),
-});
+export const getEntities = (treatmentId?: string) => {
+  const treatmentQuery = treatmentId ? `treatmentId=${treatmentId}&` : '';
+  return {
+    type: ACTION_TYPES.FETCH_IMGURL_LIST,
+    payload: axios.get<IImgUrl>(`${apiUrl}?${treatmentQuery}cacheBuster=${new Date().getTime()}`),
+  };
+};
 
 export const getEntity: ICrudGetAction<IImgUrl> = id => {
   const requestUrl = `${apiUrl}/${id}`;
@@ -126,8 +129,8 @@ export const upload = async file => {
   formData.append('image', file);
   return axios.post(`${apiUrl}/upload`, formData, {
     headers: {
-      'Content-Type': 'multipart/form-data'
-    }
+      'Content-Type': 'multipart/form-data',
+    },
   });
 };
 

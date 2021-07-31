@@ -13,8 +13,14 @@ import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 export interface IImgUrlProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
 export const ImgUrl = (props: IImgUrlProps) => {
+
+  const [treatmentId, setTreatmentId] = useState(null);
+
   useEffect(() => {
-    props.getEntities();
+    const params = new URLSearchParams(props.location.search);
+    const treatmentIdMaybe = params.get('treatmentId');
+    setTreatmentId(treatmentIdMaybe);
+    props.getEntities(treatmentIdMaybe);
   }, []);
 
   const { imgUrlList, match, loading } = props;
@@ -22,6 +28,7 @@ export const ImgUrl = (props: IImgUrlProps) => {
     <div>
       <h2 id="img-url-heading">
         <Translate contentKey="lucciadminApp.imgUrl.home.title">Img Urls</Translate>
+        {treatmentId ? ` of Treatment ${treatmentId}` : ''}
         <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
           <FontAwesomeIcon icon="plus" />
           &nbsp;
