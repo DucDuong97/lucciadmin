@@ -1,13 +1,13 @@
 package com.lucci.webadmin.service;
 
 import com.lucci.webadmin.domain.Treatment;
-import com.lucci.webadmin.domain.TreatmentPlan;
 import com.lucci.webadmin.domain.enumeration.TreatmentState;
 import com.lucci.webadmin.repository.TreatmentRepository;
 import com.lucci.webadmin.service.dto.BookingDTO;
 import com.lucci.webadmin.service.dto.TreatmentDTO;
 import com.lucci.webadmin.service.dto.TreatmentPlanDTO;
 import com.lucci.webadmin.service.mapper.TreatmentMapper;
+import com.lucci.webadmin.web.rest.errors.EntityAlreadyFinishedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +63,7 @@ public class TreatmentService {
                 treatment.setState(FINISH);
                 createNewBooking(treatment);
             } else if (state.equals(FINISH)) {
-
+                throw new EntityAlreadyFinishedException();
             }
         }
         Treatment savedTreatment = treatmentRepository.save(treatment);
