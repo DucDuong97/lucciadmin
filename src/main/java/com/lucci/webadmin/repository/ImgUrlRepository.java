@@ -15,4 +15,5 @@ import java.util.List;
 public interface ImgUrlRepository extends JpaRepository<ImgUrl, Long> {
 
     List<ImgUrl> findByPathAndName(String path, String name);
+    List<ImgUrl> findByTreatmentsId(Long treatmentId);
 }

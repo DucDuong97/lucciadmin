@@ -44,4 +44,6 @@ public interface ImgUrlService {
     void delete(Long id);
 
     ImgUrlDTO upload(MultipartFile file);
+
+    List<ImgUrlDTO> findByTreatmentId(Long treatmentId);
 }

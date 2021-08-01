@@ -89,6 +89,14 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         imgUrlRepository.deleteById(id);
     }
 
+    @Override
+    public List<ImgUrlDTO> findByTreatmentId(Long treatmentId) {
+        log.debug("Request to get all ImgUrls of Treatment {}", treatmentId);
+        return imgUrlRepository.findByTreatmentsId(treatmentId).stream()
+            .map(imgUrlMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
     @Value("${amazon.s3.lucci.erp.bucketName}")
     private String bucket;
 

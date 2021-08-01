@@ -30,12 +30,12 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
 
   const sortEntities = () => {
     getAllEntities();
-    const params = new URLSearchParams(props.location.search);
-    const customerIdMaybe = params.get('customerId');
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}${customerIdMaybe ? `&customerId=${customerIdMaybe}` : ''}`;
-    if (props.location.search !== endURL) {
-      props.history.push(`${props.location.pathname}${endURL}`);
-    }
+    // const params = new URLSearchParams(props.location.search);
+    // const customerIdMaybe = params.get('customerId');
+    // const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}${customerIdMaybe ? `&customerId=${customerIdMaybe}` : ''}`;
+    // if (props.location.search !== endURL) {
+    //   props.history.push(`${props.location.pathname}${endURL}`);
+    // }
   };
 
   useEffect(() => {

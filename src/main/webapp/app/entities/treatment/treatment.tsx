@@ -29,12 +29,12 @@ export const Treatment = (props: ITreatmentProps) => {
 
   const sortEntities = () => {
     getAllEntities();
-    const params = new URLSearchParams(props.location.search);
-    const planIdMaybe = params.get('planId');
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}${planIdMaybe ? `&planId=${planIdMaybe}` : ''}`;
-    if (props.location.search !== endURL) {
-      props.history.push(`${props.location.pathname}${endURL}`);
-    }
+    // const params = new URLSearchParams(props.location.search);
+    // const planIdMaybe = params.get('planId');
+    // const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}${planIdMaybe ? `&planId=${planIdMaybe}` : ''}`;
+    // if (props.location.search !== endURL) {
+    //   props.history.push(`${props.location.pathname}${endURL}`);
+    // }
   };
 
   useEffect(() => {

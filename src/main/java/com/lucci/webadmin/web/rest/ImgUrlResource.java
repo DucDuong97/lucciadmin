@@ -90,9 +90,15 @@ public class ImgUrlResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of imgUrls in body.
      */
     @GetMapping("/img-urls")
-    public List<ImgUrlDTO> getAllImgUrls() {
+    public List<ImgUrlDTO> getAllImgUrls(Long treatmentId) {
         log.debug("REST request to get all ImgUrls");
-        return imgUrlService.findAll();
+        List<ImgUrlDTO> imgUrlDTOList;
+        if (treatmentId != null) {
+            imgUrlDTOList = imgUrlService.findByTreatmentId(treatmentId);
+        } else {
+            imgUrlDTOList = imgUrlService.findAll();
+        }
+        return imgUrlDTOList;
     }
 
     /**
