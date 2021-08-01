@@ -17,7 +17,7 @@ export const ImgUrlDeleteDialog = (props: IImgUrlDeleteDialogProps) => {
   }, []);
 
   const handleClose = () => {
-    props.history.push('/img-url');
+    props.history.push('/img-url'+ props.location.search);
   };
 
   useEffect(() => {

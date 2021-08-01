@@ -45,6 +45,11 @@ public class ImgUrl implements Serializable {
     private Set<Treatment> treatments = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public String createAccessKey() {
+        return path + "/" + name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -122,6 +127,20 @@ public class ImgUrl implements Serializable {
     public ImgUrl removeTreatment(Treatment treatment) {
         this.treatments.remove(treatment);
         treatment.getTreatmentImgUrls().remove(this);
+        return this;
+    }
+
+    public ImgUrl clearTreatments() {
+        for (Treatment treatment : treatments) {
+            removeTreatment(treatment);
+        }
+        return this;
+    }
+
+    public ImgUrl addTreatments() {
+        for (Treatment treatment : treatments) {
+            addTreatment(treatment);
+        }
         return this;
     }
 

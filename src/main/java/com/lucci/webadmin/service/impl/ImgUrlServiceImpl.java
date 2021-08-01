@@ -54,9 +54,7 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         log.debug("Request to save ImgUrl : {}", imgUrlDTO);
         ImgUrl imgUrl = imgUrlMapper.toEntity(imgUrlDTO);
         imgUrl = imgUrlRepository.save(imgUrl);
-        for (Treatment treatment : imgUrl.getTreatments()) {
-            imgUrl.addTreatment(treatment);
-        }
+        imgUrl.addTreatments();
         return imgUrlMapper.toDto(imgUrl);
     }
 
@@ -80,12 +78,9 @@ public class ImgUrlServiceImpl implements ImgUrlService {
     @Override
     public void delete(Long id) {
         log.debug("Request to delete ImgUrl : {}", id);
-        Optional<ImgUrlDTO> imgUrlOpt = findOne(id);
-        if (!imgUrlOpt.isPresent()) {
-            log.debug("ImgUrl {} does not exist", id);
-            return;
-        }
-        fileStoreService.delete(bucket, imgUrlOpt.get().createAccessKey());
+        ImgUrl imgUrl = imgUrlRepository.findById(id).get();
+        imgUrl.clearTreatments();
+        fileStoreService.delete(bucket, imgUrl.createAccessKey());
         imgUrlRepository.deleteById(id);
     }
 
