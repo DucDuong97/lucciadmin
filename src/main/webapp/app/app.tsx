@@ -36,6 +36,7 @@ export const App = (props: IAppProps) => {
         <ToastContainer position={toast.POSITION.TOP_LEFT} className="toastify-container" toastClassName="toastify-toast" />
         <ErrorBoundary>
           <Header
+            user={props.user}
             isAuthenticated={props.isAuthenticated}
             isAdmin={props.isAdmin}
             isReceptionist={props.isReceptionist}
@@ -68,6 +69,7 @@ export const App = (props: IAppProps) => {
 
 const mapStateToProps = ({ authentication, applicationProfile, locale }: IRootState) => ({
   currentLocale: locale.currentLocale,
+  user: authentication.account.login,
   isAuthenticated: authentication.isAuthenticated,
   isAdmin: authentication.isAdmin,
   isReceptionist: authentication.isReceptionist,

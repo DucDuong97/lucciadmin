@@ -9,7 +9,7 @@ import appConfig from 'app/config/constants';
 
 export const BrandIcon = props => (
   <div {...props} className="brand-icon">
-    <img src="content/images/logo-jhipster.png" alt="Logo" />
+    <img src="content/images/lucci-icon.jpeg" alt="Logo" />
   </div>
 );
 
@@ -21,6 +21,14 @@ export const Brand = props => (
     </span>
     <span className="navbar-version">{appConfig.VERSION}</span>
   </NavbarBrand>
+);
+
+export const UserInformation = props => (
+  <NavItem>
+    <NavLink>
+      <span style={{color: '#9a9ea3', fontWeight: 'bold'}}>{props.user ? `User: ${props.user}` : ''}</span>
+    </NavLink>
+  </NavItem>
 );
 
 export const Home = props => (

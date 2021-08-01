@@ -8,13 +8,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {NavLink as Link} from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
-import {Home, Brand, Customer, Payment, Booking, Employee, Consult} from './header-components';
+import {Home, Brand, Customer, Payment, Booking, Employee, Consult, UserInformation} from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
 import MenuItem from "app/shared/layout/menus/menu-item";
 import {WebContentMenu} from "app/shared/layout/menus/web-content";
 import {MaterialMenu} from "app/shared/layout/menus/material";
 
 export interface IHeaderProps {
+  user: string;
   isAuthenticated: boolean;
   isAdmin: boolean;
   // isCustomer: boolean;
@@ -63,28 +64,33 @@ const Header = (props: IHeaderProps) => {
       <Navbar dark expand="sm" fixed="top" className="jh-navbar">
         <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
         <Brand />
+        <UserInformation user={props.user}/>
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
-            {props.isAuthenticated && (props.isAdmin
-            || props.isDoctor || props.isNurse || props.isReceptionist)
-            && <Customer />}
-            {props.isAuthenticated && props.isAdmin
-            && <Employee />}
-            {props.isAuthenticated && (props.isAdmin
-            || props.isDoctor || props.isReceptionist)
-            && <Booking />}
-            {props.isAuthenticated && (props.isAdmin
-            || props.isReceptionist)
-            && <Payment />}
-            {props.isAuthenticated && (props.isAdmin
-            || props.isMarketing)
-            && <WebContentMenu />}
-            {props.isAuthenticated && (props.isAdmin
-            || props.isReceptionist)
-            && <MaterialMenu />}
-            {props.isAuthenticated && props.isAdmin
-            && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
-            {/*{props.isAuthenticated && <EntitiesMenu />}*/}
+            {isAuthenticated && (isAdmin
+            || isConsultant || isReceptionist)
+              && <Customer />}
+            {isAuthenticated && (isAdmin
+              || isManager)
+              && <Employee />}
+            {isAuthenticated && (isAdmin
+            || isOperationsDirector || isDoctor || isBranchBossDoctor || isDoctor || isReceptionist)
+              && <Booking />}
+            {isAuthenticated && (isAdmin
+            || isDoctor || isConsultant)
+              && <Consult />}
+            {isAuthenticated && (isAdmin
+            || isReceptionist)
+              && <Payment />}
+            {isAuthenticated && (isAdmin
+            || isMarketing)
+              && <WebContentMenu />}
+            {isAuthenticated && (isAdmin
+            || isReceptionist)
+              && <MaterialMenu />}
+            {isAuthenticated && isAdmin
+              && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
+            {/*{isAuthenticated && <EntitiesMenu />}*/}
 
             <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />
             <AccountMenu isAuthenticated={props.isAuthenticated} />
