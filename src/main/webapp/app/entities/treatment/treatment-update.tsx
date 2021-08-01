@@ -47,7 +47,9 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
     }
 
     props.getEmployees();
-    props.getImgUrls(props.match.params.id.toString());
+    if (!isNew) {
+      props.getImgUrls(props.match.params.id.toString());
+    }
     props.getTreatmentPlans();
   }, []);
 
@@ -62,7 +64,6 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
       const entity = {
         ...treatmentEntity,
         ...values,
-        treatmentImgUrls: mapIdList(values.treatmentImgUrls),
       };
 
       if (isNew) {
@@ -101,12 +102,6 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                 </AvGroup>
               ) : null}
               <AvGroup>
-                <Label id="descriptionLabel" for="treatment-description">
-                  <Translate contentKey="lucciadminApp.treatment.description">Description</Translate>
-                </Label>
-                <AvField id="treatment-description" type="text" name="description" />
-              </AvGroup>
-              <AvGroup>
                 <Label id="dateLabel" for="treatment-date">
                   <Translate contentKey="lucciadminApp.treatment.date">Date</Translate>
                 </Label>
@@ -123,6 +118,32 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                 />
               </AvGroup>
               <AvGroup>
+                <Label for="treatment-treatmentPlan">
+                  <Translate contentKey="lucciadminApp.treatment.treatmentPlan">Treatment Plan</Translate>
+                </Label>
+                <AvInput id="treatment-treatmentPlan" type="select" className="form-control" name="treatmentPlanId"
+                         value={isNew ? treatmentPlanId : treatmentEntity.treatmentPlanId} disabled={true} required>
+                  {treatmentPlans
+                    ? treatmentPlans.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
+              <AvGroup>
+                <Label id="descriptionLabel" for="treatment-description">
+                  <Translate contentKey="lucciadminApp.treatment.description">Description</Translate>
+                </Label>
+                <AvField id="treatment-description" type="text" name="description" />
+              </AvGroup>
+              {props.isDoctor &&
+              <>
+              <AvGroup>
                 <Label id="nextPlanLabel" for="treatment-nextPlan">
                   <Translate contentKey="lucciadminApp.treatment.nextPlan">Next Plan</Translate>
                 </Label>
@@ -134,24 +155,6 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                 </Label>
                 <AvField id="treatment-revisitDate" type="date" className="form-control" name="revisitDate" />
               </AvGroup>
-              <AvGroup>
-                <Label for="treatment-doctor">
-                  <Translate contentKey="lucciadminApp.treatment.doctor">Doctor</Translate>
-                </Label>
-                <AvInput id="treatment-doctor" type="select" className="form-control" name="doctorId" required >
-                  {employees
-                    ? employees.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-                <AvFeedback>
-                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
-                </AvFeedback>
-              </AvGroup>
-              {!isNew &&
               <AvGroup>
                 <Label for="treatment-treatmentImgUrl">
                   <Translate contentKey="lucciadminApp.treatment.treatmentImgUrl">Treatment Img Url</Translate>
@@ -172,29 +175,31 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                   <FontAwesomeIcon icon="plus" />
                   &nbsp;
                   <span className="d-none d-md-inline">
-                    <Translate contentKey="entity.action.addimage">Add Image</Translate>
-                  </span>
+                  <Translate contentKey="entity.action.addimage">Add Image</Translate>
+                </span>
                 </Button>
               </AvGroup>
+              </>
               }
+              {props.isReceptionist &&
               <AvGroup>
-                <Label for="treatment-treatmentPlan">
-                  <Translate contentKey="lucciadminApp.treatment.treatmentPlan">Treatment Plan</Translate>
+                <Label for="treatment-doctor">
+                  <Translate contentKey="lucciadminApp.treatment.doctor">Doctor</Translate>
                 </Label>
-                <AvInput id="treatment-treatmentPlan" type="select" className="form-control" name="treatmentPlanId"
-                         value={isNew ? treatmentPlanId : treatmentEntity.treatmentPlanId} disabled={true} required>
-                  {treatmentPlans
-                    ? treatmentPlans.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                <AvInput id="treatment-doctor" type="select" className="form-control" name="doctorId" required>
+                  {employees
+                    ? employees.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
                     : null}
                 </AvInput>
                 <AvFeedback>
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
               </AvGroup>
+              }
               <Button tag={Link} id="cancel-save" to="/treatment" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -224,6 +229,9 @@ const mapStateToProps = (storeState: IRootState) => ({
   loading: storeState.treatment.loading,
   updating: storeState.treatment.updating,
   updateSuccess: storeState.treatment.updateSuccess,
+
+  isReceptionist: storeState.authentication.isReceptionist,
+  isDoctor: storeState.authentication.isDoctor,
 });
 
 const mapDispatchToProps = {

@@ -109,11 +109,7 @@ export const Treatment = (props: ITreatmentProps) => {
             <tbody>
               {treatmentList.map((treatment, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${treatment.id}`} color="link" size="sm">
-                      {treatment.id}
-                    </Button>
-                  </td>
+                  <td>{treatment.id}</td>
                   <td>{treatment.description}</td>
                   <td>{treatment.date ? <TextFormat type="date" value={treatment.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{treatment.nextPlan}</td>
@@ -130,12 +126,15 @@ export const Treatment = (props: ITreatmentProps) => {
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
+                      {props.viewPermission &&
                       <Button tag={Link} to={`${match.url}/${treatment.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
+                      }
+                      {props.editPermission &&
                       <Button
                         tag={Link}
                         to={`${match.url}/${treatment.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -147,6 +146,8 @@ export const Treatment = (props: ITreatmentProps) => {
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
                       </Button>
+                      }
+                      {props.deletePermission &&
                       <Button
                         tag={Link}
                         to={`${match.url}/${treatment.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -158,6 +159,7 @@ export const Treatment = (props: ITreatmentProps) => {
                           <Translate contentKey="entity.action.delete">Delete</Translate>
                         </span>
                       </Button>
+                      }
                     </div>
                   </td>
                 </tr>
@@ -194,10 +196,15 @@ export const Treatment = (props: ITreatmentProps) => {
   );
 };
 
-const mapStateToProps = ({ treatment }: IRootState) => ({
+const mapStateToProps = ({ treatment, authentication }: IRootState) => ({
   treatmentList: treatment.entities,
   loading: treatment.loading,
   totalItems: treatment.totalItems,
+
+  createPermission: false,
+  viewPermission: authentication.isOperationsDirector || authentication.isDoctor,
+  editPermission: authentication.isOperationsDirector || authentication.isDoctor,
+  deletePermission: false,
 });
 
 const mapDispatchToProps = {
