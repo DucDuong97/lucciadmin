@@ -18,6 +18,7 @@ import { getEntity, updateEntity, createEntity, reset } from './treatment.reduce
 import { ITreatment } from 'app/shared/model/treatment.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import {IMAGE_FILE_SYSTEM_URL} from "app/config/constants";
 
 export interface ITreatmentUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -46,7 +47,7 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
     }
 
     props.getEmployees();
-    props.getImgUrls();
+    props.getImgUrls(props.match.params.id.toString());
     props.getTreatmentPlans();
   }, []);
 
@@ -150,28 +151,32 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
               </AvGroup>
+              {!isNew &&
               <AvGroup>
                 <Label for="treatment-treatmentImgUrl">
                   <Translate contentKey="lucciadminApp.treatment.treatmentImgUrl">Treatment Img Url</Translate>
                 </Label>
-                <AvInput
-                  id="treatment-treatmentImgUrl"
-                  type="select"
-                  multiple
-                  className="form-control"
-                  name="treatmentImgUrls"
-                  value={treatmentEntity.treatmentImgUrls && treatmentEntity.treatmentImgUrls.map(e => e.id)}
-                >
-                  <option value="" key="0" />
+                <Row>
                   {imgUrls
                     ? imgUrls.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
-                        </option>
-                      ))
+                      <Col key={otherEntity.id} md="4">
+                        {otherEntity &&
+                        <img src={`${IMAGE_FILE_SYSTEM_URL}${otherEntity.path}/${otherEntity.name}`}
+                             style={{maxWidth: 200, margin:20}} alt="hello world"/>
+                        }
+                      </Col>
+                    ))
                     : null}
-                </AvInput>
+                </Row>
+                <Button tag={Link} to={`/img-url?treatmentId=${treatmentEntity.id}`} replace color="warning" style={{marginTop: "0.5rem"}}>
+                  <FontAwesomeIcon icon="plus" />
+                  &nbsp;
+                  <span className="d-none d-md-inline">
+                    <Translate contentKey="entity.action.addimage">Add Image</Translate>
+                  </span>
+                </Button>
               </AvGroup>
+              }
               <AvGroup>
                 <Label for="treatment-treatmentPlan">
                   <Translate contentKey="lucciadminApp.treatment.treatmentPlan">Treatment Plan</Translate>
