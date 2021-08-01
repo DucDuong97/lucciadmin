@@ -125,12 +125,15 @@ export const Consult = (props: IConsultProps) => {
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
+                      {props.viewPermission &&
                       <Button tag={Link} to={`${match.url}/${consult.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
+                        <FontAwesomeIcon icon="eye"/>{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
+                      }
+                      {props.editPermission &&
                       <Button
                         tag={Link}
                         to={`${match.url}/${consult.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -142,18 +145,19 @@ export const Consult = (props: IConsultProps) => {
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
                       </Button>
+                      }
                       {props.deletePermission &&
-                        <Button
-                          tag={Link}
-                          to={`${match.url}/${consult.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                          color="danger"
-                          size="sm"
-                        >
-                          <FontAwesomeIcon icon="trash" />{' '}
-                          <span className="d-none d-md-inline">
-                            <Translate contentKey="entity.action.delete">Delete</Translate>
-                          </span>
-                        </Button>
+                      <Button
+                        tag={Link}
+                        to={`${match.url}/${consult.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        color="danger"
+                        size="sm"
+                      >
+                        <FontAwesomeIcon icon="trash" />{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.delete">Delete</Translate>
+                        </span>
+                      </Button>
                       }
                     </div>
                   </td>
@@ -197,6 +201,8 @@ const mapStateToProps = ({ consult, authentication }: IRootState) => ({
   totalItems: consult.totalItems,
 
   createPermission: authentication.isConsultant,
+  viewPermission:   authentication.isConsultant,
+  editPermission:   true,
   deletePermission: authentication.isConsultant,
 });
 
