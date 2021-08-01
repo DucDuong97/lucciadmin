@@ -208,10 +208,9 @@ const mapStateToProps = ({ booking, authentication }: IRootState) => ({
   loading: booking.loading,
   totalItems: booking.totalItems,
 
-  isDoctor: authentication.isDoctor,
+  createPermission: false,
   updatePermission: authentication.isReceptionist || authentication.isOperationsDirector,
   deletePermission: authentication.isReceptionist,
-  createPermission: authentication.isReceptionist,
 });
 
 const mapDispatchToProps = {
