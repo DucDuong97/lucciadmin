@@ -88,17 +88,11 @@ export const Customer = (props: ICustomerProps) => {
                 <th className="hand" onClick={sort('name')}>
                   <Translate contentKey="lucciadminApp.customer.name">Name</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('phone')}>
-                  <Translate contentKey="lucciadminApp.customer.phone">Phone</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('birth')}>
                   <Translate contentKey="lucciadminApp.customer.birth">Birth</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('gender')}>
                   <Translate contentKey="lucciadminApp.customer.gender">Gender</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('newCustomer')}>
-                  <Translate contentKey="lucciadminApp.customer.newCustomer">New Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -106,18 +100,12 @@ export const Customer = (props: ICustomerProps) => {
             <tbody>
               {customerList.map((customer, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${customer.id}`} color="link" size="sm">
-                      {customer.id}
-                    </Button>
-                  </td>
+                  <td>{customer.id}</td>
                   <td>{customer.name}</td>
-                  <td>{customer.phone}</td>
                   <td>{customer.birth ? <TextFormat type="date" value={customer.birth} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>
                     <Translate contentKey={`lucciadminApp.Gender.${customer.gender}`} />
                   </td>
-                  <td>{customer.newCustomer ? 'true' : 'false'}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       {props.createPlanPermission &&
@@ -210,11 +198,12 @@ const mapStateToProps = ({ customer, authentication }: IRootState) => ({
   customerList: customer.entities,
   loading: customer.loading,
   totalItems: customer.totalItems,
+
   createPermission: authentication.isConsultant,
-  viewPlanPermission: authentication.isReceptionist,
+  viewPlanPermission: authentication.isReceptionist || authentication.isDoctor,
   createPlanPermission: authentication.isReceptionist,
   viewPermission: authentication.isReceptionist || authentication.isConsultant,
-  editPermission: authentication.isReceptionist,
+  editPermission: false,
   deletePermission: authentication.isAdmin,
 });
 

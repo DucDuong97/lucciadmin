@@ -97,7 +97,7 @@ public class CustomerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of customers in body.
      */
     @GetMapping("/customers")
-    @Secured({RECEPTIONIST, ADMIN, CONSULTANT})
+    @Secured({RECEPTIONIST, ADMIN, CONSULTANT, DOCTOR})
     public ResponseEntity<List<CustomerDTO>> getAllCustomers(Pageable pageable) {
         log.debug("REST request to get a page of Customers");
         Page<CustomerDTO> page = customerService.findAll(pageable);
