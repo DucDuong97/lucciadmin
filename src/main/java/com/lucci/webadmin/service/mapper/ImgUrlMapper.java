@@ -12,7 +12,12 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {TreatmentMapper.class, ServiceItemMapper.class})
 public interface ImgUrlMapper extends EntityMapper<ImgUrlDTO, ImgUrl> {
 
+    @Mapping(target = "treatments", ignore = true)
+    ImgUrlDTO toDto(ImgUrl entity);
 
+    @Mapping(target = "removeServiceItems", ignore = true)
+    @Mapping(target = "removeTreatment", ignore = true)
+    ImgUrl toEntity(ImgUrlDTO dto);
 
     default ImgUrl fromId(Long id) {
         if (id == null) {

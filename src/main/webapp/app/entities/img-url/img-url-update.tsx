@@ -16,8 +16,8 @@ import {toast} from "react-toastify";
 export interface IImgUrlUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
-  const [serviceItemId, setServiceItemId] = useState('0');
-  const [treatmentId, setTreatmentId] = useState('0');
+  const [serviceItemId, setServiceItemId] = useState(null);
+  const [treatmentId, setTreatmentId] = useState(null);
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
   const { imgUrlEntity, loading, updating } = props;
@@ -29,6 +29,11 @@ export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
   useEffect(() => {
     if (isNew) {
       props.reset();
+      const params = new URLSearchParams(props.location.search);
+      const treatmentMaybe = params.get('treatmentId');
+      if (treatmentMaybe) {
+        setTreatmentId(treatmentMaybe);
+      }
     } else {
       props.getEntity(props.match.params.id);
     }
@@ -58,7 +63,10 @@ export const ImgUrlUpdate = (props: IImgUrlUpdateProps) => {
       toast.error("Please choose an image");
       return;
     }
-    props.uploadImage({imageFile: selectedFile});
+    props.uploadImage({
+      imageFile: selectedFile,
+      treatments: treatmentId ? [{id: parseInt(treatmentId, 10)}] : []
+    });
   };
 
   return (

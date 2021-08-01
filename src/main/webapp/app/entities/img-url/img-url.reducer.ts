@@ -134,15 +134,6 @@ export const upload = async file => {
   });
 };
 
-export const uploadImage: ICrudPutAction<IImgUrl> = entity => async dispatch => {
-  const result = await dispatch({
-    type: ACTION_TYPES.CREATE_IMGURL,
-    payload: upload(entity.imageFile),
-  });
-  dispatch(getEntities());
-  return result;
-};
-
 export const updateEntity: ICrudPutAction<IImgUrl> = entity => async dispatch => {
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_IMGURL,
@@ -157,6 +148,23 @@ export const deleteEntity: ICrudDeleteAction<IImgUrl> = id => async dispatch => 
     type: ACTION_TYPES.DELETE_IMGURL,
     payload: axios.delete(requestUrl),
   });
+  dispatch(getEntities());
+  return result;
+};
+
+export const uploadImage: ICrudPutAction<IImgUrl> = entity => async dispatch => {
+  const payload = await upload(entity.imageFile);
+  const result = await dispatch({
+    type: ACTION_TYPES.CREATE_IMGURL,
+    payload,
+  });
+  if (entity.treatments.length > 0) {
+    const createdEntity = {
+      ...payload.data,
+      treatments: entity.treatments,
+    };
+    await dispatch(updateEntity(createdEntity));
+  }
   dispatch(getEntities());
   return result;
 };

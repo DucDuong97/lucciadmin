@@ -29,7 +29,7 @@ export const ImgUrl = (props: IImgUrlProps) => {
       <h2 id="img-url-heading">
         <Translate contentKey="lucciadminApp.imgUrl.home.title">Img Urls</Translate>
         {treatmentId ? ` of Treatment ${treatmentId}` : ''}
-        <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
+        <Link to={`${match.url}/new${props.location.search}`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
           <FontAwesomeIcon icon="plus" />
           &nbsp;
           <Translate contentKey="lucciadminApp.imgUrl.home.createLabel">Create new Img Url</Translate>

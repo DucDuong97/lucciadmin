@@ -1,9 +1,11 @@
 package com.lucci.webadmin.service.impl;
 
+import com.lucci.webadmin.domain.Treatment;
 import com.lucci.webadmin.service.FileStoreService;
 import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.domain.ImgUrl;
 import com.lucci.webadmin.repository.ImgUrlRepository;
+import com.lucci.webadmin.service.TreatmentService;
 import com.lucci.webadmin.service.dto.ImgUrlDTO;
 import com.lucci.webadmin.service.mapper.ImgUrlMapper;
 import org.apache.http.entity.ContentType;
@@ -32,13 +34,16 @@ public class ImgUrlServiceImpl implements ImgUrlService {
 
     private final Logger log = LoggerFactory.getLogger(ImgUrlServiceImpl.class);
 
+    private final TreatmentService treatmentService;
+
     private final ImgUrlRepository imgUrlRepository;
 
     private final ImgUrlMapper imgUrlMapper;
 
     private final FileStoreService fileStoreService;
 
-    public ImgUrlServiceImpl(ImgUrlRepository imgUrlRepository, ImgUrlMapper imgUrlMapper, FileStoreService fileStoreService) {
+    public ImgUrlServiceImpl(TreatmentService treatmentService, ImgUrlRepository imgUrlRepository, ImgUrlMapper imgUrlMapper, FileStoreService fileStoreService) {
+        this.treatmentService = treatmentService;
         this.imgUrlRepository = imgUrlRepository;
         this.imgUrlMapper = imgUrlMapper;
         this.fileStoreService = fileStoreService;
@@ -49,6 +54,9 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         log.debug("Request to save ImgUrl : {}", imgUrlDTO);
         ImgUrl imgUrl = imgUrlMapper.toEntity(imgUrlDTO);
         imgUrl = imgUrlRepository.save(imgUrl);
+        for (Treatment treatment : imgUrl.getTreatments()) {
+            imgUrl.addTreatment(treatment);
+        }
         return imgUrlMapper.toDto(imgUrl);
     }
 
