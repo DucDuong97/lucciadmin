@@ -76,11 +76,6 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
     <div>
       <h2 id="treatment-plan-heading">
         <Translate contentKey="lucciadminApp.treatmentPlan.home.title">Treatment Plans</Translate> {customerId ? ` of Customer ${customerId}` : ''}
-        <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-          <FontAwesomeIcon icon="plus" />
-          &nbsp;
-          <Translate contentKey="lucciadminApp.treatmentPlan.home.createLabel">Create new Treatment Plan</Translate>
-        </Link>
       </h2>
       <div className="table-responsive">
         {treatmentPlanList && treatmentPlanList.length > 0 ? (
@@ -89,20 +84,6 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
               <tr>
                 <th className="hand" onClick={sort('id')}>
                   <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('presentComplaint')}>
-                  <Translate contentKey="lucciadminApp.treatmentPlan.presentComplaint">Present Complaint</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('pastMedicalHistory')}>
-                  <Translate contentKey="lucciadminApp.treatmentPlan.pastMedicalHistory">Past Medical History</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('note')}>
-                  <Translate contentKey="lucciadminApp.treatmentPlan.note">Note</Translate> <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
-                  <Translate contentKey="lucciadminApp.treatmentPlan.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   <Translate contentKey="lucciadminApp.treatmentPlan.service">Service</Translate> <FontAwesomeIcon icon="sort" />
@@ -113,21 +94,7 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
             <tbody>
               {treatmentPlanList.map((treatmentPlan, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${treatmentPlan.id}`} color="link" size="sm">
-                      {treatmentPlan.id}
-                    </Button>
-                  </td>
-                  <td>{treatmentPlan.presentComplaint}</td>
-                  <td>{treatmentPlan.pastMedicalHistory}</td>
-                  <td>{treatmentPlan.note}</td>
-                  <td>
-                    {treatmentPlan.customerName ? (
-                      <Link to={`customer/${treatmentPlan.customerId}`}>{treatmentPlan.customerName}</Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
+                  <td>{treatmentPlan.id}</td>
                   <td>
                     {treatmentPlan.serviceName ? (
                       <Link to={`pricing-card/${treatmentPlan.serviceId}`}>{treatmentPlan.serviceName}</Link>
@@ -145,7 +112,7 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
                           </span>
                       </Button>
                       }
-                      {props.viewTreatmentPermission &&
+                      {props.viewTreatmentsPermission &&
                       <Button tag={Link} to={`/treatment?planId=${treatmentPlan.id}`} color="warning" size="sm">
                         <FontAwesomeIcon icon="eye"/>{' '}
                         <span className="d-none d-md-inline">
@@ -153,12 +120,15 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
                         </span>
                       </Button>
                       }
+                      {props.viewPermission &&
                       <Button tag={Link} to={`${match.url}/${treatmentPlan.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>
                       </Button>
+                      }
+                      {props.editPermission &&
                       <Button
                         tag={Link}
                         to={`${match.url}/${treatmentPlan.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -170,17 +140,20 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
                           <Translate contentKey="entity.action.edit">Edit</Translate>
                         </span>
                       </Button>
+                      }
+                      {props.deletePermission &&
                       <Button
                         tag={Link}
                         to={`${match.url}/${treatmentPlan.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
                         size="sm"
                       >
-                        <FontAwesomeIcon icon="trash" />{' '}
+                        <FontAwesomeIcon icon="trash"/>{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.delete">Delete</Translate>
                         </span>
                       </Button>
+                      }
                     </div>
                   </td>
                 </tr>
@@ -223,7 +196,11 @@ const mapStateToProps = ({ treatmentPlan, authentication }: IRootState) => ({
   totalItems: treatmentPlan.totalItems,
 
   createTreatmentPermission: authentication.isReceptionist,
-  viewTreatmentPermission: authentication.isReceptionist || authentication.isDoctor,
+  viewTreatmentsPermission: authentication.isDoctor,
+  // createPermission: authentication.isReceptionist,
+  viewPermission: authentication.isDoctor,
+  editPermission: authentication.isDoctor,
+  deletePermission: false,
 });
 
 const mapDispatchToProps = {
