@@ -17,7 +17,7 @@ export const ConsultDeleteDialog = (props: IConsultDeleteDialogProps) => {
   }, []);
 
   const handleClose = () => {
-    props.history.push('/consult' + props.location.search);
+    props.history.goBack();
   };
 
   useEffect(() => {

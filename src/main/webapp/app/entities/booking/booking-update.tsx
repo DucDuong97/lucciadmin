@@ -32,7 +32,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
   const { bookingEntity, employees, customers, treatmentPlans, branches, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/booking' + props.location.search);
+    props.history.goBack();
   };
 
   useEffect(() => {
@@ -171,14 +171,6 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                   <Translate contentKey="entity.validation.required">This field is required.</Translate>
                 </AvFeedback>
               </AvGroup>
-              <Button tag={Link} id="cancel-save" to="/booking" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
-                &nbsp;
-                <span className="d-none d-md-inline">
-                  <Translate contentKey="entity.action.back">Back</Translate>
-                </span>
-              </Button>
-              &nbsp;
               <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
                 &nbsp;

@@ -22,12 +22,11 @@ export const TreatmentPlanUpdate = (props: ITreatmentPlanUpdateProps) => {
   const [customerId, setCustomerId] = useState('0');
   const [serviceId, setServiceId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
-  const [lockCustomer, setLockCustomer] = useState(false);
 
   const { treatmentPlanEntity, customers, pricingCards, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/treatment-plan' + props.location.search);
+    props.history.goBack();
   };
 
   useEffect(() => {
@@ -36,7 +35,6 @@ export const TreatmentPlanUpdate = (props: ITreatmentPlanUpdateProps) => {
       const params = new URLSearchParams(props.location.search);
       const customerIdMaybe = params.get('customerId');
       if (customerIdMaybe) {
-        setLockCustomer(true);
         setCustomerId(customerIdMaybe);
       }
     } else {
@@ -91,6 +89,41 @@ export const TreatmentPlanUpdate = (props: ITreatmentPlanUpdateProps) => {
                   <AvInput id="treatment-plan-id" type="text" className="form-control" name="id" required readOnly />
                 </AvGroup>
               ) : null}
+
+              <AvGroup>
+                <Label for="treatment-plan-customer">
+                  <Translate contentKey="lucciadminApp.treatmentPlan.customer">Customer</Translate>
+                </Label>
+                <AvInput id="treatment-plan-customer" type="select" className="form-control" name="customerId" value={isNew ? customerId : treatmentPlanEntity.customerId} disabled={!isNew} required>
+                  {customers
+                    ? customers.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {`${otherEntity.name} - ${otherEntity.id}`}
+                      </option>
+                    ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
+              <AvGroup>
+                <Label for="treatment-plan-service">
+                  <Translate contentKey="lucciadminApp.treatmentPlan.service">Service</Translate>
+                </Label>
+                <AvInput id="treatment-plan-service" type="select" className="form-control" name="serviceId" disabled={!isNew} required>
+                  {pricingCards
+                    ? pricingCards.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.name}
+                      </option>
+                    ))
+                    : null}
+                </AvInput>
+                <AvFeedback>
+                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
+                </AvFeedback>
+              </AvGroup>
               <AvGroup>
                 <Label id="presentComplaintLabel" for="treatment-plan-presentComplaint">
                   <Translate contentKey="lucciadminApp.treatmentPlan.presentComplaint">Present Complaint</Translate>
@@ -109,48 +142,6 @@ export const TreatmentPlanUpdate = (props: ITreatmentPlanUpdateProps) => {
                 </Label>
                 <AvField id="treatment-plan-note" type="text" name="note" />
               </AvGroup>
-              <AvGroup>
-                <Label for="treatment-plan-customer">
-                  <Translate contentKey="lucciadminApp.treatmentPlan.customer">Customer</Translate>
-                </Label>
-                <AvInput id="treatment-plan-customer" type="select" className="form-control" name="customerId" value={customerId} disabled={lockCustomer} required>
-                  {customers
-                    ? customers.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {`${otherEntity.name} - ${otherEntity.id}`}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-                <AvFeedback>
-                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
-                </AvFeedback>
-              </AvGroup>
-              <AvGroup>
-                <Label for="treatment-plan-service">
-                  <Translate contentKey="lucciadminApp.treatmentPlan.service">Service</Translate>
-                </Label>
-                <AvInput id="treatment-plan-service" type="select" className="form-control" name="serviceId" required>
-                  {pricingCards
-                    ? pricingCards.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
-                <AvFeedback>
-                  <Translate contentKey="entity.validation.required">This field is required.</Translate>
-                </AvFeedback>
-              </AvGroup>
-              <Button tag={Link} id="cancel-save" to="/treatment-plan" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
-                &nbsp;
-                <span className="d-none d-md-inline">
-                  <Translate contentKey="entity.action.back">Back</Translate>
-                </span>
-              </Button>
-              &nbsp;
               <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
                 &nbsp;

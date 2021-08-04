@@ -79,14 +79,7 @@ export const TreatmentDetail = (props: ITreatmentDetailProps) => {
           </dt>
           <dd>{treatmentEntity.treatmentPlanId ? treatmentEntity.treatmentPlanId : ''}</dd>
         </dl>
-        <Button tag={Link} to="/treatment" replace color="info">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.back">Back</Translate>
-          </span>
-        </Button>
-        &nbsp;
-        <Button tag={Link} to={`/treatment/${treatmentEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/treatment/${treatmentEntity.id}/edit`} color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>

@@ -76,14 +76,7 @@ export const BookingDetail = (props: IBookingDetailProps) => {
           </dt>
           <dd>{bookingEntity.branchId ? bookingEntity.branchId : ''}</dd>
         </dl>
-        <Button tag={Link} to="/booking" replace color="info">
-          <FontAwesomeIcon icon="arrow-left" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.back">Back</Translate>
-          </span>
-        </Button>
-        &nbsp;
-        <Button tag={Link} to={`/booking/${bookingEntity.id}/edit`} replace color="primary">
+        <Button tag={Link} to={`/booking/${bookingEntity.id}/edit`} color="primary">
           <FontAwesomeIcon icon="pencil-alt" />{' '}
           <span className="d-none d-md-inline">
             <Translate contentKey="entity.action.edit">Edit</Translate>

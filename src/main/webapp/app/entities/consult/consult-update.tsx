@@ -32,7 +32,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
   const { consultEntity, customers, branches, employees, pricingCards, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/consult' + props.location.search);
+    props.history.goBack();
   };
 
   useEffect(() => {
@@ -193,14 +193,6 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
-              <Button tag={Link} id="cancel-save" to="/consult" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
-                &nbsp;
-                <span className="d-none d-md-inline">
-                  <Translate contentKey="entity.action.back">Back</Translate>
-                </span>
-              </Button>
-              &nbsp;
               <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
                 &nbsp;
