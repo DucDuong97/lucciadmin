@@ -152,6 +152,26 @@ export const deleteEntity: ICrudDeleteAction<IBooking> = id => async dispatch =>
   return result;
 };
 
+export const checkEntity: ICrudDeleteAction<IBooking> = id => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}/check`;
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_BOOKING,
+    payload: axios.post(requestUrl),
+  });
+  dispatch(getEntities());
+  return result;
+};
+
+export const cancelEntity: ICrudDeleteAction<IBooking> = id => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}/cancel`;
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_BOOKING,
+    payload: axios.post(requestUrl),
+  });
+  dispatch(getEntities());
+  return result;
+};
+
 export const reset = () => ({
   type: ACTION_TYPES.RESET,
 });

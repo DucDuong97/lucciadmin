@@ -43,4 +43,10 @@ public interface BookingService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    void came(Long id);
+
+    void notCame(Long id);
+
+    BookingDTO assignDoctor(BookingDTO bookingDTO);
 }

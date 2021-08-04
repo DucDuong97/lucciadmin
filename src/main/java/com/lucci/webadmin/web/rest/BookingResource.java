@@ -63,6 +63,24 @@ public class BookingResource {
             .body(result);
     }
 
+    @PostMapping("/bookings/{id}/check")
+    public ResponseEntity<Void> checkBooking(@PathVariable Long id) {
+        log.debug("REST request to check Booking : {}", id);
+        bookingService.came(id);
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    @PostMapping("/bookings/{id}/cancel")
+    public ResponseEntity<Void> cancelBooking(@PathVariable Long id) {
+        log.debug("REST request to cancel Booking : {}", id);
+        bookingService.notCame(id);
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
     /**
      * {@code PUT  /bookings} : Updates an existing booking.
      *
@@ -93,7 +111,7 @@ public class BookingResource {
         if (bookingDTO.getCorrespondDoctorId() == null) {
             throw new BadRequestAlertException("Invalid Doctor Id", ENTITY_NAME, "doctoridnull");
         }
-        BookingDTO result = bookingService.save(bookingDTO);
+        BookingDTO result = bookingService.assignDoctor(bookingDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bookingDTO.getId().toString()))
             .body(result);

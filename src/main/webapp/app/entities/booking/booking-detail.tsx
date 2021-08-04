@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, assignDoctor } from './booking.reducer';
-import { getDoctorsForBooking as getDoctors } from '../employee/employee.reducer';
+import { getDoctors } from '../employee/employee.reducer';
 import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, APP_TIME_FORMAT} from 'app/config/constants';
 
 export interface IBookingDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}

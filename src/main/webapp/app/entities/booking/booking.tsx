@@ -131,14 +131,41 @@ export const Booking = (props: IBookingProps) => {
                   <td>{booking.branchId ? <Link to={`branch/${booking.branchId}`}>{booking.branchId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${booking.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
+                      {/*<Button tag={Link} to={`${match.url}/${booking.id}`} color="info" size="sm">*/}
+                      {/*  <FontAwesomeIcon icon="eye" />{' '}*/}
+                      {/*  <span className="d-none d-md-inline">*/}
+                      {/*    <Translate contentKey="entity.action.view">View</Translate>*/}
+                      {/*  </span>*/}
+                      {/*</Button>*/}
 
-                      {/*Edit*/}
+                      {props.cameConfirmPermission &&
+                      <Button
+                        tag={Link}
+                        to={`${match.url}/${booking.id}/check-confirm?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        color="success"
+                        size="sm"
+                      >
+                        <FontAwesomeIcon icon="check" />{' '}
+                        <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.check">Check</Translate>
+                          </span>
+                      </Button>
+                      }
+
+                      {props.notCameConfirmPermission &&
+                      <Button
+                        tag={Link}
+                        to={`${match.url}/${booking.id}/cancel-confirm?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        color="danger"
+                        size="sm"
+                      >
+                        <FontAwesomeIcon icon="times" />{' '}
+                        <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.cancel">Cancel</Translate>
+                          </span>
+                      </Button>
+                      }
+                      &nbsp;
                       {props.updatePermission &&
                         <Button
                           tag={Link}
@@ -153,7 +180,6 @@ export const Booking = (props: IBookingProps) => {
                         </Button>
                       }
 
-                      {/*Delete*/}
                       {props.deletePermission &&
                         <Button
                           tag={Link}
@@ -209,7 +235,9 @@ const mapStateToProps = ({ booking, authentication }: IRootState) => ({
   totalItems: booking.totalItems,
 
   createPermission: false,
-  updatePermission: authentication.isReceptionist || authentication.isOperationsDirector,
+  cameConfirmPermission: authentication.isReceptionist,
+  notCameConfirmPermission: authentication.isReceptionist,
+  updatePermission: authentication.isReceptionist,
   deletePermission: authentication.isReceptionist,
 });
 

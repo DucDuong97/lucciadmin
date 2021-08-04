@@ -7,6 +7,8 @@ import Booking from './booking';
 import BookingDetail from './booking-detail';
 import BookingUpdate from './booking-update';
 import BookingDeleteDialog from './booking-delete-dialog';
+import BookingCancelDialog from "./booking-cancel-dialog";
+import BookingCheckDialog from "./booking-check-dialog";
 
 const Routes = ({ match }) => (
   <>
@@ -17,6 +19,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={match.url} component={Booking} />
     </Switch>
     <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={BookingDeleteDialog} />
+    <ErrorBoundaryRoute exact path={`${match.url}/:id/check-confirm`} component={BookingCheckDialog} />
+    <ErrorBoundaryRoute exact path={`${match.url}/:id/cancel-confirm`} component={BookingCancelDialog} />
   </>
 );
 

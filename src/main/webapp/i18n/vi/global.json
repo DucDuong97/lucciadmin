@@ -143,6 +143,12 @@
     "delete": {
       "title": "Xác nhận hành động xóa"
     },
+    "check": {
+      "title": "Xác nhận hành động Check"
+    },
+    "cancel": {
+      "title": "Xác nhận hành động Cancel"
+    },
     "validation": {
       "required": "Trường này bắt buộc phải nhập.",
       "minlength": "Trường này phải có ít nhất {{ min }} ký tự.",

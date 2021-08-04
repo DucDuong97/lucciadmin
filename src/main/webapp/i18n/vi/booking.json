@@ -13,6 +13,12 @@
       "delete": {
         "question": "Bạn có chắc là muốn xóa Lịch hẹn {{ id }}?"
       },
+      "check": {
+        "question": "Bạn có chắc là muốn check Lịch hẹn {{ id }}?"
+      },
+      "cancel": {
+        "question": "Bạn có chắc là muốn huỷ Lịch hẹn {{ id }}?"
+      },
       "detail": {
         "title": "Lịch hẹn"
       },
