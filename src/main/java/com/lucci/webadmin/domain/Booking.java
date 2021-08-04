@@ -1,6 +1,7 @@
 package com.lucci.webadmin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.lucci.webadmin.domain.enumeration.BookingState;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -28,6 +29,11 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
     @NotNull
     @Column(name = "time", nullable = false)
     private ZonedDateTime time;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state", nullable = false, columnDefinition = " default 'CAME'")
+    private BookingState state;
 
     @ManyToOne
     @JsonIgnoreProperties(value = "bookings", allowSetters = true)
@@ -144,6 +150,15 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
         return "Booking{" +
             "id=" + getId() +
             ", time='" + getTime() + "'" +
+            ", state='" + getState() + "'" +
             "}";
+    }
+
+    public BookingState getState() {
+        return state;
+    }
+
+    public void setState(BookingState state) {
+        this.state = state;
     }
 }
