@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Spring Data  repository for the Employee entity.
  */
@@ -15,4 +17,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Page<Employee> findByWorkAtIdAndRole(Long branchId, EmployeeRole role, Pageable pageable);
+    List<Employee> findByRole(EmployeeRole role);
 }

@@ -1,9 +1,13 @@
 package com.lucci.webadmin.web.rest;
 
+import com.lucci.webadmin.domain.Employee;
+import com.lucci.webadmin.security.AuthoritiesConstants;
+import com.lucci.webadmin.security.SecurityUtils;
 import com.lucci.webadmin.service.EmployeeService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
 import com.lucci.webadmin.service.dto.EmployeeDTO;
 
+import com.lucci.webadmin.web.rest.errors.NoEmployeeForCurrentUserException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -21,8 +25,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
+import static com.lucci.webadmin.domain.enumeration.EmployeeRole.DOCTOR;
 
 /**
  * REST controller for managing {@link com.lucci.webadmin.domain.Employee}.
@@ -99,11 +106,9 @@ public class EmployeeResource {
     }
 
     @GetMapping("/employees/as-doctor")
-    public ResponseEntity<List<EmployeeDTO>> getDoctorsAtBranch(Pageable pageable, Long branchId) {
+    public List<EmployeeDTO> getDoctors() {
         log.debug("REST request to get a page of Employees");
-        Page<EmployeeDTO> page = employeeService.findDoctorAtBranch(pageable, branchId);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        return employeeService.findByRole(DOCTOR);
     }
 
     /**

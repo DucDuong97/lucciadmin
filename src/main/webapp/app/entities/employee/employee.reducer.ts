@@ -109,14 +109,14 @@ export const getEntities: ICrudGetAllAction<IEmployee> = (page, size, sort) => {
   };
 };
 
-export const getDoctorsForBooking: ICrudGetAllAction<IEmployee> = (page, size, sort) => ({
+export const getDoctors: ICrudGetAllAction<IEmployee> = (page, size, sort) => ({
   type: ACTION_TYPES.FETCH_EMPLOYEE_LIST,
-  payload: axios.get<IEmployee>(`${apiUrl}/as-doctor-for-booking?cacheBuster=${new Date().getTime()}`),
+  payload: axios.get<IEmployee>(`${apiUrl}/as-doctor?cacheBuster=${new Date().getTime()}`),
 });
 
 export const getDoctorsAtBranch = (branchId: number, page?: number, size?: number, sort?: string) => ({
   type: ACTION_TYPES.FETCH_EMPLOYEE_LIST,
-  payload: axios.get<IEmployee>(`${apiUrl}/as-doctor/?branchId=${branchId}&cacheBuster=${new Date().getTime()}`),
+  payload: axios.get<IEmployee>(`${apiUrl}/as-doctor?branchId=${branchId}&cacheBuster=${new Date().getTime()}`),
 });
 
 export const getEntity: ICrudGetAction<IEmployee> = id => {

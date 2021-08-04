@@ -1,5 +1,6 @@
 package com.lucci.webadmin.service.impl;
 
+import com.lucci.webadmin.domain.enumeration.EmployeeRole;
 import com.lucci.webadmin.service.EmployeeService;
 import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.repository.EmployeeRepository;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.lucci.webadmin.domain.enumeration.EmployeeRole.*;
@@ -56,6 +58,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.debug("Request to get Doctors at Branch {}", branchId);
         return employeeRepository.findByWorkAtIdAndRole(branchId, DOCTOR, pageable)
             .map(employeeMapper::toDto);
+    }
+
+    @Override
+    public List<EmployeeDTO> findByRole(EmployeeRole role) {
+        log.debug("Request to get all Employees with role: {}", role);
+        return employeeMapper.toDto(employeeRepository.findByRole(DOCTOR));
     }
 
     @Override

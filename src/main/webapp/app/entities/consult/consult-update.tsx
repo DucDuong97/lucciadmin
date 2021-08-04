@@ -12,7 +12,7 @@ import { getEntities as getCustomers } from 'app/entities/customer/customer.redu
 import { IBranch } from 'app/shared/model/branch.model';
 import { getEntities as getBranches } from 'app/entities/branch/branch.reducer';
 import { IEmployee } from 'app/shared/model/employee.model';
-import { getDoctorsAtBranch as getDoctorsAtBranch } from 'app/entities/employee/employee.reducer';
+import { getDoctors } from 'app/entities/employee/employee.reducer';
 import { IPricingCard } from 'app/shared/model/pricing-card.model';
 import { getEntities as getPricingCards } from 'app/entities/pricing-card/pricing-card.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './consult.reducer';
@@ -44,7 +44,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
     if (props.isConsultant) {
       props.getCustomers();
       props.getBranches();
-      props.getDoctorsAtBranch(props.consultEntity.branchId);
+      props.getDoctors();
     }
     props.getPricingCards();
   }, []);
@@ -223,7 +223,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getCustomers,
   getBranches,
-  getDoctorsAtBranch,
+  getDoctors,
   getPricingCards,
   getEntity,
   updateEntity,

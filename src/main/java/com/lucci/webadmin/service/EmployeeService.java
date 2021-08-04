@@ -1,10 +1,12 @@
 package com.lucci.webadmin.service;
 
+import com.lucci.webadmin.domain.enumeration.EmployeeRole;
 import com.lucci.webadmin.service.dto.EmployeeDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,4 +47,6 @@ public interface EmployeeService {
     void delete(Long id);
 
     Page<EmployeeDTO> findDoctorAtBranch(Pageable pageable, Long branchId);
+
+    List<EmployeeDTO> findByRole(EmployeeRole role);
 }
