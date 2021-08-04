@@ -10,7 +10,7 @@ import java.util.Set;
  * A DTO for the {@link com.lucci.webadmin.domain.Treatment} entity.
  */
 public class TreatmentDTO implements Serializable {
-    
+
     private Long id;
 
     private String description;
@@ -22,14 +22,13 @@ public class TreatmentDTO implements Serializable {
 
     private LocalDate revisitDate;
 
-
     private Long doctorId;
 
     private String doctorName;
     private Set<ImgUrlDTO> treatmentImgUrls = new HashSet<>();
 
     private Long treatmentPlanId;
-    
+
     public Long getId() {
         return id;
     }

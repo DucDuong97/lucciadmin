@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.Optional;
 
 import static com.lucci.webadmin.domain.enumeration.TreatmentState.FINISH;
@@ -56,6 +57,13 @@ public class TreatmentService {
         Treatment treatment = treatmentMapper.toEntity(treatmentDTO);
         if (treatment.getId() == null) {
             treatment.setState(IN_PROCESS);
+            TreatmentPlanDTO treatmentPlanDTO = treatmentPlanService.findOne(treatmentDTO.getId()).get();
+            if (treatmentPlanDTO.getTreatments().size() > 0) {
+                TreatmentDTO lastTreatmentDTO = treatmentPlanDTO.getTreatments().stream()
+                    .max(Comparator.comparing(TreatmentDTO::getDate))
+                    .get();
+                treatment.setDescription(lastTreatmentDTO.getNextPlan());
+            }
         }
         else {
             TreatmentState state = treatmentRepository.findById(treatment.getId()).get().getState();
