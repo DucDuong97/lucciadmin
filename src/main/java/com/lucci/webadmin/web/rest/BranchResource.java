@@ -1,8 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.domain.Branch;
 import com.lucci.webadmin.service.BranchService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
+import com.lucci.webadmin.service.dto.BranchDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -41,17 +41,17 @@ public class BranchResource {
     /**
      * {@code POST  /branches} : Create a new branch.
      *
-     * @param branch the branch to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new branch, or with status {@code 400 (Bad Request)} if the branch has already an ID.
+     * @param branchDTO the branchDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new branchDTO, or with status {@code 400 (Bad Request)} if the branch has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/branches")
-    public ResponseEntity<Branch> createBranch(@Valid @RequestBody Branch branch) throws URISyntaxException {
-        log.debug("REST request to save Branch : {}", branch);
-        if (branch.getId() != null) {
+    public ResponseEntity<BranchDTO> createBranch(@Valid @RequestBody BranchDTO branchDTO) throws URISyntaxException {
+        log.debug("REST request to save Branch : {}", branchDTO);
+        if (branchDTO.getId() != null) {
             throw new BadRequestAlertException("A new branch cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Branch result = branchService.save(branch);
+        BranchDTO result = branchService.save(branchDTO);
         return ResponseEntity.created(new URI("/api/branches/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -60,21 +60,21 @@ public class BranchResource {
     /**
      * {@code PUT  /branches} : Updates an existing branch.
      *
-     * @param branch the branch to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated branch,
-     * or with status {@code 400 (Bad Request)} if the branch is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the branch couldn't be updated.
+     * @param branchDTO the branchDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated branchDTO,
+     * or with status {@code 400 (Bad Request)} if the branchDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the branchDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/branches")
-    public ResponseEntity<Branch> updateBranch(@Valid @RequestBody Branch branch) throws URISyntaxException {
-        log.debug("REST request to update Branch : {}", branch);
-        if (branch.getId() == null) {
+    public ResponseEntity<BranchDTO> updateBranch(@Valid @RequestBody BranchDTO branchDTO) throws URISyntaxException {
+        log.debug("REST request to update Branch : {}", branchDTO);
+        if (branchDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Branch result = branchService.save(branch);
+        BranchDTO result = branchService.save(branchDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, branch.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, branchDTO.getId().toString()))
             .body(result);
     }
 
@@ -85,7 +85,7 @@ public class BranchResource {
      */
     @CrossOrigin
     @GetMapping("/branches")
-    public List<Branch> getAllBranches() {
+    public List<BranchDTO> getAllBranches() {
         log.debug("REST request to get all Branches");
         return branchService.findAll();
     }
@@ -93,21 +93,20 @@ public class BranchResource {
     /**
      * {@code GET  /branches/:id} : get the "id" branch.
      *
-     * @param id the id of the branch to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the branch, or with status {@code 404 (Not Found)}.
+     * @param id the id of the branchDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the branchDTO, or with status {@code 404 (Not Found)}.
      */
-    @CrossOrigin
     @GetMapping("/branches/{id}")
-    public ResponseEntity<Branch> getBranch(@PathVariable Long id) {
+    public ResponseEntity<BranchDTO> getBranch(@PathVariable Long id) {
         log.debug("REST request to get Branch : {}", id);
-        Optional<Branch> branch = branchService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(branch);
+        Optional<BranchDTO> branchDTO = branchService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(branchDTO);
     }
 
     /**
      * {@code DELETE  /branches/:id} : delete the "id" branch.
      *
-     * @param id the id of the branch to delete.
+     * @param id the id of the branchDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/branches/{id}")

@@ -4,6 +4,8 @@ import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Branch;
 import com.lucci.webadmin.repository.BranchRepository;
 import com.lucci.webadmin.service.BranchService;
+import com.lucci.webadmin.service.dto.BranchDTO;
+import com.lucci.webadmin.service.mapper.BranchMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,9 @@ public class BranchResourceIT {
 
     @Autowired
     private BranchRepository branchRepository;
+
+    @Autowired
+    private BranchMapper branchMapper;
 
     @Autowired
     private BranchService branchService;
@@ -85,9 +90,10 @@ public class BranchResourceIT {
     public void createBranch() throws Exception {
         int databaseSizeBeforeCreate = branchRepository.findAll().size();
         // Create the Branch
+        BranchDTO branchDTO = branchMapper.toDto(branch);
         restBranchMockMvc.perform(post("/api/branches")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(branch)))
+            .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Branch in the database
@@ -105,11 +111,12 @@ public class BranchResourceIT {
 
         // Create the Branch with an existing ID
         branch.setId(1L);
+        BranchDTO branchDTO = branchMapper.toDto(branch);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restBranchMockMvc.perform(post("/api/branches")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(branch)))
+            .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Branch in the database
@@ -126,11 +133,12 @@ public class BranchResourceIT {
         branch.setAdress(null);
 
         // Create the Branch, which fails.
+        BranchDTO branchDTO = branchMapper.toDto(branch);
 
 
         restBranchMockMvc.perform(post("/api/branches")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(branch)))
+            .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
             .andExpect(status().isBadRequest());
 
         List<Branch> branchList = branchRepository.findAll();
@@ -145,11 +153,12 @@ public class BranchResourceIT {
         branch.setCity(null);
 
         // Create the Branch, which fails.
+        BranchDTO branchDTO = branchMapper.toDto(branch);
 
 
         restBranchMockMvc.perform(post("/api/branches")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(branch)))
+            .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
             .andExpect(status().isBadRequest());
 
         List<Branch> branchList = branchRepository.findAll();
@@ -197,7 +206,7 @@ public class BranchResourceIT {
     @Transactional
     public void updateBranch() throws Exception {
         // Initialize the database
-        branchService.save(branch);
+        branchRepository.saveAndFlush(branch);
 
         int databaseSizeBeforeUpdate = branchRepository.findAll().size();
 
@@ -208,10 +217,11 @@ public class BranchResourceIT {
         updatedBranch
             .adress(UPDATED_ADRESS)
             .city(UPDATED_CITY);
+        BranchDTO branchDTO = branchMapper.toDto(updatedBranch);
 
         restBranchMockMvc.perform(put("/api/branches")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedBranch)))
+            .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
             .andExpect(status().isOk());
 
         // Validate the Branch in the database
@@ -227,10 +237,13 @@ public class BranchResourceIT {
     public void updateNonExistingBranch() throws Exception {
         int databaseSizeBeforeUpdate = branchRepository.findAll().size();
 
+        // Create the Branch
+        BranchDTO branchDTO = branchMapper.toDto(branch);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restBranchMockMvc.perform(put("/api/branches")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(branch)))
+            .content(TestUtil.convertObjectToJsonBytes(branchDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Branch in the database
@@ -242,7 +255,7 @@ public class BranchResourceIT {
     @Transactional
     public void deleteBranch() throws Exception {
         // Initialize the database
-        branchService.save(branch);
+        branchRepository.saveAndFlush(branch);
 
         int databaseSizeBeforeDelete = branchRepository.findAll().size();
 

@@ -74,6 +74,7 @@ public class CacheConfiguration {
             createCache(cm, com.lucci.webadmin.domain.Video.class.getName());
             createCache(cm, com.lucci.webadmin.domain.ImgUrl.class.getName() + ".serviceItems");
             createCache(cm, com.lucci.webadmin.domain.ImgUrl.class.getName() + ".treatments");
+            createCache(cm, com.lucci.webadmin.domain.Branch.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

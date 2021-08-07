@@ -24,6 +24,7 @@
         "treatmentPlan": "Treatment Plan",
         "imgUrl": "Img Url",
         "video": "Video",
+        "branch": "Branch",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {
