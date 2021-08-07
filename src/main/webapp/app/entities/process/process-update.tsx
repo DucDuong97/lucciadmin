@@ -15,6 +15,8 @@ import { getEntity, updateEntity, createEntity, reset } from './process.reducer'
 import { IProcess } from 'app/shared/model/process.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import { toast } from 'react-toastify';
+import { IMAGE_FILE_SYSTEM_URL } from 'app/config/constants';
 
 export interface IProcessUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
@@ -46,11 +48,22 @@ export const ProcessUpdate = (props: IProcessUpdateProps) => {
     }
   }, [props.updateSuccess]);
 
+  const [file, setFile] = useState<File>();
+  const changeHandler = (event) => {
+    const imgType = event.target.files[0].type.split('/')[0];
+    if (imgType !== 'image') {
+      toast.error("Wrong file format");
+      return;
+    }
+    setFile(event.target.files[0]);
+  };
+
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const entity = {
         ...processEntity,
         ...values,
+        file,
       };
 
       if (isNew) {
@@ -122,16 +135,13 @@ export const ProcessUpdate = (props: IProcessUpdateProps) => {
                 <Label for="process-icon">
                   <Translate contentKey="lucciadminApp.process.icon">Icon</Translate>
                 </Label>
-                <AvInput id="process-icon" type="select" className="form-control" name="iconId">
-                  <option value="" key="0" />
-                  {imgUrls
-                    ? imgUrls.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
-                        </option>
-                      ))
-                    : null}
-                </AvInput>
+                <div className="form-group">
+                  <input type="file" name="file" onChange={changeHandler}/>
+                  {file && <p>Size in bytes: {file.size}</p>}
+                  {processEntity.iconId &&
+                  <img src={`${IMAGE_FILE_SYSTEM_URL+processEntity.iconName}`}
+                       style={{maxWidth: 200, margin:20}} alt="hello world"/>}
+                </div>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/process" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

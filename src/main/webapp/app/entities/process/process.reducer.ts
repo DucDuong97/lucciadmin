@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IProcess, defaultValue } from 'app/shared/model/process.model';
+import { upload } from 'app/entities/img-url/img-url.reducer';
 
 export const ACTION_TYPES = {
   FETCH_PROCESS_LIST: 'process/FETCH_PROCESS_LIST',
@@ -113,6 +114,9 @@ export const getEntity: ICrudGetAction<IProcess> = id => {
 };
 
 export const createEntity: ICrudPutAction<IProcess> = entity => async dispatch => {
+  if (entity.file != null) {
+    entity.iconId = (await upload(entity.file)).data.id;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_PROCESS,
     payload: axios.post(apiUrl, cleanEntity(entity)),
@@ -122,6 +126,9 @@ export const createEntity: ICrudPutAction<IProcess> = entity => async dispatch =
 };
 
 export const updateEntity: ICrudPutAction<IProcess> = entity => async dispatch => {
+  if (entity.file != null) {
+    entity.iconId = (await upload(entity.file)).data.id;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_PROCESS,
     payload: axios.put(apiUrl, cleanEntity(entity)),

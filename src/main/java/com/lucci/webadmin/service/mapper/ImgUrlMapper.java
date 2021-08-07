@@ -29,4 +29,12 @@ public interface ImgUrlMapper extends EntityMapper<ImgUrlDTO, ImgUrl> {
         imgUrl.setId(id);
         return imgUrl;
     }
+
+    @Named("toUrl")
+    static String ImgUrlToUrl(ImgUrl imgUrl) {
+        if (imgUrl == null) {
+            return null;
+        }
+        return imgUrl.getPath() + "/" + imgUrl.getName();
+    }
 }

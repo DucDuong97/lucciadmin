@@ -1,6 +1,7 @@
 package com.lucci.webadmin.service.mapper;
 
 
+import com.lucci.webadmin.domain.ImgUrl;
 import com.lucci.webadmin.domain.Process;
 import com.lucci.webadmin.service.dto.ProcessDTO;
 
@@ -15,7 +16,7 @@ public interface ProcessMapper extends EntityMapper<ProcessDTO, Process> {
     @Mapping(source = "serviceItem.id", target = "serviceItemId")
     @Mapping(source = "serviceItem.name", target = "serviceItemName")
     @Mapping(source = "icon.id", target = "iconId")
-    @Mapping(source = "icon.name", target = "iconName")
+    @Mapping(source = "icon", target = "iconName", qualifiedByName = "toUrl")
     ProcessDTO toDto(Process process);
 
     @Mapping(source = "serviceItemId", target = "serviceItem")

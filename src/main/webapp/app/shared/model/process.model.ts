@@ -6,6 +6,7 @@ export interface IProcess {
   serviceItemId?: number;
   iconName?: string;
   iconId?: number;
+  file?: File;
 }
 
 export const defaultValue: Readonly<IProcess> = {};

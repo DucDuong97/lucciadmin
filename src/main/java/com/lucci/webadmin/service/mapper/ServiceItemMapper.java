@@ -35,12 +35,4 @@ public interface ServiceItemMapper extends EntityMapper<ServiceItemDTO, ServiceI
         serviceItem.setId(id);
         return serviceItem;
     }
-
-    @Named("toUrl")
-    static String ImgUrlToUrl(ImgUrl imgUrl) {
-        if (imgUrl == null) {
-            return null;
-        }
-        return imgUrl.getPath() + "/" + imgUrl.getName();
-    }
 }

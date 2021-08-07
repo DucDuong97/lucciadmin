@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './img-url.reducer';
 import { IImgUrl } from 'app/shared/model/img-url.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, IMAGE_FILE_SYSTEM_URL} from 'app/config/constants';
 
 export interface IImgUrlProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -49,33 +49,22 @@ export const ImgUrl = (props: IImgUrlProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.imgUrl.path">Path</Translate>
                 </th>
+                <th>
+                </th>
                 <th />
               </tr>
             </thead>
             <tbody>
               {imgUrlList.map((imgUrl, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${imgUrl.id}`} color="link" size="sm">
-                      {imgUrl.id}
-                    </Button>
-                  </td>
+                  <td>{imgUrl.id}</td>
                   <td>{imgUrl.name}</td>
                   <td>{imgUrl.path}</td>
+                  <td>
+                    <img src={`${IMAGE_FILE_SYSTEM_URL+imgUrl.imgUrl}`}
+                         style={{maxWidth: 200, margin:20}} alt="hello world"/></td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      <Button tag={Link} to={`${match.url}/${imgUrl.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.view">View</Translate>
-                        </span>
-                      </Button>
-                      <Button tag={Link} to={`${match.url}/${imgUrl.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" />{' '}
-                        <span className="d-none d-md-inline">
-                          <Translate contentKey="entity.action.edit">Edit</Translate>
-                        </span>
-                      </Button>
                       <Button tag={Link} to={`${match.url}/${imgUrl.id}/delete`} color="danger" size="sm">
                         <FontAwesomeIcon icon="trash" />{' '}
                         <span className="d-none d-md-inline">
