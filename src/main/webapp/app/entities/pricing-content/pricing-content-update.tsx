@@ -103,7 +103,7 @@ export const PricingContentUpdate = (props: IPricingContentUpdateProps) => {
                 <Label for="pricing-content-pricingCard">
                   <Translate contentKey="lucciadminApp.pricingContent.pricingCard">Pricing Card</Translate>
                 </Label>
-                <AvInput id="pricing-content-pricingCard" type="select" className="form-control" name="pricingCard.id">
+                <AvInput id="pricing-content-pricingCard" type="select" className="form-control" name="pricingCardId">
                   <option value="" key="0" />
                   {pricingCards
                     ? pricingCards.map(otherEntity => (

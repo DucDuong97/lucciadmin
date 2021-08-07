@@ -1,10 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.domain.PricingCard;
-import com.lucci.webadmin.domain.PricingContent;
-import com.lucci.webadmin.service.PricingCardService;
 import com.lucci.webadmin.service.PricingContentService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
+import com.lucci.webadmin.service.dto.PricingContentDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -35,36 +33,25 @@ public class PricingContentResource {
     private String applicationName;
 
     private final PricingContentService pricingContentService;
-    private final PricingCardService pricingCardService;
 
-    public PricingContentResource(PricingContentService pricingContentService, PricingCardService pricingCardService) {
+    public PricingContentResource(PricingContentService pricingContentService) {
         this.pricingContentService = pricingContentService;
-        this.pricingCardService = pricingCardService;
     }
 
     /**
      * {@code POST  /pricing-contents} : Create a new pricingContent.
      *
-     * @param pricingContent the pricingContent to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new pricingContent, or with status {@code 400 (Bad Request)} if the pricingContent has already an ID.
+     * @param pricingContentDTO the pricingContentDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new pricingContentDTO, or with status {@code 400 (Bad Request)} if the pricingContent has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/pricing-contents")
-    public ResponseEntity<PricingContent> createPricingContent(@Valid @RequestBody PricingContent pricingContent) throws URISyntaxException {
-        log.debug("REST request to save PricingContent : {}", pricingContent);
-        if (pricingContent.getId() != null) {
+    public ResponseEntity<PricingContentDTO> createPricingContent(@Valid @RequestBody PricingContentDTO pricingContentDTO) throws URISyntaxException {
+        log.debug("REST request to save PricingContent : {}", pricingContentDTO);
+        if (pricingContentDTO.getId() != null) {
             throw new BadRequestAlertException("A new pricingContent cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PricingContent result = pricingContentService.save(pricingContent);
-
-        if (pricingContent.getPricingCard() != null) {
-            Optional<PricingCard> pricingCardOpt = pricingCardService.findOne(pricingContent.getPricingCard().getId());
-            pricingCardOpt.ifPresent(pricingCard -> {
-                    pricingCard.getContents().add(pricingContent);
-                    pricingCardService.save(pricingCard);
-                }
-            );
-        }
+        PricingContentDTO result = pricingContentService.save(pricingContentDTO);
         return ResponseEntity.created(new URI("/api/pricing-contents/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -73,29 +60,21 @@ public class PricingContentResource {
     /**
      * {@code PUT  /pricing-contents} : Updates an existing pricingContent.
      *
-     * @param pricingContent the pricingContent to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated pricingContent,
-     * or with status {@code 400 (Bad Request)} if the pricingContent is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the pricingContent couldn't be updated.
+     * @param pricingContentDTO the pricingContentDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated pricingContentDTO,
+     * or with status {@code 400 (Bad Request)} if the pricingContentDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the pricingContentDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/pricing-contents")
-    public ResponseEntity<PricingContent> updatePricingContent(@Valid @RequestBody PricingContent pricingContent) throws URISyntaxException {
-        log.debug("REST request to update PricingContent : {}", pricingContent);
-        if (pricingContent.getId() == null) {
+    public ResponseEntity<PricingContentDTO> updatePricingContent(@Valid @RequestBody PricingContentDTO pricingContentDTO) throws URISyntaxException {
+        log.debug("REST request to update PricingContent : {}", pricingContentDTO);
+        if (pricingContentDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        PricingContent result = pricingContentService.save(pricingContent);
-        if (pricingContent.getPricingCard() != null) {
-            Optional<PricingCard> pricingCardOpt = pricingCardService.findOne(pricingContent.getPricingCard().getId());
-            pricingCardOpt.ifPresent(pricingCard -> {
-                    pricingCard.getContents().add(pricingContent);
-                    pricingCardService.save(pricingCard);
-                }
-            );
-        }
+        PricingContentDTO result = pricingContentService.save(pricingContentDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, pricingContent.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, pricingContentDTO.getId().toString()))
             .body(result);
     }
 
@@ -104,9 +83,8 @@ public class PricingContentResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of pricingContents in body.
      */
-    @CrossOrigin
     @GetMapping("/pricing-contents")
-    public List<PricingContent> getAllPricingContents() {
+    public List<PricingContentDTO> getAllPricingContents() {
         log.debug("REST request to get all PricingContents");
         return pricingContentService.findAll();
     }
@@ -114,21 +92,20 @@ public class PricingContentResource {
     /**
      * {@code GET  /pricing-contents/:id} : get the "id" pricingContent.
      *
-     * @param id the id of the pricingContent to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pricingContent, or with status {@code 404 (Not Found)}.
+     * @param id the id of the pricingContentDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pricingContentDTO, or with status {@code 404 (Not Found)}.
      */
-    @CrossOrigin
     @GetMapping("/pricing-contents/{id}")
-    public ResponseEntity<PricingContent> getPricingContent(@PathVariable Long id) {
+    public ResponseEntity<PricingContentDTO> getPricingContent(@PathVariable Long id) {
         log.debug("REST request to get PricingContent : {}", id);
-        Optional<PricingContent> pricingContent = pricingContentService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(pricingContent);
+        Optional<PricingContentDTO> pricingContentDTO = pricingContentService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(pricingContentDTO);
     }
 
     /**
      * {@code DELETE  /pricing-contents/:id} : delete the "id" pricingContent.
      *
-     * @param id the id of the pricingContent to delete.
+     * @param id the id of the pricingContentDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/pricing-contents/{id}")

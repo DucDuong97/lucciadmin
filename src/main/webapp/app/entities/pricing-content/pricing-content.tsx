@@ -60,8 +60,8 @@ export const PricingContent = (props: IPricingContentProps) => {
                   <td>{pricingContent.content}</td>
                   <td><FontAwesomeIcon icon={pricingContent.pro ? faCheck : faTimes} /></td>
                   <td>
-                    {pricingContent.pricingCard ? (
-                      <Link to={`pricing-card/${pricingContent.pricingCard.id}`}>{pricingContent.pricingCard.name}</Link>
+                    {pricingContent.pricingCardName ? (
+                      <Link to={`pricing-card/${pricingContent.pricingCardId}`}>{pricingContent.pricingCardName}</Link>
                     ) : (
                       ''
                     )}

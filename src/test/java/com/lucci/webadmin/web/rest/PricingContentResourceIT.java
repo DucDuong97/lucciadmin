@@ -4,6 +4,8 @@ import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.PricingContent;
 import com.lucci.webadmin.repository.PricingContentRepository;
 import com.lucci.webadmin.service.PricingContentService;
+import com.lucci.webadmin.service.dto.PricingContentDTO;
+import com.lucci.webadmin.service.mapper.PricingContentMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,9 @@ public class PricingContentResourceIT {
 
     @Autowired
     private PricingContentRepository pricingContentRepository;
+
+    @Autowired
+    private PricingContentMapper pricingContentMapper;
 
     @Autowired
     private PricingContentService pricingContentService;
@@ -85,9 +90,10 @@ public class PricingContentResourceIT {
     public void createPricingContent() throws Exception {
         int databaseSizeBeforeCreate = pricingContentRepository.findAll().size();
         // Create the PricingContent
+        PricingContentDTO pricingContentDTO = pricingContentMapper.toDto(pricingContent);
         restPricingContentMockMvc.perform(post("/api/pricing-contents")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingContent)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingContentDTO)))
             .andExpect(status().isCreated());
 
         // Validate the PricingContent in the database
@@ -105,11 +111,12 @@ public class PricingContentResourceIT {
 
         // Create the PricingContent with an existing ID
         pricingContent.setId(1L);
+        PricingContentDTO pricingContentDTO = pricingContentMapper.toDto(pricingContent);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPricingContentMockMvc.perform(post("/api/pricing-contents")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingContent)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingContentDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the PricingContent in the database
@@ -126,11 +133,12 @@ public class PricingContentResourceIT {
         pricingContent.setContent(null);
 
         // Create the PricingContent, which fails.
+        PricingContentDTO pricingContentDTO = pricingContentMapper.toDto(pricingContent);
 
 
         restPricingContentMockMvc.perform(post("/api/pricing-contents")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingContent)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingContentDTO)))
             .andExpect(status().isBadRequest());
 
         List<PricingContent> pricingContentList = pricingContentRepository.findAll();
@@ -145,11 +153,12 @@ public class PricingContentResourceIT {
         pricingContent.setPro(null);
 
         // Create the PricingContent, which fails.
+        PricingContentDTO pricingContentDTO = pricingContentMapper.toDto(pricingContent);
 
 
         restPricingContentMockMvc.perform(post("/api/pricing-contents")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingContent)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingContentDTO)))
             .andExpect(status().isBadRequest());
 
         List<PricingContent> pricingContentList = pricingContentRepository.findAll();
@@ -197,7 +206,7 @@ public class PricingContentResourceIT {
     @Transactional
     public void updatePricingContent() throws Exception {
         // Initialize the database
-        pricingContentService.save(pricingContent);
+        pricingContentRepository.saveAndFlush(pricingContent);
 
         int databaseSizeBeforeUpdate = pricingContentRepository.findAll().size();
 
@@ -208,10 +217,11 @@ public class PricingContentResourceIT {
         updatedPricingContent
             .content(UPDATED_CONTENT)
             .pro(UPDATED_PRO);
+        PricingContentDTO pricingContentDTO = pricingContentMapper.toDto(updatedPricingContent);
 
         restPricingContentMockMvc.perform(put("/api/pricing-contents")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedPricingContent)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingContentDTO)))
             .andExpect(status().isOk());
 
         // Validate the PricingContent in the database
@@ -227,10 +237,13 @@ public class PricingContentResourceIT {
     public void updateNonExistingPricingContent() throws Exception {
         int databaseSizeBeforeUpdate = pricingContentRepository.findAll().size();
 
+        // Create the PricingContent
+        PricingContentDTO pricingContentDTO = pricingContentMapper.toDto(pricingContent);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restPricingContentMockMvc.perform(put("/api/pricing-contents")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingContent)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingContentDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the PricingContent in the database
@@ -242,7 +255,7 @@ public class PricingContentResourceIT {
     @Transactional
     public void deletePricingContent() throws Exception {
         // Initialize the database
-        pricingContentService.save(pricingContent);
+        pricingContentRepository.saveAndFlush(pricingContent);
 
         int databaseSizeBeforeDelete = pricingContentRepository.findAll().size();
 

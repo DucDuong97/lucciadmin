@@ -16,14 +16,14 @@
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "pricingCard",
-      "otherEntityRelationshipName": "contents",
+      "otherEntityRelationshipName": "pricingContent",
       "relationshipName": "pricingCard",
-      "otherEntityField": "id"
+      "otherEntityField": "name"
     }
   ],
   "changelogDate": "20210516213154",
   "entityTableName": "pricing_content",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,

@@ -1,10 +1,9 @@
-import { IPricingCard } from 'app/shared/model/pricing-card.model';
-
 export interface IPricingContent {
   id?: number;
   content?: string;
   pro?: boolean;
-  pricingCard?: IPricingCard;
+  pricingCardName?: string;
+  pricingCardId?: number;
 }
 
 export const defaultValue: Readonly<IPricingContent> = {

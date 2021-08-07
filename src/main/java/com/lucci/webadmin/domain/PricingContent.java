@@ -33,7 +33,7 @@ public class PricingContent implements Serializable {
     private Boolean pro;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = "contents", allowSetters = true)
+    @JsonIgnoreProperties(value = "pricingContents", allowSetters = true)
     private PricingCard pricingCard;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
