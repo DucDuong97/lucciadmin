@@ -133,4 +133,19 @@ public class ImgUrlServiceImpl implements ImgUrlService {
         }
         return result;
     }
+
+    @Override
+    public Optional<ImgUrlDTO> findByURL(String url) {
+        List<String> split = Arrays.asList(url.split("/"));
+        if (split.size() < 2) {
+            return Optional.empty();
+        }
+        String name = split.get(split.size() - 1);
+        String path = String.join("/", split.subList(0, split.size() - 1));
+        try {
+            return Optional.of(imgUrlMapper.toDto(imgUrlRepository.findByPathAndName(path, name).get(0)));
+        } catch (IndexOutOfBoundsException ignored) {
+            return Optional.empty();
+        }
+    }
 }

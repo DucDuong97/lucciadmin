@@ -18,6 +18,8 @@ public class ImgUrlDTO implements Serializable {
     @NotNull
     private String path;
 
+    private String imgUrl;
+
     private Set<TreatmentDTO> treatments = new HashSet<>();
 
     private Set<ServiceItemDTO> serviceItems = new HashSet<>();
@@ -61,6 +63,14 @@ public class ImgUrlDTO implements Serializable {
 
     public void setServiceItems(Set<ServiceItemDTO> serviceItems) {
         this.serviceItems = serviceItems;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String createAccessKey() {

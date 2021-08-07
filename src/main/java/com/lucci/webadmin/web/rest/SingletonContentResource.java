@@ -1,6 +1,5 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.config.BucketName;
 import com.lucci.webadmin.domain.SingletonContent;
 import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.service.SingletonContentService;
@@ -76,22 +75,26 @@ public class SingletonContentResource {
         if (singletonContent.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Optional<SingletonContent> scOpt = singletonContentService.findOne(singletonContent.getId());
-        if (!scOpt.isPresent()) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
-        }
+        updateImg(singletonContent);
         SingletonContent result = singletonContentService.save(singletonContent);
-        SingletonContent oldSC = scOpt.get();
-        String oldImgUrl = oldSC.getContent();
-        if (oldSC.getType().name().startsWith("IMG") && !singletonContent.getType().name().startsWith("IMG")) {
-            imgUrlService.findByURL(oldImgUrl).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
-        }
-        if (!singletonContent.getContent().equals(oldImgUrl)) {
-            imgUrlService.findByURL(oldImgUrl).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
-        }
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, singletonContent.getId().toString()))
             .body(result);
+    }
+
+    private void updateImg(SingletonContent newOne) {
+        Optional<SingletonContent> scOpt = singletonContentService.findOne(newOne.getId());
+        if (!scOpt.isPresent()) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
+        }
+        SingletonContent oldSC = scOpt.get();
+        String oldImgUrl = oldSC.getContent();
+        if (oldSC.getType().name().startsWith("IMG") && !newOne.getType().name().startsWith("IMG")) {
+            imgUrlService.findByURL(oldImgUrl).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
+        }
+        if (!newOne.getContent().equals(oldImgUrl)) {
+            imgUrlService.findByURL(oldImgUrl).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
+        }
     }
 
     /**
@@ -134,7 +137,7 @@ public class SingletonContentResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idinvalid");
         }
         singletonContentService.delete(id);
-        imgUrlService.findByURL(scOpt.get().getContent()).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
+//        imgUrlService.findByURL(scOpt.get().getContent()).ifPresent(imgUrl -> imgUrlService.delete(imgUrl.getId()));
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

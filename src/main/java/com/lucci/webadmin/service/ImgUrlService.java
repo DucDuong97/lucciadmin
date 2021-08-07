@@ -46,4 +46,6 @@ public interface ImgUrlService {
     ImgUrlDTO upload(MultipartFile file);
 
     List<ImgUrlDTO> findByTreatmentId(Long treatmentId);
+
+    Optional<ImgUrlDTO> findByURL(String url);
 }

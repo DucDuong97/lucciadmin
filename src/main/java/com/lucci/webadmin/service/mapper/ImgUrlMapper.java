@@ -14,6 +14,7 @@ public interface ImgUrlMapper extends EntityMapper<ImgUrlDTO, ImgUrl> {
 
     @Mapping(target = "serviceItems", ignore = true)
     @Mapping(target = "treatments", ignore = true)
+    @Mapping(target = "imgUrl", expression = "java(entity.getPath()+\"/\"+entity.getName())")
     ImgUrlDTO toDto(ImgUrl entity);
 
     @Mapping(target = "removeServiceItems", ignore = true)

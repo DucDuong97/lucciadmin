@@ -37,6 +37,10 @@ export const SingletonContentUpdate = (props: ISingletonContentUpdateProps) => {
   }, []);
 
   useEffect(() => {
+    setType(singletonContentEntity.type);
+  }, [singletonContentEntity]);
+
+  useEffect(() => {
     if (props.updateSuccess) {
       handleClose();
     }
@@ -118,19 +122,17 @@ export const SingletonContentUpdate = (props: ISingletonContentUpdateProps) => {
                 <Label id="contentLabel" for="singleton-content-content">
                   <Translate contentKey="lucciadminApp.singletonContent.content">Content</Translate>
                 </Label>
-                {
-                  (type ? type.startsWith('IMG') : false)
-                    ?
-                  <div className="form-group">
-                    <input type="file" name="file" onChange={changeHandler}/>
-                    {file && <p>Size in bytes: {file.size}</p>}
-                    {singletonContentEntity.content &&
+                {type && type.startsWith('IMG') &&
+                <div className="form-group">
+                  <input type="file" name="file" onChange={changeHandler}/>
+                  {file && <p>Size in bytes: {file.size}</p>}
+                  {singletonContentEntity.content &&
                     <img src={`${IMAGE_FILE_SYSTEM_URL+singletonContentEntity.content}`}
-                         style={{maxWidth: 200, margin:20}} alt="hello world"/>}
-                  </div>
-                    :
-                  <AvField id="singleton-content-content" type="text" name="content" />
+                         style={{maxWidth: 200, margin:20}} alt="hello world"/>
+                  }
+                </div>
                 }
+                <AvField id="singleton-content-content" type="text" name="content" disabled={type && type.startsWith('IMG')}/>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/singleton-content" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

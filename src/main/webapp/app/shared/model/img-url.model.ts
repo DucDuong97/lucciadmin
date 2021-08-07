@@ -5,6 +5,7 @@ export interface IImgUrl {
   id?: number;
   name?: string;
   path?: string;
+  imgUrl?: string;
   imageFile?: File | Blob;
   serviceItems?: IServiceItem[];
   treatments?: ITreatment[];
