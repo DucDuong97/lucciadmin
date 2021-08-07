@@ -18,7 +18,8 @@
       },
       "name": "Name",
       "order": "Order",
-      "serviceItem": "Service Item"
+      "serviceItem": "Service Item",
+      "icon": "Icon"
     }
   }
 }

@@ -18,7 +18,8 @@
       },
       "name": "Tên bước",
       "order": "Bước thứ",
-      "serviceItem": "Dịch vụ tương ứng"
+      "serviceItem": "Dịch vụ tương ứng",
+      "icon": "Icon"
     }
   }
 }

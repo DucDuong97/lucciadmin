@@ -32,7 +32,12 @@ public class Process implements Serializable {
     private Long order;
 
     @ManyToOne
+    @JsonIgnoreProperties(value = "processes", allowSetters = true)
     private ServiceItem serviceItem;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ImgUrl icon;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -80,6 +85,19 @@ public class Process implements Serializable {
 
     public void setServiceItem(ServiceItem serviceItem) {
         this.serviceItem = serviceItem;
+    }
+
+    public ImgUrl getIcon() {
+        return icon;
+    }
+
+    public Process icon(ImgUrl imgUrl) {
+        this.icon = imgUrl;
+        return this;
+    }
+
+    public void setIcon(ImgUrl imgUrl) {
+        this.icon = imgUrl;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

@@ -24,6 +24,9 @@
             <column name="service_item_id" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="icon_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_process_icon_id" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

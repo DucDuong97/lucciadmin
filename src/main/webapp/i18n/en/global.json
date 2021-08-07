@@ -27,6 +27,7 @@
         "branch": "Branch",
         "pricingCard": "Pricing Card",
         "pricingContent": "Pricing Content",
+        "process": "Process",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {

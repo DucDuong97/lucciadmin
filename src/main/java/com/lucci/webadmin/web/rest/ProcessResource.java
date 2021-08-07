@@ -1,8 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.domain.Process;
 import com.lucci.webadmin.service.ProcessService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
+import com.lucci.webadmin.service.dto.ProcessDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -41,17 +41,17 @@ public class ProcessResource {
     /**
      * {@code POST  /processes} : Create a new process.
      *
-     * @param process the process to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new process, or with status {@code 400 (Bad Request)} if the process has already an ID.
+     * @param processDTO the processDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new processDTO, or with status {@code 400 (Bad Request)} if the process has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/processes")
-    public ResponseEntity<Process> createProcess(@Valid @RequestBody Process process) throws URISyntaxException {
-        log.debug("REST request to save Process : {}", process);
-        if (process.getId() != null) {
+    public ResponseEntity<ProcessDTO> createProcess(@Valid @RequestBody ProcessDTO processDTO) throws URISyntaxException {
+        log.debug("REST request to save Process : {}", processDTO);
+        if (processDTO.getId() != null) {
             throw new BadRequestAlertException("A new process cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Process result = processService.save(process);
+        ProcessDTO result = processService.save(processDTO);
         return ResponseEntity.created(new URI("/api/processes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -60,21 +60,21 @@ public class ProcessResource {
     /**
      * {@code PUT  /processes} : Updates an existing process.
      *
-     * @param process the process to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated process,
-     * or with status {@code 400 (Bad Request)} if the process is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the process couldn't be updated.
+     * @param processDTO the processDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated processDTO,
+     * or with status {@code 400 (Bad Request)} if the processDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the processDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/processes")
-    public ResponseEntity<Process> updateProcess(@Valid @RequestBody Process process) throws URISyntaxException {
-        log.debug("REST request to update Process : {}", process);
-        if (process.getId() == null) {
+    public ResponseEntity<ProcessDTO> updateProcess(@Valid @RequestBody ProcessDTO processDTO) throws URISyntaxException {
+        log.debug("REST request to update Process : {}", processDTO);
+        if (processDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Process result = processService.save(process);
+        ProcessDTO result = processService.save(processDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, process.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, processDTO.getId().toString()))
             .body(result);
     }
 
@@ -83,38 +83,29 @@ public class ProcessResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of processes in body.
      */
-    @CrossOrigin
     @GetMapping("/processes")
-    public List<Process> getAllProcesses() {
+    public List<ProcessDTO> getAllProcesses() {
         log.debug("REST request to get all Processes");
         return processService.findAll();
-    }
-
-    @CrossOrigin
-    @GetMapping("/processes/service/{id}")
-    public List<Process> getAllProcessesByServiceId(@PathVariable Long id) {
-        log.debug("REST request to get all Processes by Service Id: {}", id);
-        return processService.findAllByServiceId(id);
     }
 
     /**
      * {@code GET  /processes/:id} : get the "id" process.
      *
-     * @param id the id of the process to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the process, or with status {@code 404 (Not Found)}.
+     * @param id the id of the processDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the processDTO, or with status {@code 404 (Not Found)}.
      */
-    @CrossOrigin
     @GetMapping("/processes/{id}")
-    public ResponseEntity<Process> getProcess(@PathVariable Long id) {
+    public ResponseEntity<ProcessDTO> getProcess(@PathVariable Long id) {
         log.debug("REST request to get Process : {}", id);
-        Optional<Process> process = processService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(process);
+        Optional<ProcessDTO> processDTO = processService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(processDTO);
     }
 
     /**
      * {@code DELETE  /processes/:id} : delete the "id" process.
      *
-     * @param id the id of the process to delete.
+     * @param id the id of the processDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/processes/{id}")

@@ -4,6 +4,8 @@ import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Process;
 import com.lucci.webadmin.repository.ProcessRepository;
 import com.lucci.webadmin.service.ProcessService;
+import com.lucci.webadmin.service.dto.ProcessDTO;
+import com.lucci.webadmin.service.mapper.ProcessMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,9 @@ public class ProcessResourceIT {
 
     @Autowired
     private ProcessRepository processRepository;
+
+    @Autowired
+    private ProcessMapper processMapper;
 
     @Autowired
     private ProcessService processService;
@@ -85,9 +90,10 @@ public class ProcessResourceIT {
     public void createProcess() throws Exception {
         int databaseSizeBeforeCreate = processRepository.findAll().size();
         // Create the Process
+        ProcessDTO processDTO = processMapper.toDto(process);
         restProcessMockMvc.perform(post("/api/processes")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(process)))
+            .content(TestUtil.convertObjectToJsonBytes(processDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Process in the database
@@ -105,11 +111,12 @@ public class ProcessResourceIT {
 
         // Create the Process with an existing ID
         process.setId(1L);
+        ProcessDTO processDTO = processMapper.toDto(process);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restProcessMockMvc.perform(post("/api/processes")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(process)))
+            .content(TestUtil.convertObjectToJsonBytes(processDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Process in the database
@@ -126,11 +133,12 @@ public class ProcessResourceIT {
         process.setName(null);
 
         // Create the Process, which fails.
+        ProcessDTO processDTO = processMapper.toDto(process);
 
 
         restProcessMockMvc.perform(post("/api/processes")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(process)))
+            .content(TestUtil.convertObjectToJsonBytes(processDTO)))
             .andExpect(status().isBadRequest());
 
         List<Process> processList = processRepository.findAll();
@@ -178,7 +186,7 @@ public class ProcessResourceIT {
     @Transactional
     public void updateProcess() throws Exception {
         // Initialize the database
-        processService.save(process);
+        processRepository.saveAndFlush(process);
 
         int databaseSizeBeforeUpdate = processRepository.findAll().size();
 
@@ -189,10 +197,11 @@ public class ProcessResourceIT {
         updatedProcess
             .name(UPDATED_NAME)
             .order(UPDATED_ORDER);
+        ProcessDTO processDTO = processMapper.toDto(updatedProcess);
 
         restProcessMockMvc.perform(put("/api/processes")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedProcess)))
+            .content(TestUtil.convertObjectToJsonBytes(processDTO)))
             .andExpect(status().isOk());
 
         // Validate the Process in the database
@@ -208,10 +217,13 @@ public class ProcessResourceIT {
     public void updateNonExistingProcess() throws Exception {
         int databaseSizeBeforeUpdate = processRepository.findAll().size();
 
+        // Create the Process
+        ProcessDTO processDTO = processMapper.toDto(process);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restProcessMockMvc.perform(put("/api/processes")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(process)))
+            .content(TestUtil.convertObjectToJsonBytes(processDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Process in the database
@@ -223,7 +235,7 @@ public class ProcessResourceIT {
     @Transactional
     public void deleteProcess() throws Exception {
         // Initialize the database
-        processService.save(process);
+        processRepository.saveAndFlush(process);
 
         int databaseSizeBeforeDelete = processRepository.findAll().size();
 

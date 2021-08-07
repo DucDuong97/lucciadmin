@@ -40,7 +40,11 @@ export const ProcessDetail = (props: IProcessDetailProps) => {
           <dt>
             <Translate contentKey="lucciadminApp.process.serviceItem">Service Item</Translate>
           </dt>
-          <dd>{processEntity.serviceItem ? processEntity.serviceItem.name : ''}</dd>
+          <dd>{processEntity.serviceItemName ? processEntity.serviceItemName : ''}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.process.icon">Icon</Translate>
+          </dt>
+          <dd>{processEntity.iconName ? processEntity.iconName : ''}</dd>
         </dl>
         <Button tag={Link} to="/process" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

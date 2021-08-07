@@ -14,5 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="service_item"/>
 
+        <addForeignKeyConstraint baseColumnNames="icon_id"
+                                 baseTableName="process"
+                                 constraintName="fk_process_icon_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="img_url"/>
+
     </changeSet>
 </databaseChangeLog>

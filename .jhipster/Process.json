@@ -17,12 +17,19 @@
       "otherEntityName": "serviceItem",
       "otherEntityRelationshipName": "processes",
       "relationshipName": "serviceItem",
-      "otherEntityField": "id"
+      "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "imgUrl",
+      "relationshipName": "icon",
+      "otherEntityField": "name",
+      "ownerSide": true
     }
   ],
   "changelogDate": "20210508061649",
   "entityTableName": "process",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,

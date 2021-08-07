@@ -9,6 +9,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IServiceItem } from 'app/shared/model/service-item.model';
 import { getEntities as getServiceItems } from 'app/entities/service-item/service-item.reducer';
+import { IImgUrl } from 'app/shared/model/img-url.model';
+import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './process.reducer';
 import { IProcess } from 'app/shared/model/process.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -18,9 +20,10 @@ export interface IProcessUpdateProps extends StateProps, DispatchProps, RouteCom
 
 export const ProcessUpdate = (props: IProcessUpdateProps) => {
   const [serviceItemId, setServiceItemId] = useState('0');
+  const [iconId, setIconId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { processEntity, serviceItems, loading, updating } = props;
+  const { processEntity, serviceItems, imgUrls, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/process');
@@ -34,6 +37,7 @@ export const ProcessUpdate = (props: IProcessUpdateProps) => {
     }
 
     props.getServiceItems();
+    props.getImgUrls();
   }, []);
 
   useEffect(() => {
@@ -103,10 +107,25 @@ export const ProcessUpdate = (props: IProcessUpdateProps) => {
                 <Label for="process-serviceItem">
                   <Translate contentKey="lucciadminApp.process.serviceItem">Service Item</Translate>
                 </Label>
-                <AvInput id="process-serviceItem" type="select" className="form-control" name="serviceItem.id">
+                <AvInput id="process-serviceItem" type="select" className="form-control" name="serviceItemId">
                   <option value="" key="0" />
                   {serviceItems
                     ? serviceItems.map(otherEntity => (
+                        <option value={otherEntity.id} key={otherEntity.id}>
+                          {otherEntity.name}
+                        </option>
+                      ))
+                    : null}
+                </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label for="process-icon">
+                  <Translate contentKey="lucciadminApp.process.icon">Icon</Translate>
+                </Label>
+                <AvInput id="process-icon" type="select" className="form-control" name="iconId">
+                  <option value="" key="0" />
+                  {imgUrls
+                    ? imgUrls.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
                           {otherEntity.name}
                         </option>
@@ -137,6 +156,7 @@ export const ProcessUpdate = (props: IProcessUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   serviceItems: storeState.serviceItem.entities,
+  imgUrls: storeState.imgUrl.entities,
   processEntity: storeState.process.entity,
   loading: storeState.process.loading,
   updating: storeState.process.updating,
@@ -145,6 +165,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getServiceItems,
+  getImgUrls,
   getEntity,
   updateEntity,
   createEntity,

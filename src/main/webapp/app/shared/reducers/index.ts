@@ -48,7 +48,6 @@ import employee, {
 import booking, {
   BookingState
 } from 'app/entities/booking/booking.reducer';
-import process, { ProcessState } from 'app/entities/process/process.reducer';
 // prettier-ignore
 import video, {
   VideoState
@@ -85,6 +84,10 @@ import treatment, {
 import treatmentPlan, {
   TreatmentPlanState
 } from 'app/entities/treatment-plan/treatment-plan.reducer';
+// prettier-ignore
+import process, {
+  ProcessState
+} from 'app/entities/process/process.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
