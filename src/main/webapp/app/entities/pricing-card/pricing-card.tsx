@@ -59,8 +59,8 @@ export const PricingCard = (props: IPricingCardProps) => {
                   <td>{pricingCard.name}</td>
                   <td>{pricingCard.price}</td>
                   <td>
-                    {pricingCard.serviceItem ? (
-                      <Link to={`service-item/${pricingCard.serviceItem.id}`}>{pricingCard.serviceItem.name}</Link>
+                    {pricingCard.serviceItemName ? (
+                      <Link to={`service-item/${pricingCard.serviceItemId}`}>{pricingCard.serviceItemName}</Link>
                     ) : (
                       ''
                     )}

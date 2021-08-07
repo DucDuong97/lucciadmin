@@ -18,6 +18,8 @@ public class PricingCardDTO implements Serializable {
 
 
     private Long serviceItemId;
+
+    private String serviceItemName;
     
     public Long getId() {
         return id;
@@ -51,6 +53,14 @@ public class PricingCardDTO implements Serializable {
         this.serviceItemId = serviceItemId;
     }
 
+    public String getServiceItemName() {
+        return serviceItemName;
+    }
+
+    public void setServiceItemName(String serviceItemName) {
+        this.serviceItemName = serviceItemName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -76,6 +86,7 @@ public class PricingCardDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", price=" + getPrice() +
             ", serviceItemId=" + getServiceItemId() +
+            ", serviceItemName='" + getServiceItemName() + "'" +
             "}";
     }
 }

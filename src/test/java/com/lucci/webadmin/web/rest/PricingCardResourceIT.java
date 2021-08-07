@@ -4,6 +4,8 @@ import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.PricingCard;
 import com.lucci.webadmin.repository.PricingCardRepository;
 import com.lucci.webadmin.service.PricingCardService;
+import com.lucci.webadmin.service.dto.PricingCardDTO;
+import com.lucci.webadmin.service.mapper.PricingCardMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,9 @@ public class PricingCardResourceIT {
 
     @Autowired
     private PricingCardRepository pricingCardRepository;
+
+    @Autowired
+    private PricingCardMapper pricingCardMapper;
 
     @Autowired
     private PricingCardService pricingCardService;
@@ -85,9 +90,10 @@ public class PricingCardResourceIT {
     public void createPricingCard() throws Exception {
         int databaseSizeBeforeCreate = pricingCardRepository.findAll().size();
         // Create the PricingCard
+        PricingCardDTO pricingCardDTO = pricingCardMapper.toDto(pricingCard);
         restPricingCardMockMvc.perform(post("/api/pricing-cards")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingCard)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingCardDTO)))
             .andExpect(status().isCreated());
 
         // Validate the PricingCard in the database
@@ -105,11 +111,12 @@ public class PricingCardResourceIT {
 
         // Create the PricingCard with an existing ID
         pricingCard.setId(1L);
+        PricingCardDTO pricingCardDTO = pricingCardMapper.toDto(pricingCard);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restPricingCardMockMvc.perform(post("/api/pricing-cards")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingCard)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingCardDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the PricingCard in the database
@@ -126,11 +133,12 @@ public class PricingCardResourceIT {
         pricingCard.setName(null);
 
         // Create the PricingCard, which fails.
+        PricingCardDTO pricingCardDTO = pricingCardMapper.toDto(pricingCard);
 
 
         restPricingCardMockMvc.perform(post("/api/pricing-cards")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingCard)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingCardDTO)))
             .andExpect(status().isBadRequest());
 
         List<PricingCard> pricingCardList = pricingCardRepository.findAll();
@@ -145,11 +153,12 @@ public class PricingCardResourceIT {
         pricingCard.setPrice(null);
 
         // Create the PricingCard, which fails.
+        PricingCardDTO pricingCardDTO = pricingCardMapper.toDto(pricingCard);
 
 
         restPricingCardMockMvc.perform(post("/api/pricing-cards")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingCard)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingCardDTO)))
             .andExpect(status().isBadRequest());
 
         List<PricingCard> pricingCardList = pricingCardRepository.findAll();
@@ -197,7 +206,7 @@ public class PricingCardResourceIT {
     @Transactional
     public void updatePricingCard() throws Exception {
         // Initialize the database
-        pricingCardService.save(pricingCard);
+        pricingCardRepository.saveAndFlush(pricingCard);
 
         int databaseSizeBeforeUpdate = pricingCardRepository.findAll().size();
 
@@ -208,10 +217,11 @@ public class PricingCardResourceIT {
         updatedPricingCard
             .name(UPDATED_NAME)
             .price(UPDATED_PRICE);
+        PricingCardDTO pricingCardDTO = pricingCardMapper.toDto(updatedPricingCard);
 
         restPricingCardMockMvc.perform(put("/api/pricing-cards")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedPricingCard)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingCardDTO)))
             .andExpect(status().isOk());
 
         // Validate the PricingCard in the database
@@ -227,10 +237,13 @@ public class PricingCardResourceIT {
     public void updateNonExistingPricingCard() throws Exception {
         int databaseSizeBeforeUpdate = pricingCardRepository.findAll().size();
 
+        // Create the PricingCard
+        PricingCardDTO pricingCardDTO = pricingCardMapper.toDto(pricingCard);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restPricingCardMockMvc.perform(put("/api/pricing-cards")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(pricingCard)))
+            .content(TestUtil.convertObjectToJsonBytes(pricingCardDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the PricingCard in the database
@@ -242,7 +255,7 @@ public class PricingCardResourceIT {
     @Transactional
     public void deletePricingCard() throws Exception {
         // Initialize the database
-        pricingCardService.save(pricingCard);
+        pricingCardRepository.saveAndFlush(pricingCard);
 
         int databaseSizeBeforeDelete = pricingCardRepository.findAll().size();
 

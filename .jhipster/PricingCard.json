@@ -17,19 +17,19 @@
       "relationshipType": "one-to-many",
       "otherEntityName": "pricingContent",
       "otherEntityRelationshipName": "pricingCard",
-      "relationshipName": "contents"
+      "relationshipName": "pricingContent"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "serviceItem",
       "otherEntityRelationshipName": "pricingCards",
       "relationshipName": "serviceItem",
-      "otherEntityField": "id"
+      "otherEntityField": "name"
     }
   ],
   "changelogDate": "20210516213054",
   "entityTableName": "pricing_card",
-  "dto": "no",
+  "dto": "mapstruct",
   "pagination": "no",
   "service": "serviceImpl",
   "jpaMetamodelFiltering": false,

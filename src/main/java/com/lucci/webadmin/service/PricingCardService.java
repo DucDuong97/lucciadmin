@@ -1,31 +1,30 @@
 package com.lucci.webadmin.service;
 
-import com.lucci.webadmin.domain.PricingCard;
+import com.lucci.webadmin.service.dto.PricingCardDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 /**
- * Service Interface for managing {@link PricingCard}.
+ * Service Interface for managing {@link com.lucci.webadmin.domain.PricingCard}.
  */
 public interface PricingCardService {
 
     /**
      * Save a pricingCard.
      *
-     * @param pricingCard the entity to save.
+     * @param pricingCardDTO the entity to save.
      * @return the persisted entity.
      */
-    PricingCard save(PricingCard pricingCard);
+    PricingCardDTO save(PricingCardDTO pricingCardDTO);
 
     /**
      * Get all the pricingCards.
      *
      * @return the list of entities.
      */
-    List<PricingCard> findAll();
+    List<PricingCardDTO> findAll();
 
-    List<PricingCard> findAllByServiceId(Long id);
 
     /**
      * Get the "id" pricingCard.
@@ -33,7 +32,7 @@ public interface PricingCardService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<PricingCard> findOne(Long id);
+    Optional<PricingCardDTO> findOne(Long id);
 
     /**
      * Delete the "id" pricingCard.

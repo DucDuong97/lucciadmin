@@ -1,8 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.domain.PricingCard;
 import com.lucci.webadmin.service.PricingCardService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
+import com.lucci.webadmin.service.dto.PricingCardDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -41,17 +41,17 @@ public class PricingCardResource {
     /**
      * {@code POST  /pricing-cards} : Create a new pricingCard.
      *
-     * @param pricingCard the pricingCard to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new pricingCard, or with status {@code 400 (Bad Request)} if the pricingCard has already an ID.
+     * @param pricingCardDTO the pricingCardDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new pricingCardDTO, or with status {@code 400 (Bad Request)} if the pricingCard has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/pricing-cards")
-    public ResponseEntity<PricingCard> createPricingCard(@Valid @RequestBody PricingCard pricingCard) throws URISyntaxException {
-        log.debug("REST request to save PricingCard : {}", pricingCard);
-        if (pricingCard.getId() != null) {
+    public ResponseEntity<PricingCardDTO> createPricingCard(@Valid @RequestBody PricingCardDTO pricingCardDTO) throws URISyntaxException {
+        log.debug("REST request to save PricingCard : {}", pricingCardDTO);
+        if (pricingCardDTO.getId() != null) {
             throw new BadRequestAlertException("A new pricingCard cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        PricingCard result = pricingCardService.save(pricingCard);
+        PricingCardDTO result = pricingCardService.save(pricingCardDTO);
         return ResponseEntity.created(new URI("/api/pricing-cards/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -60,21 +60,21 @@ public class PricingCardResource {
     /**
      * {@code PUT  /pricing-cards} : Updates an existing pricingCard.
      *
-     * @param pricingCard the pricingCard to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated pricingCard,
-     * or with status {@code 400 (Bad Request)} if the pricingCard is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the pricingCard couldn't be updated.
+     * @param pricingCardDTO the pricingCardDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated pricingCardDTO,
+     * or with status {@code 400 (Bad Request)} if the pricingCardDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the pricingCardDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/pricing-cards")
-    public ResponseEntity<PricingCard> updatePricingCard(@Valid @RequestBody PricingCard pricingCard) throws URISyntaxException {
-        log.debug("REST request to update PricingCard : {}", pricingCard);
-        if (pricingCard.getId() == null) {
+    public ResponseEntity<PricingCardDTO> updatePricingCard(@Valid @RequestBody PricingCardDTO pricingCardDTO) throws URISyntaxException {
+        log.debug("REST request to update PricingCard : {}", pricingCardDTO);
+        if (pricingCardDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        PricingCard result = pricingCardService.save(pricingCard);
+        PricingCardDTO result = pricingCardService.save(pricingCardDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, pricingCard.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, pricingCardDTO.getId().toString()))
             .body(result);
     }
 
@@ -85,36 +85,29 @@ public class PricingCardResource {
      */
     @CrossOrigin
     @GetMapping("/pricing-cards")
-    public List<PricingCard> getAllPricingCards() {
+    public List<PricingCardDTO> getAllPricingCards() {
         log.debug("REST request to get all PricingCards");
         return pricingCardService.findAll();
-    }
-
-    @CrossOrigin
-    @GetMapping("/pricing-cards/service/{id}")
-    public List<PricingCard> getAllPricingCardsByServiceId(@PathVariable Long id) {
-        log.debug("REST request to get all PricingCards by Service Id: {}", id);
-        return pricingCardService.findAllByServiceId(id);
     }
 
     /**
      * {@code GET  /pricing-cards/:id} : get the "id" pricingCard.
      *
-     * @param id the id of the pricingCard to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pricingCard, or with status {@code 404 (Not Found)}.
+     * @param id the id of the pricingCardDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pricingCardDTO, or with status {@code 404 (Not Found)}.
      */
     @CrossOrigin
     @GetMapping("/pricing-cards/{id}")
-    public ResponseEntity<PricingCard> getPricingCard(@PathVariable Long id) {
+    public ResponseEntity<PricingCardDTO> getPricingCard(@PathVariable Long id) {
         log.debug("REST request to get PricingCard : {}", id);
-        Optional<PricingCard> pricingCard = pricingCardService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(pricingCard);
+        Optional<PricingCardDTO> pricingCardDTO = pricingCardService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(pricingCardDTO);
     }
 
     /**
      * {@code DELETE  /pricing-cards/:id} : delete the "id" pricingCard.
      *
-     * @param id the id of the pricingCard to delete.
+     * @param id the id of the pricingCardDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/pricing-cards/{id}")

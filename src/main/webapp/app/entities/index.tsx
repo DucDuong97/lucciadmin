@@ -20,6 +20,7 @@ import TreatmentPlan from './treatment-plan';
 import ImgUrl from './img-url';
 import Video from './video';
 import Branch from './branch';
+import PricingCard from './pricing-card';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -42,6 +43,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}img-url`} component={ImgUrl} />
       <ErrorBoundaryRoute path={`${match.url}video`} component={Video} />
       <ErrorBoundaryRoute path={`${match.url}branch`} component={Branch} />
+      <ErrorBoundaryRoute path={`${match.url}pricing-card`} component={PricingCard} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

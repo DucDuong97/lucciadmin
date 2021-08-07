@@ -34,11 +34,12 @@ public class PricingCard implements Serializable {
     @Column(name = "price", nullable = false)
     private Integer price;
 
-    @OneToMany(mappedBy = "pricingCard", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pricingCard")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    private Set<PricingContent> contents = new HashSet<>();
+    private Set<PricingContent> pricingContents = new HashSet<>();
 
     @ManyToOne
+    @JsonIgnoreProperties(value = "pricingCards", allowSetters = true)
     private ServiceItem serviceItem;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -76,29 +77,29 @@ public class PricingCard implements Serializable {
         this.price = price;
     }
 
-    public Set<PricingContent> getContents() {
-        return contents;
+    public Set<PricingContent> getPricingContents() {
+        return pricingContents;
     }
 
-    public PricingCard contents(Set<PricingContent> pricingContents) {
-        this.contents = pricingContents;
+    public PricingCard pricingContents(Set<PricingContent> pricingContents) {
+        this.pricingContents = pricingContents;
         return this;
     }
 
-    public PricingCard addContents(PricingContent pricingContent) {
-        this.contents.add(pricingContent);
+    public PricingCard addPricingContent(PricingContent pricingContent) {
+        this.pricingContents.add(pricingContent);
         pricingContent.setPricingCard(this);
         return this;
     }
 
-    public PricingCard removeContents(PricingContent pricingContent) {
-        this.contents.remove(pricingContent);
+    public PricingCard removePricingContent(PricingContent pricingContent) {
+        this.pricingContents.remove(pricingContent);
         pricingContent.setPricingCard(null);
         return this;
     }
 
-    public void setContents(Set<PricingContent> pricingContents) {
-        this.contents = pricingContents;
+    public void setPricingContents(Set<PricingContent> pricingContents) {
+        this.pricingContents = pricingContents;
     }
 
     public ServiceItem getServiceItem() {

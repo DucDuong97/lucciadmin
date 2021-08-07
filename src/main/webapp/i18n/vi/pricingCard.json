@@ -2,24 +2,24 @@
   "lucciadminApp": {
     "pricingCard": {
       "home": {
-        "title": "Gói dịch vụ",
-        "createLabel": "Thêm mới một Gói dịch vụ",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Gói dịch vụ",
+        "title": "Pricing Cards",
+        "createLabel": "Thêm mới một Pricing Card",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Pricing Card",
         "notFound": "No Pricing Cards found"
       },
-      "created": "Một Gói dịch vụ mới được tạo với định danh {{ param }}",
-      "updated": "Một Gói dịch vụ cập nhật với định danh {{ param }}",
-      "deleted": "Một Gói dịch vụ đã xóa với định danh {{ param }}",
+      "created": "Một Pricing Card mới được tạo với định danh {{ param }}",
+      "updated": "Một Pricing Card cập nhật với định danh {{ param }}",
+      "deleted": "Một Pricing Card đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Gói dịch vụ {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Pricing Card {{ id }}?"
       },
       "detail": {
-        "title": "Gói dịch vụ"
+        "title": "Pricing Card"
       },
-      "name": "Tên gói",
-      "price": "Giá",
-      "contents": "Các nội dung",
-      "serviceItem": "Dịch vụ tương ứng"
+      "name": "Name",
+      "price": "Price",
+      "pricingContent": "Pricing Content",
+      "serviceItem": "Service Item"
     }
   }
 }
