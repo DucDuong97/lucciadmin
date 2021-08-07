@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './blog.reducer';
 import { IBlog } from 'app/shared/model/blog.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, IMAGE_FILE_SYSTEM_URL} from 'app/config/constants';
 
 export interface IBlogProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -65,7 +65,10 @@ export const Blog = (props: IBlogProps) => {
                   <td>{blog.title}</td>
                   <td>{blog.publishDate ? <TextFormat type="date" value={blog.publishDate} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{blog.description}</td>
-                  <td>{blog.titleImgUrl ? <Link to={`img-url/${blog.titleImgUrl.id}`}>{blog.titleImgUrl.imgUrl}</Link> : ''}</td>
+                  <td>
+                    {blog.titleImgUrl &&
+                    <img src={`${IMAGE_FILE_SYSTEM_URL+blog.titleImgUrl.path}/${blog.titleImgUrl.name}`}
+                         style={{maxWidth: 150, margin:10}} alt="hello world"/>}</td>
                   <td>{blog.serviceItem ? <Link to={`service-item/${blog.serviceItem.id}`}>{blog.serviceItem.name}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">

@@ -156,7 +156,7 @@ export const BlogUpdate = (props: IBlogUpdateProps) => {
                   <input type="file" name="file" onChange={changeHandler}/>
                   {file && <p>Size in bytes: {file.size}</p>}
                   {blogEntity.titleImgUrl &&
-                  <img src={`${IMAGE_FILE_SYSTEM_URL+blogEntity.titleImgUrl.imgUrl}`}
+                  <img src={`${IMAGE_FILE_SYSTEM_URL+blogEntity.titleImgUrl.path}/${blogEntity.titleImgUrl.name}`}
                        style={{maxWidth: 200, margin:20}} alt="hello world"/>}
                 </div>
               </AvGroup>

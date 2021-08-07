@@ -133,8 +133,8 @@ export const CustomerReviewUpdate = (props: ICustomerReviewUpdateProps) => {
                   <input type="file" name="file" onChange={changeHandler}/>
                   {file && <p>Size in bytes: {file.size}</p>}
                   {customerReviewEntity.customerImgUrl &&
-                  <img src={`${IMAGE_FILE_SYSTEM_URL+customerReviewEntity.customerImgUrl.imgUrl}`}
-                       style={{maxWidth: 200, margin:20}} alt="hello world"/>}
+                  <img src={`${IMAGE_FILE_SYSTEM_URL+customerReviewEntity.customerImgUrl.path}/${customerReviewEntity.customerImgUrl.name}`}
+                       style={{maxWidth: 150, margin:10}} alt="hello world"/>}
                 </div>
               </AvGroup>
               <Button tag={Link} id="cancel-save" to="/customer-review" replace color="info">

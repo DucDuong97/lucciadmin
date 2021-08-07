@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './customer-review.reducer';
 import { ICustomerReview } from 'app/shared/model/customer-review.model';
-import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import {APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT, IMAGE_FILE_SYSTEM_URL} from 'app/config/constants';
 
 export interface ICustomerReviewProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -55,7 +55,9 @@ export const CustomerReview = (props: ICustomerReviewProps) => {
                   <td>{customerReview.customerAddress}</td>
                   <td>{customerReview.comment}</td>
                   <td>
-                    <td>{customerReview.customerImgUrl ? customerReview.customerImgUrl.imgUrl : ''}</td>
+                    <td>{customerReview.customerImgUrl &&
+                    <img src={`${IMAGE_FILE_SYSTEM_URL+customerReview.customerImgUrl.path}/${customerReview.customerImgUrl.name}`}
+                         style={{maxWidth: 150, margin:10}} alt="hello world"/>}</td>
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
