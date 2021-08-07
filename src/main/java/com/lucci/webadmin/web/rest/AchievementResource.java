@@ -1,8 +1,8 @@
 package com.lucci.webadmin.web.rest;
 
-import com.lucci.webadmin.domain.Achievement;
 import com.lucci.webadmin.service.AchievementService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
+import com.lucci.webadmin.service.dto.AchievementDTO;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -41,17 +41,17 @@ public class AchievementResource {
     /**
      * {@code POST  /achievements} : Create a new achievement.
      *
-     * @param achievement the achievement to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new achievement, or with status {@code 400 (Bad Request)} if the achievement has already an ID.
+     * @param achievementDTO the achievementDTO to create.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new achievementDTO, or with status {@code 400 (Bad Request)} if the achievement has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/achievements")
-    public ResponseEntity<Achievement> createAchievement(@Valid @RequestBody Achievement achievement) throws URISyntaxException {
-        log.debug("REST request to save Achievement : {}", achievement);
-        if (achievement.getId() != null) {
+    public ResponseEntity<AchievementDTO> createAchievement(@Valid @RequestBody AchievementDTO achievementDTO) throws URISyntaxException {
+        log.debug("REST request to save Achievement : {}", achievementDTO);
+        if (achievementDTO.getId() != null) {
             throw new BadRequestAlertException("A new achievement cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Achievement result = achievementService.save(achievement);
+        AchievementDTO result = achievementService.save(achievementDTO);
         return ResponseEntity.created(new URI("/api/achievements/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -60,21 +60,21 @@ public class AchievementResource {
     /**
      * {@code PUT  /achievements} : Updates an existing achievement.
      *
-     * @param achievement the achievement to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated achievement,
-     * or with status {@code 400 (Bad Request)} if the achievement is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the achievement couldn't be updated.
+     * @param achievementDTO the achievementDTO to update.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated achievementDTO,
+     * or with status {@code 400 (Bad Request)} if the achievementDTO is not valid,
+     * or with status {@code 500 (Internal Server Error)} if the achievementDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/achievements")
-    public ResponseEntity<Achievement> updateAchievement(@Valid @RequestBody Achievement achievement) throws URISyntaxException {
-        log.debug("REST request to update Achievement : {}", achievement);
-        if (achievement.getId() == null) {
+    public ResponseEntity<AchievementDTO> updateAchievement(@Valid @RequestBody AchievementDTO achievementDTO) throws URISyntaxException {
+        log.debug("REST request to update Achievement : {}", achievementDTO);
+        if (achievementDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Achievement result = achievementService.save(achievement);
+        AchievementDTO result = achievementService.save(achievementDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, achievement.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, achievementDTO.getId().toString()))
             .body(result);
     }
 
@@ -83,9 +83,8 @@ public class AchievementResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of achievements in body.
      */
-    @CrossOrigin
     @GetMapping("/achievements")
-    public List<Achievement> getAllAchievements() {
+    public List<AchievementDTO> getAllAchievements() {
         log.debug("REST request to get all Achievements");
         return achievementService.findAll();
     }
@@ -93,21 +92,20 @@ public class AchievementResource {
     /**
      * {@code GET  /achievements/:id} : get the "id" achievement.
      *
-     * @param id the id of the achievement to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the achievement, or with status {@code 404 (Not Found)}.
+     * @param id the id of the achievementDTO to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the achievementDTO, or with status {@code 404 (Not Found)}.
      */
-    @CrossOrigin
     @GetMapping("/achievements/{id}")
-    public ResponseEntity<Achievement> getAchievement(@PathVariable Long id) {
+    public ResponseEntity<AchievementDTO> getAchievement(@PathVariable Long id) {
         log.debug("REST request to get Achievement : {}", id);
-        Optional<Achievement> achievement = achievementService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(achievement);
+        Optional<AchievementDTO> achievementDTO = achievementService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(achievementDTO);
     }
 
     /**
      * {@code DELETE  /achievements/:id} : delete the "id" achievement.
      *
-     * @param id the id of the achievement to delete.
+     * @param id the id of the achievementDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/achievements/{id}")

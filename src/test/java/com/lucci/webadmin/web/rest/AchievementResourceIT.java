@@ -4,6 +4,8 @@ import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Achievement;
 import com.lucci.webadmin.repository.AchievementRepository;
 import com.lucci.webadmin.service.AchievementService;
+import com.lucci.webadmin.service.dto.AchievementDTO;
+import com.lucci.webadmin.service.mapper.AchievementMapper;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +40,9 @@ public class AchievementResourceIT {
 
     @Autowired
     private AchievementRepository achievementRepository;
+
+    @Autowired
+    private AchievementMapper achievementMapper;
 
     @Autowired
     private AchievementService achievementService;
@@ -85,9 +90,10 @@ public class AchievementResourceIT {
     public void createAchievement() throws Exception {
         int databaseSizeBeforeCreate = achievementRepository.findAll().size();
         // Create the Achievement
+        AchievementDTO achievementDTO = achievementMapper.toDto(achievement);
         restAchievementMockMvc.perform(post("/api/achievements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(achievement)))
+            .content(TestUtil.convertObjectToJsonBytes(achievementDTO)))
             .andExpect(status().isCreated());
 
         // Validate the Achievement in the database
@@ -105,11 +111,12 @@ public class AchievementResourceIT {
 
         // Create the Achievement with an existing ID
         achievement.setId(1L);
+        AchievementDTO achievementDTO = achievementMapper.toDto(achievement);
 
         // An entity with an existing ID cannot be created, so this API call must fail
         restAchievementMockMvc.perform(post("/api/achievements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(achievement)))
+            .content(TestUtil.convertObjectToJsonBytes(achievementDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Achievement in the database
@@ -126,11 +133,12 @@ public class AchievementResourceIT {
         achievement.setName(null);
 
         // Create the Achievement, which fails.
+        AchievementDTO achievementDTO = achievementMapper.toDto(achievement);
 
 
         restAchievementMockMvc.perform(post("/api/achievements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(achievement)))
+            .content(TestUtil.convertObjectToJsonBytes(achievementDTO)))
             .andExpect(status().isBadRequest());
 
         List<Achievement> achievementList = achievementRepository.findAll();
@@ -145,11 +153,12 @@ public class AchievementResourceIT {
         achievement.setNumber(null);
 
         // Create the Achievement, which fails.
+        AchievementDTO achievementDTO = achievementMapper.toDto(achievement);
 
 
         restAchievementMockMvc.perform(post("/api/achievements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(achievement)))
+            .content(TestUtil.convertObjectToJsonBytes(achievementDTO)))
             .andExpect(status().isBadRequest());
 
         List<Achievement> achievementList = achievementRepository.findAll();
@@ -197,7 +206,7 @@ public class AchievementResourceIT {
     @Transactional
     public void updateAchievement() throws Exception {
         // Initialize the database
-        achievementService.save(achievement);
+        achievementRepository.saveAndFlush(achievement);
 
         int databaseSizeBeforeUpdate = achievementRepository.findAll().size();
 
@@ -208,10 +217,11 @@ public class AchievementResourceIT {
         updatedAchievement
             .name(UPDATED_NAME)
             .number(UPDATED_NUMBER);
+        AchievementDTO achievementDTO = achievementMapper.toDto(updatedAchievement);
 
         restAchievementMockMvc.perform(put("/api/achievements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(updatedAchievement)))
+            .content(TestUtil.convertObjectToJsonBytes(achievementDTO)))
             .andExpect(status().isOk());
 
         // Validate the Achievement in the database
@@ -227,10 +237,13 @@ public class AchievementResourceIT {
     public void updateNonExistingAchievement() throws Exception {
         int databaseSizeBeforeUpdate = achievementRepository.findAll().size();
 
+        // Create the Achievement
+        AchievementDTO achievementDTO = achievementMapper.toDto(achievement);
+
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restAchievementMockMvc.perform(put("/api/achievements")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(TestUtil.convertObjectToJsonBytes(achievement)))
+            .content(TestUtil.convertObjectToJsonBytes(achievementDTO)))
             .andExpect(status().isBadRequest());
 
         // Validate the Achievement in the database
@@ -242,7 +255,7 @@ public class AchievementResourceIT {
     @Transactional
     public void deleteAchievement() throws Exception {
         // Initialize the database
-        achievementService.save(achievement);
+        achievementRepository.saveAndFlush(achievement);
 
         int databaseSizeBeforeDelete = achievementRepository.findAll().size();
 

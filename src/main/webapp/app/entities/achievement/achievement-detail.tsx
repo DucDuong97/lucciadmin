@@ -37,10 +37,6 @@ export const AchievementDetail = (props: IAchievementDetailProps) => {
             </span>
           </dt>
           <dd>{achievementEntity.number}</dd>
-          <dt>
-            <Translate contentKey="lucciadminApp.achievement.imgUrl">Img Url</Translate>
-          </dt>
-          <dd>{achievementEntity.imgUrl ? achievementEntity.imgUrl.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/achievement" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

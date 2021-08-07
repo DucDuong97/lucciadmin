@@ -1,6 +1,5 @@
 package com.lucci.webadmin.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -31,10 +30,6 @@ public class Achievement implements Serializable {
     @NotNull
     @Column(name = "number", nullable = false)
     private Long number;
-
-    @OneToOne
-    @JsonIgnoreProperties(value = "serviceItem", allowSetters = true)
-    private ImgUrl imgUrl;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -69,19 +64,6 @@ public class Achievement implements Serializable {
 
     public void setNumber(Long number) {
         this.number = number;
-    }
-
-    public ImgUrl getImgUrl() {
-        return imgUrl;
-    }
-
-    public Achievement imgUrl(ImgUrl imgUrl) {
-        this.imgUrl = imgUrl;
-        return this;
-    }
-
-    public void setImgUrl(ImgUrl imgUrl) {
-        this.imgUrl = imgUrl;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

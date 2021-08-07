@@ -3,14 +3,18 @@ package com.lucci.webadmin.service.impl;
 import com.lucci.webadmin.service.AchievementService;
 import com.lucci.webadmin.domain.Achievement;
 import com.lucci.webadmin.repository.AchievementRepository;
+import com.lucci.webadmin.service.dto.AchievementDTO;
+import com.lucci.webadmin.service.mapper.AchievementMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing {@link Achievement}.
@@ -23,29 +27,37 @@ public class AchievementServiceImpl implements AchievementService {
 
     private final AchievementRepository achievementRepository;
 
-    public AchievementServiceImpl(AchievementRepository achievementRepository) {
+    private final AchievementMapper achievementMapper;
+
+    public AchievementServiceImpl(AchievementRepository achievementRepository, AchievementMapper achievementMapper) {
         this.achievementRepository = achievementRepository;
+        this.achievementMapper = achievementMapper;
     }
 
     @Override
-    public Achievement save(Achievement achievement) {
-        log.debug("Request to save Achievement : {}", achievement);
-        return achievementRepository.save(achievement);
+    public AchievementDTO save(AchievementDTO achievementDTO) {
+        log.debug("Request to save Achievement : {}", achievementDTO);
+        Achievement achievement = achievementMapper.toEntity(achievementDTO);
+        achievement = achievementRepository.save(achievement);
+        return achievementMapper.toDto(achievement);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Achievement> findAll() {
+    public List<AchievementDTO> findAll() {
         log.debug("Request to get all Achievements");
-        return achievementRepository.findAll();
+        return achievementRepository.findAll().stream()
+            .map(achievementMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<Achievement> findOne(Long id) {
+    public Optional<AchievementDTO> findOne(Long id) {
         log.debug("Request to get Achievement : {}", id);
-        return achievementRepository.findById(id);
+        return achievementRepository.findById(id)
+            .map(achievementMapper::toDto);
     }
 
     @Override
