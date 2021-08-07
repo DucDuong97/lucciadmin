@@ -11,6 +11,7 @@ import com.lucci.webadmin.web.rest.errors.EntityAlreadyFinishedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,7 @@ public class TreatmentService {
 
     private final TreatmentMapper treatmentMapper;
 
-    public TreatmentService(BookingService bookingService, TreatmentPlanService treatmentPlanService, TreatmentRepository treatmentRepository, TreatmentMapper treatmentMapper) {
+    public TreatmentService(@Lazy BookingService bookingService, TreatmentPlanService treatmentPlanService, TreatmentRepository treatmentRepository, TreatmentMapper treatmentMapper) {
         this.bookingService = bookingService;
         this.treatmentPlanService = treatmentPlanService;
         this.treatmentRepository = treatmentRepository;
@@ -57,7 +58,7 @@ public class TreatmentService {
         Treatment treatment = treatmentMapper.toEntity(treatmentDTO);
         if (treatment.getId() == null) {
             treatment.setState(IN_PROCESS);
-            TreatmentPlanDTO treatmentPlanDTO = treatmentPlanService.findOne(treatmentDTO.getId()).get();
+            TreatmentPlanDTO treatmentPlanDTO = treatmentPlanService.findOne(treatmentDTO.getTreatmentPlanId()).get();
             if (treatmentPlanDTO.getTreatments().size() > 0) {
                 TreatmentDTO lastTreatmentDTO = treatmentPlanDTO.getTreatments().stream()
                     .max(Comparator.comparing(TreatmentDTO::getDate))

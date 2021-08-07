@@ -94,7 +94,7 @@ export const TreatmentPlanUpdate = (props: ITreatmentPlanUpdateProps) => {
                 <Label for="treatment-plan-customer">
                   <Translate contentKey="lucciadminApp.treatmentPlan.customer">Customer</Translate>
                 </Label>
-                <AvInput id="treatment-plan-customer" type="select" className="form-control" name="customerId" value={isNew ? customerId : treatmentPlanEntity.customerId} disabled={!isNew} required>
+                <AvInput id="treatment-plan-customer" type="select" className="form-control" name="customerId" value={isNew ? customerId : treatmentPlanEntity.customerId} disabled={true} required>
                   {customers
                     ? customers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>

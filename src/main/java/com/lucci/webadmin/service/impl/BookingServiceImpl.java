@@ -52,6 +52,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private void handleState(Booking booking) {
+        if (booking.getId() == null) {
+            booking.setState(COMING);
+        }
         booking.setState(COMING);
     }
 
@@ -59,7 +62,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional(readOnly = true)
     public Page<BookingDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Bookings");
-        return bookingRepository.findByState(COMING, pageable)
+        return bookingRepository.findAllWithAuthority(pageable)
             .map(bookingMapper::toDto);
     }
 

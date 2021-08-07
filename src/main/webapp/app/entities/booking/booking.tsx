@@ -85,7 +85,7 @@ export const Booking = (props: IBookingProps) => {
                 <th className="hand" onClick={sort('id')}>
                   <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('date')}>
+                <th className="hand" onClick={sort('time')}>
                   <Translate contentKey="lucciadminApp.booking.date">Date</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('time')}>
@@ -95,12 +95,17 @@ export const Booking = (props: IBookingProps) => {
                   <Translate contentKey="lucciadminApp.booking.correspondDoctor">Correspond Doctor</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
                 </th>
+                {props.viewCustomerPermission &&
                 <th>
                   <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                }
+                {props.viewPlanPermission &&
                 <th>
-                  <Translate contentKey="lucciadminApp.booking.treatmentPlan">Treatment Plan</Translate> <FontAwesomeIcon icon="sort" />
+                  <Translate contentKey="lucciadminApp.booking.treatmentPlan">Treatment Plan</Translate>
+                  <FontAwesomeIcon icon="sort"/>
                 </th>
+                }
                 <th>
                   <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -110,11 +115,7 @@ export const Booking = (props: IBookingProps) => {
             <tbody>
               {bookingList.map((booking, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${booking.id}`} color="link" size="sm">
-                      {booking.id}
-                    </Button>
-                  </td>
+                  <td>{booking.id}</td>
                   <td>{booking.date ? <TextFormat type="date" value={booking.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{booking.time ? <TextFormat type="number" value={booking.time} format={APP_TIME_FORMAT} /> : null}</td>
                   <td>
@@ -124,10 +125,15 @@ export const Booking = (props: IBookingProps) => {
                       ''
                     )}
                   </td>
+                  {props.viewCustomerPermission &&
                   <td>{booking.customerId ? <Link to={`customer/${booking.customerId}`}>{booking.customerId}</Link> : ''}</td>
+                  }
+                  {props.viewPlanPermission &&
                   <td>
-                    {booking.treatmentPlanId ? <Link to={`treatment-plan/${booking.treatmentPlanId}`}>{booking.treatmentPlanId}</Link> : ''}
+                    {booking.treatmentPlanId ?
+                      <Link to={`treatment-plan/${booking.treatmentPlanId}`}>{booking.treatmentPlanId}</Link> : ''}
                   </td>
+                  }
                   <td>{booking.branchId ? <Link to={`branch/${booking.branchId}`}>{booking.branchId}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
@@ -138,7 +144,7 @@ export const Booking = (props: IBookingProps) => {
                       {/*  </span>*/}
                       {/*</Button>*/}
 
-                      {props.cameConfirmPermission &&
+                      {props.cameConfirmPermission && booking.correspondDoctorId && booking.time !== '00:00:00' &&
                       <Button
                         tag={Link}
                         to={`${match.url}/${booking.id}/check-confirm?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
@@ -170,7 +176,7 @@ export const Booking = (props: IBookingProps) => {
                         <Button
                           tag={Link}
                           to={`${match.url}/${booking.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                          color="primary"
+                          color={booking.time !== '00:00:00' ? 'warning' : 'primary'}
                           size="sm"
                         >
                           <FontAwesomeIcon icon="pencil-alt" />{' '}
@@ -234,11 +240,13 @@ const mapStateToProps = ({ booking, authentication }: IRootState) => ({
   loading: booking.loading,
   totalItems: booking.totalItems,
 
+  viewCustomerPermission: authentication.isReceptionist,
+  viewPlanPermission: authentication.isOperationsDirector || authentication.isDoctor,
   createPermission: false,
   cameConfirmPermission: authentication.isReceptionist,
   notCameConfirmPermission: authentication.isReceptionist,
   updatePermission: authentication.isReceptionist,
-  deletePermission: authentication.isReceptionist,
+  deletePermission: false,
 });
 
 const mapDispatchToProps = {

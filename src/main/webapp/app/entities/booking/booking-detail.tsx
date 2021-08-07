@@ -66,22 +66,16 @@ export const BookingDetail = (props: IBookingDetailProps) => {
           <dt>
             <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
           </dt>
-          <dd>{bookingEntity.customerId ? <Link to={`/customer/${bookingEntity.customerId}`}>{bookingEntity.customerId}</Link> : ''}</dd>
+          <dd>{bookingEntity.customerId ? bookingEntity.customerId : ''}</dd>
           <dt>
             <Translate contentKey="lucciadminApp.booking.treatmentPlan">Treatment Plan</Translate>
           </dt>
-          <dd>{bookingEntity.treatmentPlanId ? bookingEntity.treatmentPlanId : ''}</dd>
+          <dd>{bookingEntity.treatmentPlanId ? <Link to={`/treatment-plan/${bookingEntity.treatmentPlanId}`}>{bookingEntity.treatmentPlanId}</Link> : ''}</dd>
           <dt>
             <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
           </dt>
           <dd>{bookingEntity.branchId ? bookingEntity.branchId : ''}</dd>
         </dl>
-        <Button tag={Link} to={`/booking/${bookingEntity.id}/edit`} color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.edit">Edit</Translate>
-          </span>
-        </Button>
       </Col>
     </Row>
   );

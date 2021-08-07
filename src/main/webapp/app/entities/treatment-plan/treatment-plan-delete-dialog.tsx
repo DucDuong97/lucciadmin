@@ -17,7 +17,7 @@ export const TreatmentPlanDeleteDialog = (props: ITreatmentPlanDeleteDialogProps
   }, []);
 
   const handleClose = () => {
-    props.history.push('/treatment-plan' + props.location.search);
+    props.history.goBack();
   };
 
   useEffect(() => {

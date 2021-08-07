@@ -23,7 +23,7 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
   const { employeeEntity, branches, loading, updating } = props;
 
   const handleClose = () => {
-    props.history.push('/employee' + props.location.search);
+    props.history.goBack();
   };
 
   useEffect(() => {
@@ -182,13 +182,6 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
-              <Button tag={Link} id="cancel-save" to="/employee" replace color="info">
-                <FontAwesomeIcon icon="arrow-left" />
-                &nbsp;
-                <span className="d-none d-md-inline">
-                  <Translate contentKey="entity.action.back">Back</Translate>
-                </span>
-              </Button>
               &nbsp;
               <Button color="primary" id="save-entity" type="submit" disabled={updating}>
                 <FontAwesomeIcon icon="save" />
