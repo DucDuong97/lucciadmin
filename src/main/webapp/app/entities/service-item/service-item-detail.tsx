@@ -20,54 +20,16 @@ export const ServiceItemDetail = (props: IServiceItemDetailProps) => {
   const { serviceItemEntity } = props;
   return (
     <Row>
-      <Col md="8">
+      <Col md="8" style={{background: '#f6fdff'}}>
         <h2>
           <Translate contentKey="lucciadminApp.serviceItem.detail.title">ServiceItem</Translate> [<b>{serviceItemEntity.id}</b>]
         </h2>
-        <dl className="jh-entity-details">
-          <dt>
-            <span id="name">
-              <Translate contentKey="lucciadminApp.serviceItem.name">Name</Translate>
-            </span>
-          </dt>
-          <dd>{serviceItemEntity.name}</dd>
-          <dt>
-            <span id="description">
-              <Translate contentKey="lucciadminApp.serviceItem.description">Description</Translate>
-            </span>
-          </dt>
-          <dd>{serviceItemEntity.description}</dd>
-          <dt>
-            <Translate contentKey="lucciadminApp.serviceItem.icon">Icon</Translate>
-          </dt>
-          <dd>{serviceItemEntity.iconName ? serviceItemEntity.iconName : ''}</dd>
-          <dt>
-            <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Img Urls</Translate>
-          </dt>
-          <dd>
-            {serviceItemEntity.customerImgUrls
-              ? serviceItemEntity.customerImgUrls.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.name}</a>
-                    {serviceItemEntity.customerImgUrls && i === serviceItemEntity.customerImgUrls.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>
-            <Translate contentKey="lucciadminApp.serviceItem.relatedVideos">Related Videos</Translate>
-          </dt>
-          <dd>
-            {serviceItemEntity.relatedVideos
-              ? serviceItemEntity.relatedVideos.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.name}</a>
-                    {serviceItemEntity.relatedVideos && i === serviceItemEntity.relatedVideos.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-        </dl>
+        <hr/>
+
+        <h1 style={{color: '#152876'}}>{serviceItemEntity.name}</h1>
+        <div style={{color: '#667dcb'}} dangerouslySetInnerHTML={{__html: serviceItemEntity.description}}/>
+
+        <hr/>
         <Button tag={Link} to="/service-item" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">

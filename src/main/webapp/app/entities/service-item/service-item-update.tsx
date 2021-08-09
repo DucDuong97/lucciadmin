@@ -118,7 +118,7 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                 <Label id="descriptionLabel" for="service-item-description">
                   <Translate contentKey="lucciadminApp.serviceItem.description">Description</Translate>
                 </Label>
-                <AvField id="service-item-description" type="text" name="description" />
+                <AvField id="service-item-description" type="textarea" name="description" />
               </AvGroup>
               <AvGroup>
                 <Label for="service-item-icon">

@@ -24,20 +24,10 @@ export const PolicyDetail = (props: IPolicyDetailProps) => {
         <h2>
           <Translate contentKey="lucciadminApp.policy.detail.title">Policy</Translate> [<b>{policyEntity.id}</b>]
         </h2>
-        <dl className="jh-entity-details">
-          <dt>
-            <span id="name">
-              <Translate contentKey="lucciadminApp.policy.name">Name</Translate>
-            </span>
-          </dt>
-          <dd>{policyEntity.name}</dd>
-          <dt>
-            <span id="content">
-              <Translate contentKey="lucciadminApp.policy.content">Content</Translate>
-            </span>
-          </dt>
-          <dd>{policyEntity.content}</dd>
-        </dl>
+        <hr/>
+        <h1>{policyEntity.name}</h1>
+        <div dangerouslySetInnerHTML={{__html: policyEntity.content}}/>
+
         <Button tag={Link} to="/policy" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">

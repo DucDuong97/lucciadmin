@@ -22,42 +22,13 @@ export const BlogDetail = (props: IBlogDetailProps) => {
     <Row>
       <Col md="8">
         <h2>
-          <Translate contentKey="lucciadminApp.blog.detail.title">Blog</Translate> [<b>{blogEntity.id}</b>]
+          <Translate contentKey="lucciadminApp.blog.detail.title">Blog</Translate> [<b>{blogEntity.id}</b>
         </h2>
-        <dl className="jh-entity-details">
-          <dt>
-            <span id="title">
-              <Translate contentKey="lucciadminApp.blog.title">Title</Translate>
-            </span>
-          </dt>
-          <dd>{blogEntity.title}</dd>
-          <dt>
-            <span id="publishDate">
-              <Translate contentKey="lucciadminApp.blog.publishDate">Publish Date</Translate>
-            </span>
-          </dt>
-          <dd>{blogEntity.publishDate ? <TextFormat value={blogEntity.publishDate} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
-          <dt>
-            <span id="content">
-              <Translate contentKey="lucciadminApp.blog.content">Content</Translate>
-            </span>
-          </dt>
-          <dd>{blogEntity.content}</dd>
-          <dt>
-            <span id="description">
-              <Translate contentKey="lucciadminApp.blog.description">Description</Translate>
-            </span>
-          </dt>
-          <dd>{blogEntity.description}</dd>
-          <dt>
-            <Translate contentKey="lucciadminApp.blog.titleImgUrl">Title Img Url</Translate>
-          </dt>
-          <dd>{blogEntity.titleImgUrl ? blogEntity.titleImgUrl.imgUrl : ''}</dd>
-          <dt>
-            <Translate contentKey="lucciadminApp.blog.serviceItem">Service Item</Translate>
-          </dt>
-          <dd>{blogEntity.serviceItem ? blogEntity.serviceItem.name : ''}</dd>
-        </dl>
+        <hr/>
+        <h1>{blogEntity.title}</h1>
+        <div dangerouslySetInnerHTML={{__html: blogEntity.content}}/>
+
+        <hr/>
         <Button tag={Link} to="/blog" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}
           <span className="d-none d-md-inline">
