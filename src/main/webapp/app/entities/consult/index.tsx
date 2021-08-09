@@ -7,6 +7,8 @@ import Consult from './consult';
 import ConsultDetail from './consult-detail';
 import ConsultUpdate from './consult-update';
 import ConsultDeleteDialog from './consult-delete-dialog';
+import ConsultCheckDialog from "./consult-check-dialog";
+import ConsultCancelDialog from "./consult-cancel-dialog";
 
 const Routes = ({ match }) => (
   <>
@@ -17,6 +19,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={match.url} component={Consult} />
     </Switch>
     <ErrorBoundaryRoute exact path={`${match.url}/:id/delete`} component={ConsultDeleteDialog} />
+    <ErrorBoundaryRoute exact path={`${match.url}/:id/check-confirm`} component={ConsultCheckDialog} />
+    <ErrorBoundaryRoute exact path={`${match.url}/:id/cancel-confirm`} component={ConsultCancelDialog} />
   </>
 );
 

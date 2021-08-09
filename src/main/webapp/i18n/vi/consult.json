@@ -13,6 +13,12 @@
       "delete": {
         "question": "Bạn có chắc là muốn xóa Tư vấn {{ id }}?"
       },
+      "check": {
+        "question": "Bạn có chắc là muốn check Tư vấn {{ id }}?"
+      },
+      "cancel": {
+        "question": "Bạn có chắc là muốn huỷ Tư vấn {{ id }}?"
+      },
       "detail": {
         "title": "Tư vấn"
       },

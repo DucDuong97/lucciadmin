@@ -1,6 +1,7 @@
 package com.lucci.webadmin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.lucci.webadmin.domain.enumeration.BookingState;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -53,6 +54,12 @@ public class Consult extends AbstractAuditingEntity implements Serializable {
                joinColumns = @JoinColumn(name = "consult_id", referencedColumnName = "id"),
                inverseJoinColumns = @JoinColumn(name = "service_id", referencedColumnName = "id"))
     private Set<PricingCard> services = new HashSet<>();
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state", nullable = false)
+    private BookingState state;
+
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
@@ -175,6 +182,15 @@ public class Consult extends AbstractAuditingEntity implements Serializable {
             "id=" + getId() +
             ", time='" + getTime() + "'" +
             ", note='" + getNote() + "'" +
+            ", state='" + getState() + "'" +
             "}";
+    }
+
+    public BookingState getState() {
+        return state;
+    }
+
+    public void setState(BookingState state) {
+        this.state = state;
     }
 }

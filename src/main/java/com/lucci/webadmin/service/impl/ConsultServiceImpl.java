@@ -1,9 +1,14 @@
 package com.lucci.webadmin.service.impl;
 
+import com.lucci.webadmin.domain.Booking;
+import com.lucci.webadmin.domain.PricingCard;
 import com.lucci.webadmin.service.ConsultService;
 import com.lucci.webadmin.domain.Consult;
 import com.lucci.webadmin.repository.ConsultRepository;
+import com.lucci.webadmin.service.TreatmentPlanService;
 import com.lucci.webadmin.service.dto.ConsultDTO;
+import com.lucci.webadmin.service.dto.TreatmentDTO;
+import com.lucci.webadmin.service.dto.TreatmentPlanDTO;
 import com.lucci.webadmin.service.mapper.ConsultMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +18,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Optional;
+
+import static com.lucci.webadmin.domain.enumeration.BookingState.*;
 
 /**
  * Service Implementation for managing {@link Consult}.
@@ -28,15 +36,19 @@ public class ConsultServiceImpl implements ConsultService {
 
     private final ConsultMapper consultMapper;
 
-    public ConsultServiceImpl(ConsultRepository consultRepository, ConsultMapper consultMapper) {
+    private final TreatmentPlanService planService;
+
+    public ConsultServiceImpl(ConsultRepository consultRepository, ConsultMapper consultMapper, TreatmentPlanService planService) {
         this.consultRepository = consultRepository;
         this.consultMapper = consultMapper;
+        this.planService = planService;
     }
 
     @Override
     public ConsultDTO save(ConsultDTO consultDTO) {
         log.debug("Request to save Consult : {}", consultDTO);
         Consult consult = consultMapper.toEntity(consultDTO);
+        consult.setState(COMING);
         consult = consultRepository.save(consult);
         return consultMapper.toDto(consult);
     }
@@ -66,5 +78,28 @@ public class ConsultServiceImpl implements ConsultService {
     public void delete(Long id) {
         log.debug("Request to delete Consult : {}", id);
         consultRepository.deleteById(id);
+    }
+
+
+    @Override
+    public void came(Long id) {
+        Consult consult = consultRepository.findById(id).get();
+        consult.setState(CAME);
+        createNewTreatmentPlan(consult);
+    }
+
+    private void createNewTreatmentPlan(Consult consult) {
+        TreatmentPlanDTO newPlan = new TreatmentPlanDTO();
+        for (PricingCard service : consult.getServices()) {
+            newPlan.setCustomerId(consult.getCustomer().getId());
+            newPlan.setServiceId(service.getId());
+            planService.save(newPlan);
+        }
+    }
+
+    @Override
+    public void notCame(Long id) {
+        Consult con = consultRepository.findById(id).get();
+        con.setState(NOT_CAME);
     }
 }

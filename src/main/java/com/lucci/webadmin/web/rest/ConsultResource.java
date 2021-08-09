@@ -63,6 +63,24 @@ public class ConsultResource {
             .body(result);
     }
 
+    @PostMapping("/consults/{id}/check")
+    public ResponseEntity<Void> checkConsult(@PathVariable Long id) {
+        log.debug("REST request to check Consult : {}", id);
+        consultService.came(id);
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
+    @PostMapping("/consults/{id}/cancel")
+    public ResponseEntity<Void> cancelConsult(@PathVariable Long id) {
+        log.debug("REST request to cancel Consult : {}", id);
+        consultService.notCame(id);
+        return ResponseEntity.noContent()
+            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, id.toString()))
+            .build();
+    }
+
     /**
      * {@code PUT  /consults} : Updates an existing consult.
      *

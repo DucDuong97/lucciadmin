@@ -30,7 +30,9 @@
             <column name="branch_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="role" type="varchar(50)"/>
+            <column name="state" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
 
             <column name="created_by" type="varchar(50)">
                 <constraints nullable="false"/>

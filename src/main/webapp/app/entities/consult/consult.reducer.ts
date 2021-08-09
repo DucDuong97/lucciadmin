@@ -144,6 +144,26 @@ export const deleteEntity: ICrudDeleteAction<IConsult> = id => async dispatch =>
   return result;
 };
 
+export const checkEntity: ICrudDeleteAction<IConsult> = id => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}/check`;
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_CONSULT,
+    payload: axios.post(requestUrl),
+  });
+  dispatch(getEntities());
+  return result;
+};
+
+export const cancelEntity: ICrudDeleteAction<IConsult> = id => async dispatch => {
+  const requestUrl = `${apiUrl}/${id}/cancel`;
+  const result = await dispatch({
+    type: ACTION_TYPES.UPDATE_CONSULT,
+    payload: axios.post(requestUrl),
+  });
+  dispatch(getEntities());
+  return result;
+};
+
 export const reset = () => ({
   type: ACTION_TYPES.RESET,
 });

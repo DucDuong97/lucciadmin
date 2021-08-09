@@ -2,6 +2,7 @@ package com.lucci.webadmin.repository;
 
 import com.lucci.webadmin.domain.Consult;
 
+import com.lucci.webadmin.domain.enumeration.BookingState;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
@@ -27,9 +28,13 @@ public interface ConsultRepository extends JpaRepository<Consult, Long> {
     @Query("select consult from Consult consult left join fetch consult.services where consult.id =:id")
     Optional<Consult> findOneWithEagerRelationships(@Param("id") Long id);
 
-    @Query("select consult from Consult consult where " +
-        "true = ?#{hasRole('CONSULTANT')} or " +
-        "(true = ?#{hasRole('DOCTOR')} and consult.consultingDoctor.id = ?#{@userService.getRelatedEmployeeId()})"
+    @Query("select consult from Consult consult left outer join consult.consultingDoctor" +
+        " where state = 'COMING' AND" +
+        " (consult.consultingDoctor.id = ?#{@userService.getRelatedEmployeeId()} or" +
+        " true = ?#{hasRole('CONSULTANT')})"
     )
     Page<Consult> findAllWithAuthority(Pageable pageable);
+
+    Page<Consult> findByState(BookingState state, Pageable pageable);
+
 }

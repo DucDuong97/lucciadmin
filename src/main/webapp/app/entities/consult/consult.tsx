@@ -125,6 +125,34 @@ export const Consult = (props: IConsultProps) => {
                   </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
+                      {props.cameConfirmPermission && consult.services.length > 0 &&
+                      <Button
+                        tag={Link}
+                        to={`${match.url}/${consult.id}/check-confirm?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        color="success"
+                        size="sm"
+                      >
+                        <FontAwesomeIcon icon="check" />{' '}
+                        <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.check">Check</Translate>
+                          </span>
+                      </Button>
+                      }
+
+                      {props.notCameConfirmPermission &&
+                      <Button
+                        tag={Link}
+                        to={`${match.url}/${consult.id}/cancel-confirm?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
+                        color="danger"
+                        size="sm"
+                      >
+                        <FontAwesomeIcon icon="times" />{' '}
+                        <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.cancel">Cancel</Translate>
+                          </span>
+                      </Button>
+                      }
+                      &nbsp;
                       {props.viewPermission &&
                       <Button tag={Link} to={`${match.url}/${consult.id}`} color="info" size="sm">
                         <FontAwesomeIcon icon="eye"/>{' '}
@@ -200,6 +228,8 @@ const mapStateToProps = ({ consult, authentication }: IRootState) => ({
   loading: consult.loading,
   totalItems: consult.totalItems,
 
+  cameConfirmPermission: authentication.isConsultant,
+  notCameConfirmPermission: authentication.isConsultant,
   createPermission: authentication.isConsultant,
   viewPermission:   authentication.isConsultant,
   editPermission:   true,
