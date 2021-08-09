@@ -18,7 +18,6 @@ export interface IHeaderProps {
   user: string;
   isAuthenticated: boolean;
   isAdmin: boolean;
-  // isCustomer: boolean;
   isReceptionist: boolean;
   isDoctor: boolean;
   isNurse: boolean;
@@ -55,6 +54,9 @@ const Header = (props: IHeaderProps) => {
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
+  const { isAuthenticated, isAdmin, isReceptionist, isDoctor, isNurse, isMarketing,
+    isManager, isOperationsDirector, isBranchBossDoctor, isConsultant } = props;
+
   /* jhipster-needle-add-element-to-menu - JHipster will add new menu items here */
 
   return (
@@ -68,32 +70,32 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
             {isAuthenticated && (isAdmin
-            || isConsultant || isReceptionist)
-              && <Customer />}
+            || isConsultant || isReceptionist || isDoctor)
+            && <Customer />}
             {isAuthenticated && (isAdmin
-              || isManager)
-              && <Employee />}
+            || isDoctor || isConsultant || isReceptionist)
+            && <Consult />}
             {isAuthenticated && (isAdmin
-            || isOperationsDirector || isDoctor || isBranchBossDoctor || isDoctor || isReceptionist)
-              && <Booking />}
-            {isAuthenticated && (isAdmin
-            || isDoctor || isConsultant)
-              && <Consult />}
-            {isAuthenticated && (isAdmin
-            || isReceptionist)
-              && <Payment />}
+            || isOperationsDirector || isDoctor || isReceptionist)
+            && <Booking />}
             {isAuthenticated && (isAdmin
             || isMarketing)
-              && <WebContentMenu />}
+            && <WebContentMenu />}
             {isAuthenticated && (isAdmin
-            || isReceptionist)
-              && <MaterialMenu />}
+            || isManager)
+            && <Employee />}
             {isAuthenticated && isAdmin
-              && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
+            && <AdminMenu showSwagger={props.isSwaggerEnabled} />}
+            {/*{isAuthenticated && (isAdmin*/}
+            {/*  || isReceptionist)*/}
+            {/*&& <Payment />}*/}
+            {/*{isAuthenticated && (isAdmin*/}
+            {/*  || isReceptionist)*/}
+            {/*&& <MaterialMenu />}*/}
             {/*{isAuthenticated && <EntitiesMenu />}*/}
 
-            <LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />
-            <AccountMenu isAuthenticated={props.isAuthenticated} />
+            {/*<LocaleMenu currentLocale={props.currentLocale} onClick={handleLocaleChange} />*/}
+            <AccountMenu isAuthenticated={isAuthenticated} />
           </Nav>
         </Collapse>
       </Navbar>

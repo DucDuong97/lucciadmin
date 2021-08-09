@@ -5,11 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink as Link } from 'react-router-dom';
 import { NavDropdown } from './menu-components';
 import { Translate, translate } from 'react-jhipster';
+import {Employee} from "app/shared/layout/header/header-components";
 
 const adminMenuItems = (
   <>
     <MenuItem icon="user" to="/admin/user-management">
       <Translate contentKey="global.menu.admin.userManagement">User management</Translate>
+    </MenuItem>
+    <MenuItem icon="bell" to="/admin/audits">
+      <Translate contentKey="global.menu.admin.audits">Audits</Translate>
     </MenuItem>
     <MenuItem icon="tachometer-alt" to="/admin/metrics">
       <Translate contentKey="global.menu.admin.metrics">Metrics</Translate>
@@ -19,9 +23,6 @@ const adminMenuItems = (
     </MenuItem>
     <MenuItem icon="list" to="/admin/configuration">
       <Translate contentKey="global.menu.admin.configuration">Configuration</Translate>
-    </MenuItem>
-    <MenuItem icon="bell" to="/admin/audits">
-      <Translate contentKey="global.menu.admin.audits">Audits</Translate>
     </MenuItem>
     {/* jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here */}
     <MenuItem icon="tasks" to="/admin/logs">
