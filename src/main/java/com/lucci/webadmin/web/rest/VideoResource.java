@@ -83,6 +83,7 @@ public class VideoResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of videos in body.
      */
+    @CrossOrigin
     @GetMapping("/videos")
     public List<VideoDTO> getAllVideos() {
         log.debug("REST request to get all Videos");
@@ -95,6 +96,7 @@ public class VideoResource {
      * @param id the id of the videoDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the videoDTO, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/videos/{id}")
     public ResponseEntity<VideoDTO> getVideo(@PathVariable Long id) {
         log.debug("REST request to get Video : {}", id);

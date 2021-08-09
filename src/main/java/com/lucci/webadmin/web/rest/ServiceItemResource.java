@@ -84,6 +84,7 @@ public class ServiceItemResource {
      * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of serviceItems in body.
      */
+    @CrossOrigin
     @GetMapping("/service-items")
     public List<ServiceItemDTO> getAllServiceItems(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all ServiceItems");
@@ -96,6 +97,7 @@ public class ServiceItemResource {
      * @param id the id of the serviceItemDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the serviceItemDTO, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/service-items/{id}")
     public ResponseEntity<ServiceItemDTO> getServiceItem(@PathVariable Long id) {
         log.debug("REST request to get ServiceItem : {}", id);
