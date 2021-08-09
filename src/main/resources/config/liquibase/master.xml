@@ -14,7 +14,6 @@
     <property name="uuidType" value="uuid" dbms="h2, postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210312181417_added_entity_ServiceOption.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312181517_added_entity_Policy.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210508061849_added_entity_ImgUrl.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210517104429_added_entity_Branch.xml" relativeToChangelogFile="false"/>
@@ -27,7 +26,6 @@
     <include file="config/liquibase/changelog/20210312181817_added_entity_ServiceItem.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312181917_added_entity_Blog.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210312182017_added_entity_SingletonContent.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210312182117_added_entity_Page.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628105033_added_entity_Customer.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628105133_added_entity_Employee.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628111350_added_entity_Booking.xml" relativeToChangelogFile="false"/>
@@ -36,7 +34,6 @@
     <include file="config/liquibase/changelog/20210719181855_added_entity_Treatment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210719184839_added_entity_TreatmentPlan.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20210312181417_added_entity_constraints_ServiceOption.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628111350_added_entity_constraints_Booking.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628105133_added_entity_constraints_Employee.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628105033_added_entity_constraints_Customer.xml" relativeToChangelogFile="false"/>

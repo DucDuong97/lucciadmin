@@ -7,12 +7,6 @@
         Added the constraints for entity Customer.
     -->
     <changeSet id="20210628105033-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="correspond_consultant_id"
-                                 baseTableName="customer"
-                                 constraintName="fk_customer_correspond_consultant_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
 
     </changeSet>
 </databaseChangeLog>

@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity ImgUrl.
     -->
@@ -38,10 +38,10 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20210508061849-1-data" author="jhipster" context="faker">
+    <changeSet id="20210508061849-1-data" author="jhipster">
         <loadData
-                  file="config/liquibase/fake-data/img_url.csv"
-                  separator=";"
+                  file="config/liquibase/data/img_url.csv"
+                  separator=","
                   tableName="img_url">
             <column name="id" type="numeric"/>
             <column name="name" type="string"/>

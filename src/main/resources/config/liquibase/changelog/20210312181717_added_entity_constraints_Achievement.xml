@@ -7,12 +7,6 @@
         Added the constraints for entity Achievement.
     -->
     <changeSet id="20210312181717-2" author="jhipster">
-        
-        <addForeignKeyConstraint baseColumnNames="img_url_id"
-                                 baseTableName="achievement"
-                                 constraintName="fk_achievement_img_url_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="img_url"/>
 
     </changeSet>
 </databaseChangeLog>

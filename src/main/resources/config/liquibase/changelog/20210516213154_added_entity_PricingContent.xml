@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity PricingContent.
     -->
@@ -41,14 +41,15 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20210516213154-1-data" author="jhipster" context="faker">
+    <changeSet id="20210516213154-1-data" author="jhipster" context="prod">
         <loadData
-                  file="config/liquibase/fake-data/pricing_content.csv"
-                  separator=";"
+                  file="config/liquibase/data/pricing_content.csv"
+                  separator=","
                   tableName="pricing_content">
             <column name="id" type="numeric"/>
             <column name="content" type="string"/>
             <column name="pro" type="boolean"/>
+            <column name="pricing_card_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>
