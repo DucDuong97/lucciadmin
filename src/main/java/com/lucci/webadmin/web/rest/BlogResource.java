@@ -2,7 +2,6 @@ package com.lucci.webadmin.web.rest;
 
 import com.lucci.webadmin.domain.Blog;
 import com.lucci.webadmin.domain.ImgUrl;
-import com.lucci.webadmin.domain.ServiceItem;
 import com.lucci.webadmin.service.BlogService;
 import com.lucci.webadmin.service.ImgUrlService;
 import com.lucci.webadmin.web.rest.errors.BadRequestAlertException;
@@ -98,9 +97,15 @@ public class BlogResource {
      */
     @CrossOrigin
     @GetMapping("/blogs")
-    public List<Blog> getAllBlogs() {
+    public List<Blog> getAllBlogs(Long serviceId) {
         log.debug("REST request to get all Blogs");
-        return blogService.findAll();
+        List<Blog> result;
+        if (serviceId != null) {
+            result = blogService.findAllByServiceId(serviceId);
+        } else {
+            result = blogService.findAll();
+        }
+        return result;
     }
 
     @CrossOrigin

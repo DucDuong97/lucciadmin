@@ -51,6 +51,13 @@ public class PricingCardServiceImpl implements PricingCardService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Override
+    public List<PricingCardDTO> findAllByServiceId(Long id) {
+        log.debug("Request to get all PricingCards");
+        return pricingCardRepository.findByServiceItemId(id).stream()
+            .map(pricingCardMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
 
     @Override
     @Transactional(readOnly = true)

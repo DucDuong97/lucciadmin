@@ -85,9 +85,15 @@ public class ProcessResource {
      */
     @CrossOrigin
     @GetMapping("/processes")
-    public List<ProcessDTO> getAllProcesses() {
+    public List<ProcessDTO> getAllProcesses(Long serviceId) {
         log.debug("REST request to get all Processes");
-        return processService.findAll();
+        List<ProcessDTO> result;
+        if (serviceId != null) {
+            result = processService.findAllByServiceId(serviceId);
+        } else {
+            result = processService.findAll();
+        }
+        return result;
     }
 
     /**

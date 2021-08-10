@@ -25,6 +25,8 @@ public interface PricingCardService {
      */
     List<PricingCardDTO> findAll();
 
+    List<PricingCardDTO> findAllByServiceId(Long id);
+
 
     /**
      * Get the "id" pricingCard.

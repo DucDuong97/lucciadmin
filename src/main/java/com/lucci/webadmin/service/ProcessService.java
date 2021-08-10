@@ -25,6 +25,8 @@ public interface ProcessService {
      */
     List<ProcessDTO> findAll();
 
+    List<ProcessDTO> findAllByServiceId(Long id);
+
 
     /**
      * Get the "id" process.

@@ -44,7 +44,7 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Blog> findAllByServiceId(Long id) {
         log.debug("Request to get all Blogs by service: {}", id);
-        return id == null ? Collections.emptyList() : blogRepository.findAllByServiceId(id);
+        return blogRepository.findAllByServiceId(id);
     }
 
 

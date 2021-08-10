@@ -85,9 +85,15 @@ public class PricingCardResource {
      */
     @CrossOrigin
     @GetMapping("/pricing-cards")
-    public List<PricingCardDTO> getAllPricingCards() {
+    public List<PricingCardDTO> getAllPricingCards(Long serviceId) {
         log.debug("REST request to get all PricingCards");
-        return pricingCardService.findAll();
+        List<PricingCardDTO> result;
+        if (serviceId != null) {
+            result = pricingCardService.findAllByServiceId(serviceId);
+        } else {
+            result = pricingCardService.findAll();
+        }
+        return result;
     }
 
     /**

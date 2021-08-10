@@ -51,6 +51,12 @@ public class ProcessServiceImpl implements ProcessService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Override
+    public List<ProcessDTO> findAllByServiceId(Long id) {
+        return processRepository.findByServiceItemId(id).stream()
+            .map(processMapper::toDto)
+            .collect(Collectors.toList());
+    }
 
     @Override
     @Transactional(readOnly = true)
