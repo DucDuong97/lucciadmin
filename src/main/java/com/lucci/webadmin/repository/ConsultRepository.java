@@ -31,7 +31,7 @@ public interface ConsultRepository extends JpaRepository<Consult, Long> {
     @Query("select consult from Consult consult left outer join consult.consultingDoctor" +
         " where state = 'COMING' AND" +
         " (consult.consultingDoctor.id = ?#{@userService.getRelatedEmployeeId()} or" +
-        " true = ?#{hasRole('CONSULTANT')})"
+        " true = ?#{hasAnyRole('CONSULTANT', 'RECEPTIONIST')})"
     )
     Page<Consult> findAllWithAuthority(Pageable pageable);
 

@@ -181,7 +181,7 @@ export const ConsultUpdate = (props: IConsultUpdateProps) => {
                   className="form-control"
                   name="services"
                   value={consultEntity.services && consultEntity.services.map(e => e.id)}
-                  disabled={!props.isDoctor}
+                  disabled={!props.isConsultant}
                 >
                   <option value="" key="0" />
                   {pricingCards

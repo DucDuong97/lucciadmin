@@ -63,12 +63,6 @@ export const ConsultDetail = (props: IConsultDetailProps) => {
               : null}
           </dd>
         </dl>
-        <Button tag={Link} to={`/consult/${consultEntity.id}/edit`} replace color="primary">
-          <FontAwesomeIcon icon="pencil-alt" />{' '}
-          <span className="d-none d-md-inline">
-            <Translate contentKey="entity.action.edit">Edit</Translate>
-          </span>
-        </Button>
       </Col>
     </Row>
   );

@@ -107,11 +107,7 @@ export const Consult = (props: IConsultProps) => {
             <tbody>
               {consultList.map((consult, i) => (
                 <tr key={`entity-${i}`}>
-                  <td>
-                    <Button tag={Link} to={`${match.url}/${consult.id}`} color="link" size="sm">
-                      {consult.id}
-                    </Button>
-                  </td>
+                  <td>{consult.id}</td>
                   <td>{consult.time ? <TextFormat type="date" value={consult.time} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{consult.note}</td>
                   <td>{consult.customerName ? <Link to={`customer/${consult.customerId}`}>{consult.customerName}</Link> : ''}</td>
@@ -232,8 +228,8 @@ const mapStateToProps = ({ consult, authentication }: IRootState) => ({
   notCameConfirmPermission: authentication.isConsultant,
   createPermission: authentication.isConsultant,
   viewPermission:   authentication.isConsultant,
-  editPermission:   true,
-  deletePermission: authentication.isConsultant,
+  editPermission:   authentication.isConsultant || authentication.isDoctor,
+  deletePermission: false,
 });
 
 const mapDispatchToProps = {
