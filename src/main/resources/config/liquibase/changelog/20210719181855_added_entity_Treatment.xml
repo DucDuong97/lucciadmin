@@ -33,7 +33,7 @@
             <column name="treatment_plan_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="role" type="varchar(255)">
+            <column name="state" type="varchar(50)">
                 <constraints nullable="false" />
             </column>
 
