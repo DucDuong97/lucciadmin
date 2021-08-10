@@ -83,6 +83,7 @@ public class PricingContentResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of pricingContents in body.
      */
+    @CrossOrigin
     @GetMapping("/pricing-contents")
     public List<PricingContentDTO> getAllPricingContents() {
         log.debug("REST request to get all PricingContents");
@@ -95,6 +96,7 @@ public class PricingContentResource {
      * @param id the id of the pricingContentDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the pricingContentDTO, or with status {@code 404 (Not Found)}.
      */
+    @CrossOrigin
     @GetMapping("/pricing-contents/{id}")
     public ResponseEntity<PricingContentDTO> getPricingContent(@PathVariable Long id) {
         log.debug("REST request to get PricingContent : {}", id);
