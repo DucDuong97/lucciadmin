@@ -12,7 +12,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "employee",
       "relationshipName": "correspondDoctor",
-      "otherEntityField": "id",
+      "otherEntityField": "name",
       "ownerSide": true,
       "otherEntityRelationshipName": "booking"
     },
@@ -20,7 +20,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "customer",
       "relationshipName": "customer",
-      "otherEntityField": "id",
+      "otherEntityField": "name",
       "ownerSide": true,
       "relationshipValidateRules": ["required"],
       "otherEntityRelationshipName": "booking"
@@ -38,7 +38,7 @@
       "relationshipType": "many-to-one",
       "otherEntityName": "branch",
       "relationshipName": "branch",
-      "otherEntityField": "id",
+      "otherEntityField": "adress",
       "ownerSide": true,
       "relationshipValidateRules": ["required"],
       "otherEntityRelationshipName": "booking"

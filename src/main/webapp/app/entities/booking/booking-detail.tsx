@@ -66,15 +66,15 @@ export const BookingDetail = (props: IBookingDetailProps) => {
           <dt>
             <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
           </dt>
-          <dd>{bookingEntity.customerId ? bookingEntity.customerId : ''}</dd>
+          <dd>{bookingEntity.customerName ? bookingEntity.customerName : ''}</dd>
           <dt>
             <Translate contentKey="lucciadminApp.booking.treatmentPlan">Treatment Plan</Translate>
           </dt>
-          <dd>{bookingEntity.treatmentPlanId ? <Link to={`/treatment-plan/${bookingEntity.treatmentPlanId}`}>{bookingEntity.treatmentPlanId}</Link> : ''}</dd>
+          <dd>{bookingEntity.treatmentPlanId ? bookingEntity.treatmentPlanId : ''}</dd>
           <dt>
             <Translate contentKey="lucciadminApp.booking.branch">Branch</Translate>
           </dt>
-          <dd>{bookingEntity.branchId ? bookingEntity.branchId : ''}</dd>
+          <dd>{bookingEntity.branchAdress ? bookingEntity.branchAdress : ''}</dd>
         </dl>
       </Col>
     </Row>

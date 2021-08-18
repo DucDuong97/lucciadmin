@@ -1,8 +1,6 @@
 package com.lucci.webadmin.service.dto;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.time.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 
@@ -21,11 +19,17 @@ public class BookingDTO implements Serializable {
 
     private Long correspondDoctorId;
 
+    private String correspondDoctorName;
+
     private Long customerId;
+
+    private String customerName;
 
     private Long treatmentPlanId;
 
     private Long branchId;
+
+    private String branchAdress;
 
     public Long getId() {
         return id;
@@ -51,6 +55,10 @@ public class BookingDTO implements Serializable {
         this.time = time;
     }
 
+    public LocalDateTime getDateTime() {
+        return LocalDateTime.of(getDate(), getTime());
+    }
+
     public Long getCorrespondDoctorId() {
         return correspondDoctorId;
     }
@@ -59,12 +67,28 @@ public class BookingDTO implements Serializable {
         this.correspondDoctorId = employeeId;
     }
 
+    public String getCorrespondDoctorName() {
+        return correspondDoctorName;
+    }
+
+    public void setCorrespondDoctorName(String employeeName) {
+        this.correspondDoctorName = employeeName;
+    }
+
     public Long getCustomerId() {
         return customerId;
     }
 
     public void setCustomerId(Long customerId) {
         this.customerId = customerId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public Long getTreatmentPlanId() {
@@ -81,6 +105,14 @@ public class BookingDTO implements Serializable {
 
     public void setBranchId(Long branchId) {
         this.branchId = branchId;
+    }
+
+    public String getBranchAdress() {
+        return branchAdress;
+    }
+
+    public void setBranchAdress(String branchAdress) {
+        this.branchAdress = branchAdress;
     }
 
     @Override
@@ -108,9 +140,12 @@ public class BookingDTO implements Serializable {
             ", date='" + getDate() + "'" +
             ", time='" + getTime() + "'" +
             ", correspondDoctorId=" + getCorrespondDoctorId() +
+            ", correspondDoctorName='" + getCorrespondDoctorName() + "'" +
             ", customerId=" + getCustomerId() +
+            ", customerName='" + getCustomerName() + "'" +
             ", treatmentPlanId=" + getTreatmentPlanId() +
             ", branchId=" + getBranchId() +
+            ", branchAdress='" + getBranchAdress() + "'" +
             "}";
     }
 }

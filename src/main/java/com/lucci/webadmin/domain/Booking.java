@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * A Booking.
@@ -28,7 +28,7 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
 
     @NotNull
     @Column(name = "time", nullable = false)
-    private ZonedDateTime time;
+    private LocalDateTime time;
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -62,16 +62,16 @@ public class Booking extends AbstractAuditingEntity implements Serializable {
         this.id = id;
     }
 
-    public ZonedDateTime getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public Booking time(ZonedDateTime time) {
+    public Booking time(LocalDateTime time) {
         this.time = time;
         return this;
     }
 
-    public void setTime(ZonedDateTime time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

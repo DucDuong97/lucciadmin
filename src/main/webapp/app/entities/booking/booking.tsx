@@ -119,14 +119,14 @@ export const Booking = (props: IBookingProps) => {
                   <td>{booking.date ? <TextFormat type="date" value={booking.date} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{booking.time ? <TextFormat type="number" value={booking.time} format={APP_TIME_FORMAT} /> : null}</td>
                   <td>
-                    {booking.correspondDoctorId ? (
-                      <Link to={`employee/${booking.correspondDoctorId}`}>{booking.correspondDoctorId}</Link>
+                    {booking.correspondDoctorName ? (
+                      <Link to={`employee/${booking.correspondDoctorId}`}>{booking.correspondDoctorName}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   {props.viewCustomerPermission &&
-                  <td>{booking.customerId ? <Link to={`customer/${booking.customerId}`}>{booking.customerId}</Link> : ''}</td>
+                  <td>{booking.customerName ? <Link to={`customer/${booking.customerId}`}>{booking.customerName}</Link> : ''}</td>
                   }
                   {props.viewPlanPermission &&
                   <td>
@@ -134,16 +134,17 @@ export const Booking = (props: IBookingProps) => {
                       <Link to={`treatment-plan/${booking.treatmentPlanId}`}>{booking.treatmentPlanId}</Link> : ''}
                   </td>
                   }
-                  <td>{booking.branchId ? <Link to={`branch/${booking.branchId}`}>{booking.branchId}</Link> : ''}</td>
+                  <td>{booking.branchAdress ? <Link to={`branch/${booking.branchId}`}>{booking.branchAdress}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
-                      {/*<Button tag={Link} to={`${match.url}/${booking.id}`} color="info" size="sm">*/}
-                      {/*  <FontAwesomeIcon icon="eye" />{' '}*/}
-                      {/*  <span className="d-none d-md-inline">*/}
-                      {/*    <Translate contentKey="entity.action.view">View</Translate>*/}
-                      {/*  </span>*/}
-                      {/*</Button>*/}
-
+                      {props.viewPermission &&
+                      <Button tag={Link} to={`${match.url}/${booking.id}`} color="info" size="sm">
+                        <FontAwesomeIcon icon="eye"/>{' '}
+                        <span className="d-none d-md-inline">
+                          <Translate contentKey="entity.action.view">View</Translate>
+                        </span>
+                      </Button>
+                      }
                       {props.cameConfirmPermission && booking.correspondDoctorId && booking.time !== '00:00:00' &&
                       <Button
                         tag={Link}
@@ -176,7 +177,7 @@ export const Booking = (props: IBookingProps) => {
                         <Button
                           tag={Link}
                           to={`${match.url}/${booking.id}/edit?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
-                          color={booking.time !== '00:00:00' ? 'warning' : 'primary'}
+                          color={booking.time === '00:00:00' ? 'warning' : 'primary'}
                           size="sm"
                         >
                           <FontAwesomeIcon icon="pencil-alt" />{' '}
@@ -242,9 +243,10 @@ const mapStateToProps = ({ booking, authentication }: IRootState) => ({
 
   viewCustomerPermission: authentication.isReceptionist,
   viewPlanPermission: authentication.isOperationsDirector || authentication.isDoctor,
-  createPermission: false,
+  createPermission: authentication.isReceptionist,
   cameConfirmPermission: authentication.isReceptionist,
   notCameConfirmPermission: authentication.isReceptionist,
+  viewPermission: authentication.isOperationsDirector,
   updatePermission: authentication.isReceptionist,
   deletePermission: false,
 });

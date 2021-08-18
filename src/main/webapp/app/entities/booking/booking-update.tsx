@@ -124,11 +124,11 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 <Label for="booking-customer">
                   <Translate contentKey="lucciadminApp.booking.customer">Customer</Translate>
                 </Label>
-                <AvInput id="booking-customer" type="select" className="form-control" name="customerId" disabled={true} required>
+                <AvInput id="booking-customer" type="select" className="form-control" name="customerId" disabled={!isNew} required>
                   {customers
                     ? customers.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.name}
                         </option>
                       ))
                     : null}
@@ -141,7 +141,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                 <Label for="booking-treatmentPlan">
                   <Translate contentKey="lucciadminApp.booking.treatmentPlan">Treatment Plan</Translate>
                 </Label>
-                <AvInput id="booking-treatmentPlan" type="select" className="form-control" name="treatmentPlanId" disabled={true} required>
+                <AvInput id="booking-treatmentPlan" type="select" className="form-control" name="treatmentPlanId" disabled={!isNew} required>
                   {treatmentPlans
                     ? treatmentPlans.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
@@ -162,7 +162,7 @@ export const BookingUpdate = (props: IBookingUpdateProps) => {
                   {branches
                     ? branches.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.adress}
                         </option>
                       ))
                     : null}
