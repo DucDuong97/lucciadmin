@@ -28,4 +28,6 @@ public interface TreatmentRepository extends JpaRepository<Treatment, Long> {
     Optional<Treatment> findOneWithEagerRelationships(@Param("id") Long id);
 
     Page<Treatment> findByTreatmentPlanId(Pageable pageable, Long planId);
+
+    List<Treatment> findByTreatmentPlanId(Long planId);
 }

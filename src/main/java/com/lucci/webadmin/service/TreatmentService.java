@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalTime;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 import static com.lucci.webadmin.domain.enumeration.TreatmentState.FINISH;
@@ -57,12 +58,12 @@ public class TreatmentService {
         Treatment treatment = treatmentMapper.toEntity(treatmentDTO);
         if (treatment.getId() == null) {
             treatment.setState(IN_PROCESS);
-            TreatmentPlanDTO treatmentPlanDTO = treatmentPlanService.findOne(treatmentDTO.getTreatmentPlanId()).get();
-            if (treatmentPlanDTO.getTreatments().size() > 0) {
-                TreatmentDTO lastTreatmentDTO = treatmentPlanDTO.getTreatments().stream()
-                    .max(Comparator.comparing(TreatmentDTO::getDate))
+            List<Treatment> oldTreatments = treatmentRepository.findByTreatmentPlanId(treatmentDTO.getTreatmentPlanId());
+            if (oldTreatments.size() > 0) {
+                Treatment lastTreatment = oldTreatments.stream()
+                    .max(Comparator.comparing(Treatment::getDate))
                     .get();
-                treatment.setDescription(lastTreatmentDTO.getNextPlan());
+                treatment.setDescription(lastTreatment.getNextPlan());
             }
         }
         else {

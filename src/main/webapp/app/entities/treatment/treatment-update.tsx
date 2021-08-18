@@ -171,7 +171,7 @@ export const TreatmentUpdate = (props: ITreatmentUpdateProps) => {
                     ))
                     : null}
                 </Row>
-                <Button tag={Link} to={`/img-url?treatmentId=${treatmentEntity.id}`} replace color="warning" style={{marginTop: "0.5rem"}}>
+                <Button tag={Link} to={`/img-url?treatmentId=${treatmentEntity.id}`} color="warning" style={{marginTop: "0.5rem"}}>
                   <FontAwesomeIcon icon="plus" />
                   &nbsp;
                   <span className="d-none d-md-inline">
