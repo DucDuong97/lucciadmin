@@ -48,4 +48,6 @@ public interface ImgUrlService {
     List<ImgUrlDTO> findByTreatmentId(Long treatmentId);
 
     Optional<ImgUrlDTO> findByURL(String url);
+
+    List<ImgUrlDTO> findByServiceId(Long serviceId);
 }

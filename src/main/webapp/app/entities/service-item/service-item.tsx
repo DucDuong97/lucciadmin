@@ -40,9 +40,6 @@ export const ServiceItem = (props: IServiceItemProps) => {
                   <Translate contentKey="lucciadminApp.serviceItem.name">Name</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="lucciadminApp.serviceItem.description">Description</Translate>
-                </th>
-                <th>
                   <Translate contentKey="lucciadminApp.serviceItem.icon">Icon</Translate>
                 </th>
                 <th>
@@ -63,7 +60,6 @@ export const ServiceItem = (props: IServiceItemProps) => {
                     </Button>
                   </td>
                   <td>{serviceItem.name}</td>
-                  <td>{serviceItem.description}</td>
                   <td>{serviceItem.iconName ? <Link to={`img-url/${serviceItem.iconId}`}>{serviceItem.iconName}</Link> : ''}</td>
                   <td>
                     {serviceItem.customerImgUrls

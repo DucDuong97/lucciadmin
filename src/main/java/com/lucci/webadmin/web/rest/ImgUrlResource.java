@@ -91,11 +91,13 @@ public class ImgUrlResource {
      */
     @CrossOrigin
     @GetMapping("/img-urls")
-    public List<ImgUrlDTO> getAllImgUrls(Long treatmentId) {
+    public List<ImgUrlDTO> getAllImgUrls(Long treatmentId, Long serviceId) {
         log.debug("REST request to get all ImgUrls");
         List<ImgUrlDTO> imgUrlDTOList;
         if (treatmentId != null) {
             imgUrlDTOList = imgUrlService.findByTreatmentId(treatmentId);
+        } else if (serviceId != null) {
+            imgUrlDTOList = imgUrlService.findByServiceId(serviceId);
         } else {
             imgUrlDTOList = imgUrlService.findAll();
         }

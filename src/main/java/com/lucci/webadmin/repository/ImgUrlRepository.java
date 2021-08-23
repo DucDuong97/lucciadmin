@@ -5,6 +5,7 @@ import com.lucci.webadmin.domain.ImgUrl;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -16,4 +17,6 @@ public interface ImgUrlRepository extends JpaRepository<ImgUrl, Long> {
 
     List<ImgUrl> findByPathAndName(String path, String name);
     List<ImgUrl> findByTreatmentsId(Long treatmentId);
+
+    List<ImgUrl> findByServiceItemsId(Long serviceId);
 }

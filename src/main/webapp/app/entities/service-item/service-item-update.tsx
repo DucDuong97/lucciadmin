@@ -137,23 +137,25 @@ export const ServiceItemUpdate = (props: IServiceItemUpdateProps) => {
                 <Label for="service-item-customerImgUrls">
                   <Translate contentKey="lucciadminApp.serviceItem.customerImgUrls">Customer Img Urls</Translate>
                 </Label>
-                <AvInput
-                  id="service-item-customerImgUrls"
-                  type="select"
-                  multiple
-                  className="form-control"
-                  name="customerImgUrls"
-                  value={serviceItemEntity.customerImgUrls && serviceItemEntity.customerImgUrls.map(e => e.id)}
-                >
-                  <option value="" key="0" />
-                  {imgUrls
-                    ? imgUrls.map(otherEntity => (
-                        <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.name}
-                        </option>
-                      ))
+                <Row>
+                  {serviceItemEntity.customerImgUrls
+                    ? serviceItemEntity.customerImgUrls.map(otherEntity => (
+                      <Col key={otherEntity.id} md="4">
+                        {otherEntity &&
+                        <img src={`${IMAGE_FILE_SYSTEM_URL}${otherEntity.imgUrl}`}
+                             style={{maxWidth: 200, margin:20}} alt="hello world"/>
+                        }
+                      </Col>
+                    ))
                     : null}
-                </AvInput>
+                </Row>
+                <Button tag={Link} to={`/img-url?serviceId=${serviceItemEntity.id}`} color="warning" style={{marginTop: "0.5rem"}}>
+                  <FontAwesomeIcon icon="plus" />
+                  &nbsp;
+                  <span className="d-none d-md-inline">
+                  <Translate contentKey="entity.action.addimage">Add Image</Translate>
+                </span>
+                </Button>
               </AvGroup>
               <AvGroup>
                 <Label for="service-item-relatedVideos">

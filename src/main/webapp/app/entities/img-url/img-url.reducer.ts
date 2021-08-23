@@ -99,8 +99,8 @@ const apiUrl = 'api/img-urls';
 
 // Actions
 
-export const getEntities = (treatmentId?: string) => {
-  const treatmentQuery = treatmentId ? `treatmentId=${treatmentId}&` : '';
+export const getEntities = (treatmentId?: string, serviceId?: string) => {
+  const treatmentQuery = treatmentId ? `treatmentId=${treatmentId}&` : serviceId ? `serviceId=${serviceId}&` : '';
   return {
     type: ACTION_TYPES.FETCH_IMGURL_LIST,
     payload: axios.get<IImgUrl>(`${apiUrl}?${treatmentQuery}cacheBuster=${new Date().getTime()}`),

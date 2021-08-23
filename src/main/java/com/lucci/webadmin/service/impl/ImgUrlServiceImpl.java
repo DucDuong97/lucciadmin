@@ -92,6 +92,14 @@ public class ImgUrlServiceImpl implements ImgUrlService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
+    @Override
+    public List<ImgUrlDTO> findByServiceId(Long serviceId) {
+        log.debug("Request to get all ImgUrls of Service {}", serviceId);
+        return imgUrlRepository.findByServiceItemsId(serviceId).stream()
+            .map(imgUrlMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
+    }
+
     @Value("${amazon.s3.lucci.erp.bucketName}")
     private String bucket;
 

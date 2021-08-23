@@ -15,12 +15,15 @@ export interface IImgUrlProps extends StateProps, DispatchProps, RouteComponentP
 export const ImgUrl = (props: IImgUrlProps) => {
 
   const [treatmentId, setTreatmentId] = useState(null);
+  const [serviceId, setServiceId] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams(props.location.search);
     const treatmentIdMaybe = params.get('treatmentId');
     setTreatmentId(treatmentIdMaybe);
-    props.getEntities(treatmentIdMaybe);
+    const serviceIdMaybe = params.get('serviceId');
+    setServiceId(serviceIdMaybe);
+    props.getEntities(treatmentIdMaybe, serviceIdMaybe);
   }, []);
 
   const { imgUrlList, match, loading } = props;
@@ -28,7 +31,8 @@ export const ImgUrl = (props: IImgUrlProps) => {
     <div>
       <h2 id="img-url-heading">
         <Translate contentKey="lucciadminApp.imgUrl.home.title">Img Urls</Translate>
-        {treatmentId ? ` of Treatment ${treatmentId}` : ''}
+        {treatmentId ? ` của Buổi điều trị ${treatmentId}` : ''}
+        {serviceId ? ` khách hàng của Dịch vụ ${serviceId}` : ''}
         <Link to={`${match.url}/new${props.location.search}`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
           <FontAwesomeIcon icon="plus" />
           &nbsp;
