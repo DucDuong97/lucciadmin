@@ -30,6 +30,7 @@ public class ServiceItem implements Serializable {
     private String name;
 
     @Column(name = "description")
+    @Lob
     private String description;
 
     @OneToOne(cascade = CascadeType.REMOVE)

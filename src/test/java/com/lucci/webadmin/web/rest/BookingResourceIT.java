@@ -21,7 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZoneId;
 import java.util.List;
@@ -40,8 +40,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WithMockUser
 public class BookingResourceIT {
 
-    private static final ZonedDateTime DEFAULT_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    private static final LocalDateTime DEFAULT_TIME = LocalDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final LocalDateTime UPDATED_TIME = LocalDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     @Autowired
     private BookingRepository bookingRepository;
@@ -218,9 +218,9 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(booking.getId().intValue())))
-            .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))));
+            .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME)));
     }
-    
+
     @Test
     @Transactional
     public void getBooking() throws Exception {
@@ -232,7 +232,7 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(booking.getId().intValue()))
-            .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)));
+            .andExpect(jsonPath("$.time").value(DEFAULT_TIME));
     }
     @Test
     @Transactional

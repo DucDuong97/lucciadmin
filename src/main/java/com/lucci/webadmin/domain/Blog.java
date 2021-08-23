@@ -35,6 +35,7 @@ public class Blog implements Serializable {
 
     @NotNull
     @Column(name = "content", nullable = false)
+    @Lob
     private String content;
 
     @Column(name = "description")
