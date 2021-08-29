@@ -8,7 +8,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {NavLink as Link} from 'react-router-dom';
 import LoadingBar from 'react-redux-loading-bar';
 
-import {Home, Brand, Customer, Payment, Booking, Employee, Consult, UserInformation} from './header-components';
+import {
+  Home,
+  Brand,
+  Customer,
+  Payment,
+  Booking,
+  Employee,
+  Consult,
+  UserInformation,
+  Treatment
+} from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
 import MenuItem from "app/shared/layout/menus/menu-item";
 import {WebContentMenu} from "app/shared/layout/menus/web-content";
@@ -70,7 +80,7 @@ const Header = (props: IHeaderProps) => {
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ml-auto" navbar>
             {isAuthenticated && (isAdmin
-            || isConsultant || isReceptionist || isDoctor)
+            || isConsultant || isReceptionist)
             && <Customer />}
             {isAuthenticated && (isAdmin
             || isDoctor || isConsultant || isReceptionist)
@@ -81,6 +91,9 @@ const Header = (props: IHeaderProps) => {
             {isAuthenticated && (isAdmin
             || isMarketing)
             && <WebContentMenu />}
+            {isAuthenticated && (isAdmin
+            || isDoctor)
+            && <Treatment />}
             {isAuthenticated && (isAdmin
             || isManager)
             && <Employee />}

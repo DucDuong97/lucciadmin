@@ -54,7 +54,8 @@ public class TreatmentPlanService {
     @Transactional(readOnly = true)
     public Page<TreatmentPlanDTO> findAll(Pageable pageable) {
         log.debug("Request to get all TreatmentPlans");
-        return treatmentPlanRepository.findAll(pageable)
+
+        return treatmentPlanRepository.findWithAuthority(pageable)
             .map(treatmentPlanMapper::toDto);
     }
 
