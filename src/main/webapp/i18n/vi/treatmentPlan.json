@@ -2,7 +2,7 @@
   "lucciadminApp": {
     "treatmentPlan": {
       "home": {
-        "title": "Treatment Plans",
+        "title": "Hồ sơ Điều trị",
         "createLabel": "Thêm mới một Hồ sơ Điều trị",
         "createOrEditLabel": "Thêm mới hoặc cập nhật Hồ sơ Điều trị",
         "notFound": "No Treatment Plans found"

@@ -75,7 +75,8 @@ export const TreatmentPlan = (props: ITreatmentPlanProps) => {
   return (
     <div>
       <h2 id="treatment-plan-heading">
-        <Translate contentKey="lucciadminApp.treatmentPlan.home.title">Treatment Plans</Translate> {customerId ? ` of Customer ${customerId}` : ''}
+        <Translate contentKey="lucciadminApp.treatmentPlan.home.title">Treatment Plans</Translate>
+        {customerId ? ` của Khách hàng ${customerId}` : ''}
       </h2>
       <div className="table-responsive">
         {treatmentPlanList && treatmentPlanList.length > 0 ? (
