@@ -3,6 +3,7 @@ package com.lucci.webadmin.web.rest;
 import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Consult;
 import com.lucci.webadmin.domain.Customer;
+import com.lucci.webadmin.domain.enumeration.BookingState;
 import com.lucci.webadmin.repository.ConsultRepository;
 import com.lucci.webadmin.service.ConsultService;
 import com.lucci.webadmin.service.dto.ConsultDTO;
@@ -187,8 +188,10 @@ public class ConsultResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void getAllConsults() throws Exception {
         // Initialize the database
+        consult.setState(BookingState.COMING);
         consultRepository.saveAndFlush(consult);
 
         // Get all the consultList
@@ -199,7 +202,7 @@ public class ConsultResourceIT {
             .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))))
             .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE)));
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public void getAllConsultsWithEagerRelationshipsIsEnabled() throws Exception {
         when(consultServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
@@ -224,6 +227,7 @@ public class ConsultResourceIT {
     @Transactional
     public void getConsult() throws Exception {
         // Initialize the database
+        consult.setState(BookingState.COMING);
         consultRepository.saveAndFlush(consult);
 
         // Get the consult
@@ -246,6 +250,7 @@ public class ConsultResourceIT {
     @Transactional
     public void updateConsult() throws Exception {
         // Initialize the database
+        consult.setState(BookingState.COMING);
         consultRepository.saveAndFlush(consult);
 
         int databaseSizeBeforeUpdate = consultRepository.findAll().size();
@@ -295,6 +300,7 @@ public class ConsultResourceIT {
     @Transactional
     public void deleteConsult() throws Exception {
         // Initialize the database
+        consult.setState(BookingState.COMING);
         consultRepository.saveAndFlush(consult);
 
         int databaseSizeBeforeDelete = consultRepository.findAll().size();

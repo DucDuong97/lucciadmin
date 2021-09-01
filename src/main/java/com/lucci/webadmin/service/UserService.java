@@ -2,6 +2,7 @@ package com.lucci.webadmin.service;
 
 import com.lucci.webadmin.config.Constants;
 import com.lucci.webadmin.domain.Authority;
+import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.domain.User;
 import com.lucci.webadmin.repository.AuthorityRepository;
 import com.lucci.webadmin.repository.EmployeeRepository;
@@ -188,20 +189,27 @@ public class UserService {
         } else {
             user.setLangKey(userDTO.getLangKey());
         }
-        setAuthorities(user, userDTO.getRelatedEmployeeId());
+        setAuthorities(user, userDTO);
     }
 
-    public void setAuthorities(User user, Long employeeId) {
-        if (employeeId != null) {
-            user.setRelatedEmployee(employeeRepository
-                .findById(employeeId).orElse(null));
-        } else {
-            user.setRelatedEmployee(null);
-        }
+    public void setAuthorities(User user, UserDTO userDTO) {
         Set<Authority> managedAuthorities = user.getAuthorities();
         managedAuthorities.clear();
-        if (user.getRelatedEmployee() != null) {
-            user.getRelatedEmployee().getRole().getAuthorities()
+        if (userDTO.getRelatedEmployeeId() != null) {
+            Employee relatedEmployee = employeeRepository.findById(userDTO.getRelatedEmployeeId()).orElse(null);
+            if (relatedEmployee == null) {
+                return;
+            }
+            user.setRelatedEmployee(relatedEmployee);
+            relatedEmployee.getRole().getAuthorities()
+                .stream()
+                .map(authorityRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .forEach(managedAuthorities::add);
+        } else {
+            user.setRelatedEmployee(null);
+            userDTO.getAuthorities()
                 .stream()
                 .map(authorityRepository::findById)
                 .filter(Optional::isPresent)

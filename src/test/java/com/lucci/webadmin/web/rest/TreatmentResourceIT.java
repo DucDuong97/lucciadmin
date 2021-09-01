@@ -4,6 +4,7 @@ import com.lucci.webadmin.LucciadminApp;
 import com.lucci.webadmin.domain.Treatment;
 import com.lucci.webadmin.domain.Employee;
 import com.lucci.webadmin.domain.TreatmentPlan;
+import com.lucci.webadmin.domain.enumeration.TreatmentState;
 import com.lucci.webadmin.repository.TreatmentRepository;
 import com.lucci.webadmin.service.TreatmentService;
 import com.lucci.webadmin.service.dto.TreatmentDTO;
@@ -219,6 +220,7 @@ public class TreatmentResourceIT {
     @Transactional
     public void getAllTreatments() throws Exception {
         // Initialize the database
+        treatment.setState(TreatmentState.IN_PROCESS);
         treatmentRepository.saveAndFlush(treatment);
 
         // Get all the treatmentList
@@ -231,7 +233,7 @@ public class TreatmentResourceIT {
             .andExpect(jsonPath("$.[*].nextPlan").value(hasItem(DEFAULT_NEXT_PLAN)))
             .andExpect(jsonPath("$.[*].revisitDate").value(hasItem(DEFAULT_REVISIT_DATE.toString())));
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public void getAllTreatmentsWithEagerRelationshipsIsEnabled() throws Exception {
         when(treatmentServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
@@ -256,6 +258,7 @@ public class TreatmentResourceIT {
     @Transactional
     public void getTreatment() throws Exception {
         // Initialize the database
+        treatment.setState(TreatmentState.IN_PROCESS);
         treatmentRepository.saveAndFlush(treatment);
 
         // Get the treatment
@@ -280,6 +283,7 @@ public class TreatmentResourceIT {
     @Transactional
     public void updateTreatment() throws Exception {
         // Initialize the database
+        treatment.setState(TreatmentState.IN_PROCESS);
         treatmentRepository.saveAndFlush(treatment);
 
         int databaseSizeBeforeUpdate = treatmentRepository.findAll().size();
@@ -333,6 +337,7 @@ public class TreatmentResourceIT {
     @Transactional
     public void deleteTreatment() throws Exception {
         // Initialize the database
+        treatment.setState(TreatmentState.IN_PROCESS);
         treatmentRepository.saveAndFlush(treatment);
 
         int databaseSizeBeforeDelete = treatmentRepository.findAll().size();

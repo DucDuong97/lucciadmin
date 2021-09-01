@@ -3,8 +3,3 @@ id,login,password_hash,first_name,last_name,email,image_url,activated,lang_key,a
 2,anonymoususer,$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO,Anonymous,User,anonymous@localhost,"",t,vi,,,system,,,system,,
 3,admin,$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC,Administrator,Administrator,admin@localhost,"",t,vi,,,system,,,system,,
 4,user,$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K,User,User,user@localhost,"",t,vi,,,system,,,system,,
-1105,giamdocchuyenmon,$2a$10$CJ98BzJzDA3vPhKKzEJeMeQYdL9IsLIdYYmMiixh76ICzJLf5lmJ2,"","",a@b.c,,t,vi,hcOUcmAdpmQVlwSr8Yt2,,anonymousUser,2021-08-07 21:54:08.121227,,admin,2021-08-07 21:56:07.885106,1056
-1109,marketing,$2a$10$OylRMPmehmYks15DL9O25uoadAqdLD8Q5V8rp1VM4H5p0sAxM8Ybu,"","",a@b.cdefg,,t,vi,vUED5TkJwFH4BMzUeQ7i,,anonymousUser,2021-08-07 21:55:50.29811,,admin,2021-08-07 21:56:16.609429,1053
-1107,letan,$2a$10$sDQs.A06zOyZwtJ.qdwOy.ecKMwZZx.jgPHrxpUlhIN/akqfSUfg.,"","",a@b.cde,,t,vi,g0C2jL1we7zrMy9DBLRG,,anonymousUser,2021-08-07 21:54:57.828769,,admin,2021-08-07 21:56:23.541689,1054
-1108,bacsy,$2a$10$rR3Ps/N45aR6cK5yldYqtudGseXEebuScdM4jSRRaF3VMTgFUD6WS,"","",a@b.cdef,,t,vi,Kr692ybo7H1coMROp04L,,anonymousUser,2021-08-07 21:55:13.648111,,admin,2021-08-07 21:56:30.637144,1051
-1106,tuvanvien,$2a$10$7z/HNhv8tcT9uLWugEXCIuBQGhOWh0o/N6StB65qBWs5QiMlL3aGq,"","",a@b.cd,,t,vi,iejKLqxlqUcvaw5RM4Oh,,anonymousUser,2021-08-07 21:54:43.998255,,admin,2021-08-07 21:56:39.264385,1055

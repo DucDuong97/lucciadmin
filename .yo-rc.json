@@ -42,6 +42,15 @@
     "herokuAppName": "lucciadmin",
     "herokuDeployType": "jar",
     "herokuJavaVersion": "11",
-    "lastLiquibaseTimestamp": 1626720519000
+    "lastLiquibaseTimestamp": 1626720519000,
+    "aws": {
+      "applicationName": "lucciadmin",
+      "environmentName": "lucciadmin-env",
+      "bucketName": "lucciadmin",
+      "instanceType": "t2.micro",
+      "awsRegion": "ap-southeast-1",
+      "dbName": "lucciadmin",
+      "dbInstanceClass": "db.t3.micro"
+    }
   }
 }

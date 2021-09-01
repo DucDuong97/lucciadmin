@@ -5,7 +5,9 @@ import com.lucci.webadmin.domain.Booking;
 import com.lucci.webadmin.domain.Customer;
 import com.lucci.webadmin.domain.TreatmentPlan;
 import com.lucci.webadmin.domain.Branch;
+import com.lucci.webadmin.domain.enumeration.BookingState;
 import com.lucci.webadmin.repository.BookingRepository;
+import com.lucci.webadmin.security.AuthoritiesConstants;
 import com.lucci.webadmin.service.BookingService;
 import com.lucci.webadmin.service.dto.BookingDTO;
 import com.lucci.webadmin.service.mapper.BookingMapper;
@@ -150,6 +152,7 @@ public class BookingResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void createBooking() throws Exception {
         int databaseSizeBeforeCreate = bookingRepository.findAll().size();
         // Create the Booking
@@ -168,6 +171,7 @@ public class BookingResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void createBookingWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = bookingRepository.findAll().size();
 
@@ -189,6 +193,7 @@ public class BookingResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void checkTimeIsRequired() throws Exception {
         int databaseSizeBeforeTest = bookingRepository.findAll().size();
         // set the field null
@@ -209,8 +214,10 @@ public class BookingResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void getAllBookings() throws Exception {
         // Initialize the database
+        booking.setState(BookingState.COMING);
         bookingRepository.saveAndFlush(booking);
 
         // Get all the bookingList
@@ -218,13 +225,15 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(booking.getId().intValue())))
-            .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME)));
+            .andExpect(jsonPath("$.[*].time").value(hasItem("00:00:00")));
     }
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void getBooking() throws Exception {
         // Initialize the database
+        booking.setState(BookingState.COMING);
         bookingRepository.saveAndFlush(booking);
 
         // Get the booking
@@ -232,10 +241,11 @@ public class BookingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(booking.getId().intValue()))
-            .andExpect(jsonPath("$.time").value(DEFAULT_TIME));
+            .andExpect(jsonPath("$.time").value("00:00:00"));
     }
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void getNonExistingBooking() throws Exception {
         // Get the booking
         restBookingMockMvc.perform(get("/api/bookings/{id}", Long.MAX_VALUE))
@@ -244,8 +254,10 @@ public class BookingResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void updateBooking() throws Exception {
         // Initialize the database
+        booking.setState(BookingState.COMING);
         bookingRepository.saveAndFlush(booking);
 
         int databaseSizeBeforeUpdate = bookingRepository.findAll().size();
@@ -272,6 +284,7 @@ public class BookingResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void updateNonExistingBooking() throws Exception {
         int databaseSizeBeforeUpdate = bookingRepository.findAll().size();
 
@@ -291,8 +304,10 @@ public class BookingResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void deleteBooking() throws Exception {
         // Initialize the database
+        booking.setState(BookingState.COMING);
         bookingRepository.saveAndFlush(booking);
 
         int databaseSizeBeforeDelete = bookingRepository.findAll().size();

@@ -175,6 +175,7 @@ public class TreatmentPlanResourceIT {
 
     @Test
     @Transactional
+    @WithMockUser(roles = "RECEPTIONIST")
     public void getAllTreatmentPlans() throws Exception {
         // Initialize the database
         treatmentPlanRepository.saveAndFlush(treatmentPlan);
@@ -188,7 +189,7 @@ public class TreatmentPlanResourceIT {
             .andExpect(jsonPath("$.[*].pastMedicalHistory").value(hasItem(DEFAULT_PAST_MEDICAL_HISTORY)))
             .andExpect(jsonPath("$.[*].note").value(hasItem(DEFAULT_NOTE)));
     }
-    
+
     @Test
     @Transactional
     public void getTreatmentPlan() throws Exception {

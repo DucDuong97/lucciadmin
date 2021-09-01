@@ -158,4 +158,24 @@
             <column name="local_date" type="date"/>
         </createTable>
     </changeSet>
+
+    <changeSet id="00000000000003" author="jhipster" context="prod">
+
+        <loadData
+            file="config/liquibase/data/user_prod.csv"
+            tableName="jhi_user">
+            <column name="id" type="numeric"/>
+            <column name="activated" type="boolean"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="reset_date" type="timestamp"/>
+            <column name="last_modified_date" type="timestamp"/>
+            <column name="related_employee_id" type="numeric"/>
+        </loadData>
+
+        <loadData
+            file="config/liquibase/data/user_authority_prod.csv"
+            tableName="jhi_user_authority">
+            <column name="user_id" type="numeric"/>
+        </loadData>
+    </changeSet>
 </databaseChangeLog>

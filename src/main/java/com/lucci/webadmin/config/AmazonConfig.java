@@ -12,12 +12,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AmazonConfig {
 
-    @Value("${amazon.s3.credential.accessKey}")
-    private String accessKey;
-    @Value("${amazon.s3.credential.secretKey}")
-    private String secretKey;
-    @Value("${amazon.s3.region}")
-    private String region;
+//    @Value("${amazon.s3.credential.accessKey}")
+    private String accessKey = "AKIAU4NWC3CKMDBOVHFY";
+//    @Value("${amazon.s3.credential.secretKey}")
+    private String secretKey = "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";
+//    @Value("${amazon.s3.region}")
+    private String region = "ap-southeast-1";
 
     @Bean
     public AmazonS3 s3() {

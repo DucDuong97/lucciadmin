@@ -56,6 +56,9 @@ public class BookingDTO implements Serializable {
     }
 
     public LocalDateTime getDateTime() {
+        if (getDate() == null || getTime() == null) {
+            return null;
+        }
         return LocalDateTime.of(getDate(), getTime());
     }
 

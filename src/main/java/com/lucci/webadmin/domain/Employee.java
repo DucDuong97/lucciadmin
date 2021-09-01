@@ -10,6 +10,7 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Set;
 
 import com.lucci.webadmin.domain.enumeration.Gender;
@@ -71,9 +72,13 @@ public class Employee implements Serializable {
 
     @PreRemove
     private void preRemove() {
-        bookings.forEach(booking -> booking.setCorrespondDoctor(null));
-        user.setRelatedEmployee(null);
-        user.getAuthorities().clear();
+        if (bookings != null) {
+            bookings.forEach(booking -> booking.setCorrespondDoctor(null));
+        }
+        if (user != null) {
+            user.setRelatedEmployee(null);
+            user.getAuthorities().clear();
+        }
     }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

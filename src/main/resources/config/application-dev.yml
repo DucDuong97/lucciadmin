@@ -132,8 +132,4 @@ jhipster:
 # ===================================================================
 
 # application:
-amazon:
-  s3:
-    lucci:
-      erp:
-        bucketName: lucci-dev
+file-store-bucket-name: lucci-dev

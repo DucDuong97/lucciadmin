@@ -36,11 +36,17 @@ public interface BookingMapper extends EntityMapper<BookingDTO, Booking> {
 
     @Named("toLocalTime")
     public static LocalTime toTime(LocalDateTime time) {
+        if (time == null) {
+            return null;
+        }
         return time.toLocalTime();
     }
 
     @Named("toLocalDate")
     public static LocalDate toDate(LocalDateTime time) {
+        if (time == null) {
+            return null;
+        }
         return time.toLocalDate();
     }
 

@@ -100,7 +100,7 @@ public class ImgUrlServiceImpl implements ImgUrlService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    @Value("${amazon.s3.lucci.erp.bucketName}")
+    @Value("${file-store-bucket-name}")
     private String bucket;
 
     private static final List<String> IMAGE_TYPES = Stream.of(IMAGE_PNG,IMAGE_BMP,IMAGE_GIF,IMAGE_JPEG)
