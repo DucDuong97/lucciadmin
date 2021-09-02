@@ -29,8 +29,7 @@ public class ServiceItem implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "description")
-    @Lob
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @OneToOne(cascade = CascadeType.REMOVE)

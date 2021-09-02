@@ -34,8 +34,7 @@ public class Blog implements Serializable {
     private Instant publishDate;
 
     @NotNull
-    @Column(name = "content", nullable = false)
-    @Lob
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(name = "description")

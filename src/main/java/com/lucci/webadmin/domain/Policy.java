@@ -29,8 +29,7 @@ public class Policy implements Serializable {
     private String name;
 
     @NotNull
-    @Column(name = "content", nullable = false)
-    @Lob
+    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
