@@ -47,6 +47,8 @@ export const PotentialUpdate = (props: IPotentialUpdateProps) => {
   }, [props.updateSuccess]);
 
   const saveEntity = (event, errors, values) => {
+    values.time = convertDateTimeToServer(values.time);
+
     if (errors.length === 0) {
       const entity = {
         ...potentialEntity,
@@ -111,6 +113,22 @@ export const PotentialUpdate = (props: IPotentialUpdateProps) => {
                   <option value="FEMALE">{translate('lucciadminApp.Gender.FEMALE')}</option>
                   <option value="AMBIGUOUS">{translate('lucciadminApp.Gender.AMBIGUOUS')}</option>
                 </AvInput>
+              </AvGroup>
+              <AvGroup>
+                <Label id="timeLabel" for="potential-time">
+                  <Translate contentKey="lucciadminApp.potential.time">Time</Translate>
+                </Label>
+                <AvInput
+                  id="potential-time"
+                  type="datetime-local"
+                  className="form-control"
+                  name="time"
+                  placeholder={'YYYY-MM-DD HH:mm'}
+                  value={isNew ? displayDefaultDateTime() : convertDateTimeFromServer(props.potentialEntity.time)}
+                  validate={{
+                    required: { value: true, errorMessage: translate('entity.validation.required') },
+                  }}
+                />
               </AvGroup>
               <AvGroup>
                 <Label for="potential-service">

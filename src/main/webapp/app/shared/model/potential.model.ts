@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 import { Gender } from 'app/shared/model/enumerations/gender.model';
 
 export interface IPotential {
@@ -5,6 +6,7 @@ export interface IPotential {
   name?: string;
   phone?: number;
   gender?: Gender;
+  time?: string;
   serviceName?: string;
   serviceId?: number;
   branchAdress?: string;

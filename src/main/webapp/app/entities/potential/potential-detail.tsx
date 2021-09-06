@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, ICrudGetAction } from 'react-jhipster';
+import { Translate, ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -43,6 +43,12 @@ export const PotentialDetail = (props: IPotentialDetailProps) => {
             </span>
           </dt>
           <dd>{potentialEntity.gender}</dd>
+          <dt>
+            <span id="time">
+              <Translate contentKey="lucciadminApp.potential.time">Time</Translate>
+            </span>
+          </dt>
+          <dd>{potentialEntity.time ? <TextFormat value={potentialEntity.time} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
           <dt>
             <Translate contentKey="lucciadminApp.potential.service">Service</Translate>
           </dt>

@@ -1,5 +1,6 @@
 package com.lucci.webadmin.service.dto;
 
+import java.time.ZonedDateTime;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import com.lucci.webadmin.domain.enumeration.Gender;
@@ -13,10 +14,13 @@ public class PotentialDTO implements Serializable {
 
     private String name;
 
-    private Long phone;
+    private Integer phone;
 
     @NotNull
     private Gender gender;
+
+    @NotNull
+    private ZonedDateTime time;
 
 
     private Long serviceId;
@@ -43,11 +47,11 @@ public class PotentialDTO implements Serializable {
         this.name = name;
     }
 
-    public Long getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -57,6 +61,14 @@ public class PotentialDTO implements Serializable {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public ZonedDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(ZonedDateTime time) {
+        this.time = time;
     }
 
     public Long getServiceId() {
@@ -116,6 +128,7 @@ public class PotentialDTO implements Serializable {
             ", name='" + getName() + "'" +
             ", phone=" + getPhone() +
             ", gender='" + getGender() + "'" +
+            ", time='" + getTime() + "'" +
             ", serviceId=" + getServiceId() +
             ", serviceName='" + getServiceName() + "'" +
             ", branchId=" + getBranchId() +

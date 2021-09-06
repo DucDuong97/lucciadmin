@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, getSortState, IPaginationBaseState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Translate, ICrudGetAllAction, TextFormat, getSortState, IPaginationBaseState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -92,6 +92,9 @@ export const Potential = (props: IPotentialProps) => {
                 <th className="hand" onClick={sort('gender')}>
                   <Translate contentKey="lucciadminApp.potential.gender">Gender</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('time')}>
+                  <Translate contentKey="lucciadminApp.potential.time">Time</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th>
                   <Translate contentKey="lucciadminApp.potential.service">Service</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -114,6 +117,7 @@ export const Potential = (props: IPotentialProps) => {
                   <td>
                     <Translate contentKey={`lucciadminApp.Gender.${potential.gender}`} />
                   </td>
+                  <td>{potential.time ? <TextFormat type="date" value={potential.time} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{potential.serviceName ? <Link to={`pricing-card/${potential.serviceId}`}>{potential.serviceName}</Link> : ''}</td>
                   <td>{potential.branchAdress ? <Link to={`branch/${potential.branchId}`}>{potential.branchAdress}</Link> : ''}</td>
                   <td className="text-right">

@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 
 import com.lucci.webadmin.domain.enumeration.Gender;
 
@@ -30,12 +31,16 @@ public class Potential implements Serializable {
     private String name;
 
     @Column(name = "phone")
-    private Long phone;
+    private Integer phone;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "gender", nullable = false)
     private Gender gender;
+
+    @NotNull
+    @Column(name = "time", nullable = false)
+    private ZonedDateTime time;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -69,16 +74,16 @@ public class Potential implements Serializable {
         this.name = name;
     }
 
-    public Long getPhone() {
+    public Integer getPhone() {
         return phone;
     }
 
-    public Potential phone(Long phone) {
+    public Potential phone(Integer phone) {
         this.phone = phone;
         return this;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
@@ -93,6 +98,19 @@ public class Potential implements Serializable {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public ZonedDateTime getTime() {
+        return time;
+    }
+
+    public Potential time(ZonedDateTime time) {
+        this.time = time;
+        return this;
+    }
+
+    public void setTime(ZonedDateTime time) {
+        this.time = time;
     }
 
     public PricingCard getService() {
@@ -146,6 +164,7 @@ public class Potential implements Serializable {
             ", name='" + getName() + "'" +
             ", phone=" + getPhone() +
             ", gender='" + getGender() + "'" +
+            ", time='" + getTime() + "'" +
             "}";
     }
 }

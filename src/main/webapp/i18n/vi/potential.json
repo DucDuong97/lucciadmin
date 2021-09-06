@@ -2,25 +2,26 @@
   "lucciadminApp": {
     "potential": {
       "home": {
-        "title": "Potentials",
-        "createLabel": "Thêm mới một Potential",
-        "createOrEditLabel": "Thêm mới hoặc cập nhật Potential",
+        "title": "Khách hàng tiềm năng",
+        "createLabel": "Thêm mới một Khách hàng tiềm năng",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Khách hàng tiềm năng",
         "notFound": "No Potentials found"
       },
-      "created": "Một Potential mới được tạo với định danh {{ param }}",
-      "updated": "Một Potential cập nhật với định danh {{ param }}",
-      "deleted": "Một Potential đã xóa với định danh {{ param }}",
+      "created": "Một Khách hàng tiềm năng mới được tạo với định danh {{ param }}",
+      "updated": "Một Khách hàng tiềm năng cập nhật với định danh {{ param }}",
+      "deleted": "Một Khách hàng tiềm năng đã xóa với định danh {{ param }}",
       "delete": {
-        "question": "Bạn có chắc là muốn xóa Potential {{ id }}?"
+        "question": "Bạn có chắc là muốn xóa Khách hàng tiềm năng {{ id }}?"
       },
       "detail": {
-        "title": "Potential"
+        "title": "Khách hàng tiềm năng"
       },
-      "name": "Name",
-      "phone": "Phone",
-      "gender": "Gender",
-      "service": "Service",
-      "branch": "Branch"
+      "name": "Tên",
+      "phone": "SĐT",
+      "gender": "Giới tính",
+      "time": "Lịch hẹn",
+      "service": "Dịch vụ Khuyên dùng",
+      "branch": "Cơ sở"
     }
   }
 }

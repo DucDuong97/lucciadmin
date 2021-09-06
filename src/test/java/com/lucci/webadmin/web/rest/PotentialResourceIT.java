@@ -19,8 +19,13 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 
+import static com.lucci.webadmin.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -38,11 +43,14 @@ public class PotentialResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
-    private static final Long DEFAULT_PHONE = 1L;
-    private static final Long UPDATED_PHONE = 2L;
+    private static final Integer DEFAULT_PHONE = 1;
+    private static final Integer UPDATED_PHONE = 2;
 
     private static final Gender DEFAULT_GENDER = Gender.MALE;
     private static final Gender UPDATED_GENDER = Gender.FEMALE;
+
+    private static final ZonedDateTime DEFAULT_TIME = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_TIME = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     @Autowired
     private PotentialRepository potentialRepository;
@@ -71,7 +79,8 @@ public class PotentialResourceIT {
         Potential potential = new Potential()
             .name(DEFAULT_NAME)
             .phone(DEFAULT_PHONE)
-            .gender(DEFAULT_GENDER);
+            .gender(DEFAULT_GENDER)
+            .time(DEFAULT_TIME);
         // Add required entity
         PricingCard pricingCard;
         if (TestUtil.findAll(em, PricingCard.class).isEmpty()) {
@@ -104,7 +113,8 @@ public class PotentialResourceIT {
         Potential potential = new Potential()
             .name(UPDATED_NAME)
             .phone(UPDATED_PHONE)
-            .gender(UPDATED_GENDER);
+            .gender(UPDATED_GENDER)
+            .time(UPDATED_TIME);
         // Add required entity
         PricingCard pricingCard;
         if (TestUtil.findAll(em, PricingCard.class).isEmpty()) {
@@ -151,6 +161,7 @@ public class PotentialResourceIT {
         assertThat(testPotential.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testPotential.getPhone()).isEqualTo(DEFAULT_PHONE);
         assertThat(testPotential.getGender()).isEqualTo(DEFAULT_GENDER);
+        assertThat(testPotential.getTime()).isEqualTo(DEFAULT_TIME);
     }
 
     @Test
@@ -196,6 +207,26 @@ public class PotentialResourceIT {
 
     @Test
     @Transactional
+    public void checkTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = potentialRepository.findAll().size();
+        // set the field null
+        potential.setTime(null);
+
+        // Create the Potential, which fails.
+        PotentialDTO potentialDTO = potentialMapper.toDto(potential);
+
+
+        restPotentialMockMvc.perform(post("/api/potentials")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(potentialDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Potential> potentialList = potentialRepository.findAll();
+        assertThat(potentialList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPotentials() throws Exception {
         // Initialize the database
         potentialRepository.saveAndFlush(potential);
@@ -206,8 +237,9 @@ public class PotentialResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(potential.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.intValue())))
-            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE)))
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())))
+            .andExpect(jsonPath("$.[*].time").value(hasItem(sameInstant(DEFAULT_TIME))));
     }
     
     @Test
@@ -222,8 +254,9 @@ public class PotentialResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(potential.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.intValue()))
-            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()));
+            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE))
+            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()))
+            .andExpect(jsonPath("$.time").value(sameInstant(DEFAULT_TIME)));
     }
     @Test
     @Transactional
@@ -248,7 +281,8 @@ public class PotentialResourceIT {
         updatedPotential
             .name(UPDATED_NAME)
             .phone(UPDATED_PHONE)
-            .gender(UPDATED_GENDER);
+            .gender(UPDATED_GENDER)
+            .time(UPDATED_TIME);
         PotentialDTO potentialDTO = potentialMapper.toDto(updatedPotential);
 
         restPotentialMockMvc.perform(put("/api/potentials")
@@ -263,6 +297,7 @@ public class PotentialResourceIT {
         assertThat(testPotential.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testPotential.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testPotential.getGender()).isEqualTo(UPDATED_GENDER);
+        assertThat(testPotential.getTime()).isEqualTo(UPDATED_TIME);
     }
 
     @Test

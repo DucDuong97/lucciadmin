@@ -18,10 +18,13 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="phone" type="bigint">
+            <column name="phone" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="gender" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="time" type="datetime">
                 <constraints nullable="false" />
             </column>
             <column name="service_id" type="bigint">
@@ -32,6 +35,7 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="potential" columnName="time" columnDataType="datetime"/>
     </changeSet>
 
     <changeSet id="20210906212959-1-relations" author="jhipster">
@@ -56,6 +60,7 @@
             <column name="name" type="string"/>
             <column name="phone" type="numeric"/>
             <column name="gender" type="string"/>
+            <column name="time" type="datetime"/>
             <column name="service_id" type="numeric"/>
             <column name="branch_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

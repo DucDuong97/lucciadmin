@@ -27,12 +27,17 @@
     },
     {
       "fieldName": "phone",
-      "fieldType": "Long"
+      "fieldType": "Integer"
     },
     {
       "fieldName": "gender",
       "fieldType": "Gender",
       "fieldValues": "MALE,FEMALE,AMBIGUOUS",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "time",
+      "fieldType": "ZonedDateTime",
       "fieldValidateRules": ["required"]
     }
   ],

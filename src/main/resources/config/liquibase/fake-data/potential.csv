@@ -1,11 +1,11 @@
-id;name;phone;gender;service_id;branch_id
-1;partnerships;26352;FEMALE;1;1
-2;payment;11070;MALE;2;2
-3;Philippines tertiary;13076;MALE;3;3
-4;channels Granite;35799;FEMALE;4;4
-5;customized;7240;AMBIGUOUS;5;5
-6;algorithm;88359;MALE;6;6
-7;Applications Internal Outdoors;86792;MALE;7;7
-8;withdrawal Myanmar;48257;FEMALE;8;8
-9;Savings Account;73212;MALE;9;9
-10;Home Loan Account;54953;FEMALE;10;10
+id;name;phone;gender;time;service_id;branch_id
+1;partnerships;26352;FEMALE;2021-09-06T15:47:30;1;1
+2;Botswana lavender;63304;AMBIGUOUS;2021-09-06T14:36:03;2;2
+3;Cotton Tala evolve;14658;FEMALE;2021-09-06T14:18:47;3;3
+4;Orchestrator Pants Senior;58685;MALE;2021-09-06T13:47:54;4;4
+5;CSS;26418;AMBIGUOUS;2021-09-06T01:36:22;5;5
+6;Human;9733;FEMALE;2021-09-06T08:30:13;6;6
+7;Berkshire Barbados;71702;FEMALE;2021-09-06T16:22:58;7;7
+8;deposit Minnesota architect;29330;FEMALE;2021-09-06T09:24:23;8;8
+9;olive workforce;97737;MALE;2021-09-06T12:27:00;9;9
+10;Assistant;67941;FEMALE;2021-09-06T14:37:11;10;10
