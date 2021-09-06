@@ -111,7 +111,9 @@ export const Potential = (props: IPotentialProps) => {
                   </td>
                   <td>{potential.name}</td>
                   <td>{potential.phone}</td>
-                  <td>{potential.gender ? 'true' : 'false'}</td>
+                  <td>
+                    <Translate contentKey={`lucciadminApp.Gender.${potential.gender}`} />
+                  </td>
                   <td>{potential.serviceName ? <Link to={`pricing-card/${potential.serviceId}`}>{potential.serviceName}</Link> : ''}</td>
                   <td>{potential.branchAdress ? <Link to={`branch/${potential.branchId}`}>{potential.branchAdress}</Link> : ''}</td>
                   <td className="text-right">

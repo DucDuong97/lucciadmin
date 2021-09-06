@@ -42,7 +42,7 @@ export const PotentialDetail = (props: IPotentialDetailProps) => {
               <Translate contentKey="lucciadminApp.potential.gender">Gender</Translate>
             </span>
           </dt>
-          <dd>{potentialEntity.gender ? 'true' : 'false'}</dd>
+          <dd>{potentialEntity.gender}</dd>
           <dt>
             <Translate contentKey="lucciadminApp.potential.service">Service</Translate>
           </dt>

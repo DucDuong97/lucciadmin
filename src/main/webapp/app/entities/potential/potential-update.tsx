@@ -96,11 +96,21 @@ export const PotentialUpdate = (props: IPotentialUpdateProps) => {
                 </Label>
                 <AvField id="potential-phone" type="string" className="form-control" name="phone" />
               </AvGroup>
-              <AvGroup check>
-                <Label id="genderLabel">
-                  <AvInput id="potential-gender" type="checkbox" className="form-check-input" name="gender" />
+              <AvGroup>
+                <Label id="genderLabel" for="potential-gender">
                   <Translate contentKey="lucciadminApp.potential.gender">Gender</Translate>
                 </Label>
+                <AvInput
+                  id="potential-gender"
+                  type="select"
+                  className="form-control"
+                  name="gender"
+                  value={(!isNew && potentialEntity.gender) || 'MALE'}
+                >
+                  <option value="MALE">{translate('lucciadminApp.Gender.MALE')}</option>
+                  <option value="FEMALE">{translate('lucciadminApp.Gender.FEMALE')}</option>
+                  <option value="AMBIGUOUS">{translate('lucciadminApp.Gender.AMBIGUOUS')}</option>
+                </AvInput>
               </AvGroup>
               <AvGroup>
                 <Label for="potential-service">

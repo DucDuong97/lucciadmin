@@ -1,14 +1,14 @@
+import { Gender } from 'app/shared/model/enumerations/gender.model';
+
 export interface IPotential {
   id?: number;
   name?: string;
   phone?: number;
-  gender?: boolean;
+  gender?: Gender;
   serviceName?: string;
   serviceId?: number;
   branchAdress?: string;
   branchId?: number;
 }
 
-export const defaultValue: Readonly<IPotential> = {
-  gender: false,
-};
+export const defaultValue: Readonly<IPotential> = {};

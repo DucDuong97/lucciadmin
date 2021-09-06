@@ -2,6 +2,7 @@ package com.lucci.webadmin.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import com.lucci.webadmin.domain.enumeration.Gender;
 
 /**
  * A DTO for the {@link com.lucci.webadmin.domain.Potential} entity.
@@ -14,7 +15,8 @@ public class PotentialDTO implements Serializable {
 
     private Long phone;
 
-    private Boolean gender;
+    @NotNull
+    private Gender gender;
 
 
     private Long serviceId;
@@ -49,11 +51,11 @@ public class PotentialDTO implements Serializable {
         this.phone = phone;
     }
 
-    public Boolean isGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -113,7 +115,7 @@ public class PotentialDTO implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", phone=" + getPhone() +
-            ", gender='" + isGender() + "'" +
+            ", gender='" + getGender() + "'" +
             ", serviceId=" + getServiceId() +
             ", serviceName='" + getServiceName() + "'" +
             ", branchId=" + getBranchId() +

@@ -26,6 +26,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.lucci.webadmin.domain.enumeration.Gender;
 /**
  * Integration tests for the {@link PotentialResource} REST controller.
  */
@@ -40,8 +41,8 @@ public class PotentialResourceIT {
     private static final Long DEFAULT_PHONE = 1L;
     private static final Long UPDATED_PHONE = 2L;
 
-    private static final Boolean DEFAULT_GENDER = false;
-    private static final Boolean UPDATED_GENDER = true;
+    private static final Gender DEFAULT_GENDER = Gender.MALE;
+    private static final Gender UPDATED_GENDER = Gender.FEMALE;
 
     @Autowired
     private PotentialRepository potentialRepository;
@@ -149,7 +150,7 @@ public class PotentialResourceIT {
         Potential testPotential = potentialList.get(potentialList.size() - 1);
         assertThat(testPotential.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testPotential.getPhone()).isEqualTo(DEFAULT_PHONE);
-        assertThat(testPotential.isGender()).isEqualTo(DEFAULT_GENDER);
+        assertThat(testPotential.getGender()).isEqualTo(DEFAULT_GENDER);
     }
 
     @Test
@@ -175,6 +176,26 @@ public class PotentialResourceIT {
 
     @Test
     @Transactional
+    public void checkGenderIsRequired() throws Exception {
+        int databaseSizeBeforeTest = potentialRepository.findAll().size();
+        // set the field null
+        potential.setGender(null);
+
+        // Create the Potential, which fails.
+        PotentialDTO potentialDTO = potentialMapper.toDto(potential);
+
+
+        restPotentialMockMvc.perform(post("/api/potentials")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(TestUtil.convertObjectToJsonBytes(potentialDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Potential> potentialList = potentialRepository.findAll();
+        assertThat(potentialList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPotentials() throws Exception {
         // Initialize the database
         potentialRepository.saveAndFlush(potential);
@@ -186,7 +207,7 @@ public class PotentialResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(potential.getId().intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.intValue())))
-            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.booleanValue())));
+            .andExpect(jsonPath("$.[*].gender").value(hasItem(DEFAULT_GENDER.toString())));
     }
     
     @Test
@@ -202,7 +223,7 @@ public class PotentialResourceIT {
             .andExpect(jsonPath("$.id").value(potential.getId().intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.intValue()))
-            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.booleanValue()));
+            .andExpect(jsonPath("$.gender").value(DEFAULT_GENDER.toString()));
     }
     @Test
     @Transactional
@@ -241,7 +262,7 @@ public class PotentialResourceIT {
         Potential testPotential = potentialList.get(potentialList.size() - 1);
         assertThat(testPotential.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testPotential.getPhone()).isEqualTo(UPDATED_PHONE);
-        assertThat(testPotential.isGender()).isEqualTo(UPDATED_GENDER);
+        assertThat(testPotential.getGender()).isEqualTo(UPDATED_GENDER);
     }
 
     @Test

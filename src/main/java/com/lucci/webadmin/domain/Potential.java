@@ -9,6 +9,8 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 
+import com.lucci.webadmin.domain.enumeration.Gender;
+
 /**
  * A Potential.
  */
@@ -30,8 +32,10 @@ public class Potential implements Serializable {
     @Column(name = "phone")
     private Long phone;
 
-    @Column(name = "gender")
-    private Boolean gender;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender", nullable = false)
+    private Gender gender;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -78,16 +82,16 @@ public class Potential implements Serializable {
         this.phone = phone;
     }
 
-    public Boolean isGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public Potential gender(Boolean gender) {
+    public Potential gender(Gender gender) {
         this.gender = gender;
         return this;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -141,7 +145,7 @@ public class Potential implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", phone=" + getPhone() +
-            ", gender='" + isGender() + "'" +
+            ", gender='" + getGender() + "'" +
             "}";
     }
 }

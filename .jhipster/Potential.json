@@ -31,7 +31,9 @@
     },
     {
       "fieldName": "gender",
-      "fieldType": "Boolean"
+      "fieldType": "Gender",
+      "fieldValues": "MALE,FEMALE,AMBIGUOUS",
+      "fieldValidateRules": ["required"]
     }
   ],
   "changelogDate": "20210906212959",
