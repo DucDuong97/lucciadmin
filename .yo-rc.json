@@ -44,8 +44,8 @@
     "herokuJavaVersion": "11",
     "lastLiquibaseTimestamp": 1626720519000,
     "aws": {
-      "applicationName": "lucciadmin",
-      "environmentName": "lucciadmin-env",
+      "applicationName": "lucciadmin-3",
+      "environmentName": "lucci-env",
       "bucketName": "lucciadmin",
       "instanceType": "t2.micro",
       "awsRegion": "ap-southeast-1",
