@@ -28,6 +28,7 @@ const initialState = {
   isOperationsDirector: false,
   isBranchBossDoctor: false,
   isConsultant: false,
+  isB2CMarketer: false,
   loginSuccess: false,
   loginError: false, // Errors returned from server side
   showModalLogin: false,
@@ -53,6 +54,7 @@ const setAuthorities = authorities => ({
   isOperationsDirector: hasAnyAuthority(authorities, [AUTHORITIES.OPERATIONS_DIRECTOR]),
   isBranchBossDoctor: hasAnyAuthority(authorities, [AUTHORITIES.BRANCH_BOSS_DOCTOR]),
   isConsultant: hasAnyAuthority(authorities, [AUTHORITIES.CONSULTANT]),
+  isB2CMarketer: hasAnyAuthority(authorities, [AUTHORITIES.B2C_MARKETER]),
 });
 
 export default (state: AuthenticationState = initialState, action): AuthenticationState => {

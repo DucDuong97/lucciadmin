@@ -60,6 +60,13 @@ public enum EmployeeRole {
         public List<String> getAuthorities() {
             return Arrays.asList("ROLE_CONSULTANT", "ROLE_USER");
         }
+    },
+
+    B2C_MARKETER {
+        @Override
+        public List<String> getAuthorities() {
+            return Arrays.asList("ROLE_B2C_MARKETER", "ROLE_USER");
+        }
     };
 
     public abstract List<String> getAuthorities();

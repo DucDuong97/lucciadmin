@@ -47,6 +47,7 @@ export const App = (props: IAppProps) => {
             isOperationsDirector={props.isOperationsDirector}
             isBranchBossDoctor={props.isBranchBossDoctor}
             isConsultant={props.isConsultant}
+            isB2CMarketer={props.isB2CMarketer}
             currentLocale={props.currentLocale}
             onLocaleChange={props.setLocale}
             ribbonEnv={props.ribbonEnv}
@@ -80,6 +81,7 @@ const mapStateToProps = ({ authentication, applicationProfile, locale }: IRootSt
   isOperationsDirector: authentication.isOperationsDirector,
   isBranchBossDoctor: authentication.isBranchBossDoctor,
   isConsultant: authentication.isConsultant,
+  isB2CMarketer: authentication.isB2CMarketer,
   ribbonEnv: applicationProfile.ribbonEnv,
   isInProduction: applicationProfile.inProduction,
   isSwaggerEnabled: applicationProfile.isSwaggerEnabled,

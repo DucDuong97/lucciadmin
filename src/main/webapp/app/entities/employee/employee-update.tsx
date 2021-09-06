@@ -165,6 +165,7 @@ export const EmployeeUpdate = (props: IEmployeeUpdateProps) => {
                   <option value="OPERATIONS_DIRECTOR">{translate('lucciadminApp.EmployeeRole.OPERATIONS_DIRECTOR')}</option>
                   <option value="BRANCH_BOSS_DOCTOR">{translate('lucciadminApp.EmployeeRole.BRANCH_BOSS_DOCTOR')}</option>
                   <option value="CONSULTANT">{translate('lucciadminApp.EmployeeRole.CONSULTANT')}</option>
+                  <option value="B2C_MARKETER">{translate('lucciadminApp.EmployeeRole.B2C_MARKETER')}</option>
                 </AvInput>
               </AvGroup>
               <AvGroup>

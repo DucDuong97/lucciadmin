@@ -17,7 +17,7 @@ import {
   Employee,
   Consult,
   UserInformation,
-  Treatment
+  Treatment, Potential
 } from './header-components';
 import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from '../menus';
 import MenuItem from "app/shared/layout/menus/menu-item";
@@ -36,6 +36,7 @@ export interface IHeaderProps {
   isOperationsDirector:boolean;
   isBranchBossDoctor:boolean;
   isConsultant:boolean;
+  isB2CMarketer:boolean;
 
   ribbonEnv: string;
   isInProduction: boolean;
@@ -65,7 +66,7 @@ const Header = (props: IHeaderProps) => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   const { isAuthenticated, isAdmin, isReceptionist, isDoctor, isNurse, isMarketing,
-    isManager, isOperationsDirector, isBranchBossDoctor, isConsultant } = props;
+    isManager, isOperationsDirector, isBranchBossDoctor, isConsultant, isB2CMarketer } = props;
 
   /* jhipster-needle-add-element-to-menu - JHipster will add new menu items here */
 
@@ -94,6 +95,9 @@ const Header = (props: IHeaderProps) => {
             {isAuthenticated && (isAdmin
             || isDoctor)
             && <Treatment />}
+            {isAuthenticated && (isAdmin
+            || isB2CMarketer)
+            && <Potential />}
             {isAuthenticated && (isAdmin
             || isManager)
             && <Employee />}

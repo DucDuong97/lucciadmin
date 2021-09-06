@@ -92,6 +92,16 @@ export const Treatment = props => (
   </NavItem>
 );
 
+export const Potential = props => (
+  <NavItem>
+    <NavLink tag={Link} to="/potential" className="d-flex align-items-center">
+      <span>
+        <Translate contentKey="global.menu.entities.potential" />
+      </span>
+    </NavLink>
+  </NavItem>
+);
+
 export const Payment = props => (
   <NavItem>
     <NavLink tag={Link} to="/payment" className="d-flex align-items-center">

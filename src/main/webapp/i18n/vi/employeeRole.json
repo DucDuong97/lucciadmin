@@ -4,13 +4,14 @@
       "null": "",
       "DOCTOR": "Bác sỹ",
       "NURSE": "Y tá",
-      "MARKETING": "Marketer",
+      "MARKETING": "Content Marketer",
       "RECEPTIONIST": "Lễ tân",
       "ADMIN": "Admin",
       "OPERATIONS_DIRECTOR": "Giám đốc chuyên môn",
       "BRANCH_BOSS_DOCTOR": "Bác sỹ tổng Chi nhánh",
       "CONSULTANT": "Tư vấn viên",
-      "MANAGER": "Quản lý"
+      "MANAGER": "Quản lý",
+      "B2C_MARKETER": "B2C Marketer"
     }
   }
 }

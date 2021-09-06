@@ -27,6 +27,7 @@ describe('Header', () => {
     isOperationsDirector: false,
     isBranchBossDoctor: false,
     isConsultant: false,
+    isB2CMarketer: false,
 
     currentLocale: 'en',
     onLocaleChange: localeSpy,

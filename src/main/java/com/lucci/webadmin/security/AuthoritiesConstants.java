@@ -18,6 +18,7 @@ public final class AuthoritiesConstants {
     public static final String OPERATIONS_DIRECTOR = "ROLE_OPERATIONS_DIRECTOR";
     public static final String BRANCH_BOSS_DOCTOR = "ROLE_BRANCH_BOSS_DOCTOR";
     public static final String CONSULTANT = "ROLE_CONSULTANT";
+    public static final String B2C_MARKETER = "ROLE_B2C_MARKETER";
 
     private AuthoritiesConstants() {
     }
