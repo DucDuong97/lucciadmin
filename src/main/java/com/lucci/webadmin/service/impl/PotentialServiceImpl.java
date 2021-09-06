@@ -8,6 +8,7 @@ import com.lucci.webadmin.repository.PotentialRepository;
 import com.lucci.webadmin.service.dto.ConsultDTO;
 import com.lucci.webadmin.service.dto.CustomerDTO;
 import com.lucci.webadmin.service.dto.PotentialDTO;
+import com.lucci.webadmin.service.dto.PricingCardDTO;
 import com.lucci.webadmin.service.mapper.PotentialMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,11 @@ public class PotentialServiceImpl implements PotentialService {
             ConsultDTO consultDTO = new ConsultDTO();
             consultDTO.setCustomerId(newCustomerDTO.getId());
             consultDTO.setBranchId(potentialDTO.getBranchId());
+            consultDTO.setTime(potentialDTO.getTime());
+            PricingCardDTO serviceDTO = new PricingCardDTO();
+            serviceDTO.setId(potentialDTO.getServiceId());
+            consultDTO.getServices().add(serviceDTO);
+            consultService.save(consultDTO);
         }
         Potential potential = potentialMapper.toEntity(potentialDTO);
         potential = potentialRepository.save(potential);
