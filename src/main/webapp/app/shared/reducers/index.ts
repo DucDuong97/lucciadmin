@@ -88,6 +88,10 @@ import treatmentPlan, {
 import process, {
   ProcessState
 } from 'app/entities/process/process.reducer';
+// prettier-ignore
+import potential, {
+  PotentialState
+} from 'app/entities/potential/potential.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -120,6 +124,7 @@ export interface IRootState {
   readonly consult: ConsultState;
   readonly treatment: TreatmentState;
   readonly treatmentPlan: TreatmentPlanState;
+  readonly potential: PotentialState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -154,6 +159,7 @@ const rootReducer = combineReducers<IRootState>({
   consult,
   treatment,
   treatmentPlan,
+  potential,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });

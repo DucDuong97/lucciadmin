@@ -28,6 +28,8 @@
         "consult": "Tư vấn",
         "treatment": "Buổi điều trị",
         "treatmentPlan": "Hồ sơ điều trị",
+        "potential": "Khách hàng tiềm năng",
+        "potential": "Potential",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "web-content": {

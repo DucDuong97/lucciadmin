@@ -1,0 +1,26 @@
+{
+  "lucciadminApp": {
+    "potential": {
+      "home": {
+        "title": "Potentials",
+        "createLabel": "Create a new Potential",
+        "createOrEditLabel": "Create or edit a Potential",
+        "notFound": "No Potentials found"
+      },
+      "created": "A new Potential is created with identifier {{ param }}",
+      "updated": "A Potential is updated with identifier {{ param }}",
+      "deleted": "A Potential is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Potential {{ id }}?"
+      },
+      "detail": {
+        "title": "Potential"
+      },
+      "name": "Name",
+      "phone": "Phone",
+      "gender": "Gender",
+      "service": "Service",
+      "branch": "Branch"
+    }
+  }
+}

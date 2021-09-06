@@ -12,8 +12,7 @@
       "fieldValidateRules": ["required"]
     }
   ],
-  "relationships": [
-  ],
+  "relationships": [],
   "changelogDate": "20210312181717",
   "entityTableName": "achievement",
   "dto": "mapstruct",

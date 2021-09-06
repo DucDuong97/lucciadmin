@@ -33,6 +33,7 @@
     <include file="config/liquibase/changelog/20210718191832_added_entity_Consult.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210719181855_added_entity_Treatment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210719184839_added_entity_TreatmentPlan.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210906212959_added_entity_Potential.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20210628111350_added_entity_constraints_Booking.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210628105133_added_entity_constraints_Employee.xml" relativeToChangelogFile="false"/>
@@ -45,6 +46,7 @@
     <include file="config/liquibase/changelog/20210516213054_added_entity_constraints_PricingCard.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210516213154_added_entity_constraints_PricingContent.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210508061649_added_entity_constraints_Process.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210906212959_added_entity_constraints_Potential.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>
