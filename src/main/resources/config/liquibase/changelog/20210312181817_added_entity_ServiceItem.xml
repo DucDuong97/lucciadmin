@@ -18,7 +18,7 @@
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="ux_service_item_name" />
             </column>
-            <column name="description" type="text">
+            <column name="description" type="varchar(10485760)">
                 <constraints nullable="true" />
             </column>
             <column name="icon_id" type="bigint">

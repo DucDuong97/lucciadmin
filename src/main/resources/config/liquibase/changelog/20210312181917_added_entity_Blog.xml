@@ -21,7 +21,7 @@
             <column name="publish_date" type="datetime">
                 <constraints nullable="false" />
             </column>
-            <column name="content" type="text">
+            <column name="content" type="varchar(10485760)">
                 <constraints nullable="false" />
             </column>
             <column name="description" type="varchar(255)">

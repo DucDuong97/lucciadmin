@@ -2,6 +2,7 @@ package com.lucci.webadmin.domain;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -29,7 +30,7 @@ public class Policy implements Serializable {
     private String name;
 
     @NotNull
-    @Column(name = "content", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "content", nullable = false)
     private String content;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

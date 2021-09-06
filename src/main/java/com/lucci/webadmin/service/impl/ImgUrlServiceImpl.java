@@ -100,8 +100,8 @@ public class ImgUrlServiceImpl implements ImgUrlService {
             .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    @Value("${file-store-bucket-name}")
-    private String bucket;
+//    @Value("${application.bucket}")
+    private String bucket = "lucci";
 
     private static final List<String> IMAGE_TYPES = Stream.of(IMAGE_PNG,IMAGE_BMP,IMAGE_GIF,IMAGE_JPEG)
                                                     .map(ContentType::getMimeType)
