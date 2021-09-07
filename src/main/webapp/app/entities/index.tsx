@@ -24,6 +24,7 @@ import PricingCard from './pricing-card';
 import PricingContent from './pricing-content';
 import Process from './process';
 import Potential from './potential';
+import Banner from './banner';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -50,6 +51,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}pricing-content`} component={PricingContent} />
       <ErrorBoundaryRoute path={`${match.url}process`} component={Process} />
       <ErrorBoundaryRoute path={`${match.url}potential`} component={Potential} />
+      <ErrorBoundaryRoute path={`${match.url}banner`} component={Banner} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>

@@ -92,6 +92,10 @@ import process, {
 import potential, {
   PotentialState
 } from 'app/entities/potential/potential.reducer';
+// prettier-ignore
+import banner, {
+  BannerState
+} from 'app/entities/banner/banner.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -125,6 +129,7 @@ export interface IRootState {
   readonly treatment: TreatmentState;
   readonly treatmentPlan: TreatmentPlanState;
   readonly potential: PotentialState;
+  readonly banner: BannerState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -160,6 +165,7 @@ const rootReducer = combineReducers<IRootState>({
   treatment,
   treatmentPlan,
   potential,
+  banner,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar,
 });
