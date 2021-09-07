@@ -42,6 +42,10 @@ public class PricingCard implements Serializable {
     @JsonIgnoreProperties(value = "pricingCards", allowSetters = true)
     private ServiceItem serviceItem;
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private ImgUrl imgUrl;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -113,6 +117,19 @@ public class PricingCard implements Serializable {
 
     public void setServiceItem(ServiceItem serviceItem) {
         this.serviceItem = serviceItem;
+    }
+
+    public ImgUrl getImgUrl() {
+        return imgUrl;
+    }
+
+    public PricingCard imgUrl(ImgUrl imgUrl) {
+        this.imgUrl = imgUrl;
+        return this;
+    }
+
+    public void setImgUrl(ImgUrl imgUrl) {
+        this.imgUrl = imgUrl;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

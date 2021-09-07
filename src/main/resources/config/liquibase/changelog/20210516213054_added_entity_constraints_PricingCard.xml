@@ -14,5 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="service_item"/>
 
+        <addForeignKeyConstraint baseColumnNames="img_url_id"
+                                 baseTableName="pricing_card"
+                                 constraintName="fk_pricing_card_img_url_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="img_url"/>
+
     </changeSet>
 </databaseChangeLog>

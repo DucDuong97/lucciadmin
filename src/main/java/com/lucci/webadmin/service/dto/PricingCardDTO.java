@@ -23,6 +23,10 @@ public class PricingCardDTO implements Serializable {
 
     private String serviceItemName;
 
+    private Long imgUrlId;
+
+    private String imgUrlName;
+
     public Long getId() {
         return id;
     }
@@ -71,6 +75,23 @@ public class PricingCardDTO implements Serializable {
         this.pricingContents = pricingContents;
     }
 
+    public Long getImgUrlId() {
+        return imgUrlId;
+    }
+
+    public void setImgUrlId(Long imgUrlId) {
+        this.imgUrlId = imgUrlId;
+    }
+
+    public String getImgUrlName() {
+        return imgUrlName;
+    }
+
+    public void setImgUrlName(String imgUrlName) {
+        this.imgUrlName = imgUrlName;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -97,6 +118,8 @@ public class PricingCardDTO implements Serializable {
             ", price=" + getPrice() +
             ", serviceItemId=" + getServiceItemId() +
             ", serviceItemName='" + getServiceItemName() + "'" +
+            ", imgUrlId=" + getImgUrlId() +
+            ", imgUrlName='" + getImgUrlName() + "'" +
             "}";
     }
 }

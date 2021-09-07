@@ -41,6 +41,10 @@ export const PricingCardDetail = (props: IPricingCardDetailProps) => {
             <Translate contentKey="lucciadminApp.pricingCard.serviceItem">Service Item</Translate>
           </dt>
           <dd>{pricingCardEntity.serviceItemName ? pricingCardEntity.serviceItemName : ''}</dd>
+          <dt>
+            <Translate contentKey="lucciadminApp.pricingCard.imgUrl">Img Url</Translate>
+          </dt>
+          <dd>{pricingCardEntity.imgUrlName ? pricingCardEntity.imgUrlName : ''}</dd>
         </dl>
         <Button tag={Link} to="/pricing-card" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

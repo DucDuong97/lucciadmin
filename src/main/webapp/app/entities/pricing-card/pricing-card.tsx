@@ -45,6 +45,9 @@ export const PricingCard = (props: IPricingCardProps) => {
                 <th>
                   <Translate contentKey="lucciadminApp.pricingCard.serviceItem">Service Item</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="lucciadminApp.pricingCard.imgUrl">Img Url</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -65,6 +68,7 @@ export const PricingCard = (props: IPricingCardProps) => {
                       ''
                     )}
                   </td>
+                  <td>{pricingCard.imgUrlName ? <Link to={`img-url/${pricingCard.imgUrlId}`}>{pricingCard.imgUrlName}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${pricingCard.id}`} color="info" size="sm">

@@ -7,6 +7,9 @@ export interface IPricingCard {
   pricingContents?: IPricingContent[];
   serviceItemName?: string;
   serviceItemId?: number;
+  imgUrlName?: string;
+  imgUrlId?: number;
+  file?: File;
 }
 
 export const defaultValue: Readonly<IPricingCard> = {};

@@ -5,6 +5,7 @@ import { cleanEntity } from 'app/shared/util/entity-utils';
 import { REQUEST, SUCCESS, FAILURE } from 'app/shared/reducers/action-type.util';
 
 import { IPricingCard, defaultValue } from 'app/shared/model/pricing-card.model';
+import { upload } from 'app/entities/img-url/img-url.reducer';
 
 export const ACTION_TYPES = {
   FETCH_PRICINGCARD_LIST: 'pricingCard/FETCH_PRICINGCARD_LIST',
@@ -113,6 +114,11 @@ export const getEntity: ICrudGetAction<IPricingCard> = id => {
 };
 
 export const createEntity: ICrudPutAction<IPricingCard> = entity => async dispatch => {
+  if (entity.file != null) {
+    const imgUrl = (await upload(entity.file)).data;
+    entity.imgUrlId = imgUrl.id;
+    entity.imgUrlName = imgUrl.name;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.CREATE_PRICINGCARD,
     payload: axios.post(apiUrl, cleanEntity(entity)),
@@ -122,6 +128,11 @@ export const createEntity: ICrudPutAction<IPricingCard> = entity => async dispat
 };
 
 export const updateEntity: ICrudPutAction<IPricingCard> = entity => async dispatch => {
+  if (entity.file != null) {
+    const imgUrl = (await upload(entity.file)).data;
+    entity.imgUrlId = imgUrl.id;
+    entity.imgUrlName = imgUrl.name;
+  }
   const result = await dispatch({
     type: ACTION_TYPES.UPDATE_PRICINGCARD,
     payload: axios.put(apiUrl, cleanEntity(entity)),

@@ -25,6 +25,14 @@
       "otherEntityRelationshipName": "pricingCards",
       "relationshipName": "serviceItem",
       "otherEntityField": "name"
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "imgUrl",
+      "otherEntityRelationshipName": "pricingCard",
+      "relationshipName": "imgUrl",
+      "otherEntityField": "name",
+      "ownerSide": true
     }
   ],
   "changelogDate": "20210516213054",

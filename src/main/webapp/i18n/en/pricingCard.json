@@ -19,7 +19,8 @@
       "name": "Name",
       "price": "Price",
       "pricingContent": "Pricing Content",
-      "serviceItem": "Service Item"
+      "serviceItem": "Service Item",
+      "imgUrl": "Img Url"
     }
   }
 }

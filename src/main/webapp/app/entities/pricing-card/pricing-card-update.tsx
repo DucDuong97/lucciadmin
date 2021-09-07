@@ -9,18 +9,23 @@ import { IRootState } from 'app/shared/reducers';
 
 import { IServiceItem } from 'app/shared/model/service-item.model';
 import { getEntities as getServiceItems } from 'app/entities/service-item/service-item.reducer';
+import { IImgUrl } from 'app/shared/model/img-url.model';
+import { getEntities as getImgUrls } from 'app/entities/img-url/img-url.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './pricing-card.reducer';
 import { IPricingCard } from 'app/shared/model/pricing-card.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
+import {toast} from "react-toastify";
+import {IMAGE_FILE_SYSTEM_URL} from "app/config/constants";
 
 export interface IPricingCardUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
 
 export const PricingCardUpdate = (props: IPricingCardUpdateProps) => {
   const [serviceItemId, setServiceItemId] = useState('0');
+  const [imgUrlId, setImgUrlId] = useState('0');
   const [isNew, setIsNew] = useState(!props.match.params || !props.match.params.id);
 
-  const { pricingCardEntity, serviceItems, loading, updating } = props;
+  const { pricingCardEntity, serviceItems, imgUrls, loading, updating } = props;
 
   const handleClose = () => {
     props.history.push('/pricing-card');
@@ -34,6 +39,7 @@ export const PricingCardUpdate = (props: IPricingCardUpdateProps) => {
     }
 
     props.getServiceItems();
+    props.getImgUrls();
   }, []);
 
   useEffect(() => {
@@ -42,11 +48,22 @@ export const PricingCardUpdate = (props: IPricingCardUpdateProps) => {
     }
   }, [props.updateSuccess]);
 
+  const [file, setFile] = useState<File>();
+  const changeHandler = (event) => {
+    const imgType = event.target.files[0].type.split('/')[0];
+    if (imgType !== 'image') {
+      toast.error("Wrong file format");
+      return;
+    }
+    setFile(event.target.files[0]);
+  };
+
   const saveEntity = (event, errors, values) => {
     if (errors.length === 0) {
       const entity = {
         ...pricingCardEntity,
         ...values,
+        file
       };
 
       if (isNew) {
@@ -123,6 +140,20 @@ export const PricingCardUpdate = (props: IPricingCardUpdateProps) => {
                     : null}
                 </AvInput>
               </AvGroup>
+
+              <AvGroup>
+                <Label for="service-item-icon">
+                  <Translate contentKey="lucciadminApp.serviceItem.icon">Icon</Translate>
+                </Label>
+                <div className="form-group">
+                  <input type="file" name="file" onChange={changeHandler}/>
+                  {file && <p>Size in bytes: {file.size}</p>}
+                  {pricingCardEntity.imgUrlName &&
+                  <img src={`${IMAGE_FILE_SYSTEM_URL}${pricingCardEntity.imgUrlName}`}
+                       style={{maxWidth: 200, margin:20}} alt="hello world"/>
+                  }
+                </div>
+              </AvGroup>
               <Button tag={Link} id="cancel-save" to="/pricing-card" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
@@ -146,6 +177,7 @@ export const PricingCardUpdate = (props: IPricingCardUpdateProps) => {
 
 const mapStateToProps = (storeState: IRootState) => ({
   serviceItems: storeState.serviceItem.entities,
+  imgUrls: storeState.imgUrl.entities,
   pricingCardEntity: storeState.pricingCard.entity,
   loading: storeState.pricingCard.loading,
   updating: storeState.pricingCard.updating,
@@ -154,6 +186,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getServiceItems,
+  getImgUrls,
   getEntity,
   updateEntity,
   createEntity,
