@@ -9,14 +9,13 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity {@link PricingCard} and its DTO {@link PricingCardDTO}.
  */
-@Mapper(componentModel = "spring", uses = {ServiceItemMapper.class})
+@Mapper(componentModel = "spring", uses = {ServiceItemMapper.class, PricingContentMapper.class})
 public interface PricingCardMapper extends EntityMapper<PricingCardDTO, PricingCard> {
 
     @Mapping(source = "serviceItem.id", target = "serviceItemId")
     @Mapping(source = "serviceItem.name", target = "serviceItemName")
     PricingCardDTO toDto(PricingCard pricingCard);
 
-    @Mapping(target = "pricingContents", ignore = true)
     @Mapping(target = "removePricingContent", ignore = true)
     @Mapping(source = "serviceItemId", target = "serviceItem")
     PricingCard toEntity(PricingCardDTO pricingCardDTO);

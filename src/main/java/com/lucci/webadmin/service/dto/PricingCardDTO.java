@@ -2,12 +2,13 @@ package com.lucci.webadmin.service.dto;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * A DTO for the {@link com.lucci.webadmin.domain.PricingCard} entity.
  */
 public class PricingCardDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -16,11 +17,12 @@ public class PricingCardDTO implements Serializable {
     @NotNull
     private Integer price;
 
+    private List<PricingContentDTO> pricingContents;
 
     private Long serviceItemId;
 
     private String serviceItemName;
-    
+
     public Long getId() {
         return id;
     }
@@ -59,6 +61,14 @@ public class PricingCardDTO implements Serializable {
 
     public void setServiceItemName(String serviceItemName) {
         this.serviceItemName = serviceItemName;
+    }
+
+    public List<PricingContentDTO> getPricingContents() {
+        return pricingContents;
+    }
+
+    public void setPricingContents(List<PricingContentDTO> pricingContents) {
+        this.pricingContents = pricingContents;
     }
 
     @Override
