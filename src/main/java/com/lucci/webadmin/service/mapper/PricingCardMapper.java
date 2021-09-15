@@ -15,7 +15,7 @@ public interface PricingCardMapper extends EntityMapper<PricingCardDTO, PricingC
     @Mapping(source = "serviceItem.id", target = "serviceItemId")
     @Mapping(source = "serviceItem.name", target = "serviceItemName")
     @Mapping(source = "imgUrl.id", target = "imgUrlId")
-    @Mapping(source = "imgUrl.name", target = "imgUrlName")
+    @Mapping(source = "imgUrl", target = "imgUrlName", qualifiedByName = "toUrl")
     PricingCardDTO toDto(PricingCard pricingCard);
 
     @Mapping(target = "removePricingContent", ignore = true)

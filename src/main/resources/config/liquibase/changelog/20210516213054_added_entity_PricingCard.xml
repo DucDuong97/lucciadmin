@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    
+
     <!--
         Added the entity PricingCard.
     -->
@@ -24,9 +24,6 @@
             <column name="service_item_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="img_url_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_pricing_card_img_url_id" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
@@ -35,6 +32,21 @@
 
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+
+    <changeSet id="20210516213054-3" author="jhipster">
+
+        <addColumn tableName="pricing_card">
+            <column name="img_url_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_pricing_card_img_url_id" />
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="img_url_id"
+                                 baseTableName="pricing_card"
+                                 constraintName="fk_pricing_card_img_url_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="img_url"/>
+    </changeSet>
 
     <!--
         Load sample data generated with Faker.js

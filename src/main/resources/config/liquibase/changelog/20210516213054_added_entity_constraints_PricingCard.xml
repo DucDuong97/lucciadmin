@@ -7,18 +7,12 @@
         Added the constraints for entity PricingCard.
     -->
     <changeSet id="20210516213054-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="service_item_id"
                                  baseTableName="pricing_card"
                                  constraintName="fk_pricing_card_service_item_id"
                                  referencedColumnNames="id"
                                  referencedTableName="service_item"/>
-
-        <addForeignKeyConstraint baseColumnNames="img_url_id"
-                                 baseTableName="pricing_card"
-                                 constraintName="fk_pricing_card_img_url_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="img_url"/>
 
     </changeSet>
 </databaseChangeLog>

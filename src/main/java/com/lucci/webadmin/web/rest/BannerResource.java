@@ -83,6 +83,7 @@ public class BannerResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of banners in body.
      */
+    @CrossOrigin
     @GetMapping("/banners")
     public List<BannerDTO> getAllBanners() {
         log.debug("REST request to get all Banners");
